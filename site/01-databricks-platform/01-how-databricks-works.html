@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="active" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><div class="locked"><span class="tick">🔒</span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</div><div class="locked"><span class="tick">🔒</span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</div><div class="locked"><span class="tick">🔒</span>5. Lakeflow Connect: Managed Ingestion & CDC</div><div class="locked"><span class="tick">🔒</span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</div><div class="locked"><span class="tick">🔒</span>7. Lakeflow Jobs & Orchestration Patterns</div><div class="locked"><span class="tick">🔒</span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</div><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 1</div>
+<h1 class="lesson">How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</h1>
+<div class="meta">19 min listen · The two-buildings mental model of Databricks architecture — where your code runs, where your data lives, what Photon does, how serverless changes the picture, and how to narrate it all in an interview.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/01-how-databricks-works.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/01-how-databricks-works" onclick="toggleDone('01-databricks-platform/01-how-databricks-works')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17</em></p>
+<h2 id="the-mental-model-two-buildings">The mental model: two buildings</h2>
+<p><strong>Left building = Databricks (control plane).</strong> Web app, notebooks UI, job scheduler, cluster manager, Unity Catalog metastore. Metadata + orchestration only — never your data.
+<strong>Right building = your cloud account (compute/data plane).</strong> Storage (ADLS) in the vault, cluster VMs on the floors. Connections <strong>initiate outbound from your side</strong> — key security fact.</p>
+<pre class="mermaid">flowchart LR
+    subgraph CP["Databricks account — Control Plane"]
+      UI[Web app / notebooks]
+      SCHED[Job scheduler]
+      CM[Cluster manager]
+      UC[Unity Catalog metastore]
+      SVLS["Serverless compute pools\n(annex — Databricks-operated)"]
+    end
+    subgraph DP["Your cloud account — Classic Compute Plane"]
+      DRV[Driver VM]
+      W1[Workers...]
+      ADLS[(ADLS / object storage\n— all data, your keys)]
+    end
+    UI -->|code / instructions| DRV
+    DRV --> W1
+    W1 --> ADLS
+    DRV -->|results only| UI
+    SVLS -.->|"scoped, short-lived credentials\n(UC-governed)"| ADLS
+</pre>
+
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control plane</td>
+<td>Databricks-hosted brain: UI, scheduler, cluster mgr, UC metastore</td>
+<td>"Metadata and orchestration only — my data never enters it"</td>
+</tr>
+<tr>
+<td>Compute (data) plane</td>
+<td>Clusters + storage in YOUR subscription</td>
+<td>"Compute reaches out; nothing punches in"</td>
+</tr>
+<tr>
+<td>Driver / workers</td>
+<td>Foreman plans + collects; workers run tasks on partitions</td>
+<td>Driver OOM = classic <code>collect()</code> kill</td>
+</tr>
+<tr>
+<td>All-purpose vs job cluster</td>
+<td>Interactive shared vs born-per-job, dies after</td>
+<td>Job clusters = production default (pay only while alive)</td>
+</tr>
+<tr>
+<td>SQL warehouse</td>
+<td>Cluster personality tuned for SQL/BI, queueing, T-shirt sizes</td>
+<td>Serverless SQL = seconds to start</td>
+</tr>
+<tr>
+<td>DBU</td>
+<td>Databricks Unit — Databricks' meter, on top of cloud VM bill</td>
+<td>"Two meters running" — optimise both</td>
+</tr>
+<tr>
+<td>Photon</td>
+<td>C++ <strong>vectorised</strong> execution engine under unchanged Spark APIs</td>
+<td>2–4× on CPU-bound work; premium DBU; wasted if IO-bound</td>
+</tr>
+<tr>
+<td>Serverless compute</td>
+<td>Databricks-operated warm pools; per-second billing, instant start</td>
+<td>Boundary shifts to "governed access to my storage"</td>
+</tr>
+<tr>
+<td>Lakebase</td>
+<td>Serverless <strong>Postgres</strong> (OLTP) on object storage, <strong>GA</strong></td>
+<td>Git-style branching; CDC sync to UC Delta tables; closes OLTP gap</td>
+</tr>
+<tr>
+<td>Cluster policies</td>
+<td>Admin templates constraining cluster creation</td>
+<td>Guardrail vs cluster sprawl</td>
+</tr>
+</tbody>
+</table>
+<h2 id="photon-depth-interview-fishing-spot">Photon depth (interview fishing spot)</h2>
+<ul>
+<li>Why: analytics bottleneck moved from IO to CPU (JVM row-wise interpretation, boxing, GC).</li>
+<li>What: from-scratch C++ engine, columnar/vectorised batches, SIMD-friendly loops.</li>
+<li>How it slots in: query plan segments Photon supports run native; rest <strong>falls back to classic Spark seamlessly</strong>. APIs unchanged.</li>
+<li>When NOT worth it: IO-bound scans, heavy UDF workloads (UDFs mostly don't photonise) — premium DBU wasted.</li>
+</ul>
+<h2 id="serverless-tradeoff-volunteer-this">Serverless tradeoff (volunteer this)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Classic (compute in your account)</th>
+<th>Serverless</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start time</td>
+<td>Minutes (VM boot)</td>
+<td>Seconds (warm pools)</td>
+</tr>
+<tr>
+<td>Billing</td>
+<td>While cluster alive</td>
+<td>Per-second of use</td>
+</tr>
+<tr>
+<td>Ops</td>
+<td>You size/tune/autoscale</td>
+<td>Databricks manages</td>
+</tr>
+<tr>
+<td>Security story</td>
+<td>Compute inside your perimeter</td>
+<td>UC-governed scoped access to your storage; residency/egress conversation with regulators</td>
+</tr>
+</tbody>
+</table>
+<h2 id="azure-vs-aws-quick-anchor-full-episode-t1e2">Azure vs AWS quick anchor (full episode: T1E2)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Azure</th>
+<th>AWS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service model</td>
+<td>First-party (portal deploy, one Microsoft invoice)</td>
+<td>Third-party (cross-account IAM role, split billing)</td>
+</tr>
+<tr>
+<td>Identity</td>
+<td>Entra ID, managed identities</td>
+<td>IAM roles, instance profiles</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>ADLS Gen2 (<code>abfss://</code>)</td>
+<td>S3 (<code>s3://</code>)</td>
+</tr>
+<tr>
+<td>Enterprise network</td>
+<td>VNet injection + Private Link</td>
+<td>Customer-managed VPC + PrivateLink</td>
+</tr>
+</tbody>
+</table>
+<h2 id="classic-fires-war-stories">Classic fires (war stories)</h2>
+<ol>
+<li><strong>Immortal all-purpose cluster</strong> — no auto-terminate + forgotten dashboard = five-figure bill. Fix: auto-terminate, job clusters, policies, serverless for spiky.</li>
+<li><strong>Driver bottleneck</strong> — <code>collect()</code> or driver-side Python loops while workers idle. First question on a slow job: is work distributed?</li>
+<li><strong>Small files</strong> — micro-batch writes → millions of tiny files → file-open overhead dominates. Modern fix: predictive optimisation (auto compaction on managed tables) + liquid clustering (see Delta episode).</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. Walk me through Databricks architecture.</strong>
+Two planes. Control plane (Databricks account): UI, scheduler, cluster manager, UC metastore — metadata/orchestration only. Compute plane (my account): storage + cluster VMs; connections initiated outbound from my side; instructions go one way, results the other; raw data never crosses. Serverless variant: compute in Databricks-operated pools, storage access still mine, governed by UC with short-lived scoped credentials.</p>
+<p><strong>Q2. What is Photon and when would you not enable it?</strong>
+C++ vectorised engine under unchanged Spark APIs; 2–4× on CPU-bound queries; falls back seamlessly for unsupported operators. Skip when IO-bound or UDF-heavy — higher DBU rate with no gain.</p>
+<p><strong>Q3. How does Databricks keep customer data secure if the UI is SaaS?</strong>
+Data + classic compute stay in customer subscription; control plane holds metadata; outbound-initiated connections; UC centralises grants/lineage/audit; serverless uses scoped credentials rather than standing access.</p>
+<p><strong>Q4. Job cluster vs all-purpose vs serverless — production ETL?</strong>
+Job cluster (or serverless jobs): created per run, dies after, cheapest + isolated. All-purpose is for humans. Serverless when spiky/latency-sensitive or to remove ops burden.</p>
+<p><strong>Q5. What's Lakebase and why does it matter?</strong>
+GA serverless Postgres on object storage — operational/OLTP workloads on the same governed platform, with branching and CDC sync into Delta. Kills the separate-OLTP-silo + fragile-pipeline pattern for lakehouse apps.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Architecture overview: https://docs.databricks.com/en/getting-started/overview.html</li>
+<li>Serverless compute: https://docs.databricks.com/en/compute/serverless/index.html</li>
+<li>Photon: https://docs.databricks.com/en/compute/photon.html</li>
+<li>Cluster policies: https://docs.databricks.com/en/admin/clusters/policies.html</li>
+<li>Lakebase: https://www.databricks.com/product/lakebase</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome to the AI Tutor. Track one, episode one: how Databricks actually works. And I want to start with a question that sounds simple but separates people who use Databricks from people who understand it. When you open a notebook, type a query against a table with a few billion rows, and hit run... where does that code actually execute? Whose computer does the work? Whose network does the data cross? Who can see it? If an interviewer asks you to whiteboard Databricks architecture, that's really the question they're asking. By the end of this episode, you'll have one picture in your head that answers it, and we'll walk every workload type through that same picture.
+
+[PAUSE 1s]
+
+Here's the picture. You're driving, so build it on your windshield. Imagine two buildings, side by side, with a street between them. The building on your left belongs to Databricks. The building on your right belongs to you — it is your cloud account, your Azure subscription. Hold onto that: left building, Databricks owns it. Right building, you own it. The street between them is a secured network connection. Almost everything about Databricks architecture is a story about what sits in which building, and what crosses that street.
+
+Let's furnish the left building first, the Databricks side. This is called the control plane. It's the brain, but importantly, it's the brain only. The web application you log into, the notebook interface you type in, the job scheduler that fires your two a.m. pipeline, the cluster manager that decides machines need to start, the Unity Catalog metastore holding your table definitions and permissions — all of that lives in the left building. Notice what I did not put there: your data, and the heavy computation. The left building holds metadata and orchestration. Notebook code you write is stored there, configurations, audit logs. But your five hundred and forty billion records? Never.
+
+Now the right building, your building. This is the classic compute plane, sometimes called the data plane. Two things live here. First, at the base of the building, picture the vault: your storage account, A D L S in your world, holding every Delta file, every parquet footer, all of it encrypted, in your subscription, under your keys. Second, the floors above the vault: the clusters. When you spin up a cluster, Databricks reaches across the street and asks your cloud provider to start virtual machines inside your building. Your V Ms, your subscription, your network rules. The machines phone home to the control plane across the street through a secure relay — and here's a detail interviewers love — that connection is initiated outbound from your building. The control plane doesn't punch into your network; your compute reaches out. That single fact is why Databricks passes security reviews in banks and telcos: data and compute stay inside the customer's perimeter, and what crosses the street is instructions going one way and results and telemetry going the other.
+
+[PAUSE 1s]
+
+Let's make it concrete. You hit run on a notebook attached to a cluster. Watch the flow on your windshield. Your browser talks to the left building, the web app. The control plane sends your code across the street to the cluster driver in your building. The driver — think of it as the site foreman — breaks your Spark query into tasks and hands them to the worker machines on the floors around it. The workers walk down to the vault, read Delta files from A D L S, shuffle among themselves on the floors of your building, and hand results up to the driver. The driver sends a result set — just the answer, maybe a few thousand rows, not the raw data — back across the street so your browser can display it. That's the whole trick: instructions travel left to right, answers travel right to left, and the billions of rows never leave your building.
+
+Now, cluster anatomy, because interviews go here immediately. A cluster is one driver plus N workers. The driver holds the Spark context, plans queries, collects results — and it's also the machine that dies when someone calls collect on a hundred-gigabyte dataframe. Driver out-of-memory is the classic beginner kill. Workers execute tasks in parallel on partitions of data. There are two personalities of cluster: all-purpose clusters, interactive, shared by people in notebooks, expensive to leave running — and job clusters, born for one scheduled job, do the work, and die, which makes them the correct default for production because you pay only while they exist. Then there's the third personality, the S Q L warehouse — a cluster tuned for sequel workloads and B I dashboards, fronted by a query queue, with T-shirt sizing instead of node counts.
+
+And how do you pay? One term: D B U, the Databricks Unit. You pay two bills — one to your cloud provider for the V Ms in your building, and one to Databricks, metered in D B Us per hour that scale with compute size and workload type. In cost conversations, that dual bill is the thing to name, because optimising only one side of it is the classic mistake.
+
+[PAUSE 1s]
+
+Next: Photon. When an interviewer says "what is Photon", here's the depth they're fishing for. Classic Spark executes on the J V M, and for years the bottleneck in analytics wasn't reading the data, it was C P U: the cost of interpreting query plans row by row, boxing values in Java objects, garbage collection pauses. Photon is Databricks' answer: they rewrote the execution engine from scratch in C++, and it processes data vectorised — not row at a time, but column-chunks at a time, batches of values marched through the C P U in tight loops that modern processors love. The key design choice: Photon slots in underneath the same Spark A P Is. Your PySpark, your sequel, unchanged. The query optimiser hands parts of the plan that Photon supports down to the C++ engine, and anything unsupported falls back to classic Spark seamlessly. So the interview one-liner: Photon is a C++ vectorised execution engine under unchanged Spark A P Is, roughly doubling to quadrupling C P U-bound query speed, charged at a higher D B U rate — worth it when your workload is C P U-bound, wasted money when you're I O-bound. Knowing when it does NOT pay — that's the staff-level flourish.
+
+[PAUSE 1s]
+
+Now let's renovate the picture, because the industry moved, and this is where being current matters. Everything so far was classic architecture: compute in YOUR building. Serverless flips it. With serverless — serverless sequel warehouses, serverless jobs and notebooks, and the serverless compute behind things like Lakeflow and model serving — the machines move OUT of your building and into a third space. Picture an annex attached to the left building: Databricks' compute plane, machines Databricks owns and operates, kept warm in giant pools. Why would you give that up after I just spent ten minutes praising compute-in-your-perimeter? Three reasons. Start-up time: a classic cluster takes minutes to boot V Ms; serverless hands you compute in seconds, from those warm pools. Utilisation: no more idle clusters burning money between jobs — you pay per second of actual use. And operations: no more node sizing, no more autoscaling tuning; Databricks manages it.
+
+But — and say this in interviews — the data stays in your vault. Serverless compute reaches into your storage with short-lived, scoped credentials, governed by Unity Catalog. So the security boundary shifts from "compute in my network" to "governed access to my storage". For some regulators that's an easy yes; for others, and you've lived this at Optus, it's a longer conversation about data residency and egress guarantees. That tension — serverless convenience versus perimeter control — is a genuinely good tradeoff discussion to volunteer in an interview, because it shows you've had to defend an architecture to a security board, not just draw it.
+
+One more tenant moved into the picture recently, and it signals you're current: Lakebase. Databricks now runs a serverless Postgres — a real transactional, O L T P database — on open object storage, now generally available. It gives the platform an operational database next to the analytical lakehouse, with git-style branching of database state, and continuous sync between Lakebase tables and Unity Catalog Delta tables. Why it matters architecturally: the classic pattern of lakehouse for analytics plus a separate operational database in another silo, with a fragile pipeline between them, collapses into one governed platform. Drop the phrase "Lakebase closes the O L T P gap" in a Databricks interview and you're speaking this year's language, not twenty twenty-three's.
+
+Now, one more layer of texture, because in interviews the follow-up is often "and how does this look on Azure versus AWS?" Quick anchor now; the whole next episode goes deep. The two buildings exist on both clouds, but the paperwork differs. On Azure — your home turf — Databricks is a first-party service: you create the workspace from the Azure portal like any Microsoft resource, it lands on your Azure invoice, identity is Entra I D end to end, and the vault speaks A D L S through the a b f s s protocol. On A W S, Databricks is a third-party product: you connect it to your A W S account by creating a cross-account I AM role that lets the control plane provision E C two instances in your V P C, storage is S three buckets, identity is I AM roles — clusters reach data through instance profiles — and you get two separate bills, one from Databricks, one from Amazon. Same architecture, different keys to the building. Hold that phrase — same architecture, different keys — and episode two will furnish the details.
+
+[PAUSE 1s]
+
+Pitfalls, three of them, all war stories you can borrow. One: the always-on all-purpose cluster. Someone creates an interactive cluster, sets auto-terminate to never, attaches a dashboard, forgets it. Sixty thousand dollars later, finance calls. Fix: aggressive auto-terminate, job clusters for production, serverless for spiky work, and cluster policies — templates that constrain what users can spin up — as the platform guardrail. Two: the driver bottleneck. A pipeline that collects big results to the driver, or loops over a million files in Python on the driver while thirty-two workers sit idle. If a job is mysteriously slow, first question: is the work actually distributed, or is the foreman doing everything while the crew watches? Three: small files. Streaming or frequent micro-batches writing tiny files; three years later a simple select scans four million files and spends its life in file-open overhead, not reading data. Modern Databricks fixes this with automatic background optimisation on managed tables — predictive optimisation, compaction that runs for you — plus liquid clustering. We'll go deep on that in the Delta internals episode, but know the failure mode by name.
+
+[PAUSE 1s]
+
+Interview angle. The question comes as "walk me through Databricks architecture" or "how does Databricks keep customer data secure". Give them the two buildings, in order, in about ninety seconds: control plane on the left — U I, scheduler, cluster manager, Unity Catalog metastore; metadata and orchestration only. Compute plane on the right — my storage account and my clusters, in my subscription; connections initiated outbound from my side; data never crosses into the control plane. Then differentiate yourself with the modern layer: serverless moves compute into Databricks-operated pools for instant start and per-second billing, while storage access stays governed through Unity Catalog with scoped credentials — and mention you've weighed that tradeoff against regulatory requirements in production. If the conversation is going well, close the loop with cost: two meters running, cloud V Ms plus D B Us, and the levers are job clusters, auto-terminate, right-sized Photon, and serverless for spiky loads. That answer has architecture, security, currency, and money in it. Four dimensions, ninety seconds.
+
+[PAUSE 1s]
+
+Recap, eyes on the road, rebuild the picture. Two buildings. Left: Databricks control plane — web app, scheduler, cluster manager, Unity Catalog metastore; metadata and orchestration, never your data. Right: your building — the vault of A D L S storage at the base, cluster floors above it; driver as foreman, workers on partitions; connections dial out from your side. Instructions cross the street one way, answers the other. Clusters come as all-purpose for humans, job clusters for production, sequel warehouses for B I. Photon: C++ vectorised engine under unchanged Spark A P Is — faster when C P U-bound, premium D B Us. Serverless: compute moves to a warm annex Databricks operates — seconds to start, per-second billing, storage access still yours and governed. Lakebase adds serverless Postgres for transactional workloads on the same governed platform. And the three classic fires: immortal clusters, overloaded drivers, small files. That's the foundation. Next episode: same architecture, different keys — Databricks on Azure versus A W S, deployment to identity to networking to billing. See you there.</div></details>
+<div class="navrow"><span></span><a class="btn" href="02-azure-vs-aws-databricks.html">Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing →</a></div></main></div></body></html>

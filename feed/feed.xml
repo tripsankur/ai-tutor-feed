@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI Tutor with Ankur</title>
+    <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
+    <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
+    <language>en-au</language>
+    <lastBuildDate>Fri, 17 Jul 2026 05:04:19 +0000</lastBuildDate>
+    <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
+    <itunes:author>Ankur Tripathi</itunes:author>
+    <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
+    <itunes:image href="https://tripsankur.github.io/ai-tutor-feed/feed/cover.png"/>
+    <itunes:category text="Technology"/>
+    <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>How Databricks Actually Works: Control Plane, Compute Plane, Photon, Serverless</title>
+      <description>The two-buildings mental model of Databricks architecture — where your code runs, where your data lives, what Photon does, how serverless changes the picture, and how to narrate it all in an interview.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/01-how-databricks-works.mp3" length="5032809" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e1-how-databricks-works</guid>
+      <pubDate>Fri, 17 Jul 2026 04:20:08 +0000</pubDate>
+      <itunes:duration>00:13:58</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</title>
+      <description>Same architecture, different keys — how the two-buildings model maps onto Azure and AWS: first-party vs third-party deployment, Entra ID vs IAM, ADLS vs S3, VNet injection vs customer VPC, Private Link on both, and the billing split.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/02-azure-vs-aws-databricks.mp3" length="4989896" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e2-azure-vs-aws-databricks</guid>
+      <pubDate>Fri, 17 Jul 2026 04:54:44 +0000</pubDate>
+      <itunes:duration>00:13:51</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lakehouse AI: The Big Picture</title>
+      <description>The five-floor tower mental model of the Databricks AI stack — Unity Catalog at the base, MLflow 3 observability, Model Serving and the AI Gateway, Vector Search, and Agent Bricks on top — with current 2026 product names and interview narrations.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/01-lakehouse-ai-big-picture.mp3" length="4262484" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e1-lakehouse-ai-big-picture</guid>
+      <pubDate>Fri, 17 Jul 2026 03:07:15 +0000</pubDate>
+      <itunes:duration>00:11:50</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>DRILL: Databricks GenAI Rapid-Fire (Sample)</title>
+      <description>Rapid-fire interview drill: hear the question, answer aloud in the pause, then compare with a strong model answer. Sample of five — full drill lands when Track 2 completes.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/08-databricks-ai-drill.mp3" length="1238066" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e8-databricks-ai-drill</guid>
+      <pubDate>Fri, 17 Jul 2026 03:08:16 +0000</pubDate>
+      <itunes:duration>00:03:26</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>

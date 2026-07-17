@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit) — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><div class="locked"><span class="tick">🔒</span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</div><div class="locked"><span class="tick">🔒</span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</div><div class="locked"><span class="tick">🔒</span>5. Lakeflow Connect: Managed Ingestion & CDC</div><div class="locked"><span class="tick">🔒</span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</div><div class="locked"><span class="tick">🔒</span>7. Lakeflow Jobs & Orchestration Patterns</div><div class="locked"><span class="tick">🔒</span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</div><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk" open><summary>Track 2 · Databricks AI Stack</summary><a class="active" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 2 · Databricks AI Stack · Episode 1</div>
+<h1 class="lesson">Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</h1>
+<div class="meta">19 min listen · The five-floor tower mental model of the Databricks AI stack — Unity Catalog at the base, MLflow 3 observability, Model Serving and the AI Gateway, Vector Search, and Agent Bricks on top — with current 2026 product names and interview narrations.</div>
+<audio controls preload="metadata" src="../../audio/02-databricks-ai/01-lakehouse-ai-big-picture.mp3"></audio>
+<button class="btn complete" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" onclick="toggleDone('02-databricks-ai/01-lakehouse-ai-big-picture')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (Agent Bricks, MLflow 3, AI Gateway GA, Lakeflow naming)</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Databricks built its AI platform <strong>out of</strong> the lakehouse, not next to it — every AI capability is Delta storage + Unity Catalog governance + serverless compute, reused.</p>
+<h2 id="the-five-floor-tower">The five-floor tower</h2>
+<pre class="mermaid">flowchart TB
+    A5["Floor 5 — Applications\nAgent Bricks (auto-optimise, MCP tool catalog) · Agent Evaluation (judges, review app) · AI Functions (ai_query) · Genie"]
+    A4["Floor 4 — Retrieval\nVector Search (Delta Sync indexes)"]
+    A3["Floor 3 — Serving\nEndpoints: custom · hosted foundation (PPT / provisioned throughput) · external proxies\nAI Gateway (GA): keys, rate limits, cost attribution, guardrails, auto-fallback"]
+    A2["Floor 2 — Lifecycle & Observability\nMLflow 3: tracing (agents anywhere) · evaluation · prompt/app versioning"]
+    A1["Ground floor — Delta + Unity Catalog\nmodels, functions/tools, indexes, volumes, eval sets = UC objects"]
+    A5 --> A4 --> A3 --> A2 --> A1
+</pre>
+
+<h2 id="key-terms-2026-current-names">Key terms (2026-current names)</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Models in UC</td>
+<td>Registered models are UC objects (<code>catalog.schema.model</code>)</td>
+<td>"AI inherits my RBAC, lineage, audit — governance isn't reinvented"</td>
+</tr>
+<tr>
+<td>MLflow 3 Tracing</td>
+<td>Per-request tree: prompt, retrievals, tool calls, tokens, latency; traces agents deployed <strong>anywhere</strong> (other clouds, on-prem)</td>
+<td>"Distributed tracing for AI — how you debug Tuesday's weird answer"</td>
+</tr>
+<tr>
+<td>MLflow 3 versioning</td>
+<td>Prompts + application versions in registry, not just models</td>
+<td>"Which prompt was live during the incident — answerable"</td>
+</tr>
+<tr>
+<td>Serving endpoint</td>
+<td>Governed REST API in front of a model</td>
+<td>Three tenants: custom, hosted foundation, external proxy</td>
+</tr>
+<tr>
+<td>Pay-per-token vs provisioned throughput</td>
+<td>Shared API vs reserved tokens/sec</td>
+<td>Break-even on steady-state volume; PT for latency SLAs, bills regardless of use</td>
+</tr>
+<tr>
+<td>AI Gateway (<strong>GA</strong>)</td>
+<td>One front door for all model traffic</td>
+<td>Central keys, rate limits, cost attribution, payload logging, PII/safety guardrails, <strong>automatic provider fallback</strong>, swap = config change</td>
+</tr>
+<tr>
+<td>Vector Search + Delta Sync</td>
+<td>Index auto-synced from Delta table via CDF</td>
+<td>"Freshness is a platform guarantee, not a pipeline I babysit"</td>
+</tr>
+<tr>
+<td><strong>Agent Bricks</strong></td>
+<td>Current-gen agent tooling (successor branding to Mosaic AI Agent Framework)</td>
+<td>Declares agent → auto-generates synthetic data + task benchmarks → auto-tunes quality/cost</td>
+</tr>
+<tr>
+<td>Agent Bricks + MCP</td>
+<td>Native Model Context Protocol support + <strong>MCP tool catalog</strong> in UC</td>
+<td>Tools discoverable, permissioned, audited org-wide</td>
+</tr>
+<tr>
+<td>Agent Evaluation</td>
+<td>LLM judges (groundedness, relevance) + human review app</td>
+<td>Quality gates for agents = CI/CD for prompts</td>
+</tr>
+<tr>
+<td><code>ai_query()</code></td>
+<td>LLM from SQL for batch inference</td>
+<td>GenAI for analysts, no Python</td>
+</tr>
+<tr>
+<td>Genie</td>
+<td>NL → SQL over curated governed data (Genie spaces, trusted assets)</td>
+<td>Grounded self-service analytics</td>
+</tr>
+</tbody>
+</table>
+<h2 id="calling-a-model-the-shape-of-it">Calling a model — the shape of it</h2>
+<pre><code class="language-python">from databricks.sdk import WorkspaceClient
+client = WorkspaceClient().serving_endpoints.get_open_ai_client()
+
+resp = client.chat.completions.create(
+    model=&quot;my-gateway-endpoint&quot;,      # Llama, GPT, Claude — same interface, gateway-governed
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Summarise this incident record...&quot;}],
+)
+</code></pre>
+<pre><code class="language-sql">-- Batch inference from SQL (AI Functions)
+SELECT complaint_id,
+       ai_query('my-endpoint', CONCAT('Classify sentiment: ', complaint_text)) AS sentiment
+FROM silver.complaints;
+</code></pre>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Integrated vs best-of-breed</strong> — tower wins governance/TCO/audit for enterprises already on Databricks; dedicated vector DBs may win raw retrieval latency/features.</li>
+<li><strong>Pay-per-token vs provisioned throughput</strong> — break-even on steady-state token volume; PT also for latency guarantees; reserved bills whether used or not.</li>
+<li><strong>Auto-optimisation ≠ absolution</strong> — Agent Bricks tunes against benchmarks; YOUR golden eval set + release gating remain your discipline.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. How would you add document Q&amp;A to an existing Databricks platform?</strong>
+Walk the tower bottom-up: docs in Delta/UC (governance day one) → Delta Sync Vector Search index (freshness automatic) → model behind endpoint via AI Gateway (keys, limits, cost attribution, payload logging, fallback) → agent whose tools/knowledge are UC objects, MLflow 3 tracing on → golden eval set + judge-gated releases + human review. Close: nothing sensitive leaves the perimeter — that's what passes a telco security review.</p>
+<p><strong>Q2. Why proxy external models through Databricks instead of calling OpenAI directly?</strong>
+Central credential custody, rate limits, cost attribution, payload logging for audit, PII/safety guardrails at the gateway, automatic provider fallback, provider swap as config change — "centralise, govern, abstract", replayed on model access.</p>
+<p><strong>Q3. What's Agent Bricks and how is it different from writing agent code?</strong>
+Declarative agent building with auto-optimisation: generates domain-specific synthetic data and task-aware benchmarks, evaluates candidates, tunes for quality+cost. Native MCP support and a UC-governed MCP tool catalog. You still own the golden eval set and release gates.</p>
+<p><strong>Q4. What does MLflow 3 add for GenAI over classic MLflow?</strong>
+Production-scale tracing (agents on any platform, not just Databricks), redesigned evaluation with judges + feedback APIs, and versioning extended to prompts and full applications.</p>
+<p><strong>Q5. Biggest production RAG risk this stack removes vs DIY?</strong>
+Stale embeddings — Delta Sync keeps the index consistent with the source table via CDF, removing the hand-rolled sync pipeline that drifts in DIY stacks.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Agent Bricks: https://www.databricks.com/product/artificial-intelligence/agent-bricks</li>
+<li>MLflow 3: https://www.databricks.com/blog/mlflow-30-unified-ai-experimentation-observability-and-governance</li>
+<li>Model Serving: https://docs.databricks.com/en/machine-learning/model-serving/index.html</li>
+<li>AI Gateway: https://docs.databricks.com/en/ai-gateway/index.html</li>
+<li>Vector Search: https://docs.databricks.com/en/generative-ai/vector-search.html</li>
+<li>AI Functions: https://docs.databricks.com/en/large-language-models/ai-functions.html</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track two, episode one: the Databricks AI stack, the big picture. Last track we built the two-buildings picture of how Databricks itself works. Today we build the second picture you'll reuse for this entire track. And here's the thesis before the picture: Databricks did not build an AI platform next to the lakehouse. They built it out of the lakehouse. Every AI capability is the same three ingredients you already run in production: Delta storage, Unity Catalog governance, serverless compute. Say that sentence in an interview and you've signalled architecture-level understanding before naming a single product.
+
+[PAUSE 1s]
+
+Now the picture. On your windshield, build a tower. Five floors. We're going to furnish it floor by floor, bottom to top, and every product name in the Databricks AI universe lives on exactly one floor of this tower. When you're lost in marketing terms — Agent Bricks, Mosaic, Genie, Gateway — come back to the tower and ask: which floor is this?
+
+The ground floor, the foundation the whole tower stands on: Delta plus Unity Catalog. Here's the single most important fact of this episode. On this platform, a machine learning model is a catalog object. So is a vector index. So is a tool an agent can call — it's a Unity Catalog function. So are your documents, sitting in volumes, and your evaluation datasets, sitting in tables. Everything above the ground floor is registered INTO the ground floor with a three-part name: catalog dot schema dot thing. Feel the consequence: access control, lineage, and audit are inherited, not reinvented. The same grant statement that gives an analyst a silver table gives an application a model. When you say to an interviewer, "on my platform A I passes the same security review as data, because models and tables share one governance spine" — that's the ground floor talking, and with your tokenisation and Privacy Act purging background, you can say it with scars to prove it.
+
+Floor two: MLflow — and specifically MLflow three, because the version matters now. MLflow grew up as experiment tracking for classical M L. That still exists, but MLflow three was redesigned around generative A I, and it earns its floor with three capabilities. First, tracing: every request to your A I application is captured as a tree — the prompt in, the retrieval call, each tool invocation, the model's response, token counts, latencies. It's distributed tracing for A I, and it's how you answer the production question "why did the agent say THAT on Tuesday". And a differentiator worth quoting: MLflow three can trace agents deployed anywhere — on Databricks, on another cloud, even on-premise — so it positions as the observability plane for your whole A I estate, not just the Databricks corner of it. Second, evaluation: harnesses that run your application against test questions and score outputs, including L L M judges. Third, versioning — and not just models anymore: prompts and full application versions are registry citizens too, so "which prompt was live during that incident" has an actual answer. Floor two, one phrase: the observability and quality floor.
+
+[PAUSE 1s]
+
+Floor three: serving. A serving endpoint is a governed REST A P I in front of a model. Three different kinds of tenant can stand behind an endpoint, and being crisp about the three is an interview moment. Kind one: your own model — trained or fine-tuned, registered on the ground floor, deployed onto serverless compute. Kind two: foundation models Databricks itself hosts — open models like the Llama family — offered two ways: pay-per-token, a shared A P I where you pay for what you use, or provisioned throughput, dedicated capacity with guaranteed tokens per second for production S L As. Kind three: external models — the endpoint is a governed proxy to an outside provider, Open A I, Anthropic; your code calls Databricks, Databricks forwards it, and the provider key stays held centrally.
+
+And wrapped around this whole floor is the A I Gateway — now generally available, and worth thirty seconds of depth. Why proxy everything through one front door? Central credential custody — no A P I keys scattered through notebooks. Per-user and per-workload rate limits. Usage logging and cost attribution — who spent what, on which model. Payload logging for audit, non-optional in your regulated world. P I I detection and safety guardrails applied at the gateway, before and after the model. Automatic fallback — if one provider times out or errors, the gateway retries on the configured backup, which turns a provider outage into a latency blip. And model swap as a config change, because everything presents the same endpoint interface. Notice what the gateway really is: the centralise, govern, and abstract move you applied to data access, replayed on model access. Same playbook, new asset class.
+
+[PAUSE 1s]
+
+Floor four: retrieval — Vector Search. One sentence of mechanics, then the killer feature. A vector search index stores embeddings — numerical representations of your documents — and answers "find me chunks similar to this question" in milliseconds. Here's what makes the Databricks version architecturally interesting: the index is not a separate database you feed. It's a projection of a Delta table. You point it at a source table on the ground floor, and delta sync watches the table's change data feed; rows change, the index re-embeds and updates itself. Think about which failure mode that kills. In a do-it-yourself R A G stack, you babysit the pipeline keeping your vector database consistent with your documents, and stale embeddings — the assistant confidently citing the deleted policy — is THE classic production R A G bug. Here, freshness is a platform guarantee, like ACID was for the table itself. And of course the index is a catalog object: grant access to it like a table. Episode two goes deep inside this floor.
+
+Floor five, the top floor: applications. This is the floor with the most product churn, so anchor to the current names. The headline resident is Agent Bricks — Databricks' current-generation agent tooling, the successor to what launched as the Mosaic A I agent framework. You declare an agent at a high level — what it should do, what data it can touch — and Agent Bricks does something genuinely differentiated: it auto-optimises. It generates domain-specific synthetic data and task-aware benchmarks for YOUR use case, evaluates candidate configurations against them, and tunes for quality and cost automatically, rather than you hand-twiddling prompts for a fortnight. Two more things it brings that interviewers will recognise as current: native Model Context Protocol support — M C P, the open standard for connecting agents to tools, which gets its own episode in the agents track — and an M C P tool catalog, where tools are discoverable, permissioned, and audited across the organisation. Where do those tools live? Unity Catalog. Ground floor again.
+
+Sharing the top floor: agent evaluation — L L M judges scoring groundedness and relevance, plus a review app where human experts label agent answers, feeding evaluation datasets that live, again, on the ground floor. Then A I functions in sequel — functions like A I underscore query that let an analyst run an L L M over a million rows from a sequel statement, batch classification and summarisation with no Python. And Genie: natural-language analytics for business users — plain-English questions compiled to sequel against curated, governed tables, configured through Genie spaces with instructions and trusted assets so it's grounded in YOUR semantics rather than guessing table names.
+
+[PAUSE 1s]
+
+Step back from the tower for tradeoffs, because staff-level answers volunteer the sharp edges. Tradeoff one: integrated versus best-of-breed. The tower buys governance, integration, and freshness guarantees; a specialised standalone vector database or orchestration framework can buy raw performance or specific features. Honest answer: for an enterprise already on Databricks with audit obligations, the tower usually wins on total cost of ownership; for a latency-obsessed startup, maybe not. Tradeoff two: pay-per-token versus provisioned throughput. Measure steady-state token volume; below the break-even, stay pay-per-token; above it, or when latency S L As bind, reserve capacity — and remember reserved capacity bills whether you use it or not. Tradeoff three: auto-optimisation is not absolution. Agent Bricks tunes against benchmarks, but the golden evaluation set that reflects YOUR business reality, and the release gate that blocks a regression from shipping — that discipline is still yours, the same dev-test-prod rigour you run for data releases today.
+
+[PAUSE 1s]
+
+Interview angle. The question will come as: "how would you add a document question-answering assistant to an existing Databricks platform?" Walk the tower, ground floor up, about a minute. Documents already land in Delta under Unity Catalog — governance solved on day one. Chunk and embed into a delta-sync vector search index — freshness automatic. Model behind a serving endpoint through the A I Gateway — central keys, rate limits, cost attribution, payload logging, provider fallback. Application built as an agent whose tools and knowledge are all catalog objects, MLflow three tracing on every request. Before production: golden evaluation set, judge scores gating release, human review on the hard cases. And then the differentiating close: because every layer is a Unity Catalog citizen, nothing sensitive leaves the perimeter to make A I work — which, in a telco carrying data-retention obligations, is the difference between a proof of concept and a security-approved production system. That close is your story; own it.
+
+[PAUSE 1s]
+
+Sixty-second recap. Rebuild the tower. Ground floor: Delta plus Unity Catalog — models, indexes, tools, documents, eval sets, all catalog objects, one governance spine. Floor two: MLflow three — tracing everywhere, evaluation harnesses, versioning for prompts and applications, the observability floor. Floor three: serving — custom models, hosted foundation models pay-per-token or provisioned throughput, external model proxies — all behind the A I Gateway, now G A: credentials, rate limits, cost attribution, guardrails, automatic fallback. Floor four: Vector Search — a governed index that delta sync keeps automatically consistent with its source table; stale embeddings die here. Top floor: Agent Bricks with auto-optimisation, synthetic benchmarks, M C P tool catalog; agent evaluation with judges and human review; A I functions in sequel; Genie for natural-language analytics. One tower, one governance spine, and your existing platform skills run straight up the middle of it. Next episode: inside floor four — Vector Search internals. See you in the car.</div></details>
+<div class="navrow"><span></span><a class="btn" href="08-databricks-ai-drill.html">DRILL: Databricks GenAI Rapid-Fire →</a></div></main></div></body></html>
