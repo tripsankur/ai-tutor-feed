@@ -1,0 +1,154 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="active" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><div class="locked"><span class="tick">🔒</span>5. Lakeflow Connect: Managed Ingestion & CDC</div><div class="locked"><span class="tick">🔒</span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</div><div class="locked"><span class="tick">🔒</span>7. Lakeflow Jobs & Orchestration Patterns</div><div class="locked"><span class="tick">🔒</span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</div><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 4</div>
+<h1 class="lesson">Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</h1>
+<div class="meta">18 min listen · The governed-city mental model of Unity Catalog — metastore as the city map, three-level namespace addresses, credential gates to storage, inherited grants, the new ABAC policy regime with governed tags, lineage as CCTV, and the metrics semantic layer.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" onclick="toggleDone('01-databricks-platform/04-unity-catalog-deep-dive')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (ABAC + governed tags + agentic classification GA May 2026; external lineage GA; UC Metrics; managed Iceberg GA)</em></p>
+<h2 id="the-mental-model-a-governed-city">The mental model: a governed city</h2>
+<p>Metastore = council office (one map per region, all workspaces attached). Address = <code>catalog.schema.object</code> (suburb → street → house). Council holds gate keys (storage credentials); zoning stickers (governed tags) trigger laws (ABAC policies); CCTV (lineage) records itself.</p>
+<pre class="mermaid">flowchart TB
+    MS["Metastore (1/region, account-level)"]
+    MS --> C1["Catalog (domain)"]
+    C1 --> S1["Schema (team/layer)"]
+    S1 --> T[Tables/Views]
+    S1 --> V[Volumes]
+    S1 --> F["Functions (agent tools)"]
+    S1 --> M[Models]
+    S1 --> VS[Vector indexes]
+    MS --> SC["Storage credentials\n(Azure: access connector · AWS: IAM role + ext ID)"]
+    SC --> EL["External locations (governed paths)"]
+    MS --> GT["Governed tags"] --> POL["ABAC policies\n(row filters + column masks at catalog/schema level)"]
+</pre>
+
+<h2 id="why-uc-exists-the-beforeafter">Why UC exists (the before/after)</h2>
+<p>Before: Hive metastore <strong>per workspace</strong>, permissions in workspace ACLs, storage keys in mount points, no lineage — N workspaces = N disagreeing registries. After: one account-level metastore, one governance model, every asset type (tables, volumes, functions, models, indexes, shares) under one grant + audit system.</p>
+<h2 id="key-facts">Key facts</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Detail</th>
+<th>Interview line</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Managed vs external tables</td>
+<td>Managed: UC controls location + lifecycle; predictive optimization + <strong>managed Iceberg (GA)</strong> work here</td>
+<td>"Managed by default — that's where the automation lives; external only for migration/interop"</td>
+</tr>
+<tr>
+<td>Storage credentials</td>
+<td>Access connector (Azure) / IAM role + external ID (AWS)</td>
+<td>"No keys in code, ever — gates are auditable and revocable"</td>
+</tr>
+<tr>
+<td>Grants</td>
+<td>Hierarchical inheritance; <code>USE CATALOG</code> + <code>USE SCHEMA</code> + <code>SELECT</code> = read path</td>
+<td>Groups not users; service-principal ownership</td>
+</tr>
+<tr>
+<td><strong>ABAC (GA 5/2026)</strong></td>
+<td>Row-filter + column-mask <strong>policies</strong> attached at catalog/schema, conditioned on <strong>governed tags</strong>; auto-applies to current + future objects; 10k policies/metastore</td>
+<td>"Laws on zoning stickers, not house addresses"</td>
+</tr>
+<tr>
+<td>Governed tags</td>
+<td>Account-level key-value pairs on catalogs→columns, models, volumes</td>
+<td>Taxonomy is account-defined, not free-text chaos</td>
+</tr>
+<tr>
+<td>Agentic data classification (GA)</td>
+<td>Auto-scans + tags PII per GDPR/HIPAA/PCI/etc.</td>
+<td>Chain: <strong>classify → tag → protect</strong></td>
+</tr>
+<tr>
+<td>Lineage</td>
+<td>Automatic table+column level from query execution; <strong>external lineage GA</strong> (register non-Databricks up/downstream)</td>
+<td>"Nobody documents it; the engine records it"</td>
+</tr>
+<tr>
+<td>System tables</td>
+<td>Audit, billing, lineage, access as queryable Delta tables</td>
+<td>"Access review = scheduled query, not spreadsheet safari"</td>
+</tr>
+<tr>
+<td>UC Metrics</td>
+<td>KPIs as governed objects (measure+dimensions), consumed by SQL/BI/agents; open-sourced</td>
+<td>"Genie computes THE churn, not A churn"</td>
+</tr>
+<tr>
+<td>Delta Sharing</td>
+<td>Open protocol, share without copying, any consumer</td>
+<td>Foundation for clean rooms</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>Metastore geography</strong> — 1/region; plan before workspace sprawl; consolidation later = surgery.</li>
+<li><strong>Inheritance generosity</strong> — catalog-level write grants flow into every future object. Read broad+high, write tight+low.</li>
+<li><strong>External location sprawl</strong> — centralise creation rights; audit via system tables.</li>
+<li><strong>Tags without policies</strong> — classification theatre. A tag matters only when a policy references it.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. Design governance for a multi-team lakehouse.</strong>
+One metastore/region → domain catalogs, team/layer schemas → storage only via credentials+external locations → managed tables default → group grants for coarse access + ABAC (classify→tag→protect) for fine → lineage + external lineage + system-table audits → UC Metrics for shared semantics. Close with production proof: 540B records, RLS/CLM, automated purging.</p>
+<p><strong>Q2. ABAC vs classic row filters/column masks?</strong>
+Classic: per-table functions — sprawl, gaps on new tables. ABAC: policy written once at catalog/schema level, triggered by governed tags, auto-covers future objects; classification agent applies tags. Migration path: keep table-level filters where bespoke, ABAC for estate-wide rules.</p>
+<p><strong>Q3. How does UC secure storage access on each cloud?</strong>
+Storage credential wraps access connector managed identity (Azure) or IAM role with external ID (AWS); external locations bind paths to credentials; grants on the UC object, not the storage. CloudTrail/Azure logs + UC audit both see access.</p>
+<p><strong>Q4. Managed vs external — why has the default flipped to managed?</strong>
+Predictive optimization (auto OPTIMIZE/VACUUM/stats), managed Iceberg with lifecycle handled, no path management. External keeps: existing lake layouts, non-Databricks writers, migration staging.</p>
+<p><strong>Q5. How do you prove compliance (who accessed PII last quarter)?</strong>
+System tables: join audit log with lineage and tag inventory — a SQL query, schedulable, alertable. External lineage extends the graph to source systems and BI reports.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>ABAC: https://docs.databricks.com/aws/en/data-governance/unity-catalog/abac/</li>
+<li>ABAC GA blog: https://www.databricks.com/blog/abac-row-filtering-and-column-masking-policies-governed-tags-and-data-classification-are-now</li>
+<li>UC access control: https://docs.databricks.com/aws/en/data-governance/unity-catalog/access-control/</li>
+<li>Managed tables (Delta+Iceberg): https://docs.databricks.com/aws/en/tables/managed</li>
+<li>UC at DAIS 2026 (metrics, external lineage): https://www.databricks.com/blog/whats-new-unity-catalog-data-ai-summit-2026</li>
+<li>System tables: https://docs.databricks.com/en/admin/system-tables/index.html</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode four: Unity Catalog, properly. You administer this thing daily — schemas, external locations, grants, row-level security. So this episode has a different job than the last two: not introducing the machine, but organising what you already know into an interview-grade structure, and bolting on the twenty twenty-six layer — ABAC policies, governed tags, agentic classification, external lineage, and metrics — that turns "I know Unity Catalog" into "I know where Unity Catalog is going."
+
+[PAUSE 1s]
+
+The picture for this episode: a governed city. Unity Catalog is the city council. Build it on your windshield piece by piece. The city map: every data asset has a three-part address — catalog is the suburb, schema is the street, and the object — table, view, volume, function, model, vector index — is the house. Catalog dot schema dot table: suburb, street, house. The council office holding the master map is the metastore — one per cloud region, attached to every workspace in that region. That attachment is the whole revolution, and worth saying explicitly in interviews: before Unity Catalog, every workspace kept its own private map — a Hive metastore per workspace — with permissions scattered across workspace A C Ls and storage keys buried in mount points. Three workspaces meant three registries that disagreed. Unity Catalog moved the map up to the account level: one map, every workspace reads it, governance defined once.
+
+Now, who owns the land under the city? Trick question — the council doesn't. The land is your cloud storage, and the council governs access to it through two objects you know intimately. Storage credentials: the keyed gates — on Azure, an access connector with a managed identity; on A W S, an I AM role with an external I D — the cloud-specific keys from episode two, held by the council, never by residents. And external locations: registered land parcels — this credential governs that storage path. Every notebook that touches a b f s s or s three does it through a gate the council can audit, revoke, and log. No keys in code, ever.
+
+Two kinds of houses on every street. Managed tables: council-built housing — Unity Catalog decides where the files live, and in exchange it maintains them: predictive optimisation, automatic compaction, the robot librarian from last episode, works on managed tables. And since managed Iceberg tables went G A, council housing comes in two formats — Delta or Iceberg — with the council running snapshot expiry and compaction for both. External tables: houses you built on your own land parcel — you control the path, useful for migration and for data shared with non-Databricks engines, but the robot librarian doesn't clean there. The modern default answer in an interview: managed unless you have a concrete interop or migration reason, because that's where the automation lives.
+
+[PAUSE 1s]
+
+Next: how permission flows through the city. The classic model is grants on the hierarchy, and the key word is inheritance. Grant select on a catalog, and it flows down every street into every house. Grant use catalog, use schema, select on a table — the three keys a reader needs, and the pattern you've mapped to Entra groups at Optus. Ownership matters: every securable has an owner who can grant onwards. The discipline: grant to groups, never individuals; own objects with service principals, never humans who resign. That's the classic model — name-based: permissions attached to named objects, one by one.
+
+And here's the twenty twenty-six shift, the part that makes you current: attribute-based access control — ABAC — went generally available in May, and it inverts the model. Instead of writing rules on house addresses, you write laws on zoning stickers. Picture it: the council issues governed tags — key-value stickers defined once at the account level: sensitivity equals P I I, domain equals billing, classification equals confidential — and inspectors stick them on houses, on individual rooms, on columns. Then you write policies: a row-filter policy, a column-mask policy, attached not to a table but to a catalog or schema, with a condition — wherever a column carries the sticker sensitivity P I I, mask it for everyone outside the privacy-cleared group. The policy takes effect automatically on every current AND future object carrying the tag. Feel what that kills: the per-table row-filter sprawl you maintain today. New table lands with a P I I column, inspector tags it — or, and this is the third G A piece, the agentic data classifier tags it for you: an agent that scans data, recognises patterns across G D P R, HIPAA, P C I regimes, and applies the governed tags automatically. The chain to say in an interview: classify, tag, protect — automated discovery applies tags, tags trigger policies, policies enforce masks and filters, at metastore scale — the limits grew to ten thousand policies. For someone who hand-built deterministic tokenisation and row-level security for a telco, this is your story arc: what you built manually is becoming declarative infrastructure — and you understand it from underneath, which is exactly who they want running it.
+
+[PAUSE 1s]
+
+Now the council's surveillance system — benign version: lineage and audit. Unity Catalog captures lineage automatically from actual query execution — table-level and column-level: this silver column feeds that gold column feeds that dashboard. Nobody documents it; the engine records it. And the recent extension, external lineage, now G A: register systems OUTSIDE Databricks — the upstream Kafka topic or Oracle source, the downstream Power B I report — so the lineage graph spans the true end-to-end flow, not just the Databricks middle. Pair it with system tables: the council's own records exposed as queryable Delta tables — audit logs, billing usage, lineage, access history. Governance you can query with sequel is governance you can automate: your quarterly access review becomes a scheduled query, not a spreadsheet safari. And table insights now adds derived signals like column-level popularity — which columns queries actually read — feeding both optimisation and cleanup decisions.
+
+Two more city services, briefly, both interview-current. Metrics: the semantic layer problem — revenue defined five ways in five B I tools — solved by defining the K P I once as a governed Unity Catalog object: a metric with its measure, dimensions, and filters, queryable from sequel, B I tools, and, importantly, A I agents like Genie, so the agent computing churn uses THE definition of churn. It's open too — part of the open-source Unity Catalog and Spark surface. And Delta Sharing: the council's protocol for lending books to other cities — share tables to any consumer, Databricks or not, without copying data; the foundation for clean rooms and cross-company collaboration. One sentence each is enough in most interviews; knowing they exist and why is the point.
+
+[PAUSE 1s]
+
+Pitfalls, four, fast. One: metastore geography. One metastore per region — plan the region layout before workspace sprawl, because consolidating metastores later is surgery. Two: inheritance generosity. A convenience grant of all privileges at catalog level flows into every future schema and table forever; scope write grants tight and low, read grants broad and high. Three: external-table sprawl — every external location someone registers is another land parcel to audit; centralise creation rights, review with system tables. Four — the modern one: tags without policies. Teams roll out beautiful classification taxonomies, stickers everywhere, and enforce nothing — inventory theatre. A tag only matters when a policy references it. Classify, tag, protect — all three links, or the chain does nothing.
+
+[PAUSE 1s]
+
+Interview angle. The flagship question at staff level: "design data governance for a multi-team lakehouse." Walk the city, one minute. Foundation: one metastore per region, workspaces attached — governance defined once at account level. Addressing: catalogs by domain or business unit, schemas by layer or team — suburb, street, house. Storage: all access through storage credentials and external locations — access connector on Azure, I AM role with external I D on A W S — no keys in code. Tables: managed by default for predictive optimisation, Delta or Iceberg, external only for interop. Access: group-based grants down the hierarchy for the coarse layer; then ABAC for the fine layer — governed tags applied by agentic classification, row-filter and column-mask policies attached at catalog level, so protection is automatic on future objects. Observability: automatic column lineage extended with external lineage for true end-to-end, audit and billing in system tables, quarterly reviews as scheduled queries. Semantics: shared K P Is as Unity Catalog metrics so humans and A I agents compute the same numbers. Then plant your flag: "I run this at production scale — five hundred forty billion records under this exact model, with row-level security and automated Privacy Act purging on top." That's not a memorised answer; that's your resume speaking.
+
+[PAUSE 1s]
+
+Recap, walk the city one last time. The metastore is the council office — one per region, one map for all workspaces. Addresses: catalog, schema, object — suburb, street, house. The council holds the gate keys: storage credentials and external locations; residents never touch raw keys. Managed tables get the robot librarian — predictive optimisation, Delta and now Iceberg; external tables are your own land, your own maintenance. Permissions: inherited grants to groups for the coarse cut; ABAC for the current era — governed tags as zoning stickers, agentic classification applying them, policies at catalog level enforcing masks and filters wherever stickers appear: classify, tag, protect. Lineage records itself, extends beyond Databricks with external lineage, and everything the council does is queryable in system tables. Metrics make K P I definitions governed objects; Delta Sharing lends data without copying it. One city, one map, laws that follow stickers instead of addresses. Next episode: data actually starts moving — Lakeflow Connect, managed ingestion and C D C. See you in the car.</div></details>
+<div class="navrow"><a class="btn" href="03-delta-lake-internals.html">← Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><span></span></div></main></div></body></html>

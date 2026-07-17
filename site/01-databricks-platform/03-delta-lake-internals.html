@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="active" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><div class="locked"><span class="tick">🔒</span>5. Lakeflow Connect: Managed Ingestion & CDC</div><div class="locked"><span class="tick">🔒</span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</div><div class="locked"><span class="tick">🔒</span>7. Lakeflow Jobs & Orchestration Patterns</div><div class="locked"><span class="tick">🔒</span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</div><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 3</div>
+<h1 class="lesson">Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</h1>
+<div class="meta">18 min listen · The filing-room-and-ledger mental model of Delta Lake — how a folder of parquet files gets ACID transactions, time travel, deletion vectors, data skipping, and liquid clustering, and how to explain each mechanism in an interview.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/03-delta-lake-internals.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/03-delta-lake-internals" onclick="toggleDone('01-databricks-platform/03-delta-lake-internals')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (liquid clustering GA DBR 15.4+, CLUSTER BY AUTO via predictive optimization, DV protocol reader v3, Delta 4.0)</em></p>
+<h2 id="the-mental-model-filing-room-ledger">The mental model: filing room + ledger</h2>
+<p>Immutable parquet files (folders in cabinets) + <code>_delta_log/</code> (ledger at the door). <strong>The ledger is the table</strong> — readers consult the log, never list the directory.</p>
+<pre class="mermaid">sequenceDiagram
+    participant W as Writer
+    participant S as Object storage (files)
+    participant L as _delta_log
+    participant R as Reader
+    W->>S: write new parquet files (invisible)
+    W->>L: PUT 00000041.json (add/remove actions) — atomic
+    Note over L: commit exists the moment the page lands
+    R->>L: read checkpoint + tail commits
+    R->>S: open only listed files (min/max skipping)
+</pre>
+
+<h2 id="mechanisms">Mechanisms</h2>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>How it works</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commit</td>
+<td>Numbered JSON file of actions (<code>add</code>/<code>remove</code>/<code>metaData</code>/<code>protocol</code>)</td>
+<td>"Atomicity = one atomic PUT of one log entry"</td>
+</tr>
+<tr>
+<td>Optimistic concurrency</td>
+<td>Both writers race for next commit number; loser re-reads winner's commit, retries if disjoint, else <code>ConcurrentModificationException</code></td>
+<td>"Check at commit, don't lock up front — analytics writers rarely collide"</td>
+</tr>
+<tr>
+<td>Checkpoint</td>
+<td>Parquet state summary every ~10 commits</td>
+<td>Fast log replay; no infinite JSON scan</td>
+</tr>
+<tr>
+<td>Time travel</td>
+<td><code>VERSION AS OF</code> / <code>TIMESTAMP AS OF</code> replays retained log</td>
+<td>Audits + fat-finger recovery, free</td>
+</tr>
+<tr>
+<td>Data skipping</td>
+<td>Per-file column min/max + null counts stored in log</td>
+<td>"The ledger IS the index" — only works if similar rows co-locate</td>
+</tr>
+<tr>
+<td>Deletion vectors</td>
+<td>Sidecar bitmap marks rows dead; readers skip; compaction repays later</td>
+<td>DELETE/UPDATE/MERGE become metadata-sized. Protocol: <strong>writer 7 / reader 3</strong> — check every consumer</td>
+</tr>
+<tr>
+<td>Liquid clustering (GA)</td>
+<td>Clustering keys in table metadata; incremental background reorg; <strong>keys changeable without rewrite</strong></td>
+<td>Replaces partitioning+ZORDER for new tables</td>
+</tr>
+<tr>
+<td><code>CLUSTER BY AUTO</code></td>
+<td>Predictive optimization picks/evolves keys from real query workload</td>
+<td>Self-tuning layout, changes keys only when gain &gt; cost</td>
+</tr>
+<tr>
+<td>Predictive optimization</td>
+<td>Auto OPTIMIZE/VACUUM/stats on <strong>managed</strong> tables</td>
+<td>The robot librarian — another reason managed &gt; external</td>
+</tr>
+<tr>
+<td>VACUUM</td>
+<td>Physically deletes unreferenced files past retention (default 7d)</td>
+<td>Kills time travel + running streams if too aggressive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="layout-three-generations">Layout: three generations</h2>
+<ol>
+<li><strong>Hive partitioning</strong> — directory per value. Survives ONLY for hard lifecycle boundaries (e.g. partition-per-month → drop month on retention/purge — Ankur's purge framework).</li>
+<li><strong>Z-order</strong> — space-filling curve on OPTIMIZE. Periodic full rewrite, decays, keys frozen. Legacy; migrate away.</li>
+<li><strong>Liquid clustering</strong> — incremental, metadata-driven, keys evolvable, <code>AUTO</code> available. Default for new tables.</li>
+</ol>
+<h2 id="delta-40-modern-protocol-extras">Delta 4.0 / modern protocol extras</h2>
+<ul>
+<li><strong>Variant type</strong> — fast semi-structured/JSON without string parsing</li>
+<li><strong>Type widening</strong> — int→long etc. without rewrite</li>
+<li><strong>UniForm</strong> — Iceberg metadata mirrored over Delta files (interop; see T1E10)</li>
+<li>Protocol ratchet: every feature bumps reader/writer versions <strong>one-way</strong> — run interop check across consumers before enabling</li>
+</ul>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>VACUUM vs time travel/streams</strong> — retention is a contract (storage cost × recovery window × streaming consumers). Friday zero-retention vacuum + weekend recovery = incident.</li>
+<li><strong>Merge storms / DV density</strong> — merges rewriting hundreds of files or accumulating dense deletion vectors → clustering keys don't match merge keys. Watch files-rewritten-per-merge.</li>
+<li><strong>Protocol upgrades break old readers</strong> — DV needs reader v3 (Snowflake now OK; older engines choke).</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. How does Delta give ACID on object storage with no transactions?</strong>
+Immutable files + transaction log; log is the table. Write = stage files invisibly, commit = one atomic PUT of numbered log entry (A). Snapshot from checkpoint+tail (C). Optimistic concurrency on commit number, conflict check on collision (I). Object store durability (D).</p>
+<p><strong>Q2. Two jobs MERGE into the same table simultaneously — what happens?</strong>
+Both stage, race for commit N. Loser reads winner's actions: disjoint files → auto-retry as N+1; overlapping → ConcurrentModificationException, app-level retry. Serialise merges to same table; appends coexist.</p>
+<p><strong>Q3. What are deletion vectors and why do they matter for GDPR/Privacy-Act deletes?</strong>
+Bitmap sidecars marking rows dead without rewriting parquet — turns compliance deletes from terabyte rewrites into metadata ops, compacted in background. Requires reader v3 across all consumers.</p>
+<p><strong>Q4. Liquid clustering vs partitioning — when which?</strong>
+Liquid by default: incremental, evolvable keys, AUTO key selection from workload. Partition only for lifecycle boundaries (retention drops whole partitions). Z-order = legacy.</p>
+<p><strong>Q5. Why did your query scan everything despite a date filter?</strong>
+Data skipping needs co-located dates: if every file spans all dates, min/max prunes nothing. Fix = clustering on the filter column; check via file stats / query profile files-pruned.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Transaction log protocol: https://github.com/delta-io/delta/blob/master/PROTOCOL.md</li>
+<li>Liquid clustering: https://docs.databricks.com/aws/en/tables/clustering</li>
+<li>Deletion vectors: https://docs.databricks.com/en/delta/deletion-vectors.html</li>
+<li>Predictive optimization: https://docs.databricks.com/en/optimizations/predictive-optimization.html</li>
+<li>Time travel &amp; VACUUM: https://docs.databricks.com/en/delta/history.html</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode three: Delta Lake internals. Here's the interview question this episode exists to demolish: "object storage like S three or A D L S has no transactions — so how exactly does Delta Lake give you ACID guarantees on top of it?" Most candidates say "there's a transaction log" and stall. You run five hundred and forty billion records on this format; today we go deep enough that you can narrate a commit, a conflict, a delete, and a clustering decision, mechanism by mechanism, eyes closed.
+
+[PAUSE 1s]
+
+Build the picture. A big filing room. Rows of filing cabinets fill the space — every folder in every cabinet is a parquet file, immutable, write-once; nobody ever edits a folder in place. And here's the crucial furniture: by the door, on a lectern, sits a ledger. The ledger is the Delta transaction log — the underscore delta underscore log directory. Now the rule that makes everything work, the one rule of the filing room: the cabinets are not the table. The ledger is the table. A reader never wanders the cabinets to see what's there; a reader walks to the lectern first, reads the ledger, and the ledger says exactly which folders, in which cabinets, constitute the table right now. Folders can sit in cabinets without being part of the table — if the ledger doesn't list them, they don't exist. Hold that: the ledger is the table.
+
+Now watch a write. A job wants to append data. It writes brand new folders into the cabinets — nobody sees them yet, they're unlisted. Then it walks to the lectern and adds one page to the ledger: a numbered entry — entry zero, one, two, counting up forever — a JSON file whose lines are actions: add file, this parquet path, with these statistics; or remove file, that path. The moment that page lands in the ledger, the write exists. Before that moment, nothing happened. And because writing one page is a single atomic operation on object storage — one file put that either fully succeeds or fully fails — you get atomicity. A job that dies halfway through leaves orphan folders in the cabinets, invisible and harmless, cleaned up later. No torn reads, no half-tables. That's the A in ACID: one page, all or nothing.
+
+What about two writers at once? This is the mechanism interviewers really probe: optimistic concurrency control. Both writers prepare their folders, both walk to the lectern intending to write page number, say, forty-one. Object storage arbitrates: only one write of the name zero-zero-forty-one succeeds. The winner is committed. The loser doesn't crash — it picks up the winner's page, reads what changed, and asks: does their change conflict with mine? Two appends to different data: no conflict — rewrite my page as forty-two, done, invisible retry. But if both writers touched the same files — two merge statements updating the same region of the table — the loser gets a concurrent modification exception. That's the I, isolation: optimistic, because in analytics writers rarely collide; check at commit time instead of locking up front. And it's why your framework serialises merges to the same table but lets appends to different tables fly in parallel.
+
+One page per commit, forever — doesn't the ledger get slow? Yes, so every ten commits or so, Delta writes a checkpoint: a parquet summary at the lectern saying "state as of page forty: these files, this schema, this protocol". A reader grabs the latest checkpoint plus the few pages after it, reconstructs the table in a couple of reads instead of replaying thousands. And since old pages never get erased, you get time travel for free: ask for the table as of page thirty, or as of yesterday nine a.m., and the ledger replays to exactly that state. Version as of, timestamp as of — audits and accidental-delete recoveries, built into the format.
+
+[PAUSE 1s]
+
+Now deletes, and the mechanism that changed the economics: deletion vectors. Remember, folders are immutable. Classically, deleting one row from a folder of a million rows meant copying the entire folder minus one row and updating the ledger — brutal write amplification; your Privacy Act purging would have rewritten terabytes to remove megabytes. Deletion vectors fix it with a sticky note. Instead of rewriting the folder, the writer attaches a small sidecar file — the deletion vector — that says "in this folder, rows three thousand and two, and nine thousand fifty, are dead". The ledger records folder plus sticky note. Readers open the folder, check the sticky note, and skip the dead rows on the fly. Deletes, updates, and merges become metadata-sized operations instead of data-sized ones. The debt gets repaid later: a compaction rewrites heavily-noted folders clean in the background. Protocol detail worth having in your pocket: deletion vectors need writer version seven, reader version three — which matters for interop, because every external engine reading your tables must speak reader three; even Snowflake now reads Delta tables with deletion vectors, but older readers choke. Feature adoption is a protocol negotiation with every consumer of your data — very staff-level thing to say out loud.
+
+Next mechanism: data skipping. Every ledger page that adds a folder also records statistics — per column, the minimum and maximum values in that folder, null counts. So when a query asks for July seventeenth, the planner reads the ledger, looks at min-max ranges, and simply never opens folders whose date range can't contain July seventeenth. No index structure, no extra service — the ledger IS the index. This is why the next topic, physical layout, matters so much: statistics only help if similar rows live together. If every folder contains a little bit of every date, min-max ranges span everything, and nothing gets skipped.
+
+[PAUSE 1s]
+
+Which brings us to the layout story — three generations, and you've lived all three. Generation one: Hive-style partitioning. Physically separate cabinets per date, per region — directory per value. Works while cardinality is low and data per partition is fat. Fails predictably: partition by too fine a key and you get millions of tiny folders, the small-files fire from episode one; pick the wrong key and queries filtering on anything else scan everything; and the layout is welded to the directory structure — repartitioning means rewriting the world. Generation two: Z-ordering. Keep coarse partitions, and within them, on each optimise run, sort folders along a space-filling curve across several columns, so min-max skipping works on all of them. Better — but it's a periodic full rewrite, it decays as new data arrives, and the clustering columns are frozen into your optimise commands.
+
+Generation three, the current answer, generally available: liquid clustering. Declare clustering keys as a table property — cluster by customer I D and event date — and the engine organises folders incrementally, in the background, no directory welding, no full rewrites, and crucially: you can CHANGE the clustering keys later without rewriting the table, because clustering lives in metadata, in the ledger, not in the directory tree. Newly written data gets clustered on arrival; history gets reorganised gradually. And the twenty twenty-six cherry on top: cluster by auto — you don't even pick the keys. Predictive optimisation watches your actual query workload, identifies which columns you filter and join on, and picks and evolves the clustering keys itself, changing them only when the predicted gain outweighs the clustering cost. The same predictive optimisation, on managed tables, also schedules the compactions, the optimise runs, and the vacuum cleanups automatically — the robot librarian that tidies the filing room at night, paid for by the queries it speeds up.
+
+So the layout guidance you give in an interview, one breath: new tables get liquid clustering, auto where workloads are query-driven; explicit partitioning survives for one honest reason — hard data lifecycle boundaries, like partition-per-month when your retention framework drops whole months at a time; Z-order is the legacy answer you migrate away from. And that retention example is literally your platform — say it as your own war story, because it is.
+
+[PAUSE 1s]
+
+Pitfalls, three, all real. One: vacuum versus time travel. Vacuum physically deletes folders no longer referenced within the retention window — default seven days. Set vacuum retention to zero to save storage and you just burned your time travel AND any streaming reader still holding references to those files. The classic incident: someone vacuums aggressively on Friday, the weekend recovery needs Thursday's version, and Thursday's folders are gone. Retention policy is a contract between storage cost, recovery needs, and streaming consumers — decide it consciously. Two: merge storms. A merge that logically touches ten rows but matches against an unclustered table rewrites hundreds of folders — or, with deletion vectors, quietly accumulates sticky notes on thousands of folders until read performance sags. Watch the metrics: number of files rewritten per merge, deletion vector density. If merges rewrite the table daily, your clustering keys don't match your merge keys. Three: schema evolution complacency. Delta lets you evolve schema — add columns freely, and with type widening in the modern protocol, even widen ints to longs without rewrite. But every protocol upgrade — deletion vectors, liquid clustering, type widening — ratchets the reader version, and the ratchet only turns one way. Turn a feature on, and every downstream consumer must upgrade or lose access. Run the interop check before, not after.
+
+[PAUSE 1s]
+
+Interview angle. The flagship question: "how does Delta provide ACID on object storage that has no transactions?" Ninety-second answer, walking the room: immutable parquet files plus a transaction log; the log is the table. Writes prepare files invisibly, then commit by atomically writing one numbered log entry — atomicity. Concurrent writers race on the entry number; loser rechecks for real conflicts and retries — optimistic concurrency, isolation. Checkpoints every ten commits keep log replay fast; retained history gives time travel. Per-file column statistics in the log give data skipping. Deletion vectors make deletes metadata operations, compacted later. Liquid clustering keeps the physical layout aligned with query patterns incrementally, keys changeable because layout lives in metadata — and predictive optimisation now automates the whole maintenance loop on managed tables. If they follow up with "when would you still partition", you have the retention-boundary answer, from production, at five hundred forty billion records scale. There is no stronger position to answer a Delta question from.
+
+[PAUSE 1s]
+
+Recap, rebuild the room. Filing cabinets of immutable parquet folders; ledger at the door — the ledger is the table. A commit is one atomic page: add these folders, remove those. Two writers race for the next page number; the loser rebases or raises a conflict — optimistic concurrency. Checkpoints summarise every ten pages; old pages give time travel; vacuum tears out unreferenced folders after the retention window — mind the contract. Ledger statistics give data skipping; skipping only bites when similar rows sit together. Layout generations: partitions for lifecycle boundaries only, Z-order legacy, liquid clustering now — incremental, keys changeable, and with cluster by auto plus predictive optimisation, self-tuning. Deletion vectors: sticky notes instead of rewrites, writer seven reader three, check your consumers. Next episode: the governance spine itself — Unity Catalog deep dive: metastore, securables, ABAC policies, lineage, and the new metrics layer. See you in the car.</div></details>
+<div class="navrow"><a class="btn" href="02-azure-vs-aws-databricks.html">← Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="btn" href="04-unity-catalog-deep-dive.html">Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics →</a></div></main></div></body></html>

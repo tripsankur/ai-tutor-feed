@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Fri, 17 Jul 2026 05:04:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 05:19:51 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -32,6 +32,28 @@
       <itunes:duration>00:13:51</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>2</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</title>
+      <description>The filing-room-and-ledger mental model of Delta Lake — how a folder of parquet files gets ACID transactions, time travel, deletion vectors, data skipping, and liquid clustering, and how to explain each mechanism in an interview.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/03-delta-lake-internals.mp3" length="4555450" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e3-delta-lake-internals</guid>
+      <pubDate>Fri, 17 Jul 2026 05:15:28 +0000</pubDate>
+      <itunes:duration>00:12:39</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Unity Catalog Deep Dive: Metastore, Securables, ABAC, Lineage, Metrics</title>
+      <description>The governed-city mental model of Unity Catalog — metastore as the city map, three-level namespace addresses, credential gates to storage, inherited grants, the new ABAC policy regime with governed tags, lineage as CCTV, and the metrics semantic layer.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3" length="4097088" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e4-unity-catalog-deep-dive</guid>
+      <pubDate>Fri, 17 Jul 2026 05:19:34 +0000</pubDate>
+      <itunes:duration>00:11:22</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>4</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
