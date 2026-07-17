@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lakeflow Connect: Managed Ingestion & CDC — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="active" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><div class="locked"><span class="tick">🔒</span>7. Lakeflow Jobs & Orchestration Patterns</div><div class="locked"><span class="tick">🔒</span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</div><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 5</div>
+<h1 class="lesson">Lakeflow Connect: Managed Ingestion & CDC</h1>
+<div class="meta">17 min listen · The harbor mental model of Databricks ingestion — managed SaaS connectors, the two-piece CDC gateway architecture for databases, Auto Loader and the DIY docks, and how to choose between them in an interview.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/05-lakeflow-connect.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/05-lakeflow-connect" onclick="toggleDone('01-databricks-platform/05-lakeflow-connect')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (Salesforce/Workday/SQL Server GA; gateway on classic compute in your VPC/VNet)</em></p>
+<h2 id="the-mental-model-the-harbor">The mental model: the harbor</h2>
+<p>Sources = water · docks = ingestion tech · conveyors → bronze. Walk most-managed → most-manual.</p>
+<pre class="mermaid">flowchart LR
+    subgraph Sources
+      SF[Salesforce/Workday/ServiceNow]
+      DB[(SQL Server / OLTP DBs)]
+      FILES[Files → ADLS/S3 landing]
+      K[Kafka / Event Hubs]
+    end
+    SF -->|managed SaaS connector| BR[Bronze streaming tables in UC]
+    DB -->|"ingestion gateway (classic compute, YOUR VNet)\n→ CDC events → UC staging volume"| PIPE["ingestion pipeline (serverless)"] --> BR
+    FILES -->|"Auto Loader\n(directory listing / file notification)"| BR
+    K -->|structured streaming| BR
+</pre>
+
+<h2 id="the-docks">The docks</h2>
+<table>
+<thead>
+<tr>
+<th>Dock</th>
+<th>Tech</th>
+<th>Key mechanics</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ferry terminal</td>
+<td><strong>Managed SaaS connectors</strong> (Salesforce, Workday GA; SQL Server GA; ServiceNow, GA4, Jira…)</td>
+<td>Databricks owns API pagination, rate limits, incremental cursors, schema drift. Config, not code</td>
+<td>Connector exists + covers your objects</td>
+</tr>
+<tr>
+<td>Tanker berth</td>
+<td><strong>Managed DB CDC connectors</strong></td>
+<td><strong>Two-piece</strong>: gateway (classic compute in your VPC/VNet, reads transaction log/CDC tables, stages to UC volume) + serverless ingestion pipeline (applies changes). Snapshot → CDC convergence handled</td>
+<td>DB replication at scale</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Query-based connectors</td>
+<td>Incremental pulls by cursor column, no CDC needed on source</td>
+<td>CDC can't be enabled</td>
+</tr>
+<tr>
+<td>File beach</td>
+<td><strong>Auto Loader</strong> (<code>cloudFiles</code>)</td>
+<td>Exactly-once via checkpoint; discovery: directory listing (simple, cost grows) vs <strong>file notification</strong> (Event Grid/S3 events, scales to millions); schema inference + evolution + <code>_rescued_data</code></td>
+<td>Landing-zone files</td>
+</tr>
+<tr>
+<td>Offshore pipeline</td>
+<td>Structured streaming</td>
+<td>Native Kafka/Event Hubs/Kinesis → bronze</td>
+<td>True streams</td>
+</tr>
+<tr>
+<td>Rowboat</td>
+<td><code>COPY INTO</code></td>
+<td>Idempotent ad hoc loads</td>
+<td>One-offs only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decision-logic-interview">Decision logic (interview)</h2>
+<ol>
+<li>Managed connector exists → use it ("undifferentiated plumbing isn't where staff engineers spend innovation budget").</li>
+<li>DB replication → CDC connector (snapshot+CDC convergence = code you least want to own).</li>
+<li>Files → Auto Loader, notification mode past ~1000s files/day.</li>
+<li>Streams → structured streaming.</li>
+<li>Genuinely weird/governed sources → build (metadata-driven framework pattern — Ankur's Optus engine).</li>
+</ol>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>Gateway networking</strong> — gateway must reach DB: private endpoints, firewall, DNS. Budget the Infosec time.</li>
+<li><strong>Source CDC retention vs gateway lag</strong> — gateway down longer than source log retention = gap = re-snapshot. Monitor lag like Kafka consumer lag.</li>
+<li><strong>Checkpoint amnesia</strong> — Auto Loader checkpoint IS ingestion memory; deleting it = reload or skipped files. Treat as state.</li>
+<li><strong>Schema drift by default</strong> — decide per pipeline: evolve / rescue / fail. Silent evolution forks columns.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. Design enterprise ingestion on Databricks.</strong>
+Walk the harbor: SaaS → managed connectors; DBs → CDC connector (gateway in my network, staging volume, serverless apply); files → Auto Loader notification mode with explicit schema policy; streams → structured streaming. All land as bronze STs in UC — governance from the waterline. Name ops realities: gateway network path, CDC retention vs lag, checkpoint discipline.</p>
+<p><strong>Q2. How does the managed CDC connector work?</strong>
+Two pieces: ingestion gateway on classic compute inside customer VPC/VNet reads source change log continuously → stages raw events in UC volume; serverless ingestion pipeline applies ordered changes to Delta. Initial snapshot then CDC convergence, exactly-once.</p>
+<p><strong>Q3. Auto Loader directory listing vs file notification?</strong>
+Listing: periodic list + checkpoint diff — simple, list cost grows with directory. Notification: storage events (Event Grid/S3) push new-file events — scales to millions, needs event infra permissions.</p>
+<p><strong>Q4. When would you still build custom ingestion?</strong>
+No connector for source (bespoke protocols, network elements), extreme governance constraints, or transformation-at-ingest needs. Pattern: config/metadata-driven single engine, not per-source scripts.</p>
+<p><strong>Q5. Managed connector vs your own framework — tradeoff?</strong>
+Managed: zero maintenance, fast onboarding, opaque internals, connector coverage limits. Custom: full control, any source, but you own snapshot/CDC/drift/retries forever. Buy the commodity, build the differentiated.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Lakeflow Connect overview: https://docs.databricks.com/aws/en/ingestion/overview</li>
+<li>Managed connectors: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/</li>
+<li>DB CDC connectors: https://docs.databricks.com/aws/en/ingestion/lakeflow-connect/cdc-overview</li>
+<li>Auto Loader: https://docs.databricks.com/en/ingestion/cloud-object-storage/auto-loader/index.html</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode five: Lakeflow Connect — how data actually gets INTO the lakehouse. This topic is personal: you spent years building a metadata-driven ingestion engine at Optus — Kafka, A D L S, Cosmos, G C P, sequel sources, near-real-time and batch. So here's the framing for this episode: Databricks productised the problem you solved by hand. Understanding exactly what Lakeflow Connect automates — and what it doesn't — lets you do something powerful in interviews: compare the managed product to a bespoke framework you personally built, and reason about when each wins. Very few candidates can do that from experience.
+
+[PAUSE 1s]
+
+The picture for this episode: a harbor. Your governed city from last episode sits inland; the harbor is where goods arrive. Build it on your windshield: the water on the left — source systems out in the world. The docks in the middle. And conveyor belts running from the docks into the city's warehouses — bronze tables, in your medallion language. Every ingestion technology on Databricks is a kind of dock in this harbor, and the whole episode is a walk along the waterfront, from the most managed dock to the most manual.
+
+Dock one, the ferry terminal: managed SaaS connectors. Scheduled ferries that Databricks operates — you don't captain anything. Point at Salesforce, Workday, ServiceNow, Google Analytics, Jira; pick the objects you want; pick a destination schema and a schedule; done. Databricks owns the A P I pagination, the rate limits, the schema drift, the incremental cursors — for Salesforce, for instance, the connector picks a cursor column and pulls only what changed since last trip. Salesforce, Workday, and sequel Server are generally available; the connector catalogue keeps growing. The design goal: ingestion as configuration, not code. No cluster to size, no watermark logic to debug — the ferry just runs. This is the dock that replaces an entire class of brittle, hand-rolled A P I ingestion scripts that every enterprise data team maintains and resents.
+
+Dock two, and the most architecturally interesting: the tanker berth — managed database connectors, running on change data capture. Here's the two-piece architecture, and this is the part interviews probe, so place it carefully in the picture. Piece one: the ingestion gateway. It sits at the water's edge, close to the source — concretely, it runs on classic compute inside YOUR V P C or V Net, because it must reach your database over your network — episode two's fence rules apply: private connectivity, firewall rules, the gateway is a resident of your building. Its job: read the database's change feed — the transaction log, the C D C tables in sequel Server terms — and continuously pump raw change events into a staging area, a Unity Catalog volume. Piece two: the ingestion pipeline, running on serverless in the platform, picks up the staged changes and applies them to your Delta tables — inserts, updates, deletes, in order, incrementally. Why two pieces? Separation of concerns you'll recognise: the gateway needs network adjacency to the source and runs continuously and cheaply; the apply side needs elastic compute and Delta expertise. Snapshot first, then continuous changes — the connector handles initial load plus C D C convergence, the trickiest part of any replication pipeline, the part where hand-rolled solutions quietly lose rows. And for sources where you can't or won't enable C D C, there are query-based connectors — periodic incremental pulls by cursor column, less elegant, no log access needed.
+
+[PAUSE 1s]
+
+Keep walking. Dock three: the file beach and its conveyor — Auto Loader. Not part of Lakeflow Connect branding, but the workhorse of file ingestion and absolutely interview-current. Files land in object storage — your A D L S landing zone — and Auto Loader incrementally discovers and loads new ones with exactly-once guarantees. The mechanism worth knowing at depth: two discovery modes. Directory listing mode — periodically list the landing path, compare against the checkpoint of already-loaded files; simple, but listing costs grow with directory size. File notification mode — subscribe to the storage account's event stream, Event Grid on Azure, S three notifications on A W S: new file lands, event fires, Auto Loader ingests; scales to millions of files because nobody lists anything. Auto Loader also handles schema inference and evolution — new columns arriving in the source files can flow through or quarantine into a rescue column instead of breaking the pipeline. Your history loads — a hundred thirty-two billion records — this is the dock they came through.
+
+Dock four, the offshore pipeline: streaming sources. Kafka, Event Hubs, Kinesis — structured streaming consumes them directly into bronze streaming tables. No Lakeflow Connect involvement; Spark native. Your N R T ingestion from Kafka lives here. And dock five, the rowboat: COPY INTO and one-off loads — fine for ad hoc, never for production cadence.
+
+Now step back and look at the whole waterfront, because the interview question is never "what is Auto Loader" — it's "how would you choose". The decision logic, one breath each. Managed connector exists for your source and covers your objects? Use it — undifferentiated plumbing is not where a staff engineer spends innovation budget; your team's cleverness belongs in silver and gold, not in Salesforce pagination. Database replication at scale? The C D C connector — because snapshot-plus-C D C convergence is precisely the code you least want to own; you know, because you owned it. Files in a landing zone? Auto Loader, file notification mode past the first few thousand files a day. True streaming? Structured streaming from the message bus. Source so weird or so governed that nothing managed fits — your telco network elements, bespoke protocols? Then you build, and your metadata-driven framework is the pattern: config-driven, source-agnostic, one engine, many pipes. The strong closing line in an interview: "I built the bespoke version at telco scale, so I know exactly which parts of it Lakeflow Connect commoditises — and I'd rather buy those parts now and spend my engineers on the data products."
+
+[PAUSE 1s]
+
+Pitfalls, four, all production-flavoured. One: gateway networking surprises. The C D C gateway lives in your compute plane and must reach the database — private endpoints, firewall exceptions, D N S. Teams budget zero days for this and lose two weeks; you've fought this exact battle with Infosec, say so. Two: source-side C D C hygiene. Enabling C D C on sequel Server has retention windows — if the gateway is down longer than the source retains its change log, you've got a gap, and the fix is a re-snapshot; monitor gateway lag like you monitor Kafka consumer lag. Three: Auto Loader checkpoint amnesia. The checkpoint IS the memory of what's been loaded — delete it casually during a "cleanup" and the pipeline reloads history or, worse, someone hacks around it and skips files. Checkpoints are state, treat them like state. Four: schema drift policy by default instead of by decision. Auto Loader and the connectors can evolve schemas automatically — convenient, until an upstream rename silently forks a column and downstream joins go quietly wrong. Decide per pipeline: evolve, rescue, or fail; never just accept the default silently.
+
+[PAUSE 1s]
+
+Interview angle. The question comes as "design ingestion for an enterprise on Databricks" or "how would you replicate operational databases into the lakehouse". Walk the harbor left to right, sixty seconds: SaaS sources through managed connectors — configuration, not code. Databases through the C D C connector — gateway in my network reading the transaction log, staging to a volume, serverless pipeline applying changes; snapshot then C D C. Files through Auto Loader in file notification mode with explicit schema-evolution policy. Streams through structured streaming from Kafka. Everything lands as bronze streaming tables in Unity Catalog, so governance starts at the waterline. Then the differentiator: name the operational realities — gateway network path through private endpoints, source C D C retention versus gateway lag, checkpoint discipline — because that's what separates people who've drawn the diagram from people who've been paged about it. You've been paged about it.
+
+[PAUSE 1s]
+
+Recap, walk the waterfront once more. The harbor feeds the governed city. Ferry terminal: managed SaaS connectors — Salesforce, Workday, sequel Server G A — ingestion as configuration. Tanker berth: managed C D C connectors, two pieces — gateway on classic compute in your network reading the change log, staging into a Unity Catalog volume; serverless pipeline applying changes; snapshot then converge. Query-based connectors when C D C isn't on offer. File beach: Auto Loader — directory listing or file notification, exactly-once via checkpoints, schema evolution by policy. Offshore pipeline: structured streaming for Kafka and friends. Choose managed wherever the plumbing is undifferentiated; build only where your domain is genuinely weird; and monitor gateway lag, C D C retention, and checkpoints like the production state they are. Next episode, the goods get processed: Lakeflow Declarative Pipelines — the framework formerly known as D L T — streaming tables, materialised views, auto C D C, and expectations. See you in the car.</div></details>
+<div class="navrow"><a class="btn" href="04-unity-catalog-deep-dive.html">← Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="btn" href="06-lakeflow-declarative-pipelines.html">Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations →</a></div></main></div></body></html>

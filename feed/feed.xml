@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Fri, 17 Jul 2026 05:19:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 05:33:07 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -54,6 +54,28 @@
       <itunes:duration>00:11:22</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>4</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lakeflow Connect: Managed Ingestion &amp; CDC</title>
+      <description>The harbor mental model of Databricks ingestion — managed SaaS connectors, the two-piece CDC gateway architecture for databases, Auto Loader and the DIY docks, and how to choose between them in an interview.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/05-lakeflow-connect.mp3" length="3726115" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e5-lakeflow-connect</guid>
+      <pubDate>Fri, 17 Jul 2026 05:28:37 +0000</pubDate>
+      <itunes:duration>00:10:20</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</title>
+      <description>The blueprint-factory mental model of Lakeflow Declarative Pipelines — the DLT rename, streaming tables and flows, materialized views, AUTO CDC for SCD, expectations as quality gates, and the serverless 2026 upgrades.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/06-lakeflow-declarative-pipelines.mp3" length="4330821" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e6-lakeflow-declarative-pipelines</guid>
+      <pubDate>Fri, 17 Jul 2026 05:32:51 +0000</pubDate>
+      <itunes:duration>00:12:01</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>6</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
