@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Fri, 17 Jul 2026 05:33:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 08:35:33 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -76,6 +76,28 @@
       <itunes:duration>00:12:01</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>6</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Lakeflow Jobs &amp; Orchestration Patterns</title>
+      <description>The orchestra mental model of Lakeflow Jobs — task DAGs, the five trigger types including table-update and file-arrival, repair runs, serverless compute choices, and when Airflow still earns its place.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/07-lakeflow-jobs-orchestration.mp3" length="4008496" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e7-lakeflow-jobs-orchestration</guid>
+      <pubDate>Fri, 17 Jul 2026 08:30:31 +0000</pubDate>
+      <itunes:duration>00:11:07</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>dbt on Databricks: Where It Fits vs Declarative Pipelines</title>
+      <description>The tailor-shop mental model of dbt — how SELECT-plus-ref compiles into a tested, documented DAG on a SQL warehouse, the 2026 Fusion engine and Fivetran merger, and the honest dbt-versus-Declarative-Pipelines decision an interviewer wants to hear.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/08-dbt-on-databricks.mp3" length="4179299" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e8-dbt-on-databricks</guid>
+      <pubDate>Fri, 17 Jul 2026 08:35:05 +0000</pubDate>
+      <itunes:duration>00:11:36</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>8</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>

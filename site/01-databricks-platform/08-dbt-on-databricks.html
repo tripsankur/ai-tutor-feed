@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>dbt on Databricks: Where It Fits vs Declarative Pipelines — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="active" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 8</div>
+<h1 class="lesson">dbt on Databricks: Where It Fits vs Declarative Pipelines</h1>
+<div class="meta">17 min listen · The tailor-shop mental model of dbt — how SELECT-plus-ref compiles into a tested, documented DAG on a SQL warehouse, the 2026 Fusion engine and Fivetran merger, and the honest dbt-versus-Declarative-Pipelines decision an interviewer wants to hear.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/08-dbt-on-databricks.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/08-dbt-on-databricks" onclick="toggleDone('01-databricks-platform/08-dbt-on-databricks')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (Fivetran + dbt Labs merger completed 2026-06-01; dbt Core v2.0 Fusion engine, Apache 2.0; state-aware orchestration cost claims from Coalesce 2025)</em></p>
+<h2 id="the-mental-model-tailor-shop-above-the-warehouse">The mental model: tailor shop above the warehouse</h2>
+<p>dbt does no compute — it compiles patterns (models) and sends DDL downstairs. <strong>A model = a SQL SELECT in a file.</strong> dbt wraps it in CREATE TABLE/VIEW ceremony and runs it on a Databricks <strong>SQL warehouse</strong> via <code>dbt-databricks</code> adapter; results = UC-governed tables/views.</p>
+<h2 id="core-machinery">Core machinery</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>What</th>
+<th>Key point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref('model')</code></td>
+<td>Reference other models</td>
+<td>Builds DAG automatically + free environments (dev schema vs prod catalog per target)</td>
+</tr>
+<tr>
+<td>Sources</td>
+<td>Declared raw tables (bronze)</td>
+<td>Graph entry points + freshness checks</td>
+</tr>
+<tr>
+<td>Materializations</td>
+<td>view / table / <strong>incremental</strong> / ephemeral</td>
+<td>Incremental: dbt generates merge logic from config (unique_key)</td>
+</tr>
+<tr>
+<td>Snapshots</td>
+<td>Hand-rolled SCD2 by diffing query results</td>
+<td>vs AUTO CDC (SCD2 from change stream) — same goal, different mechanism/freshness</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>YAML: unique, not_null, relationships, custom SQL</td>
+<td>Compile to must-return-zero-rows queries; run per build</td>
+</tr>
+<tr>
+<td>Docs</td>
+<td>Generated site: lineage graph + column docs from YAML</td>
+<td></td>
+</tr>
+<tr>
+<td>Workflow</td>
+<td>Everything in git, PRs, CI</td>
+<td>The actual revolution dbt sold</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql">-- models/marts/fct_revenue.sql — this IS a dbt model
+select region, sum(amount) as revenue
+from {{ ref('stg_orders') }}
+group by region
+</code></pre>
+<h2 id="2026-headlines">2026 headlines</h2>
+<ol>
+<li><strong>Fusion engine</strong> (dbt Core v2.0, Rust, Apache 2.0): real SQL parsing (not Jinja-holes-in-text) → <strong>state-aware orchestration</strong> — skips models whose inputs didn't change. Claimed 60–65% warehouse cost cut on large projects. Same convergence as MV incremental maintenance: "only compute what changed."</li>
+<li><strong>Fivetran + dbt Labs merger completed 2026-06-01</strong> — neutral EL+T stack consolidating against platform bundles (Lakeflow/Snowflake/Fabric full-stacks). dbt = the lock-in hedge.</li>
+</ol>
+<h2 id="dbt-vs-lakeflow-declarative-pipelines-both-declarative-sql-dags">dbt vs Lakeflow Declarative Pipelines (both declarative SQL DAGs)</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>dbt</th>
+<th>Declarative Pipelines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workload</td>
+<td>Batch SQL only</td>
+<td>Streaming + batch, AUTO CDC, continuous</td>
+</tr>
+<tr>
+<td>Persona</td>
+<td>Analytics engineers (SQL-first, marts)</td>
+<td>Data engineers (Python+SQL, pipelines)</td>
+</tr>
+<tr>
+<td>Ecosystem</td>
+<td>Packages, community, portability across warehouses</td>
+<td>Platform-native: serverless autoscaling, engine-chosen incremental, expectations→event log/UC</td>
+</tr>
+<tr>
+<td>Ops on Databricks</td>
+<td><strong>dbt task in Lakeflow Jobs</strong>, warehouse compute, UC governance</td>
+<td>Pipeline task, same orchestra</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision rule:</strong> streaming/CDC → pipelines, no contest. Existing dbt estate/analytics team → keep dbt as Jobs task. Greenfield batch marts → either, pick by team identity. Common enterprise split: <strong>pipelines own bronze+silver (streaming/CDC), dbt owns gold marts — handoff at silver.</strong></p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>Incremental drift</strong> — wrong unique_key/late data → diverges from full rebuild. Periodic full-refresh sanity runs; Fusion state-awareness helps.</li>
+<li><strong>Thousand-model sprawl</strong> — models are cheap; enforce naming/folders, prune dead patterns.</li>
+<li><strong>Tests as decoration</strong> — test business invariants (join keys, money columns), fail builds; else the green badge is theatre.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. You haven't used dbt much — how does it fit on Databricks?</strong>
+Models are SELECTs, ref builds the DAG, compiled onto a SQL warehouse — declarative transformation, same philosophy as the pipelines I run. Operationally: dbt task in Lakeflow Jobs, UC governance, no exceptions to my platform model. Streaming → pipelines; analyst marts → dbt; handoff at silver.</p>
+<p><strong>Q2. What is the Fusion engine?</strong>
+Rust rewrite of dbt's compiler/runtime (dbt Core v2.0, open source): parses SQL properly → state-aware orchestration skipping unchanged models; big warehouse-cost claims. Industry converging on incremental-everything.</p>
+<p><strong>Q3. dbt snapshots vs AUTO CDC SCD2?</strong>
+Snapshots: periodic query-diff — freshness bound by snapshot cadence, works without change feed. AUTO CDC: from actual change stream, sequence-resolved, continuous. Prefer AUTO CDC when CDC exists; snapshots for sources without it.</p>
+<p><strong>Q4. Why dbt at all when pipelines exist?</strong>
+Team fit (analytics engineers), existing estate, package ecosystem, portability/lock-in hedge (sharpened by Fivetran merger). Not a technical knockout either way — it's a people-and-strategy call.</p>
+<p><strong>Q5. What breaks in badly-run dbt projects?</strong>
+Incremental drift, model sprawl, decorative tests — all governance-of-the-repo problems, fixed with conventions, full-refresh audits, invariant tests in CI.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>dbt-databricks adapter: https://docs.databricks.com/en/partners/prep/dbt.html</li>
+<li>dbt task in Jobs: https://docs.databricks.com/aws/en/jobs/dbt</li>
+<li>dbt Fusion: https://docs.getdbt.com/docs/fusion/about-fusion</li>
+<li>Merger press: https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode eight: d b t on Databricks. This one fills a known gap — d b t appears in half the data engineering job descriptions you're targeting, and it was flagged as a be-ready topic in your AirTrunk prep. The good news: you already understand d b t's soul, because last episode's factory — declare datasets, let the engine derive the graph — IS d b t's philosophy; d b t just got there first, in twenty sixteen, for sequel analysts. By the end of this episode you'll speak d b t fluently, place it correctly next to declarative pipelines without tribal bias, and carry the twenty twenty-six headlines — the Fusion engine and the Fivetran merger — that most candidates won't have.
+
+[PAUSE 1s]
+
+The picture: a tailor shop, upstairs from the warehouse. Here's the scene. The warehouse below — that's Databricks: the compute, the storage, the governed tables. The tailor shop above does no heavy lifting of its own — no fabric is woven up there. Instead, the shop is full of patterns: paper templates, each one a d b t model. And here is the single most important fact about d b t, the one that unlocks everything: a model is just a sequel SELECT statement in a file. Not a merge, not D D L, not orchestration code — a SELECT. The tailor's trick is compilation: d b t takes your SELECT, wraps it in the right CREATE TABLE or CREATE VIEW ceremony, and sends it downstairs to the warehouse to execute. You write the pattern; the shop cuts the cloth on the warehouse's machines. On Databricks concretely: d b t connects through the adapter to a sequel warehouse, and every model materialises as a Unity Catalog table or view — governed, lineage-tracked, like everything else in the city.
+
+How do patterns connect? The ref function — the heart of the whole system. Inside a model's SELECT, you never write a raw table name for another model; you write ref, quote, staging orders. Two consequences, both huge. One: d b t builds the dependency graph automatically — patterns referencing patterns form the D A G, no orchestration file anywhere, exactly the blueprint-wall move from last episode. Two: environments come free — the same ref compiles to the dev schema on your laptop and the prod catalog in deployment, because ref resolves per target. Sources — declared pointers to raw tables the shop doesn't make, your bronze layer — complete the graph's entry points. And materialisation is a per-model dial: view, table, or incremental — where d b t generates the merge-new-rows logic for you from a config block — plus snapshots, which are d b t's hand-rolled S C D type two. Note the echo and the difference: auto C D C gave you S C D two from a change stream; d b t snapshots build it by periodically diffing a query result. Same goal, different mechanism, different freshness.
+
+Then the two features that made d b t beloved beyond its engine. Tests: declare, in Y A M L next to the model, that a column is unique, not null, references a parent, or passes any custom sequel assertion — d b t compiles each into a query that must return zero rows, run on every build. Contracts and quality, versioned in git with the code — hear the expectations echo. And docs: d b t generates a browsable documentation site with the full lineage graph and column descriptions, from the same Y A M L. The whole shop lives in git, ships through pull requests, tests in C I. That workflow — sequel in version control with tests, review, and environments — is the actual revolution d b t sold, and it's why analytics teams adopted it like a religion.
+
+[PAUSE 1s]
+
+Now the twenty twenty-six headlines, because this is where you sound current. Headline one: the Fusion engine. d b t Core version two shipped with Fusion — a ground-up rewrite of d b t's compiler and runtime in Rust, open-sourced under Apache two. Why you care: Fusion actually UNDERSTANDS sequel — it parses it, rather than treating it as text with Jinja holes — which enables state-aware orchestration: Fusion knows which models' inputs actually changed and skips rebuilding the rest. The benchmark claim from Coalesce: sixty to sixty-five percent warehouse cost reduction on big projects, simply from not rebuilding unchanged models. Connect the dots out loud in an interview: state-aware orchestration is d b t's incremental-maintenance move — the same idea as materialised views choosing incremental refresh, arriving from the opposite direction. Everyone is converging on "only compute what changed."
+
+Headline two: the merger. June first, twenty twenty-six, Fivetran and d b t Labs completed their merger — the ingestion giant and the transformation standard, one company. Read the board like a strategist, because interviewers reward this: Databricks, Snowflake, and Fabric are each bundling a full stack — ingestion, transformation, orchestration, all native; Lakeflow is exactly that play, episodes five through seven. Fivetran plus d b t is the counter-move: the independent, platform-neutral stack — extract with Fivetran, transform with d b t — portable across any warehouse. So when someone asks "why would anyone use d b t on Databricks when declarative pipelines exists," part of the answer is strategic: d b t is the hedge against platform lock-in, and some enterprises value that hedge more than native integration.
+
+[PAUSE 1s]
+
+Which brings us to the comparison itself — d b t versus Lakeflow declarative pipelines — and let's do it honestly, dimension by dimension, because both are declarative sequel D A Gs and the differences are real but specific. Dimension one, workload shape: declarative pipelines does streaming AND batch — streaming tables, auto C D C from change streams, continuous mode; d b t is batch sequel, full stop — it transforms data that has landed. If the requirement says streaming, the conversation is over. Dimension two, persona: d b t was built for analytics engineers — sequel-first people who own marts and metrics; declarative pipelines leans data engineer — Python and sequel, pipeline-shaped thinking. Adoption follows the people you have. Dimension three, ecosystem: d b t brings packages, a huge community, consultants who know it, and portability — the same project runs on Snowflake tomorrow if the winds change; declarative pipelines brings platform-native automation — serverless autoscaling, engine-chosen incremental maintenance, expectations wired into the event log and Unity Catalog. Dimension four, operations on Databricks specifically: they're not rivals in the runbook — there's a d b t task type in Lakeflow Jobs, so d b t projects run as orchestra musicians from last episode, on warehouse compute, governed in Unity Catalog, alongside pipeline tasks in the same score.
+
+So the decision rule, compressed for the windshield: streaming or C D C — declarative pipelines, no contest. Existing d b t estate or an analytics-engineering team that lives in d b t — keep d b t, run it as a Jobs task on a warehouse; migration would burn goodwill for marginal gain. Green field, batch-only, sequel marts, portability valued — genuinely either; pick by team identity. Green field with streaming ambitions or platform-native automation valued — declarative pipelines. And in many real enterprises: both — pipelines for bronze and silver where streaming and C D C live, d b t for the gold marts the analytics team owns. That split — engineering owns the plumbing, analytics owns the marts, clean handoff at silver — is a very defensible architecture and a very strong interview answer.
+
+[PAUSE 1s]
+
+Pitfalls, three, fast. One: incremental models that drift. d b t's incremental materialisation appends or merges by your rules — get the unique key wrong or forget late-arriving data, and the table quietly diverges from a full rebuild; schedule periodic full-refresh sanity runs, or let Fusion's state-awareness reduce the guesswork. Two: the thousand-model shop. d b t makes models cheap to create, so projects sprawl — five layers of staging views nobody remembers; enforce naming conventions and folder standards early, prune dead patterns. Three: tests as decoration — a project with three generic tests and a green badge is not a tested project; test the business invariants — the join keys, the money columns — and fail the build when they break, or the badge is theatre.
+
+[PAUSE 1s]
+
+Interview angle. The question you'll actually get, given your profile: "you haven't used d b t much — how would you come up to speed, and where does it fit on Databricks?" The answer: lead with the mental model — models are SELECTs, ref builds the D A G, compilation targets the warehouse; that's declarative transformation, the same philosophy as declarative pipelines, which I run — then place it operationally: d b t task in Lakeflow Jobs, sequel warehouse compute, Unity Catalog governance, so it slots into my existing orchestration and governance without exceptions; then the split-stack answer for when each wins, streaming to pipelines, analyst marts to d b t; and close current: Fusion's state-aware orchestration and the Fivetran merger, and what they signal about the industry converging on incremental, declarative everything. That answer converts "gap" into "I understand the design space this tool lives in" — which is worth more than a year of casual usage.
+
+[PAUSE 1s]
+
+Recap. The tailor shop above the warehouse: models are SELECT statements; d b t compiles them into tables and views on the sequel warehouse below, governed in Unity Catalog. Ref connects patterns into an automatic D A G and makes environments free; sources anchor the graph in bronze; materialisations dial view, table, incremental; snapshots hand-roll S C D two. Tests compile to zero-row queries; docs and lineage generate from Y A M L; everything lives in git and ships by pull request. Twenty twenty-six: Fusion — Rust engine, real sequel understanding, state-aware orchestration skipping unchanged models, big cost claims; and the Fivetran merger — the neutral stack consolidating against the platform bundles. Versus declarative pipelines: streaming and C D C go native; analyst-owned batch marts go d b t; big shops run both with the handoff at silver. Next episode: performance and cost — Photon, adaptive query execution, caching, and the economics of serverless. See you in the car.</div></details>
+<div class="navrow"><a class="btn" href="07-lakeflow-jobs-orchestration.html">← Lakeflow Jobs & Orchestration Patterns</a><span></span></div></main></div></body></html>

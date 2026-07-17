@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lakeflow Jobs & Orchestration Patterns — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="active" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><div class="locked"><span class="tick">🔒</span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</div><div class="locked"><span class="tick">🔒</span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</div><div class="locked"><span class="tick">🔒</span>11. DRILL: Databricks Platform Rapid-Fire</div></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 7</div>
+<h1 class="lesson">Lakeflow Jobs & Orchestration Patterns</h1>
+<div class="meta">17 min listen · The orchestra mental model of Lakeflow Jobs — task DAGs, the five trigger types including table-update and file-arrival, repair runs, serverless compute choices, and when Airflow still earns its place.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/07-lakeflow-jobs-orchestration.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" onclick="toggleDone('01-databricks-platform/07-lakeflow-jobs-orchestration')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-17 (table-update triggers + dynamic refs, file-arrival triggers on UC locations/volumes, file events)</em></p>
+<h2 id="the-mental-model-the-orchestra">The mental model: the orchestra</h2>
+<p>Score = job definition (task DAG) · musicians = tasks · conductor = Jobs engine (cues, failure handling, recovery). Formerly "Workflows".</p>
+<h2 id="task-types-musicians">Task types (musicians)</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notebook / Python wheel / JAR</td>
+<td>Versioned wheels = CI/CD artifact slot</td>
+</tr>
+<tr>
+<td>SQL task</td>
+<td>Runs on SQL warehouse</td>
+</tr>
+<tr>
+<td>Pipeline task</td>
+<td>A whole Declarative Pipeline as one node</td>
+</tr>
+<tr>
+<td>dbt task</td>
+<td>dbt project on warehouse compute (see T1E8)</td>
+</tr>
+<tr>
+<td>Condition (if/else)</td>
+<td>Branch on params/results</td>
+</tr>
+<tr>
+<td><strong>For-each</strong></td>
+<td>Fan out over list — metadata-driven table loops</td>
+</tr>
+<tr>
+<td><strong>Run-job</strong></td>
+<td>Nest jobs — compose team scores into symphonies</td>
+</tr>
+</tbody>
+</table>
+<p>Edges: <code>depends_on</code> + run-if (success/failure/always) — cleanup + alerting in-graph.</p>
+<h2 id="triggers-the-cues-interview-current">Triggers (the cues) — interview-current</h2>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schedule</td>
+<td>Cron + timezone</td>
+</tr>
+<tr>
+<td>Manual/API</td>
+<td>REST</td>
+</tr>
+<tr>
+<td>Continuous</td>
+<td>Restart on finish</td>
+</tr>
+<tr>
+<td><strong>File arrival</strong></td>
+<td>Watches UC external location/volume — data's arrival IS the cue</td>
+</tr>
+<tr>
+<td><strong>Table update</strong></td>
+<td>Fires when upstream Delta tables get data; dynamic refs e.g. <code>{{job.trigger.table_update.updated_tables}}</code></td>
+</tr>
+</tbody>
+</table>
+<p>Enable <strong>file events</strong> on storage → cheap notifications (Event Grid/S3) instead of polling; also speeds Auto Loader.
+Killer line: "Wire medallion layers with table-update triggers — orchestration follows data readiness, not wall-clock optimism."</p>
+<h2 id="compute-per-task">Compute per task</h2>
+<p>Serverless (spiky/short, zero sizing) · job clusters (heavy sustained, instance control) · shared job cluster (reuse across tasks in run) · SQL warehouse (SQL/dbt). <strong>Never all-purpose clusters in scheduled jobs.</strong></p>
+<h2 id="failure-handling">Failure handling</h2>
+<ul>
+<li>Per-task retries (+ intervals) — safe only on <strong>idempotent</strong> tasks (merge-writes, deterministic outputs)</li>
+<li>Task/job timeouts, queueing, max-concurrent-runs (queue/skip/parallel)</li>
+<li>Notifications: start/success/failure → email/webhook/Slack/Teams</li>
+<li><strong>Repair runs</strong> — rerun only failed task + downstream, same run ID/params, audit intact</li>
+</ul>
+<p>Parameters: job params → tasks; dynamic value refs (run ID, trigger time, updated tables); task values pass results between tasks (≈ Airflow XCom).</p>
+<h2 id="jobs-vs-airflow-ankur-runs-airflow-own-this-comparison">Jobs vs Airflow (Ankur runs Airflow — own this comparison)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Lakeflow Jobs</th>
+<th>Airflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infra</td>
+<td>Zero (no scheduler/metadata DB/executor ops)</td>
+<td>You run it (or pay managed)</td>
+</tr>
+<tr>
+<td>Data-driven triggers</td>
+<td>Native table-update/file-arrival</td>
+<td>Sensors that poll (and cost while waiting)</td>
+</tr>
+<tr>
+<td>Recovery</td>
+<td>Repair runs</td>
+<td>Clear + rerun subtleties</td>
+</tr>
+<tr>
+<td>Cross-platform</td>
+<td>Weak — Databricks-centric</td>
+<td>The neutral conductor</td>
+</tr>
+<tr>
+<td>Ecosystem</td>
+<td>Task types</td>
+<td>Massive operator library</td>
+</tr>
+</tbody>
+</table>
+<p>Verdict: Databricks-internal DAGs → Jobs; cross-platform enterprise flows → Airflow calling Jobs via API as single tasks. "Two conductors, clear jurisdictions."</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li>Cron optimism → replace with table-update triggers.</li>
+<li>All-purpose cluster in scheduled job → interactive prices for batch.</li>
+<li>Retry on non-idempotent task → double writes. Idempotency is designed, not checked.</li>
+<li>One giant 100-task job → compose with run-job; team-sized, independently repairable.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. Productionise a medallion platform's orchestration.</strong>
+Pipelines for transforms; Jobs per domain composed via run-job; bronze on file-arrival, silver/gold on table-update triggers; serverless/job clusters; retries on idempotent tasks + timeouts + alerts; repair runs for recovery; for-each + params for metadata fan-out.</p>
+<p><strong>Q2. Table-update trigger vs scheduling downstream later?</strong>
+Trigger fires on actual upstream commit — kills before-upstream-finished races; dynamic ref hands the changed-tables list to the run. Schedule = hope; trigger = causality.</p>
+<p><strong>Q3. When Airflow over Jobs?</strong>
+DAG spans platforms (on-prem, vendor APIs, non-Databricks); org standard already Airflow. Keep Databricks work as Jobs invoked by Airflow via API.</p>
+<p><strong>Q4. What makes retries safe?</strong>
+Idempotent tasks: MERGE-based writes, deterministic outputs, checkpointed streams. Retry a blind INSERT = duplicates.</p>
+<p><strong>Q5. Repair run vs full rerun?</strong>
+Repair reruns failed task + downstream only, same run ID and params — surgical, auditable, saves the 5-hour replay.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Triggers overview: https://docs.databricks.com/aws/en/jobs/triggers</li>
+<li>Table-update triggers: https://docs.databricks.com/aws/en/jobs/trigger-table-update</li>
+<li>File-arrival triggers: https://docs.databricks.com/aws/en/jobs/file-arrival-triggers</li>
+<li>Jobs overview: https://docs.databricks.com/aws/en/jobs/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode seven: Lakeflow Jobs — orchestration. Quick naming note first, same drill as last episode: this is the product long known as Databricks Workflows, and before that just Jobs; under the Lakeflow umbrella it's Lakeflow Jobs. Same engine, evolved. And here's why this episode matters to you specifically: you run Airflow with dynamic Jinja D A Gs in production, so you already think in D A Gs. The job today is to map that thinking onto the Databricks-native orchestrator, learn what it does that Airflow doesn't, and — the part interviewers love — articulate when you'd still bring Airflow anyway.
+
+[PAUSE 1s]
+
+The picture: an orchestra. Build it. The score on the conductor's stand — that's the job definition: a directed graph of tasks, what plays when, what waits for what. The musicians — the tasks themselves. And the conductor — the Lakeflow Jobs engine: cues each section, watches for wrong notes, decides what happens when the violin breaks a string mid-performance. Orchestration in one image: score, musicians, conductor. Every feature this episode covers hangs on one of those three.
+
+Start with the musicians — task types, because a job is a graph of heterogeneous tasks, and the variety is the point. A task can be: a notebook. A Python wheel or a J A R — your semantically-versioned wheels from the Optus C I C D story slot exactly here. A sequel task running against a warehouse. A declarative pipeline — last episode's factory becomes a single musician in a bigger piece. A d b t task — next episode's guest, sitting in this orchestra. And then the control-flow musicians, the ones that make the score interesting: the condition task — if-else branching on a parameter or a prior result; the for-each task — fan out the same task over a list, a hundred tables processed by one score with a parameterised loop, which should sound very familiar to the person who built a metadata-driven framework where table lists drive execution; and the run-job task — a job invoking another job, scores nesting into symphonies, which is how you compose team-owned pipelines into an end-to-end flow without one giant fragile graph.
+
+Tasks connect with depends-on edges into the D A G, and each edge can carry a condition — run on success, run on failure, run always — so cleanup tasks and alert tasks live in the same score as the happy path.
+
+[PAUSE 1s]
+
+Now the conductor's cue — triggers — and this is the most interview-current part of the episode. Five ways a performance starts. One, the classic: time-based schedule, cron with a timezone. Two: manual or A P I — someone presses play, or your external system calls the R E S T A P I. Three: continuous — the job restarts itself the moment it finishes, for near-real-time loops without a streaming cluster. Four, and pay attention: file-arrival triggers. The job watches a Unity Catalog external location or volume; new file lands, performance begins. No cron guessing, no "poll every five minutes and usually find nothing" — the data's arrival IS the cue. And five, the newest and most architecturally interesting: table-update triggers. The job watches upstream Delta tables — when a source table gets new data, the downstream job fires. Feel what that changes: pipelines chain by DATA readiness instead of by clock. The eight a.m. gold job that sometimes ran before silver finished — that entire class of race condition dies, because gold triggers on silver's update, not on a hopeful timestamp. And the trigger passes context: dynamic references like the list of updated tables since the last run, so the job can process exactly what changed. Under the hood, enabling file events on your storage locations makes both of these trigger types efficient — cloud notifications instead of polling, the same Event Grid machinery Auto Loader's notification mode uses. In an interview, the phrase is: "I'd wire the medallion layers with table-update triggers so orchestration follows data readiness, not wall-clock optimism."
+
+Next: what the musicians play on — compute. Each task picks its instrument: a job cluster spun up for the run and torn down after — the production default from episode one; a shared job cluster reused across tasks in the same run, saving the startup tax when many tasks run back to back; serverless jobs compute — no sizing at all, seconds to start, per-second billing; or a sequel warehouse for sequel and d b t tasks. The cost-shaped guidance: serverless for spiky and short tasks, job clusters for heavy sustained crunching where you want instance control, never all-purpose clusters in a scheduled job — that's paying interactive prices for batch work.
+
+[PAUSE 1s]
+
+Then the part that separates orchestrators from schedulers: failure handling — what the conductor does when the violin string snaps. Per-task retries with intervals. Task and job timeouts, so a hung task can't hold the hall all night. Notifications on start, success, failure — to email, webhooks, Slack, Teams. Queueing and max-concurrent-runs, so a slow Monday run and the Tuesday run don't trample each other — you choose: queue, skip, or run in parallel. And the feature you will genuinely love operationally: repair runs. The performance fails at task seven of ten. You fix the data problem, and instead of replaying the whole symphony, you repair the run — rerun only the failed task and everything downstream of it, with the same run I D, same parameters, audit trail intact. Anyone who has re-run a five-hour Airflow D A G because one leaf task hiccuped knows exactly what this is worth.
+
+Parameters round out the score: job-level parameters flow to tasks; dynamic value references — run I D, trigger time, the updated-tables list — let the score adapt per performance; task values let one task pass results to the next, a lightweight X-com if you speak Airflow.
+
+So: Jobs versus Airflow — the comparison you're personally qualified to make, and a very common staff interview probe. The honest mapping. What Jobs wins: zero infrastructure — no scheduler V Ms, no metadata database, no executor tuning, and you've paid the Airflow ops tax so you can itemise it; native integration — cluster lifecycle, Unity Catalog identity, pipeline and d b t task types, repair runs, and the data-driven triggers, which Airflow approximates with sensors that poll and cost money while they wait; and the security story — everything runs as governed service principals inside the platform perimeter. What Airflow still wins: orchestration ACROSS platforms — when the D A G touches Databricks, an on-prem system, a vendor A P I, and a mainframe file drop, Airflow is the neutral conductor; a mature Python ecosystem of operators; and organisational gravity — if the enterprise already runs Airflow as the standard, a second orchestrator needs a reason. The staff-level answer: "Databricks-internal D A Gs belong in Lakeflow Jobs — data-driven triggers and repair runs are worth the migration alone; cross-platform enterprise flows stay in Airflow, calling Databricks jobs through the A P I as single tasks. Two conductors, clear jurisdictions."
+
+[PAUSE 1s]
+
+Pitfalls, quick. One: cron optimism — scheduling downstream at eight a.m. because upstream "usually" finishes at seven fifty. Table-update triggers exist; use them, delete the race condition. Two: the all-purpose cluster in a scheduled job — the classic silent money fire, episode one's immortal cluster wearing an orchestration costume. Three: retry blindness — a retry that reruns a non-idempotent task double-writes data; retries are only safe when tasks are idempotent, which is a property YOU design, not a checkbox. Merge-based writes, deterministic outputs, then retry freely. Four: one-giant-job syndrome — a hundred-task mega-D A G owned by nobody. Compose with run-job tasks: team-sized scores, nested into the symphony, each independently testable and repairable.
+
+[PAUSE 1s]
+
+Interview angle. The question arrives as "how do you productionise pipelines on Databricks" or "design the orchestration for a medallion platform". The shape of a strong answer, forty-five seconds: ingestion and transformations defined as declarative pipelines; orchestration in Lakeflow Jobs — a job per domain, composed with run-job tasks; bronze fires on file-arrival triggers, silver and gold chain on table-update triggers so the flow follows data readiness; compute is serverless or per-run job clusters, never interactive clusters; failure policy is per-task retries on idempotent tasks, timeouts, alerting to the on-call channel, and repair runs for surgical recovery; parameters and for-each drive the fan-out over table lists, metadata-style. Then the differentiator sentence: "I currently run Airflow with dynamic Jinja D A Gs in production, and my migration line is: platform-internal orchestration moves to Jobs for the data-driven triggers and repair runs; Airflow keeps the cross-platform flows." Experience plus judgment, in one breath.
+
+[PAUSE 1s]
+
+Recap, one last look at the hall. The score: a D A G of heterogeneous tasks — notebooks, wheels, sequel, pipelines, d b t, plus condition, for-each, and run-job for control flow and composition. The cues: five triggers — schedule, manual, continuous, file-arrival on Unity Catalog locations, and table-update on upstream Deltas, with dynamic references telling the job what changed; file events make the watching cheap. The instruments: serverless or job clusters per task, warehouses for sequel, never all-purpose in production. The conductor's recovery: retries on idempotent tasks, timeouts, queueing, notifications, and repair runs — rerun only what failed and what depends on it. Jurisdiction: Databricks-internal D A Gs in Jobs, cross-platform symphonies in Airflow calling Jobs through the A P I. Next episode: d b t on Databricks — the other declarative sequel D A G, the Fusion engine, the Fivetran merger, and exactly when you'd choose it over declarative pipelines. See you in the car.</div></details>
+<div class="navrow"><a class="btn" href="06-lakeflow-declarative-pipelines.html">← Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="btn" href="08-dbt-on-databricks.html">dbt on Databricks: Where It Fits vs Declarative Pipelines →</a></div></main></div></body></html>
