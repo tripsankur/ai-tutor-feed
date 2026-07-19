@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Fri, 17 Jul 2026 08:35:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 02:27:02 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -15,10 +15,10 @@
     <item>
       <title>How Databricks Actually Works: Control Plane, Compute Plane, Photon, Serverless</title>
       <description>The two-buildings mental model of Databricks architecture — where your code runs, where your data lives, what Photon does, how serverless changes the picture, and how to narrate it all in an interview.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/01-how-databricks-works.mp3" length="5032809" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/01-how-databricks-works.mp3" length="5105756" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e1-how-databricks-works</guid>
-      <pubDate>Fri, 17 Jul 2026 04:20:08 +0000</pubDate>
-      <itunes:duration>00:13:58</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 02:26:39 +0000</pubDate>
+      <itunes:duration>00:14:10</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>1</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -26,10 +26,10 @@
     <item>
       <title>Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</title>
       <description>Same architecture, different keys — how the two-buildings model maps onto Azure and AWS: first-party vs third-party deployment, Entra ID vs IAM, ADLS vs S3, VNet injection vs customer VPC, Private Link on both, and the billing split.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/02-azure-vs-aws-databricks.mp3" length="4989896" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/02-azure-vs-aws-databricks.mp3" length="5023448" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e2-azure-vs-aws-databricks</guid>
-      <pubDate>Fri, 17 Jul 2026 04:54:44 +0000</pubDate>
-      <itunes:duration>00:13:51</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 01:44:25 +0000</pubDate>
+      <itunes:duration>00:13:57</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>2</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -37,10 +37,10 @@
     <item>
       <title>Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</title>
       <description>The filing-room-and-ledger mental model of Delta Lake — how a folder of parquet files gets ACID transactions, time travel, deletion vectors, data skipping, and liquid clustering, and how to explain each mechanism in an interview.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/03-delta-lake-internals.mp3" length="4555450" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/03-delta-lake-internals.mp3" length="4648186" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e3-delta-lake-internals</guid>
-      <pubDate>Fri, 17 Jul 2026 05:15:28 +0000</pubDate>
-      <itunes:duration>00:12:39</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 01:49:14 +0000</pubDate>
+      <itunes:duration>00:12:54</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>3</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -48,10 +48,10 @@
     <item>
       <title>Unity Catalog Deep Dive: Metastore, Securables, ABAC, Lineage, Metrics</title>
       <description>The governed-city mental model of Unity Catalog — metastore as the city map, three-level namespace addresses, credential gates to storage, inherited grants, the new ABAC policy regime with governed tags, lineage as CCTV, and the metrics semantic layer.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3" length="4097088" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3" length="4126320" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e4-unity-catalog-deep-dive</guid>
-      <pubDate>Fri, 17 Jul 2026 05:19:34 +0000</pubDate>
-      <itunes:duration>00:11:22</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 01:53:40 +0000</pubDate>
+      <itunes:duration>00:11:27</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>4</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -59,10 +59,10 @@
     <item>
       <title>Lakeflow Connect: Managed Ingestion &amp; CDC</title>
       <description>The harbor mental model of Databricks ingestion — managed SaaS connectors, the two-piece CDC gateway architecture for databases, Auto Loader and the DIY docks, and how to choose between them in an interview.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/05-lakeflow-connect.mp3" length="3726115" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/05-lakeflow-connect.mp3" length="3811219" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e5-lakeflow-connect</guid>
-      <pubDate>Fri, 17 Jul 2026 05:28:37 +0000</pubDate>
-      <itunes:duration>00:10:20</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 01:58:04 +0000</pubDate>
+      <itunes:duration>00:10:35</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>5</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -70,10 +70,10 @@
     <item>
       <title>Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</title>
       <description>The blueprint-factory mental model of Lakeflow Declarative Pipelines — the DLT rename, streaming tables and flows, materialized views, AUTO CDC for SCD, expectations as quality gates, and the serverless 2026 upgrades.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/06-lakeflow-declarative-pipelines.mp3" length="4330821" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/06-lakeflow-declarative-pipelines.mp3" length="4355013" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e6-lakeflow-declarative-pipelines</guid>
-      <pubDate>Fri, 17 Jul 2026 05:32:51 +0000</pubDate>
-      <itunes:duration>00:12:01</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 02:02:43 +0000</pubDate>
+      <itunes:duration>00:12:05</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>6</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -81,10 +81,10 @@
     <item>
       <title>Lakeflow Jobs &amp; Orchestration Patterns</title>
       <description>The orchestra mental model of Lakeflow Jobs — task DAGs, the five trigger types including table-update and file-arrival, repair runs, serverless compute choices, and when Airflow still earns its place.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/07-lakeflow-jobs-orchestration.mp3" length="4008496" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/07-lakeflow-jobs-orchestration.mp3" length="4024624" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e7-lakeflow-jobs-orchestration</guid>
-      <pubDate>Fri, 17 Jul 2026 08:30:31 +0000</pubDate>
-      <itunes:duration>00:11:07</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 02:07:06 +0000</pubDate>
+      <itunes:duration>00:11:10</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>7</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -92,10 +92,10 @@
     <item>
       <title>dbt on Databricks: Where It Fits vs Declarative Pipelines</title>
       <description>The tailor-shop mental model of dbt — how SELECT-plus-ref compiles into a tested, documented DAG on a SQL warehouse, the 2026 Fusion engine and Fivetran merger, and the honest dbt-versus-Declarative-Pipelines decision an interviewer wants to hear.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/08-dbt-on-databricks.mp3" length="4179299" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/08-dbt-on-databricks.mp3" length="4162739" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e8-dbt-on-databricks</guid>
-      <pubDate>Fri, 17 Jul 2026 08:35:05 +0000</pubDate>
-      <itunes:duration>00:11:36</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 02:11:29 +0000</pubDate>
+      <itunes:duration>00:11:33</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>8</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -103,10 +103,10 @@
     <item>
       <title>Lakehouse AI: The Big Picture</title>
       <description>The five-floor tower mental model of the Databricks AI stack — Unity Catalog at the base, MLflow 3 observability, Model Serving and the AI Gateway, Vector Search, and Agent Bricks on top — with current 2026 product names and interview narrations.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/01-lakehouse-ai-big-picture.mp3" length="4262484" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/01-lakehouse-ai-big-picture.mp3" length="4285236" type="audio/mpeg"/>
       <guid isPermaLink="false">t2e1-lakehouse-ai-big-picture</guid>
-      <pubDate>Fri, 17 Jul 2026 03:07:15 +0000</pubDate>
-      <itunes:duration>00:11:50</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 02:16:00 +0000</pubDate>
+      <itunes:duration>00:11:54</itunes:duration>
       <itunes:season>2</itunes:season>
       <itunes:episode>1</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -116,7 +116,7 @@
       <description>Rapid-fire interview drill: hear the question, answer aloud in the pause, then compare with a strong model answer. Sample of five — full drill lands when Track 2 completes.</description>
       <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/08-databricks-ai-drill.mp3" length="1238066" type="audio/mpeg"/>
       <guid isPermaLink="false">t2e8-databricks-ai-drill</guid>
-      <pubDate>Fri, 17 Jul 2026 03:08:16 +0000</pubDate>
+      <pubDate>Sun, 19 Jul 2026 02:17:07 +0000</pubDate>
       <itunes:duration>00:03:26</itunes:duration>
       <itunes:season>2</itunes:season>
       <itunes:episode>8</itunes:episode>
