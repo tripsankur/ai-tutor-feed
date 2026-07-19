@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Sun, 19 Jul 2026 10:16:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 12:54:20 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -15,9 +15,9 @@
     <item>
       <title>How Databricks Actually Works: Control Plane, Compute Plane, Photon, Serverless</title>
       <description>The two-buildings mental model of Databricks architecture — where your code runs, where your data lives, what Photon does, how serverless changes the picture, and how to narrate it all in an interview.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/01-how-databricks-works.mp3" length="5114540" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/01-how-databricks-works.mp3" length="5115836" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e1-how-databricks-works</guid>
-      <pubDate>Sun, 19 Jul 2026 08:12:42 +0000</pubDate>
+      <pubDate>Sun, 19 Jul 2026 12:14:26 +0000</pubDate>
       <itunes:duration>00:14:12</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>1</itunes:episode>
@@ -26,10 +26,10 @@
     <item>
       <title>Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</title>
       <description>Same architecture, different keys — how the two-buildings model maps onto Azure and AWS: first-party vs third-party deployment, Entra ID vs IAM, ADLS vs S3, VNet injection vs customer VPC, Private Link on both, and the billing split.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/02-azure-vs-aws-databricks.mp3" length="5035256" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/02-azure-vs-aws-databricks.mp3" length="5131725" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e2-azure-vs-aws-databricks</guid>
-      <pubDate>Sun, 19 Jul 2026 07:31:53 +0000</pubDate>
-      <itunes:duration>00:13:59</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 12:49:29 +0000</pubDate>
+      <itunes:duration>00:14:15</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>2</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
@@ -48,10 +48,10 @@
     <item>
       <title>Unity Catalog Deep Dive: Metastore, Securables, ABAC, Lineage, Metrics</title>
       <description>The governed-city mental model of Unity Catalog — metastore as the city map, three-level namespace addresses, credential gates to storage, inherited grants, the new ABAC policy regime with governed tags, lineage as CCTV, and the metrics semantic layer.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3" length="4158144" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/04-unity-catalog-deep-dive.mp3" length="4159728" type="audio/mpeg"/>
       <guid isPermaLink="false">t1e4-unity-catalog-deep-dive</guid>
-      <pubDate>Sun, 19 Jul 2026 07:40:51 +0000</pubDate>
-      <itunes:duration>00:11:32</itunes:duration>
+      <pubDate>Sun, 19 Jul 2026 12:05:10 +0000</pubDate>
+      <itunes:duration>00:11:33</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>4</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
