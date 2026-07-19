@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres) — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk" open><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="active" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><div class="locked"><span class="tick">🔒</span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</div><div class="locked"><span class="tick">🔒</span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</div><div class="locked"><span class="tick">🔒</span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</div><div class="locked"><span class="tick">🔒</span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</div><div class="locked"><span class="tick">🔒</span>6. AI Functions in SQL, Genie, AI/BI</div><div class="locked"><span class="tick">🔒</span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</div><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 1 · Databricks Platform & Data Engineering · Episode 10</div>
+<h1 class="lesson">Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</h1>
+<div class="meta">17 min listen · The bilingual-vault mental model of the open lakehouse — why two table formats exist, how UniForm and managed Iceberg dissolve the format war, catalog federation via the Iceberg REST API, and Lakebase bolting a real OLTP database onto the same governed platform.</div>
+<audio controls preload="metadata" src="../../audio/01-databricks-platform/10-iceberg-lakebase-open.mp3"></audio>
+<button class="btn complete" data-ep="01-databricks-platform/10-iceberg-lakebase-open" onclick="toggleDone('01-databricks-platform/10-iceberg-lakebase-open')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-19 (managed Iceberg GA, full Iceberg support incl. REST catalog, Lakebase GA w/ branching + Lakehouse sync, UniForm async read-only)</em></p>
+<h2 id="the-mental-model-one-vault-two-ledgers">The mental model: one vault, two ledgers</h2>
+<p>Same parquet in the cabinets; <strong>Delta ledger</strong> (numbered log + checkpoints) and <strong>Iceberg ledger</strong> (snapshot → manifest-list → manifest tree) mounted at the door. The format war was about READING, not storing.</p>
+<pre class="mermaid">flowchart LR
+    P[(Parquet files\none copy)]
+    DL["Delta log"] --> P
+    IB["Iceberg metadata"] --> P
+    SPARK[Spark/Databricks] --> DL
+    SNOW[Snowflake/Trino/Flink] --> IB
+    UC["Unity Catalog\n(Iceberg REST catalog API + credential vending)"] --- DL
+    UC --- IB
+</pre>
+
+<h2 id="three-mechanisms-escalating-commitment">Three mechanisms (escalating commitment)</h2>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What</th>
+<th>Caveats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UniForm</strong></td>
+<td>Delta table maintains BOTH ledgers — Iceberg metadata generated async over same files; external engines read it as normal Iceberg</td>
+<td>Iceberg side read-only; async lag (no read-after-write for external readers)</td>
+</tr>
+<tr>
+<td><strong>Managed Iceberg (GA)</strong></td>
+<td>Native, writable Iceberg tables as UC managed tables — snapshot expiry + compaction automated</td>
+<td>First-class citizen: same grants, lineage, predictive optimization</td>
+</tr>
+<tr>
+<td><strong>Iceberg REST catalog API + federation</strong></td>
+<td>UC speaks the standard Iceberg catalog protocol (external engines connect + credential vending); UC also federates Glue/Hive catalogs inward</td>
+<td>City gates open both directions</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Strategic reframe (say in interviews):</strong> "The format war ended in interoperability — parquet either way, dual-readable metadata, open catalog protocol. Differentiation moved up the stack: governance + automation." (Same consolidation pattern as dbt/Fivetran vs platform bundles.)</p>
+<h2 id="lakebase-the-oltp-gap">Lakebase (the OLTP gap)</h2>
+<p>Serverless <strong>Postgres</strong> (real, wire-compatible) on separated compute/storage, <strong>GA</strong>, millions of launches/day.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Branching</td>
+<td>Copy-on-write fork of a live operational DB — test migrations/agent experiments disposably ("branch production" — impossible in classic OLTP)</td>
+</tr>
+<tr>
+<td>Lakehouse sync</td>
+<td>Continuous CDC replication Lakebase ⇄ UC Delta tables — the hand-built operational→analytical pipeline as a platform feature</td>
+</tr>
+<tr>
+<td>Same governance</td>
+<td>Corner store + warehouse, one landlord, one key system</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-honest-edges">Pitfalls / honest edges</h2>
+<ol>
+<li><strong>UniForm lag</strong> — async metadata: external read-after-write freshness needs native Iceberg or direct integration.</li>
+<li><strong>Feature asymmetry</strong> — newest Delta features (DVs, clustering behaviours) lack same-day Iceberg equivalents; protocol-version interop check now spans TWO ecosystems.</li>
+<li><strong>Lakebase maturity</strong> — adopt new lakehouse-native apps + agent state first; core banking ledgers last. Enthusiasm with rollout discipline.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. Delta or Iceberg?</strong>
+Both, one vault: UniForm for Delta-write/Iceberg-read, managed Iceberg for Iceberg-native teams, REST catalog + federation for outside engines — all under one UC governance spine. Format no longer locks you in; governance/automation differentiate.</p>
+<p><strong>Q2. How does UniForm work and when is it wrong?</strong>
+Each Delta commit asynchronously generates equivalent Iceberg metadata over the SAME parquet — no copy, one table, two descriptions. Wrong when external readers need read-after-write freshness or write access.</p>
+<p><strong>Q3. How does Snowflake read a Unity Catalog table?</strong>
+Via UC's Iceberg REST catalog endpoint: discovers the table, gets short-lived storage credentials (credential vending), reads Iceberg metadata + parquet directly.</p>
+<p><strong>Q4. What is Lakebase and why did a lakehouse vendor build it?</strong>
+Serverless Postgres closing the OLTP gap — apps need ms row transactions the lakehouse can't serve; classic answer was a separate DB + fragile sync. Lakebase: same platform, branching, CDC sync into Delta.</p>
+<p><strong>Q5. Your Iceberg migration stance for a Delta estate?</strong>
+Don't migrate for fashion: enable UniForm where Iceberg readers exist, create managed Iceberg for new Iceberg-native workloads, keep Delta where the automation pays. Formats coexist under one catalog.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Iceberg on Databricks: https://docs.databricks.com/aws/en/iceberg/</li>
+<li>Full Iceberg support blog: https://www.databricks.com/blog/announcing-full-apache-iceberg-support-databricks</li>
+<li>Managed tables (Delta+Iceberg): https://docs.databricks.com/aws/en/tables/managed</li>
+<li>UniForm: https://docs.databricks.com/en/delta/uniform.html</li>
+<li>Lakebase: https://www.databricks.com/product/lakebase</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track one, episode ten: the open lakehouse — Iceberg, UniForm, and Lakebase. This episode exists because of a question that used to start arguments and now, increasingly, ends them: "Delta or Iceberg?" Five years ago that was a real fork in the road — pick wrong and you'd re-platform. Today the strategic answer is "yes, both, same vault," and the engineers who can explain WHY that became possible — the actual mechanics, not the marketing — walk out of interviews looking like they've been paying attention. That's the job today.
+
+[PAUSE 1s]
+
+First, the thirty-second history so the picture makes sense. Delta Lake and Apache Iceberg solved the same problem — episode three's problem: transactions on object storage — with the same core idea, a metadata layer over parquet files, but different metadata designs. Delta: the transaction log, numbered JSON pages plus checkpoints. Iceberg: a tree of manifest files — snapshots pointing to manifest lists pointing to manifests pointing to data files. Delta grew up inside the Databricks world; Iceberg grew up at Netflix and became the format of choice for Snowflake, for A W S's native services, for half the query-engine ecosystem. Same parquet underneath. Same ACID promises. Different passports.
+
+Now the picture for this episode. In your mind's eye, go back to the vault — the storage basement from episode one, the filing room from episode three. Same room, same cabinets, same parquet folders. But now look at the door: there are two ledgers mounted beside it, one in each language. The Delta ledger — the numbered pages you know. And the Iceberg ledger — the manifest tree. The files in the cabinets don't care which ledger describes them; parquet is parquet. The whole format war was only ever about which ledger a given engine could read. Hold that: one vault, two ledgers, and the war is about the reading, not the storing.
+
+So how does Databricks dissolve the war? Three mechanisms, in escalating order of commitment. Mechanism one: UniForm — short for universal format. A Delta table with UniForm enabled maintains BOTH ledgers: every commit writes the Delta log as normal, and asynchronously generates the equivalent Iceberg metadata over the SAME parquet files. No data copied, no second table — one set of files, two descriptions. A Snowflake or an Iceberg-native engine walks up, reads the Iceberg ledger, sees a perfectly ordinary Iceberg table. Your Spark jobs keep reading the Delta ledger. The catch to know for interviews: the Iceberg side is read-only and the metadata generation is asynchronous, so external readers can lag the freshest commit by a beat. UniForm is a translation service, not a co-ownership agreement.
+
+Mechanism two, the bigger step: managed Iceberg tables. Since these went generally available, Unity Catalog will happily create a NATIVE Iceberg table — Iceberg ledger only, first-class, writable — as council housing, meaning the catalog owns lifecycle: snapshot expiry, compaction, the robot librarian from the Delta episode working on Iceberg tables too. This is the moment the platform stopped treating Iceberg as a guest format. In the governed city, Delta houses and Iceberg houses now stand on the same streets, under the same grants, the same lineage, the same predictive optimisation.
+
+Mechanism three, the door for outsiders: the Iceberg REST catalog A P I. Unity Catalog speaks the standard Iceberg catalog protocol, which means external engines — Snowflake, Trino, Flink, anything Iceberg-native — can connect to Unity Catalog AS IF it were an Iceberg catalog, discover tables, and read them with credential vending handling the storage keys. Flip it around and catalog federation works the other direction too: Unity Catalog can federate external catalogs — a Glue catalog, a Hive metastore — so their tables appear in the one city map. Put the three mechanisms together and say it as one interview sentence: "UniForm translates a Delta table for Iceberg readers, managed Iceberg makes Iceberg a native citizen, and the REST catalog A P I opens the city gates to every external engine — one vault, one governance spine, every dialect."
+
+[PAUSE 1s]
+
+Why does this matter strategically? Because it re-frames the lock-in question, and lock-in questions are staff-interview favourites. The old fear: "if I build on Databricks I'm trapped in Delta." The current answer: the storage layer is parquet either way; the table format is dual-readable via UniForm or natively Iceberg if you choose; the catalog speaks an open protocol; and Delta Lake and Spark's declarative pipelines are open source besides. What actually differentiates the platform now is the machinery ABOVE the format — the automation, the governance, the A I stack. In an interview, that reframe — "the format war ended in interoperability; the competition moved up the stack" — is a genuinely senior observation, because it's the same pattern as the d b t and Fivetran story from episode eight: consolidation at the commodity layer, differentiation above it.
+
+Now the second half of the episode: Lakebase, and why a lakehouse company shipped a Postgres. Here's the gap it fills. Everything in this track so far is analytical — columnar files, big scans, batch and streaming pipelines. But real applications need the OTHER kind of database: row-oriented, millisecond point reads and writes, thousands of small transactions a second. O L T P. The classic architecture bolts a separate operational database next to the lakehouse — different vendor, different governance, and a fragile sync pipeline between them; you've heard that story pattern in this track before, and it always ends with the pipeline drifting.
+
+Lakebase is the platform absorbing that gap: a serverless Postgres — real Postgres, real transactions, wire-compatible with the entire Postgres ecosystem — running on separated compute and storage, on the same platform, now generally available and operating at serious scale, with launch counts in the millions per day. In the city picture: a corner store attached to the vault — small fast transactions at the counter in front, the analytical warehouse behind, same landlord, same keys. Two features to name for currency. Branching: Lakebase can branch a database like git branches code — an instant copy-on-write fork of your operational database for testing a migration or an agent experiment, disposable, cheap; try saying "let me branch production to test this" about a classic operational database and watch the D B A leave the room. And sync: continuous change-data-capture replication between Lakebase tables and Unity Catalog Delta tables — the operational-to-analytical pipeline that every enterprise hand-builds, delivered as a platform feature, governed like everything else. The interview one-liner from episode one still holds and now has its mechanism: "Lakebase closes the O L T P gap — the corner store and the warehouse finally share a ledger system."
+
+[PAUSE 1s]
+
+Pitfalls and honest edges, because this topic invites cheerleading and interviewers respect calibration. One: UniForm lag — the asynchronous Iceberg metadata means an external reader can be seconds-to-minutes behind; if a downstream Snowflake job needs read-after-write freshness, UniForm is the wrong tool, native Iceberg or direct integration is. Two: feature asymmetry — the newest Delta features, deletion vectors, certain clustering behaviours, don't always have same-day Iceberg equivalents, and cross-format readers negotiate protocol versions exactly like episode three's reader-version ratchet; the interop check before enabling features now spans TWO format ecosystems. Three: Lakebase is young — real Postgres, yes, but a new operational database earns trust workload by workload; the honest adoption path is new lakehouse-native apps and agent state first, migrating a bank's core ledger last. Saying that out loud in an interview — enthusiasm with a rollout discipline — reads as judgment, not hedging.
+
+[PAUSE 1s]
+
+Interview angle. The question arrives as "Delta versus Iceberg — what would you choose?" or "how do you avoid lock-in on Databricks?" The strong answer walks the three mechanisms: same parquet in the vault, two ledgers at the door; UniForm when Delta-writing but Iceberg-reading engines exist downstream; managed Iceberg when a team or tool is Iceberg-native — both under one Unity Catalog, one grant model, one lineage graph; REST catalog A P I and federation for everything outside the walls. Then the strategic close: "format is no longer the decision that locks you in — governance and automation are where platforms differentiate now." And if they ask about operational workloads, the Lakebase paragraph: serverless Postgres, branching, C D C sync into Delta — the two-database architecture collapsing into one governed platform. Concrete, current, and calibrated.
+
+[PAUSE 1s]
+
+Recap. One vault, two ledgers: Delta's numbered log, Iceberg's manifest tree, same parquet in the cabinets — the war was about reading, not storing. UniForm: one table, both ledgers maintained, external Iceberg readers welcome, read-only and slightly behind. Managed Iceberg: native Iceberg citizens in Unity Catalog, robot-librarian maintenance included. Iceberg REST catalog A P I and federation: the city gates open both ways, credential vending at the door. Strategy: the format war ended in interoperability; differentiation moved up the stack. And Lakebase: serverless Postgres, git-style branching, C D C sync to Delta — the corner store attached to the warehouse, O L T P and analytics under one landlord. That completes the platform tour. Next episode: the Track One drill — fifteen rapid-fire questions across everything from the two buildings to Lakebase. Bring answers. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="09-performance-cost.html">← Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="btn" href="11-databricks-platform-drill.html">DRILL: Databricks Platform Rapid-Fire →</a></div></main></div></body></html>

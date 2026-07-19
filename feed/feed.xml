@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Sun, 19 Jul 2026 08:31:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 10:16:14 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -98,6 +98,39 @@
       <itunes:duration>00:11:36</itunes:duration>
       <itunes:season>1</itunes:season>
       <itunes:episode>8</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Performance &amp; Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</title>
+      <description>The tuning-garage mental model of Databricks performance — two gauges on every job, the five tuning stations from engine to layout, and the FinOps discipline that turns speed work into money saved.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/09-performance-cost.mp3" length="4135547" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e9-performance-cost</guid>
+      <pubDate>Sun, 19 Jul 2026 10:06:13 +0000</pubDate>
+      <itunes:duration>00:11:29</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>9</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Open Lakehouse: Iceberg Support, UniForm, Lakebase</title>
+      <description>The bilingual-vault mental model of the open lakehouse — why two table formats exist, how UniForm and managed Iceberg dissolve the format war, catalog federation via the Iceberg REST API, and Lakebase bolting a real OLTP database onto the same governed platform.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/10-iceberg-lakebase-open.mp3" length="3867677" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e10-iceberg-lakebase-open</guid>
+      <pubDate>Sun, 19 Jul 2026 10:10:47 +0000</pubDate>
+      <itunes:duration>00:10:44</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>10</itunes:episode>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>DRILL: Databricks Platform Rapid-Fire</title>
+      <description>Fifteen rapid-fire interview questions across the whole platform track — architecture, Delta internals, Unity Catalog, Lakeflow, dbt, performance, and the open lakehouse. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/01-databricks-platform/11-databricks-platform-drill.mp3" length="4018288" type="audio/mpeg"/>
+      <guid isPermaLink="false">t1e11-databricks-platform-drill</guid>
+      <pubDate>Sun, 19 Jul 2026 10:15:27 +0000</pubDate>
+      <itunes:duration>00:11:09</itunes:duration>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>11</itunes:episode>
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
