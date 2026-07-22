@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Functions in SQL, Genie, AI/BI — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk" open><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="active" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 2 · Databricks AI Stack · Episode 6</div>
+<h1 class="lesson">AI Functions in SQL, Genie, AI/BI</h1>
+<div class="meta">17 min listen · AI Functions bring the L L M to the sequel analyst's own counter through ai_query, while Genie is the multilingual concierge that turns a business user's plain-English question into governed sequel — with the 2026 evolution into Genie One, Genie Ontology, and Genie Agents.</div>
+<audio controls preload="metadata" src="../../audio/02-databricks-ai/s2e06-ai-functions-genie.mp3"></audio>
+<button class="btn complete" data-ep="02-databricks-ai/06-ai-functions-genie" onclick="toggleDone('02-databricks-ai/06-ai-functions-genie')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-22 (ai_query requirements, Genie GA, Genie One / Genie Ontology / Genie Agents launched at Data + AI Summit 2026)</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Two front-of-house moves put the L L M to work without leaving governed sequel: <code>ai_query</code> is the intercom from a sequel statement straight to a serving endpoint (batch inference, no Python); Genie is the concierge who takes a plain-English question and writes governed sequel for you — and in 2026 that concierge got promoted into Genie One, Genie Ontology, and Genie Agents.</p>
+<h2 id="the-picture-one-wall-two-counters">The picture: one wall, two counters</h2>
+<pre class="mermaid">flowchart LR
+    subgraph Counter1["Counter 1 — SQL analyst + ai_query"]
+        Q["SQL statement\ncontaining ai_query(...)"] --> EP["Model serving endpoint\n(chat / completions / embeddings)"]
+        EP --> Q
+    end
+    subgraph Counter2["Counter 2 — Genie concierge"]
+        NLQ["Plain-English question"] --> GS["Genie space\n(instructions + trusted assets + sample Qs)"]
+        GS --> SQLGen["Generated read-only SQL"]
+        SQLGen --> Answer["Answer + chart"]
+    end
+    UC[("Unity Catalog\ngoverned tables")]
+    Q --> UC
+    SQLGen --> UC
+    UC --> Q
+    UC --> SQLGen
+</pre>
+
+<h2 id="key-terms-2026-current">Key terms (2026-current)</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ai_query()</code></td>
+<td>General-purpose A I Function: L L M call embedded in a sequel statement, real-time or batch inference against any supported endpoint</td>
+<td>"GenAI for analysts — no Python, no data movement"</td>
+</tr>
+<tr>
+<td>Task-specific A I Functions</td>
+<td><code>ai_classify</code>, <code>ai_translate</code>, <code>ai_summarize</code>, <code>ai_extract</code>, <code>ai_parse_document</code> — pre-tuned for routine jobs</td>
+<td>"Start here before hand-rolling a prompt in <code>ai_query</code>"</td>
+</tr>
+<tr>
+<td><code>ai_query</code> limits</td>
+<td>Requires serverless compute (no Pro/Classic sequel warehouse); Databricks Runtime 18.2+ for notebooks/workflows; supported Model Serving region required</td>
+<td>The three gotchas worth naming unprompted</td>
+</tr>
+<tr>
+<td>Genie</td>
+<td>N L → sequel over curated, governed Unity Catalog tables</td>
+<td>"Grounded self-service analytics, not a chatbot guessing schema"</td>
+</tr>
+<tr>
+<td>Genie space</td>
+<td>Analyst-configured container: tables, plain-language instructions, sample questions, certified/trusted queries</td>
+<td>Grounding is a design discipline, not a model property</td>
+</tr>
+<tr>
+<td>Genie query behaviour</td>
+<td>Always read-only; caller needs at least CAN USE on the underlying (Pro/Serverless) sequel warehouse</td>
+<td>Access-controlled, not a side door around UC</td>
+</tr>
+<tr>
+<td>Genie accuracy benchmark</td>
+<td>84.5% first-attempt correct on a 28-question real-world benchmark vs 52.4% for a strong general coding agent, ~2x faster</td>
+<td>Grounded + briefed beats generic + guessing</td>
+</tr>
+<tr>
+<td>Genie One (GA)</td>
+<td>Agentic coworker: drafts docs/reports/artifacts, triggers actions in connected tools, ships web/iOS/Android, scheduling + alerts, native M C P tool integration</td>
+<td>Beyond Q&amp;A — a scheduled, multi-surface coworker</td>
+</tr>
+<tr>
+<td>Genie Ontology (Public Preview)</td>
+<td>Unified, continuously updated graph of company data + 50+ connected apps</td>
+<td>Grounding shifts from question-time guessing to design-time curation</td>
+</tr>
+<tr>
+<td>Genie Agents (GA)</td>
+<td>Reusable, shareable agents saved from any Genie conversation</td>
+<td>Turns a good prompt into an org asset</td>
+</tr>
+<tr>
+<td>A I / B I dashboards</td>
+<td>Fixed, curated governed dashboards; Genie can sit underneath answering follow-ups</td>
+<td>Dashboard = standing report; Genie = one-off conversation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ai_query-the-shape-of-it"><code>ai_query</code> — the shape of it</h2>
+<pre><code class="language-sql">-- Batch sentiment classification over a million support tickets, no Python
+SELECT ticket_id,
+       ai_query(
+         'my-llm-endpoint',
+         CONCAT('Classify sentiment as angry, neutral, or happy: ', ticket_text)
+       ) AS sentiment
+FROM silver.support_tickets;
+
+-- Task-specific function: structured field extraction
+SELECT contract_id,
+       ai_extract(contract_text, array('effective_date', 'renewal_date', 'contract_value'))
+FROM silver.contracts;
+</code></pre>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong><code>ai_query</code> cost/throughput risk</strong> — a model call per row adds up; an endpoint sized for interactive traffic can be overwhelmed by an uncoordinated batch job. Batch sensibly, watch endpoint throughput, provision ahead of known large jobs.</li>
+<li><strong>Genie grounding is a design discipline, not a model property</strong> — war story: two tables both with a column called "revenue" (net vs gross), no distinguishing instruction, Genie picked one and answered confidently wrong. Fix was scoping the space + writing the instruction down, not a smarter model.</li>
+<li><strong>Genie One / Genie Agents still need golden-question regression testing</strong> — agentic and multi-surface capability doesn't remove the need for eval gates before an agent sends a report to an executive unsupervised.</li>
+<li><strong>Dashboard vs Genie</strong> — reach for Genie when the question hasn't been asked before; reach for the A I/B I dashboard when it's asked every week.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. How would you let business analysts run L L M-powered enrichment over a table without writing Python?</strong>
+<code>ai_query()</code> called directly from the sequel statement they already write — serverless batch inference, handles parallelization/retries/scaling automatically, governed by the same Unity Catalog grants as the source table. Reach for task-specific functions (<code>ai_classify</code>, <code>ai_summarize</code>, <code>ai_extract</code>, etc.) first since they're pre-tuned; drop to general-purpose <code>ai_query</code> for anything bespoke. Name the three real limits: serverless-only, Databricks Runtime 18.2+, supported Model Serving region.</p>
+<p><strong>Q2. A non-technical business user needs an answer — what's the path?</strong>
+Genie: a Genie space scoped to a curated set of tables, grounded with written instructions and trusted/certified sample queries, compiles the plain-English question to read-only sequel. Cite the benchmark: 84.5% first-attempt accuracy vs 52.4% for a general coding agent, roughly 2x faster, because it's briefed and grounded rather than guessing schema from scratch.</p>
+<p><strong>Q3. How does Genie avoid hallucinating table names or joins?</strong>
+Grounding via the Genie space: a narrow, curated table set, plain-language instructions capturing business semantics ("revenue means net revenue from the finance mart"), and trusted/certified sample questions to pattern-match against. Grounding is something an analyst designs into the space — not an emergent property of the model.</p>
+<p><strong>Q4. Where does Genie One fit versus a hand-built agent?</strong>
+Genie One is the fast path for structured plus unstructured data already registered in the lakehouse — agentic beyond Q&amp;A (documents, reports, artifacts), multi-surface (web/iOS/Android), scheduling/alerts, native M C P tool integration. Hand-build an agent when you need bespoke tool orchestration or logic that doesn't reduce to "ask a governed question, get an answer."</p>
+<p><strong>Q5. How does Genie decide which of 50+ connected systems to trust for an answer?</strong>
+It isn't decided per question — Genie Ontology maintains a continuously updated graph of how company data and connected applications relate, ahead of time. Grounding shifts from question-time guessing to design-time curation.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>AI Functions overview: https://docs.databricks.com/aws/en/large-language-models/ai-functions</li>
+<li>Use <code>ai_query</code>: https://docs.databricks.com/aws/en/large-language-models/ai-query</li>
+<li><code>ai_query</code> function reference: https://docs.databricks.com/aws/en/sql/language-manual/functions/ai_query</li>
+<li>AI/BI Genie now Generally Available: https://www.databricks.com/blog/aibi-genie-now-generally-available</li>
+<li>Introducing Genie One, Genie Ontology, and Genie Agents: https://www.databricks.com/blog/introducing-genie-one-genie-ontology-and-genie-agents</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track two, episode six: A I Functions in sequel, Genie, and A I slash B I. Here's the question that separates a strong platform answer from a mediocre one in an interview: your data analyst wants to run an L L M over a million rows — sentiment on complaint text, entities out of free-text notes, a one-line summary of a contract — does that analyst need to become a Python engineer first? On this platform the honest answer is no. And a second question, right behind it: your finance director wants to ask a question in plain English and get a trustworthy number back, without learning sequel or pinging an analyst — can the platform do that safely, without guessing? Also yes. Both questions matter for the same underlying reason: every organisation that adopts a lakehouse ends up with two very different populations wanting the same L L M capability. One population already speaks the platform's native language, sequel, and lives at a terminal all day. The other population never will, and never should have to. A platform that only serves one of them has only finished half the job, and a sharp interviewer knows exactly where that gap usually shows up. Today's episode is about both of those moves, and back in the big-picture episode we put both of them on the top floor of the tower, sharing space with Agent Bricks. Today we walk onto that floor and stay a while.
+
+[PAUSE 1s]
+
+Here's the picture, and hold it steady, because everything today happens inside it. In your mind's eye, build a front desk in a busy office. Behind the desk, filling the back wall, are locked, labelled shelves — every folder catalogued, every drawer requiring the right badge to open. That's Unity Catalog, and it's the same wall you've pictured in every episode of this track: nothing today bypasses it. Standing at the desk is a sequel analyst. This is their counter. They've worked it for years, they know exactly which drawer holds which table, and their whole job happens without ever stepping away from it.
+
+Now furnish the desk with two things. Sitting right on the counter, within arm's reach of the analyst, is an intercom handset. That's A I Functions, and specifically ai underscore query. Right next to the analyst's counter, close enough to share the same wall of shelves, is a second counter — a concierge desk, staffed by a multilingual concierge. That's Genie. Two counters, one wall of governed shelves behind both, and this is a busy office — dozens of people moving through it every working hour, both desks seeing steady traffic all day, not a demo booth that empties out after lunch. Let's walk through each.
+
+[PAUSE 1s]
+
+Start with the intercom. The analyst is mid-query, pulling rows from a table, and hits a column that needs judgment — is this complaint angry or neutral, what's the sentiment, what entity does this free-text note mention. Old way: export the column, write a Python script, call a model A P I, manage retries, load the results back in — leave the counter entirely, walk to another room, come back later. New way: analyst picks up the intercom, dials a number — a model serving endpoint — says what they need in the same sequel statement they're already writing, and the answer comes back inline, in the same row, in the same result set. That's ai underscore query: an L L M call embedded directly in a sequel statement, batch inference over an entire table, no Python, no data leaving the perimeter. It's genuinely one of Databricks's most popular production use cases, precisely because it collapses a whole engineering detour into one function call an analyst already knows how to write.
+
+Walk one row through the picture to feel why that matters. A table of a million support tickets lands overnight, and someone needs a sentiment label on every one before the morning stand-up. A raw ticket sits in the row in front of the analyst — nothing but complaint text. The analyst picks up the intercom, and in the same breath as the rest of the query, asks whoever's on the other end of the line — the model behind the serving endpoint — to read that text and hand back one word: angry, neutral, happy. The answer lands in a new column, same row, same result set, and it took zero extra tooling to get it. Do that across a million rows overnight, and by morning stand-up the whole table is labelled.
+
+Under the hood it's serverless batch inference: point ai underscore query at a chat endpoint, a completions endpoint, or an embeddings endpoint, and the platform handles parallelization, retries, and scaling across however many rows you throw at it — you don't hand-roll a queue or a retry loop. Alongside the general-purpose ai underscore query sit task-specific functions for the routine jobs, and their names carry their intent, which is exactly why Databricks recommends starting with them before reaching for the general-purpose intercom. Ai underscore classify sorts text into categories you define. Ai underscore translate moves text between languages. Ai underscore summarize condenses a document down to a few sentences. Ai underscore extract pulls structured fields — a date, an amount, a policy number — out of free text. And ai underscore parse underscore document goes a step further and reads a scanned P D F or a photographed form. Each one is tuned by Databricks for its specific job, so you're not writing prompt engineering from scratch for a problem that's already been solved well. And because it's a sequel workload, it's governed like any sequel workload: same grants, same audit trail, same lineage back to the source table, running on the same intercom line the analyst already trusts.
+
+Three real limits worth knowing before you promise this in an interview. It needs serverless compute — it will not run on a Pro or Classic sequel warehouse. Notebooks and workflows calling it need a current-generation Databricks Runtime, eighteen point two or newer. And your workspace has to sit in a region where model serving is actually available. Miss any one of those three and the intercom simply has no line to dial out on. Say them out loud when you describe this and you sound like someone who's actually deployed it, not someone reciting a keynote slide.
+
+[PAUSE 1s]
+
+Now step to the second counter — the concierge desk. This one isn't for the analyst. It's for the business user who has never written a line of sequel and never will — a director, an operations lead, someone who just wants an answer. That user walks up and asks a plain-English question: "what was our churn rate by region last quarter." The concierge — Genie — doesn't guess. It takes the English question, compiles it into a sequel query against the same governed shelves behind both counters, runs it, and hands back an answer in English, chart included. Strip it down and that's the whole trick in three letters: N L in, sequel out, governed tables underneath the whole exchange.
+
+Here's the part that keeps this from being a parlour trick: the concierge has been briefed. Before any business user ever approaches that desk, a data analyst sets up a Genie space — pins a curated, deliberately narrow set of tables from Unity Catalog to the desk, writes instructions in plain language ("revenue means net revenue from the finance mart, not the raw sales table"), and leaves sample questions and answers as trusted assets the concierge can pattern-match against. That briefing is what keeps the concierge grounded — reasoning from your organisation's actual semantics instead of pattern-matching a table name that merely sounds right.
+
+Walk a question through the desk to see the briefing at work. A regional manager who has never opened a sequel editor in their life walks up and asks, in plain English, what churn looked like by region last quarter. The concierge doesn't wander off to guess. It checks the instructions pinned to its own desk for exactly this space, recognises that "churn" in this business means a specific calculation someone already wrote down, writes the sequel, runs it against the same shelves the analyst uses, and hands back a number and a chart in the time it takes to refill a coffee. A Genie space can also pin a certified, pre-approved query as a trusted asset, so a recurring question always resolves the same correct way instead of being reasoned out fresh every single time, and a business user can even drag a spreadsheet onto the desk for a one-off analysis without it ever touching a governed table at all.
+
+Every query the concierge generates is read-only, and the business user needs at least basic use permission on the sequel warehouse behind the space, so it's still access-controlled, not a side door around governance. It's a genuinely strong capability now: on a twenty-eight-question real-world analysis benchmark Databricks published this year, Genie answered eighty-four and a half percent correctly on the first attempt, against fifty-two percent for a strong general-purpose coding agent doing the same task, and it did it roughly twice as fast — because it isn't guessing schema from scratch each time, it's working from a briefed, governed space.
+
+[PAUSE 1s]
+
+And 2026 is the year the concierge got promoted. Three new titles now sit above the desk, all announced together this year, and worth knowing by name because interviewers reading the same release notes will ask about them. First, Genie One, now generally available: an agentic coworker that goes well past answering a question at the counter. It drafts documents, reports, and artefacts, it can trigger actions in connected business tools, and it doesn't wait for you to walk up to the desk — it ships to the web, to mobile on iOS and Android, and it can schedule itself, run on an alert, and reach out to tools through Model Context Protocol, M C P, the same open standard Agent Bricks uses. Second, Genie Ontology, currently in public preview: think of it as a master directory pinned to the wall behind the concierge desk, a continuously-updated map of how the whole company's data and more than fifty connected applications relate to each other — so when the concierge needs to find a trustworthy source, it's reading an up-to-date map instead of guessing which drawer to open. Third, Genie Agents, also generally available: any time a business user has a particularly good conversation with the concierge — the right question, the right procedure to get the answer — that exchange can be saved as a reusable, shareable agent, so the next person with a similar question doesn't start from a blank desk.
+
+And it's worth being precise about where A I slash B I dashboards sit in this picture, because interviewers will probe the boundary. A dashboard is the fixed, curated view — the same handful of charts a leadership team checks every Monday morning, still built off the governed shelves behind both counters, and Genie can sit underneath a dashboard answering follow-up questions when a number looks surprising. Genie is the conversation; the dashboard is the standing report. You send someone to the concierge desk when the question hasn't been asked before, and you point them at the dashboard when it's asked every single week.
+
+[PAUSE 1s]
+
+Tradeoffs, because a staff-level answer volunteers where this breaks. First: ai underscore query is powerful but it is still a model call per row, and model calls cost money and hit rate limits. A team that pipes a raw, ungoverned million-row table straight into ai underscore query without batching sensibly or checking the endpoint's throughput will either blow out a bill or throttle the very endpoint other production traffic depends on. A concrete way to size that risk: a serving endpoint provisioned for a handful of interactive requests a second can be brought to its knees by a workflow firing a million uncoordinated calls at it in a tight loop. The fix is the same one you'd apply to any downstream A P I dependency — batch sensibly, watch the endpoint's throughput, and provision ahead of a known large job rather than discovering the ceiling in production. Second, and this is the real war story: Genie's accuracy is only as good as its briefing. A finance team stood up a Genie space against two tables that both had a column literally called "revenue" — one net, one gross — without instructions distinguishing them. The concierge didn't ask for clarification; it picked one, answered confidently, and a wrong number went into an executive deck before anyone caught it. The fix wasn't a smarter model, it was scoping the space tighter and writing the instruction down. That's the lesson to volunteer: grounding is a design discipline you own — narrow tables, explicit instructions, curated trusted assets — not a property of the model. Third: Genie One and Genie Agents are genuinely capable, but they are still tools that need the same golden-question regression testing you'd apply to any agent before it's allowed to send a report to an executive unsupervised.
+
+[PAUSE 1s]
+
+Interview angle. Expect this framed as: "how would you let business analysts run L L M-powered enrichment over a table without writing Python?" Answer with the intercom: ai underscore query, called directly from the sequel statement they already write, serverless compute underneath handling parallelization and retries, governed by the same Unity Catalog grants as the source table, task-specific functions for the routine jobs so nobody's hand-tuning prompts for a solved problem. Then expect the follow-up: "and if the requester isn't technical at all?" That's the concierge desk — a Genie space scoped to a curated set of tables, grounded with written instructions and trusted sample questions, generating read-only sequel, and the answer sitting right there in the release notes: eighty-four and a half percent first-attempt accuracy on a real benchmark, because it's briefed, not guessing. And if they push into 2026 specifics — "where does Genie One fit versus a hand-built agent" — the honest answer is that Genie One is the fast path for structured plus unstructured data your organisation already has registered in the lakehouse, with M C P and scheduling built in; you'd still hand-build an agent when you need bespoke tool orchestration or logic that doesn't reduce to "ask a governed question and get an answer back." One more follow-up worth being ready for: "how does Genie decide which of fifty-plus connected systems to trust for an answer." The strong answer is that it isn't decided per question at all — it's maintained continuously in the Genie Ontology graph ahead of time, so grounding shifts from question-time guessing to design-time curation, the same shift you'd argue for in any well-run data platform.
+
+[PAUSE 1s]
+
+Sixty-second recap. Rebuild the office. Locked shelves at the back — Unity Catalog, unchanged from every other episode. Two counters in front of it. Counter one, the sequel analyst's desk, intercom within reach: ai underscore query, an L L M call embedded in a sequel statement, serverless batch inference, no Python, no data movement, governed like any sequel workload — remember the three real limits, serverless compute required, a current runtime required, supported region required. Counter two, the concierge desk: Genie, plain English compiled to governed, read-only sequel, grounded by a Genie space's instructions and trusted assets, not guessing table names — and grounding is a discipline you design, not a switch you flip. Above both desks now: Genie One, the agentic coworker producing documents and reports and reaching tools through M C P; Genie Ontology, the continuously updated map behind the desk; Genie Agents, reusable conversations turned into shareable agents; and A I slash B I dashboards sitting alongside, still built on the same governed tables. One wall of shelves, two counters, and this year, a promotion. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="05-mlflow3-genai.html">← MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="btn" href="07-ai-governance.html">AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost →</a></div></main></div></body></html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk" open><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="active" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 2 · Databricks AI Stack · Episode 4</div>
+<h1 class="lesson">Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</h1>
+<div class="meta">17 min listen · Agent Bricks turns agent-building into a declarative brief instead of hand-tuned code: an auto-optimization loop invents synthetic data and task-aware benchmarks for your use case, tunes for quality and cost, and wires tools through a governed MCP catalog living in Unity Catalog.</div>
+<audio controls preload="metadata" src="../../audio/02-databricks-ai/s2e04-agent-bricks.mp3"></audio>
+<button class="btn complete" data-ep="02-databricks-ai/04-agent-bricks" onclick="toggleDone('02-databricks-ai/04-agent-bricks')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-22</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Agent Bricks replaces hand-tuned agent prompting with a closed loop: describe the job, and the platform generates domain-specific synthetic data and task-aware benchmarks, then searches model/prompt/retrieval configurations to auto-tune for quality <strong>and</strong> cost — while tools are governed, discoverable MCP objects that live in Unity Catalog.</p>
+<h2 id="the-workshop-image-the-optimization-loop">The workshop image → the optimization loop</h2>
+<pre class="mermaid">flowchart LR
+    B["You: declare the brief\n(task + data/tools it can touch)"] --> M["Agent Bricks\n(the auto-tuning master)"]
+    M --> S["Synthetic data generation\n(domain-specific, shaped to the brief)"]
+    S --> E["Task-aware benchmarks\n(LLM-judge scored evals)"]
+    E --> C["Candidate search\nmodel choice x prompt x retrieval x fine-tune"]
+    C -->|score each candidate| SC["Scoreboard: quality + cost"]
+    SC -->|keep best, repeat| C
+    SC --> A["Tuned agent"]
+</pre>
+
+<h2 id="what-an-agent-bricks-agent-is-made-of">What an Agent Bricks agent is made of</h2>
+<pre class="mermaid">flowchart TB
+    Agent["Agent Bricks agent"]
+    Agent --> Tools["Tools = Unity Catalog functions\n(governed, discoverable via MCP catalog)"]
+    Agent --> Knowledge["Knowledge = Vector Search index\n(Delta Sync — freshness automatic)"]
+    Agent --> Model["Model = Serving endpoint\nvia AI Gateway (GA): keys, limits, cost attribution"]
+    Agent --> Trace["Every step traced in MLflow 3"]
+    Tools --> UC["Unity Catalog\n(one governance spine)"]
+    Knowledge --> UC
+    Model --> UC
+</pre>
+
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agent Bricks</td>
+<td>Current-gen Databricks agent-building platform (successor branding to Mosaic AI Agent Framework)</td>
+<td>"Declare the job; the platform auto-optimizes the implementation"</td>
+</tr>
+<tr>
+<td>Auto-optimization</td>
+<td>Generates domain-specific synthetic data + task-aware (often LLM-judge) benchmarks, searches candidate configs, tunes for quality <strong>and</strong> cost</td>
+<td>The core differentiator vs. hand-writing agent code</td>
+</tr>
+<tr>
+<td>Synthetic data generation</td>
+<td>Data manufactured to match your declared task, not supplied by you upfront</td>
+<td>Removes the "we have no labeled dataset" blocker</td>
+</tr>
+<tr>
+<td>Task-aware benchmarks</td>
+<td>Eval harness built specifically for the declared task, commonly LLM-as-judge</td>
+<td>Measurement replaces guesswork</td>
+</tr>
+<tr>
+<td>MCP (Model Context Protocol)</td>
+<td>Open standard for agents to discover and call tools</td>
+<td>Native support in Agent Bricks — tools declared once, discovered everywhere</td>
+</tr>
+<tr>
+<td>MCP tool catalog</td>
+<td>Discoverable, permissioned, audited catalog of tools org-wide</td>
+<td>Reuse instead of reinventing a tool per team; grants control who can call what</td>
+</tr>
+<tr>
+<td>Tools = UC functions</td>
+<td>Every tool is a governed function registered in Unity Catalog</td>
+<td>Same grant statement, same audit trail as tables — no new governance model</td>
+</tr>
+<tr>
+<td>Knowledge = Vector Search index</td>
+<td>Delta Sync-backed index (see episode 2)</td>
+<td>Freshness guarantee carries over into agents automatically</td>
+</tr>
+<tr>
+<td>Model = Serving endpoint</td>
+<td>Reached through the AI Gateway (GA)</td>
+<td>Central keys, rate limits, cost attribution — same as any model call</td>
+</tr>
+<tr>
+<td>MLflow 3 tracing</td>
+<td>Every retrieval/tool-call/response step traced</td>
+<td>"What did the agent actually do" has an answer</td>
+</tr>
+<tr>
+<td>Quality/cost dial</td>
+<td>Optimization target is a pair, tunable per use case</td>
+<td>High-volume agents bias cost; low-volume/high-stakes agents bias quality</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Auto-optimization ≠ absolution</strong> — it tunes against benchmarks built from your brief; a vague brief produces a blind spot in the benchmark. The golden evaluation set reflecting real business edge cases, and the release gate blocking regressions, remain your responsibility.</li>
+<li><strong>Governance cuts both ways</strong> — a discoverable, reusable tool catalog is a win, but an over-permissioned tool becomes discoverable by every team, not just the one that built it. Scoping grants tightly at registration time is a human judgment call, not something the platform enforces for you.</li>
+<li><strong>Maturity curve</strong> — native MCP support and the tool catalog are shipping and real; some surrounding ecosystem pieces (broader cross-org marketplace-style tool sharing) are newer and still stabilizing. Verify current rollout status before committing a timeline.</li>
+<li><strong>When not to reach for it</strong> — exotic custom control flow that doesn't reduce to "describe the job, optimize the configuration," or a five-minute prototype, may still be faster hand-written. Agent Bricks earns its keep once the agent needs real measurement and re-tuning in production.</li>
+</ol>
+<h2 id="scale-for-color-not-personal-metrics">Scale (for color, not personal metrics)</h2>
+<p>Databricks reported more than 100,000 agents running on the platform, processing over a quadrillion tokens a year — the argument for why the tuning loop has to be automated: nobody hand-tunes prompts at that scale one thread at a time.</p>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. How is Agent Bricks actually different from writing agent code by hand?</strong>
+Hand-written code gets you exactly the configuration you wrote, with no measurement of whether another configuration would score better. Agent Bricks closes the loop: it generates domain-specific synthetic data and task-aware benchmarks for your declared task, searches across model choice, prompt structure, and retrieval settings, and keeps whichever configuration scores best on quality <strong>and</strong> cost together — automatically, not via manual trial and error.</p>
+<p><strong>Q2. Walk me through the MCP tool catalog's governance story.</strong>
+Tools are Model Context Protocol objects, natively supported, and every tool is really a governed function registered in Unity Catalog. That makes tools discoverable (browse instead of reinvent), permissioned (a tool only opens for an agent granted access), and audited (every call logged) — the same governance spine that already covers tables and models, extended to cover agent actions.</p>
+<p><strong>Q3. Is auto-optimization a substitute for an evaluation strategy?</strong>
+No. It optimizes against the benchmarks it's given, and those benchmarks are shaped by your declared brief. The golden evaluation set reflecting your actual hard cases, and the release gate that blocks a regression from shipping, are still owned by the team — the same dev-test-prod discipline applied to data pipeline releases today.</p>
+<p><strong>Q4. What is an Agent Bricks agent actually composed of, underneath the product name?</strong>
+Four already-familiar objects wired together: tools that are Unity Catalog functions, knowledge from a Delta Sync vector search index, a model behind a serving endpoint reached through the AI Gateway, and every step traced in MLflow 3. Nothing about "agent" introduces a new governance model — it composes objects that already had one.</p>
+<p><strong>Q5. When would you NOT use Agent Bricks?</strong>
+When control flow is genuinely exotic and doesn't reduce to a declarative brief plus configuration search, or at the earliest prototype stage where the goal is just to see if an idea holds together. Agent Bricks pays off once the agent is past prototype and needs real, ongoing measurement and tuning in production.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Agent Bricks: https://www.databricks.com/product/artificial-intelligence/agent-bricks</li>
+<li>Introducing Agent Bricks (auto-optimization detail): https://www.databricks.com/blog/introducing-agent-bricks</li>
+<li>Agent Framework — tools for agents: https://docs.databricks.com/aws/en/agents/agent-framework/agent-tool</li>
+<li>Databricks managed MCP servers: https://docs.databricks.com/aws/en/generative-ai/mcp/managed-mcp</li>
+<li>Accelerate AI Development with MCP and Agent Bricks: https://www.databricks.com/blog/accelerate-ai-development-databricks-discover-govern-and-build-mcp-and-agent-bricks</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track two, episode four: Agent Bricks. Back in the big-picture episode we stood on the top floor of the five-floor tower and named the resident living there. Today we move in and actually watch it work, because "Agent Bricks" is one of those names that sounds like marketing until you see the mechanism underneath, and the mechanism is genuinely interview-worthy.
+
+Here's the puzzle it exists to solve. Say you're asked to build an agent that triages incoming support tickets — decide refund, escalate, or reply. The naive path: pick a model, write a prompt, test it on a handful of examples that look right, ship it, and then spend the next two weeks in a miserable loop — tweak the prompt, eyeball five outputs, tweak again, argue with a teammate about whether the new phrasing actually helped or you're just pattern-matching on noise. That loop is expensive in a way that's easy to underestimate: it's not just engineer-hours, it's the fact that "better" is a guess until someone builds real measurement, and most teams never get around to building the measurement, so they ship on vibes. Agent Bricks exists to replace that loop with something that measures, not guesses.
+
+[PAUSE 1s]
+
+Why it matters before we go further: this is the differentiator that separates Agent Bricks from "yet another agent framework." Plenty of tools help you wire a model to some tools and call it an agent. Agent Bricks' bet is narrower and sharper — auto-optimization. You describe the job. It invents its own domain-specific synthetic data and task-aware benchmarks for that exact job, evaluates a whole space of candidate configurations against them, and keeps whichever configuration scores best on quality and cost together. Say that distinction out loud in an interview and you've separated yourself from someone who only knows the product name.
+
+[PAUSE 1s]
+
+Now the picture, because this is worth seeing rather than just hearing described. In your mind's eye, build a workshop — one room, stone floor, good light. Standing at a bench on the left is you, the person with the job to get done. You are not holding a manual. You are not holding a hundred lines of prompt engineering. You're holding a single sheet with a brief written on it: what the job is, and what data and tools it's allowed to touch. That's the entire input.
+
+Facing you, in the center of the room, is the master craftsperson. This is Agent Bricks itself — not a tool you operate step by step, but a craftsperson you hand a brief to and who takes over from there. Behind the master is a second bench, piled with raw material, and this is where the first surprising thing happens: the master doesn't ask you for a pile of example tickets to train on. The master manufactures the practice problems. Watch it happen — the master reaches into that pile and starts producing synthetic tickets, cases that look and read like your real traffic, edge cases included, because it's generating them specifically shaped around the brief you just handed over. That's domain-specific synthetic data, built to order.
+
+Above that bench, bolted to the wall, picture a scoreboard with two columns, side by side: quality on the left, cost on the right. The master doesn't grade on one axis. Every practice run gets marked on both. Now bring in the apprentice, standing just to the right of the master — this is a candidate version of your agent, one particular combination of choices: a specific model, a specific way of phrasing the instructions, specific retrieval settings for how it looks up information. The master hands the apprentice a batch of the synthetic practice problems, watches how the apprentice performs, marks both columns on the scoreboard, then tears up that apprentice's approach and tries a different combination — different model, different phrasing, different retrieval depth — and drills again. This repeats many times, unattended, and only the combination that tops the scoreboard on quality without blowing out the cost column is the one that graduates and gets kept as your agent.
+
+One more fixture in this workshop: on the wall to your left, a locked tool cabinet, drawers labeled and numbered. This is the Model Context Protocol tool catalog — we'll come back to M C P properly in a moment. Every drawer in that cabinet is a capability the agent might reach for — look up an order, issue a refund, search a knowledge base — and every drawer has a label showing who's allowed to open it, and a little logbook nailed beside it recording every time it's opened. Hold that image; we're going to walk back into it piece by piece.
+
+[PAUSE 1s]
+
+So, how does this actually work underneath the picture? Start with the brief on your bench. Declaring an agent in Agent Bricks is deliberately high level — you're not writing an orchestration loop or a state machine, you're describing what the agent should accomplish and pointing it at the data and systems it's permitted to use. That's the input to the master craftsperson.
+
+Now the auto-optimization loop itself, which is the real engineering underneath the metaphor. First, synthetic data generation: Agent Bricks uses techniques built by Databricks' own research group to produce data shaped specifically around your declared task, rather than expecting you to supply a large labeled dataset up front — because most teams don't have one, and building one by hand is exactly the kind of multi-week detour this tool is trying to remove. Second, task-aware benchmarks: it builds an evaluation harness for your specific job, commonly using a large language model — an L L M — acting as a judge, scoring candidate outputs against what a good answer for this task looks like. Third, the search itself: across that evaluation harness, Agent Bricks runs experiments over model choice, prompt structure, retrieval parameters, and in some cases fine-tuning, and does this automatically rather than one engineer manually trying combinations. Fourth — and this is the part worth over-emphasizing in an interview — it optimizes for quality and cost as a pair, not quality alone, and you can lean the dial toward one or the other depending on what the job demands. A ticket-triage agent running millions of times a day cares enormously about cost per call; a contract-review agent running twice a week can afford to spend more per call for higher quality. Agent Bricks treats that as a tunable target, not an afterthought bolted on after the fact.
+
+Back to the tool cabinet on the wall — Model Context Protocol, spelled out fully: M C P. This is the open standard for how an agent discovers and calls tools, and Agent Bricks supports it natively, which matters because it means tools aren't hand-wired, one integration at a time, into every agent you build. They're declared once and discovered. And the catalog is the governance story: tools are discoverable, so a team building a new agent can browse what already exists instead of reinventing a refund-lookup tool for the fifth time; they're permissioned, so a drawer only opens for an agent that's been granted access to it; and every call is audited, so when someone asks "what did this agent actually do in production last Tuesday," there's a logbook, not a shrug. And here's the detail that ties this whole episode back to the tower from last time: where do those tools actually live? Unity Catalog. A tool in this system is a governed function registered in Unity Catalog, the exact same governance spine that already holds your tables and your models. Nothing new to secure — the same grant statement, the same audit trail, extended to cover "what can this agent do" the way it already covers "what can this person query."
+
+Zoom out one more level and look at what an Agent Bricks agent is actually made of, because this is a favorite interview probe — "what's really underneath the name?" Peel back the label and you find four ordinary, already-familiar objects wired together. The tools the agent calls are Unity Catalog functions. The knowledge it retrieves from is a vector search index — the same delta-synced index from two episodes back, so the freshness guarantee you already know about applies here too; no separate "keep the agent's knowledge current" pipeline to babysit. The model that actually generates the agent's responses sits behind a serving endpoint, reached through the A I Gateway, now generally available, which means the same centralized credentials, rate limits, and cost attribution you'd get calling a model directly also cover every model call an agent makes. And every single step along the way — the retrieval, the tool call, the model response — gets traced in M L flow three, the same tracing floor from the big picture. So an "agent" here isn't a new kind of object requiring a new kind of governance. It's a composition of four things you already had a security review for, wired together and optimized as a unit.
+
+[PAUSE 1s]
+
+Some numbers to anchor this, because a claim without a number is just marketing. Databricks reported earlier this year that more than a hundred thousand agents are already running on this platform, processing over a quadrillion tokens annually. That scale is the argument for why auto-optimization matters at all — nobody is hand-tuning a hundred thousand agents' worth of prompts one Slack thread at a time. The economics only work if the tuning itself is automated.
+
+[PAUSE 1s]
+
+Now the tradeoffs, because a staff-level answer volunteers the sharp edges before being asked. First: auto-optimization is not absolution. The master craftsperson in our workshop is extremely good at grading against the scoreboard it built — but it built that scoreboard from synthetic data shaped by your brief, and a brief that's vague or missing an edge case produces a scoreboard that's blind to that same edge case. The golden evaluation set that reflects your actual business reality, with your actual hard cases baked in, is still work only you can do, and the release gate that blocks a regression from reaching production is still a discipline you own — the identical dev-test-prod rigor you already apply to a data pipeline release, not something Agent Bricks lets you skip.
+
+Second, the tool catalog governance story cuts both ways. Discoverable and reusable tools are a real win — but discoverable also means an over-permissioned tool is now discoverable by every team that goes looking, not just the one that built it. The failure mode isn't exotic: a refund-issuing tool gets built for one narrow support workflow, gets registered with broad grants because narrowing the grant felt like extra work at the time, and six months later a completely different agent — built by a different team, for a different purpose — discovers it in the catalog and starts calling it in a context nobody reviewed. Governance infrastructure doesn't prevent that by existing; it prevents it when someone actually scopes the grant tightly at registration time. The cabinet has locks, but somebody still has to decide who gets which key, and "everyone, because it was easier" is the mistake that shows up in a postmortem, not a design review.
+
+Third, know the maturity curve honestly. Native M C P support and the tool catalog are current, real, and shipping — but parts of the surrounding ecosystem, like broader marketplace-style tool sharing across organizations, are newer and still stabilizing. In an interview, "the tool catalog gives governed, audited discovery" is a strong claim to make; overclaiming that every corner of that ecosystem is long-since mature is the kind of detail a sharp interviewer will probe, so hold that nuance rather than papering over it.
+
+Fourth, know when this is the wrong tool. If your control flow is genuinely exotic — deeply custom branching logic that doesn't reduce to "describe the job, optimize the configuration" — or you're at a five-minute prototype stage where you just want to see if an idea holds together at all, hand-writing the agent directly can still be faster than declaring a brief and waiting on an optimization loop. Agent Bricks earns its keep once you're past the prototype and need something that's actually going to be measured, tuned, and re-tuned in production.
+
+[PAUSE 1s]
+
+Interview angle. The question comes in some form of: "how is this actually different from writing agent code by hand?" Give the honest, specific answer, not the marketing answer. Hand-written agent code gets you exactly the configuration you wrote and no measurement of whether a different configuration would have been better — improvement depends entirely on someone's spare time and intuition. Agent Bricks replaces that with a closed loop: synthetic data generated for your specific task, task-aware benchmarks built from that data, a search across model choice, prompt, and retrieval settings scored against those benchmarks, tuned for quality and cost together rather than quality alone. Then land the second half of the answer, because it's the part that shows judgment rather than product recall: auto-optimization tunes against the benchmarks it was given, so the golden evaluation set representing your real business cases, and the release gate that blocks a regression, remain entirely your responsibility — the tool removes the manual tuning grind, not the obligation to define what "good" means for your business. And if asked specifically about the M C P tool catalog, land on the governance framing: tools are Unity Catalog functions, so they're discoverable, permissioned, and audited the same way your tables already are — one governance spine, extended, not duplicated — while flagging that scoping grants tightly at registration time is still a human judgment call the platform can't make for you.
+
+[PAUSE 1s]
+
+Sixty-second recap. Walk back into the workshop. You, on the left, hand over a brief — what the job is, what data and tools it can touch. The master craftsperson in the center takes that brief and manufactures synthetic practice problems shaped to it, builds a two-column scoreboard for quality and cost, drills apprentice after apprentice — each one a candidate model, prompt, and retrieval combination — against those problems, and keeps only the configuration that tops both columns. The locked tool cabinet on the wall is the Model Context Protocol catalog: drawers labeled, permissioned, logged, and every drawer is really a governed function sitting in Unity Catalog. Pull back further and the whole agent is just four familiar objects wired together: tools from Unity Catalog, knowledge from a vector search index, a model behind a serving endpoint through the A I Gateway, every step traced in M L flow three. Auto-optimization removes the hand-tuning grind; it does not remove your golden evaluation set or your release gate — that discipline stays yours. Next episode: back to M L flow three, this time for the full picture — tracing, evals, and prompt and application versioning. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-model-serving.html">← Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="btn" href="05-mlflow3-genai.html">MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning →</a></div></main></div></body></html>

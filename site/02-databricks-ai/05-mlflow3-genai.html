@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk" open><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="active" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><div class="locked"><span class="tick">🔒</span>1. Anatomy of a Production LLM System</div><div class="locked"><span class="tick">🔒</span>2. "Design a RAG System" — Interview Walkthrough</div><div class="locked"><span class="tick">🔒</span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</div><div class="locked"><span class="tick">🔒</span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</div><div class="locked"><span class="tick">🔒</span>5. Guardrails, PII, Prompt-Injection Defense</div><div class="locked"><span class="tick">🔒</span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</div><div class="locked"><span class="tick">🔒</span>7. DRILL: GenAI System Design Rapid-Fire</div></details><details class="trk"><summary>Track 4 · RAG</summary><div class="locked"><span class="tick">🔒</span>1. Embeddings & Vector Similarity from First Principles</div><div class="locked"><span class="tick">🔒</span>2. Chunking Strategies</div><div class="locked"><span class="tick">🔒</span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</div><div class="locked"><span class="tick">🔒</span>4. Vector DB Internals: HNSW, IVF, Quantization</div><div class="locked"><span class="tick">🔒</span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</div><div class="locked"><span class="tick">🔒</span>6. RAG Evaluation: RAGAS & Friends</div><div class="locked"><span class="tick">🔒</span>7. Production RAG Failure Modes & Fixes</div><div class="locked"><span class="tick">🔒</span>8. DRILL: RAG Rapid-Fire</div></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><div class="locked"><span class="tick">🔒</span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</div><div class="locked"><span class="tick">🔒</span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</div><div class="locked"><span class="tick">🔒</span>3. Agent Memory: Short-Term, Long-Term, Summarization</div><div class="locked"><span class="tick">🔒</span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</div><div class="locked"><span class="tick">🔒</span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</div><div class="locked"><span class="tick">🔒</span>6. MCP vs Function Calling; Security & Auth in Real Deployments</div><div class="locked"><span class="tick">🔒</span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</div><div class="locked"><span class="tick">🔒</span>8. Agent Evals, Guardrails, Human-in-the-Loop</div><div class="locked"><span class="tick">🔒</span>9. DRILL: Agents + MCP Rapid-Fire</div></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><div class="locked"><span class="tick">🔒</span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</div><div class="locked"><span class="tick">🔒</span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</div><div class="locked"><span class="tick">🔒</span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</div><div class="locked"><span class="tick">🔒</span>4. LangSmith: Tracing, Datasets, Evals</div><div class="locked"><span class="tick">🔒</span>5. When NOT LangChain — Tradeoffs & Alternatives</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LangChain/LangGraph Rapid-Fire</div></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><div class="locked"><span class="tick">🔒</span>1. From RNNs to Attention: Why Transformers Won</div><div class="locked"><span class="tick">🔒</span>2. Self-Attention Mechanics: Q, K, V by Analogy</div><div class="locked"><span class="tick">🔒</span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</div><div class="locked"><span class="tick">🔒</span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</div><div class="locked"><span class="tick">🔒</span>5. Inference: KV Cache, Sampling, Speculative Decoding</div><div class="locked"><span class="tick">🔒</span>6. Scaling Laws, Mixture-of-Experts, Long Context</div><div class="locked"><span class="tick">🔒</span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</div><div class="locked"><span class="tick">🔒</span>8. DRILL: Transformers Rapid-Fire</div></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><div class="locked"><span class="tick">🔒</span>1. LLMOps vs MLOps: What Actually Changes</div><div class="locked"><span class="tick">🔒</span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</div><div class="locked"><span class="tick">🔒</span>3. Quantization & Efficient Serving</div><div class="locked"><span class="tick">🔒</span>4. Monitoring, Drift, Feedback Loops</div><div class="locked"><span class="tick">🔒</span>5. Prompt Engineering Patterns That Matter in Interviews</div><div class="locked"><span class="tick">🔒</span>6. DRILL: LLMOps Rapid-Fire</div></details></nav>
+<main class="main"><div class="crumb">Track 2 · Databricks AI Stack · Episode 5</div>
+<h1 class="lesson">MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</h1>
+<div class="meta">17 min listen · One floor of the lakehouse AI tower, opened up in full: how MLflow 3 turns every agent request into a recorded flight, every release into a certified inspection, and every prompt into a tail-numbered, rollback-ready registry citizen.</div>
+<audio controls preload="metadata" src="../../audio/02-databricks-ai/s2e05-mlflow3-genai.mp3"></audio>
+<button class="btn complete" data-ep="02-databricks-ai/05-mlflow3-genai" onclick="toggleDone('02-databricks-ai/05-mlflow3-genai')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-07-22</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>MLflow 3 was redesigned around generative AI — it turns non-deterministic, multi-step agent behavior into something you can <strong>record</strong> (tracing), <strong>certify</strong> (evaluation), and <strong>roll back</strong> (prompt/app versioning), instead of just tracking one input-output prediction like classical MLflow did.</p>
+<h2 id="the-mental-image-the-flight-recorder-and-the-control-tower">The mental image: the flight recorder and the control tower</h2>
+<ul>
+<li><strong>Tracing</strong> = the black box in every aircraft — records every leg of every flight (request), continuously, at production scale.</li>
+<li><strong>Evaluation</strong> = the pre-flight inspection panel — judges (automated + human) check the aircraft against a checklist before and after it carries passengers.</li>
+<li><strong>Registry</strong> = the hangar — models, prompts, and full application versions sit tail-numbered, swappable by alias, rollback-ready.</li>
+</ul>
+<h2 id="trace-tree-one-request-nested-spans">Trace tree — one request, nested spans</h2>
+<pre class="mermaid">flowchart TB
+    R["Root span: user request\n(prompt in)"]
+    RT["Retrieval span\n(vector search call)"]
+    T1["Tool call span\n(e.g. lookup API)"]
+    T2["Tool call span\n(e.g. calculation)"]
+    G["Guardrail / safety check span"]
+    M["Model synthesis span\n(final response)"]
+    R --> RT
+    R --> T1
+    R --> T2
+    R --> G
+    R --> M
+    RT -.->|tokens, latency logged| R
+    T1 -.->|tokens, latency logged| R
+    M -.->|tokens, latency logged| R
+</pre>
+
+<p>Every span carries inputs, outputs, token counts, and latency. Traces are searchable — e.g. "every trace that touched document X in the last hour" — which is how a stale-context bug gets found in minutes instead of inferred from tickets. Traces work for agents <strong>deployed anywhere</strong> (Databricks, another cloud, on-prem), making MLflow 3 the observability plane for the whole AI estate, not just the Databricks corner of it.</p>
+<h2 id="evaluation-loop-the-inspection-gate">Evaluation loop — the inspection gate</h2>
+<pre class="mermaid">flowchart LR
+    D["Dev: golden test set"] --> H["Evaluation harness"]
+    H --> S1["Built-in scorers\n(groundedness, relevance, safety)"]
+    H --> S2["Custom scorers\n(domain-specific rules)"]
+    H --> J["LLM judges"]
+    S1 & S2 & J --> SC["Scores"]
+    SC -->|pass| PROD["Promote to production alias"]
+    SC -->|fail| DEV2["Back to dev"]
+    PROD --> FB["Production traces"]
+    FB --> HR["Human review / feedback API"]
+    HR -->|checks judge agreement| J
+</pre>
+
+<p>Same scorers run in dev (against the golden set) and in production (against live traffic) — the bar doesn't relax after launch. LLM judges need periodic calibration against human review; an uncalibrated judge can systematically miss a failure mode (e.g. answers grounded in retrieved text but missing what the user actually needed).</p>
+<h2 id="registry-the-hangar">Registry — the hangar</h2>
+<pre class="mermaid">flowchart TB
+    UC["Unity Catalog\n(governance ledger)"]
+    subgraph Hangar["Registry"]
+        MOD["Model versions"]
+        PR["Prompt versions\n(git-like: commits, aliases)"]
+        APP["Application versions\n(prompt + retrieval config + tools + model)"]
+    end
+    UC --> Hangar
+    PR -->|alias: production| LIVE1["Live traffic"]
+    APP -->|alias: production| LIVE2["Live traffic"]
+    PR -.->|rollback: repoint alias| PR
+</pre>
+
+<p>Prompts get git-like versioning: commit messages, aliases (e.g. "production"), instant rollback by repointing the alias. Full application versions (prompt + retrieval config + tool wiring + model choice) are versioned as a unit, so "which prompt/app was live during the incident" is a factual lookup, not a guess. The registry's ledger is Unity Catalog — same access control, lineage, and audit as tables and models elsewhere on the platform.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trace</td>
+<td>Tree of nested spans for one request: prompt, retrieval, tool calls, model response, tokens, latency</td>
+<td>"Distributed tracing for AI — pull it up, don't guess"</td>
+</tr>
+<tr>
+<td>Span</td>
+<td>One leg of a trace (a single retrieval call, tool call, or model call)</td>
+<td>Nested under the root span, ordered, timed</td>
+</tr>
+<tr>
+<td>Production-scale tracing</td>
+<td>Every real request traced, not sampled in dev</td>
+<td>"The incident you need is never the one you sampled"</td>
+</tr>
+<tr>
+<td>Cross-platform tracing</td>
+<td>Traces agents on Databricks, other clouds, or on-prem</td>
+<td>"Observability plane for the whole AI estate"</td>
+</tr>
+<tr>
+<td>Evaluation harness</td>
+<td>Runs the app against a golden test set, scores outputs</td>
+<td>Same scorers in dev and production</td>
+</tr>
+<tr>
+<td>Built-in / custom scorers</td>
+<td>Standard groundedness/relevance/safety checks + domain-specific rules</td>
+<td>Checklist, some generic, some yours</td>
+</tr>
+<tr>
+<td>LLM judge</td>
+<td>A model grading another model's output against a rubric</td>
+<td>Fast, but needs calibration against human review</td>
+</tr>
+<tr>
+<td>Feedback-collection APIs / UI</td>
+<td>Humans or end users flag real production traces as good/bad</td>
+<td>Feeds back into the next round of test scenarios</td>
+</tr>
+<tr>
+<td>Prompt Registry</td>
+<td>Git-like versioned prompts: commits, aliases, rollback</td>
+<td>"Prompt is a registry citizen, not a hardcoded string"</td>
+</tr>
+<tr>
+<td>Application version</td>
+<td>Prompt + retrieval config + tools + model, versioned as a unit</td>
+<td>Answers "what was live during the incident"</td>
+</tr>
+<tr>
+<td>Registry on Unity Catalog</td>
+<td>Same governance spine as tables/models</td>
+<td>Access control, lineage, audit — inherited, not reinvented</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Tracing cost at scale</strong> — every span, every token, every request logged is real storage/latency overhead. Tiered approach: sample routine traffic, but never sample away errors or flagged requests — capture those at 100%.</li>
+<li><strong>Judges drift</strong> — an LLM judge can be systematically lenient or share a blind spot with the model family it's built from. Keep a rotating human-review sample checking judge agreement permanently, not just at launch.</li>
+<li><strong>Registry ≠ governance by itself</strong> — versioning is just bookkeeping unless promotion to a "production" alias actually requires clearing the evaluation gate first. The dev-test-prod discipline has to be enforced operationally, the same as any other production release process.</li>
+</ol>
+<h2 id="interview-qa">Interview Q&amp;A</h2>
+<p><strong>Q1. How would you debug an agent that gave a wrong answer in production?</strong>
+Pull the trace for that request, walk the span tree top to bottom (prompt in, each retrieval/tool call, model response out), and find the exact leg where things went wrong — e.g., a retrieval call that surfaced a superseded document. No speculation; the trace has the answer.</p>
+<p><strong>Q2. How do you find out which prompt or application version was live during an incident?</strong>
+Because prompts and application versions are registry citizens with commit history, aliases, and timestamps (backed by Unity Catalog), that's a factual lookup against the registry ledger, not a reconstruction from memory or scattered commits.</p>
+<p><strong>Q3. How do you stop a bad prompt change from reaching customers?</strong>
+Nothing gets promoted to a "production" alias without clearing the evaluation harness first — same scorers, same golden set, dev-to-test-to-production discipline. Compare the candidate against the current production version side by side before promoting.</p>
+<p><strong>Q4. What's the risk of relying entirely on LLM judges for evaluation?</strong>
+Judges can drift or share a blind spot with the model family they're built from, systematically passing a failure mode a human would catch. Keep a rotating human-review sample permanently checking judge agreement, not just at launch — plus feedback-collection APIs so real users can flag production traces.</p>
+<p><strong>Q5. What does MLflow 3 add for GenAI that classical MLflow (experiment tracking) didn't have?</strong>
+Classical MLflow tracked one input-output model artifact per run. MLflow 3 is built for multi-step, non-deterministic agent behavior: production-scale tracing as nested trace trees (across any deployment platform), evaluation harnesses with built-in and custom scorers plus LLM judges and human feedback, and versioning extended from models to prompts and full application versions.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>MLflow GenAI overview: https://mlflow.org/docs/latest/genai/</li>
+<li>MLflow 3 (concepts): https://mlflow.org/docs/latest/genai/mlflow-3/</li>
+<li>LLM Tracing and Agent Observability: https://mlflow.org/docs/latest/genai/tracing/</li>
+<li>LLM and Agent Evaluation: https://mlflow.org/docs/latest/genai/eval-monitor/</li>
+<li>Prompt Registry: https://mlflow.org/docs/latest/genai/prompt-registry/</li>
+<li>Databricks — MLflow 3 for GenAI: https://docs.databricks.com/aws/en/mlflow3/genai/</li>
+<li>Databricks blog — MLflow 3.0: https://www.databricks.com/blog/mlflow-30-unified-ai-experimentation-observability-and-governance</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track two, episode five: M L flow three for generative A I — tracing, evaluations, and prompt and application versioning. Last time we built the five-floor tower of the Databricks A I stack, and floor two was M L flow three, the observability and quality floor. Today we stop naming it and start opening it up.
+
+Here's the scenario that makes this episode matter. An A I assistant, live in production, tells a customer something wrong — maybe a policy that doesn't exist, maybe a number that's stale, maybe something that just sounds off. Someone escalates it. Now you're in a room, and the question on the table is simple to ask and brutal to answer without the right tooling: what exactly happened, in what order, and which piece of the system is at fault? Was it the retrieval step pulling the wrong document? A tool call that silently failed? The model itself hallucinating on good context? Without an answer, you're guessing, and guessing in front of an incident review is not where you want to be.
+
+That's the gap M L flow three closes. Quick word on why it needed closing. Classical M L flow — the tool most people mean when they just say "M L flow" — was built for a different shape of work: you run an experiment, you log hyperparameters and metrics, and at the end you get one model artifact that takes one input and produces one output. Clean, deterministic-ish, easy to track. Generative A I applications don't look like that at all. A single user question can trigger a retrieval call, then a tool call, then a second model call to synthesize the answer, and the whole chain can behave differently on a retry. There's no single "the prediction" to log anymore — there's a multi-step, non-deterministic journey. M L flow three was redesigned from the ground up around that reality, and it stands on three capabilities: tracing, evaluation, and versioning. We're going to build one picture and hang all three off it.
+
+[PAUSE 1s]
+
+Picture an airfield. Not a tower this time — an airfield, wide open, with a control tower at one end. Every single request into your A I application is a flight taking off from this airfield. The prompt coming in is wheels leaving the runway. Everything that happens next — a call out to a retrieval index, a tool invocation, a second model call — is a leg of that flight, one waypoint after another. And the final answer coming back to the user is the landing. Hold that image: one request, one flight, start to finish. Now let's furnish the airfield with the three things that make it work.
+
+First, sitting inside every single aircraft: the flight recorder. The black box. This is tracing. From the moment wheels leave the runway to the moment the aircraft lands, the recorder is running continuously, capturing everything: the prompt that went in, each retrieval call and what came back, each tool invocation and its result, the model's response at the end, and — instrumentation any good flight recorder needs — the altitude and airspeed readouts the whole way, which in this world means token counts and latencies at every single leg. And critically, this isn't a flat log. It's structured as a tree. The whole flight is the root, and each leg — each retrieval, each tool call, each model call — is a nested span underneath it, in the exact order it happened, with exact timing. That tree is the trace, and it's the thing you pull up when someone asks "why did the agent say THAT." You don't guess. You open the trace, walk it top to bottom, leg by leg, and you find the exact point where things went wrong — maybe the retrieval leg pulled back a chunk from a superseded document, and everything downstream of that was the model faithfully summarizing garbage.
+
+Notice how granular this gets in practice. A single customer question might spawn a dozen spans underneath one root — a retrieval call that itself fans out into several document lookups, two or three tool invocations, a guardrail check, a final synthesis call — and every one of those legs is searchable. You can ask the airfield "show me every flight that touched this specific document in the last hour" and get back the exact set of traces, which is how a stale-document problem gets found in minutes instead of being inferred from a pile of angry tickets.
+
+Two things make this flight recorder more than a debugging convenience. One: it runs at production scale, not sampled in a dev notebook. Real flight recorders are mandatory equipment on every commercial aircraft, on every flight, not a sample of flights picked at random — because the one flight you didn't record is exactly the one you'll need. M L flow three tracing is built on the same logic: every real production request gets a trace, because the 2 A M incident is never the one you planned to capture. Two — and this is the differentiator worth remembering for an interview — the recorder format isn't tied to one airline or one airport. M L flow three can trace agents deployed anywhere: on Databricks, on another cloud entirely, even on-premises. That turns it from "the Databricks tracing feature" into something bigger: the observability plane for your whole A I estate, wherever pieces of it happen to be running. If your organization has agents scattered across more than one platform — and most do, at least for a while — this is the one place they all show up in the same format.
+
+[PAUSE 1s]
+
+Second feature of the airfield: before any aircraft is allowed to push back from the gate carrying passengers, it goes through a pre-flight inspection, and standing at the gate is a panel of inspectors with a checklist. This is evaluation. Mechanically, an evaluation harness runs your application against a set of test questions — a curated battery of scenarios, the golden set — and scores what comes back. Some of the inspectors on this panel aren't human at all. They're L L M judges: models whose entire job is to read an output and grade it against a rubric — is this grounded in the evidence that was retrieved, is it actually relevant to the question that was asked, is it safe to hand to a customer. That's enormously faster than convening a room of human reviewers for every single change, and it's what makes evaluation something you can run continuously instead of once a quarter. And the checklist itself is a mix of built-in scorers — the standard groundedness, relevance, and safety checks you'd want on almost any application — and custom scorers you write for whatever your domain actually cares about, whether that's a specific compliance phrase that must appear or a tone that must never appear. The same scorers run in development against your golden set and again in production against live traffic, so the bar a release had to clear before launch is the same bar it keeps being held to afterward — the inspection doesn't stop once the aircraft is in the air.
+
+But an inspector, human or automated, can drift out of calibration, and this is where the metaphor earns its keep as a warning, not just a picture. Picture a platform that leaned entirely on one automated judge to certify every release, month after month, scores consistently high, everyone stops looking closer. Then a specific category of user complaint starts showing up — answers that are technically grounded in retrieved text but miss what the customer actually needed — and it turns out the judge, built from the same model family as the application it was grading, had a soft spot for exactly that failure mode. It was grading its own blind spot as a passing score. The fix isn't to throw out automated judges — it's to keep a rotating sample of human review permanently in the loop, not just at launch, specifically checking whether the judge and the humans still agree. M L flow three supports that other half of the panel too: feedback-collection A P Is and a U I, so after a flight has actually landed — after a real production trace has happened — a human reviewer or even the end user can file a report, flagging a good answer or a bad one, and that feedback flows back to sharpen the next round of test scenarios. The inspection panel and the people who flew the actual flight talk to each other.
+
+[PAUSE 1s]
+
+Third and last feature of the airfield: behind the runway, the hangar. This is the registry, and here's the fact worth sitting with — the hangar doesn't only store aircraft as in "trained models." It stores prompts and full application versions too, each one tail-numbered, each one a first-class citizen you can pull back out.
+
+Take the prompt specifically. In a lot of shops, a prompt is just a string sitting inside application code, buried in a repository, and changing it means a code change and a redeploy. In this picture, a prompt is its own aircraft in the hangar, with git-like versioning: every edit is a new tail number with a commit message describing what changed, an alias like "production" points at whichever tail number is currently flying live traffic, and swapping which version is live is a pointer change, not a redeploy. And if the new version turns out to fly badly, rollback is just wheeling the previous tail number back out and pointing the alias at it again. Before any of that promotion happens, you can taxi two tail numbers side by side — run the candidate prompt and the current production prompt through the same evaluation harness against the same golden set, and compare the scores directly, so promoting a new version is a decision backed by numbers instead of a hunch that the new wording "reads better."
+
+Zoom out one more level: the entire assembled application — prompt, retrieval configuration, tool wiring, model choice, all of it together — gets versioned as a unit too. That's what makes a question like "which prompt was live during that incident last Tuesday" actually answerable, with a date and a tail number, instead of a shrug and a guess based on someone's memory of a Slack message. That's incident forensics, made possible because the version was recorded as a citizen of the hangar the moment it went live, not reconstructed after the fact from scattered commits.
+
+And the hangar's own inventory ledger — the thing that actually tracks which tail number is where, who's allowed to touch it, and its full history — is Unity Catalog. Same governance spine we built as the ground floor of the whole tower back in episode one. Which means a prompt or an application version gets the same access control, lineage, and audit trail as a table or a model does elsewhere on the platform. Nobody had to invent a separate permission system for prompts. They just moved into a hangar that already had one.
+
+[PAUSE 1s]
+
+Now the costs and the sharp edges, because a staff-level answer names these before an interviewer has to dig for them. Full production tracing has a real bill: every span logged, every token counted, on every request, at real query volume, and that's write and storage overhead that shows up in your bill and, if done carelessly, in your latency too. The fix most teams land on is tiered — sample the routine, uneventful traffic, but never sample away the failures; anything that errors or gets flagged gets captured at one hundred percent, full stop, because that's precisely the traffic you can't afford to have missing when someone asks what happened.
+
+Second sharp edge, and we already walked through it: L L M judges are an instrument, and instruments drift. Treat a judge's score as provisional until it's been checked against human agreement recently, not just when the judge was first stood up. The moment you stop checking is the moment a systematic blind spot gets to hide behind a green checkmark.
+
+Third: a registry existing is not the same thing as governance actually happening. The hangar can turn into an unlabeled scrapyard of half-tracked versions if nobody enforces the gate — if promoting a prompt's "production" alias doesn't actually require passing the evaluation harness first, the versioning is just bookkeeping after an incident, not a safety net that prevented one. The discipline has to be real: dev, test, and only then production, for prompts and application versions exactly the way you already enforce it for a data pipeline release.
+
+[PAUSE 1s]
+
+Interview angle, three ways this shows up, and each one is worth having a one-breath answer ready for. First: "how would you debug an agent giving a wrong answer in production." Strong answer — pull the trace, walk the tree span by span, prompt in, each retrieval and tool call, model response out, find the exact leg where the trail goes bad, and say precisely why, don't speculate. Second: "how do you handle an incident where the wrong prompt might have been live." Strong answer — because prompts and application versions are registry citizens with tail numbers and timestamps, that question has a factual answer, pulled from the hangar's ledger, not reconstructed from memory. Third: "how do you stop a bad prompt change from reaching customers." Strong answer — nothing gets promoted to a production alias without clearing the evaluation gate first, the same dev-to-test-to-production discipline you'd insist on for any other production release, and the judges plus a rotating human-review sample are what actually enforces that gate rather than just documenting it.
+
+[PAUSE 1s]
+
+Sixty-second recap. One airfield, three fixtures. Inside every aircraft, the flight recorder — tracing — capturing prompt, retrieval, tool calls, model response, tokens, and latency as a nested tree, running at full production scale, and able to trace a flight no matter which airline or airport it took off from, meaning any cloud, meaning it's the observability plane for your whole estate. At the gate, the panel of inspectors — evaluation — running your test questions through the harness, L L M judges scoring groundedness and relevance at speed, human feedback looped back in to keep the judges honest. And behind the runway, the hangar — the registry — where models, prompts, and whole application versions all sit tail-numbered, swappable by pointing an alias, rollback-ready, and governed through the same Unity Catalog ledger as everything else on the platform. Tracing tells you what happened. Evaluation tells you whether it's good enough to fly. The registry tells you exactly which version was flying when it mattered. Next episode: A I Functions in sequel and Genie — putting this whole stack in reach of anyone who can write a query. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="04-agent-bricks.html">← Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="btn" href="06-ai-functions-genie.html">AI Functions in SQL, Genie, AI/BI →</a></div></main></div></body></html>

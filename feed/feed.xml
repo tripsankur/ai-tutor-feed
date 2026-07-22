@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Tue, 21 Jul 2026 22:38:59 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 17:20:50 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -158,11 +158,83 @@
       <itunes:explicit>false</itunes:explicit>
     </item>
     <item>
-      <title>S2E08 · DRILL: Databricks GenAI Rapid-Fire (Sample)</title>
-      <description>Rapid-fire interview drill: hear the question, answer aloud in the pause, then compare with a strong model answer. Sample of five — full drill lands when Track 2 completes.</description>
+      <title>S2E02 · Databricks Vector Search Internals</title>
+      <description>Inside floor four of the tower: how Databricks AI Search turns documents into searchable coordinates with H N S W, keeps that index fresh automatically with Delta Sync, and where hybrid search and storage-optimized endpoints change the calculus.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e02-vector-search-internals.mp3" length="5509961" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e2-vector-search-internals</guid>
+      <pubDate>Tue, 13 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:15:18</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E03 · Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</title>
+      <description>The power-grid mental model for Databricks Model Serving — governed outlets, reserved generators for guaranteed throughput, and the AI Gateway substation that meters, limits, and reroutes every current — plus the pay-per-token-versus-provisioned-throughput decision and the governance model interviewers probe.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e03-model-serving.mp3" length="5488836" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e3-model-serving</guid>
+      <pubDate>Wed, 14 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:15:14</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E04 · Agent Bricks: Building &amp; Auto-Optimizing Agents, MCP Tool Catalog</title>
+      <description>Agent Bricks turns agent-building into a declarative brief instead of hand-tuned code: an auto-optimization loop invents synthetic data and task-aware benchmarks for your use case, tunes for quality and cost, and wires tools through a governed MCP catalog living in Unity Catalog.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e04-agent-bricks.mp3" length="5681496" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e4-agent-bricks</guid>
+      <pubDate>Thu, 15 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:15:46</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E05 · MLflow 3 for GenAI: Tracing, Evals, Prompt &amp; App Versioning</title>
+      <description>One floor of the lakehouse AI tower, opened up in full: how MLflow 3 turns every agent request into a recorded flight, every release into a certified inspection, and every prompt into a tail-numbered, rollback-ready registry citizen.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e05-mlflow3-genai.mp3" length="5483922" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e5-mlflow3-genai</guid>
+      <pubDate>Fri, 16 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:15:13</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E06 · AI Functions in SQL, Genie, AI/BI</title>
+      <description>AI Functions bring the L L M to the sequel analyst's own counter through ai_query, while Genie is the multilingual concierge that turns a business user's plain-English question into governed sequel — with the 2026 evolution into Genie One, Genie Ontology, and Genie Agents.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e06-ai-functions-genie.mp3" length="6086104" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e6-ai-functions-genie</guid>
+      <pubDate>Sat, 17 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:16:54</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E07 · AI Governance: UC Models &amp; Functions, AI Gateway Guardrails, Lineage, Cost</title>
+      <description>The governed-city model from Unity Catalog, zoomed into its AI district: every model, function, index, and prompt is a catalog object under one council, the AI Gateway is the checkpoint every request crosses, and evaluation is the quality gate guardrails alone can't provide.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e07-ai-governance.mp3" length="5655585" type="audio/mpeg"/>
+      <guid isPermaLink="false">t2e7-ai-governance</guid>
+      <pubDate>Sun, 18 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:15:42</itunes:duration>
+      <itunes:season>2</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S2E08 · DRILL: Databricks GenAI Rapid-Fire</title>
+      <description>Fifteen rapid-fire interview questions across the whole Databricks AI stack — the five-floor tower, Vector Search, Model Serving, Agent Bricks, MLflow 3, AI Functions and Genie, and AI governance. Answer aloud in the pause, then compare.</description>
       <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e08-databricks-ai-drill.mp3" length="1241666" type="audio/mpeg"/>
       <guid isPermaLink="false">t2e8-databricks-ai-drill</guid>
-      <pubDate>Tue, 13 Jan 2026 08:00:00 +0000</pubDate>
+      <pubDate>Mon, 19 Jan 2026 08:00:00 +0000</pubDate>
       <itunes:duration>00:03:26</itunes:duration>
       <itunes:season>2</itunes:season>
       <itunes:episode>8</itunes:episode>
