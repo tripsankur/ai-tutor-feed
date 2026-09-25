@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 6</div>
 <h1 class="lesson">Why LLMs Repeat Themselves & Handling Hallucinations</h1>
 <div class="meta">18 min listen · The writer's table: tiles laid left to right, a mirror that reflects everything already written, a dial panel for decoding, a stack of sources, and three gates on the way out. Why models fall into repetition loops, which knobs actually break them, and a layered defense against hallucination for regulated outputs.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e06-repetition-hallucination.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/06-repetition-hallucination" onclick="toggleDone('09-interview-lab/06-repetition-hallucination')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em></p>
 <p><strong>Thesis:</strong> Repetition and hallucination come from the same autoregressive loop. Repetition happens when the model's own output reinforces itself (a self-reinforcing copy loop that greedy decoding can't escape). Hallucination happens when the most plausible next token isn't the true one. So fix the mechanism (pipeline, decoding, grounding), know the side effects of each knob, and add layered verification for regulated outputs.</p>

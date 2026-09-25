@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 2</div>
 <h1 class="lesson">KV Cache Management & Serving Parameters (max seqs, batched tokens)</h1>
 <div class="meta">19 min listen · How the KV cache really works and is managed in vLLM: sizing math, paged blocks, prefix caching, LRU eviction and preemption, chunked prefill, and exactly what max_num_seqs, max_num_batched_tokens, gpu_memory_utilization and max_model_len trade off, with a step-by-step tuning procedure.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e02-kv-cache-serving-params.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/02-kv-cache-serving-params" onclick="toggleDone('09-interview-lab/02-kv-cache-serving-params')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em> (vLLM v0.30.0 source: <code>vllm/config/cache.py</code>, <code>vllm/config/scheduler.py</code>, <code>vllm/engine/arg_utils.py</code>, <code>vllm/v1/core/kv_cache_utils.py</code>; docs: optimization, prefix caching design, benchmarking sweeps)</p>
 <p><strong>Thesis:</strong> on a self-hosted LLM the KV cache — not compute — caps concurrency; vLLM manages it as a fixed pool of paged blocks, and four knobs (<code>gpu_memory_utilization</code>, <code>max_model_len</code>, <code>max_num_seqs</code>, <code>max_num_batched_tokens</code>) decide how that pool is sized, admitted into, and fed each step.</p>

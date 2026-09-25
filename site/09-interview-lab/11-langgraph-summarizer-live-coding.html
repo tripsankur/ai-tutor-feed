@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 11</div>
 <h1 class="lesson">Live Coding: A Working LangGraph Summarizer Agent</h1>
 <div class="meta">19 min listen · How to talk your way through the live-coding question 'write a working LangGraph summarizer agent': clarify first, then build a map-reduce graph on a whiteboard — state with reducers, Send fan-out over chunks, a bounded collapse loop, a final summary, a checkpointer that resumes only the failed branch, split error handling and three-channel streaming.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e11-langgraph-summarizer-live-coding.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" onclick="toggleDone('09-interview-lab/11-langgraph-summarizer-live-coding')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em> — code below was executed end to end in a clean venv (Python 3.11.15) with <strong>langgraph 1.2.12, langgraph-checkpoint 4.2.0, langchain-core 1.6.5, langchain-text-splitters 1.1.2</strong> (real-model swap path checked for import/instantiation with langchain 1.4.2 + langchain-anthropic 1.7.4 / langchain-openai 1.6.6; no live API call was made).</p>
 <h2 id="one-sentence-thesis">One-sentence thesis</h2>

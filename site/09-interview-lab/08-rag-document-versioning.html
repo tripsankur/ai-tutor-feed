@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 8</div>
 <h1 class="lesson">RAG Document Versioning: Section Edits, Removals, Index Consistency</h1>
 <div class="meta">19 min listen · The interview question every production RAG system eventually has to answer: when a document changes, a section is edited, or a section disappears, how do you keep the index consistent? Stable section IDs, content hashes, a manifest ledger, delete-then-verify writes, tombstones, as-of versions for regulated documents, blue-green index aliases, cache invalidation and reconciliation.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e08-rag-document-versioning.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/08-rag-document-versioning" onclick="toggleDone('09-interview-lab/08-rag-document-versioning')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em></p>
 <p><strong>Thesis:</strong> the vector index is <em>derived data</em>; keep a transactional manifest (ledger) of section IDs, content hashes, versions and chunk IDs, gate reads with a current-version pointer, and prove consistency with nightly reconciliation.</p>

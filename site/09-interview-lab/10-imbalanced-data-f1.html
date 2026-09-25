@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 10</div>
 <h1 class="lesson">Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</h1>
 <div class="meta">16 min listen · The classical ML questions that still show up in agentic AI interviews: how to handle an imbalanced dataset, and the difference between micro, macro and weighted F1. Resampling and SMOTE, class weights, threshold tuning, PR-AUC and recall at fixed precision, and a fraud-flavoured worked example you can say out loud.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e10-imbalanced-data-f1.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/10-imbalanced-data-f1" onclick="toggleDone('09-interview-lab/10-imbalanced-data-f1')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em></p>
 <p><strong>Thesis:</strong> imbalance is fixed by changing three defaults on purpose — the metric (PR curve / constrained recall, not accuracy), the objective (class weights, resampling inside training folds only), and above all the decision threshold (tuned to business cost); micro F1 = per-decision (≈ accuracy), macro F1 = per-class (exposes the broken rare class).</p>

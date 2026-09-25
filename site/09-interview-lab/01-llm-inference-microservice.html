@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 1</div>
 <h1 class="lesson">Building an LLM Inference Microservice</h1>
 <div class="meta">19 min listen · The interview question 'walk me through the LLM inference microservice you built', answered floor by floor: API layer, validation, per-tenant token rate limits, deadlines and cancellation, SSE streaming, a vLLM engine underneath, health probes, cold start, observability, and a tour of the optimization techniques that live on each floor.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e01-llm-inference-microservice.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/01-llm-inference-microservice" onclick="toggleDone('09-interview-lab/01-llm-inference-microservice')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em> (vLLM v0.30.0 source + docs, Kubernetes probe docs, Gateway API Inference Extension docs)</p>
 <p><strong>Thesis:</strong> an LLM inference microservice is two layers — a thin, async, policy-owning gateway (auth, validation, token-based tenant limits, deadlines, streaming) over a batching engine (vLLM) — and the interview is won by explaining the seams between them: cancellation, backpressure, probes, cold start and the right metrics.</p>

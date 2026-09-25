@@ -8,7 +8,7 @@ mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
 <main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 7</div>
 <h1 class="lesson">LLM-as-a-Judge: Selecting Representative Evaluation Examples</h1>
 <div class="meta">16 min listen · A map of production traffic, a small display case, a judge and a human panel: how to pick evaluation examples that actually represent your users, using stratified sampling, embedding clusters, difficulty mixes and adversarial cases, how many you need, how to calibrate the judge against humans with Cohen's kappa, and how to keep the set fresh and leak-free.</div>
-<p class="meta">🎙 Audio not rendered yet.</p>
+<audio controls preload="metadata" src="../../audio/09-interview-lab/s9e07-llm-judge-sampling.mp3"></audio>
 <button class="btn complete" data-ep="09-interview-lab/07-llm-judge-sampling" onclick="toggleDone('09-interview-lab/07-llm-judge-sampling')">Mark complete</button>
 <div class="note"><p><em>Facts verified: 2026-09-25</em></p>
 <p><strong>Thesis:</strong> A good judge scoring the wrong examples gives you a precise, confident, wrong number. Build the eval set from production traffic: stratify by business dimensions with risk-weighted floors, discover hidden segments by embedding clustering (centroids and outliers), tilt toward hard cases, add a hand-built adversarial slice, size it with confidence intervals, calibrate the judge against humans with Cohen's kappa, then refresh on a cadence and guard against leakage.</p>

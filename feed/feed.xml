@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Fri, 25 Sep 2026 06:05:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2026 07:11:37 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -766,6 +766,162 @@
       <itunes:duration>00:10:00</itunes:duration>
       <itunes:season>8</itunes:season>
       <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E01 · Building an LLM Inference Microservice</title>
+      <description>The interview question 'walk me through the LLM inference microservice you built', answered floor by floor: API layer, validation, per-tenant token rate limits, deadlines and cancellation, SSE streaming, a vLLM engine underneath, health probes, cold start, observability, and a tour of the optimization techniques that live on each floor.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e01-llm-inference-microservice.mp3" length="8323164" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e1-llm-inference-microservice</guid>
+      <pubDate>Thu, 05 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:23:07</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E02 · KV Cache Management &amp; Serving Parameters (max seqs, batched tokens)</title>
+      <description>How the KV cache really works and is managed in vLLM: sizing math, paged blocks, prefix caching, LRU eviction and preemption, chunked prefill, and exactly what max_num_seqs, max_num_batched_tokens, gpu_memory_utilization and max_model_len trade off, with a step-by-step tuning procedure.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e02-kv-cache-serving-params.mp3" length="8144633" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e2-kv-cache-serving-params</guid>
+      <pubDate>Fri, 06 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:37</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E03 · Autoscaling LLMs on Kubernetes: HPA, KEDA &amp; Picking the Scaling Metric</title>
+      <description>The interview question 'how did you set up HPA and pick your scaling parameters?' answered from the mechanics up: why CPU and GPU utilization lie for LLM serving, how waiting requests and KV cache usage reach the autoscaler through Prometheus and KEDA, how HPA behavior and cold starts shape the numbers, and how load testing picks the targets.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e03-autoscaling-llms-k8s.mp3" length="8545244" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e3-autoscaling-llms-k8s</guid>
+      <pubDate>Sat, 07 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:23:44</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E04 · Latency Metrics That Matter &amp; Choosing an LLM Deployment Framework</title>
+      <description>Two round-two questions, answered properly: which latency metrics you measured and why (time to first token, inter-token latency, end-to-end, throughput, goodput, tail percentiles, and how each is measured), and which framework you'd deploy with, from vLLM, SGLang and TensorRT-LLM through Dynamo, KServe, llm-d and Ray Serve to managed options, with current status verified.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e04-latency-metrics-frameworks.mp3" length="8772328" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e4-latency-metrics-frameworks</guid>
+      <pubDate>Sun, 08 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:24:21</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E05 · Distillation vs Quantization: Advantages &amp; Disadvantages</title>
+      <description>The master painting, the apprentice's smaller canvas, and the reprint with fewer shades: how distillation and quantization each make a model cheaper, what each one costs and breaks, when to stack them, and how to answer the pros-and-cons question in ninety seconds.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e05-distillation-vs-quantization.mp3" length="8926830" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e5-distillation-vs-quantization</guid>
+      <pubDate>Mon, 09 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:24:47</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E06 · Why LLMs Repeat Themselves &amp; Handling Hallucinations</title>
+      <description>The writer's table: tiles laid left to right, a mirror that reflects everything already written, a dial panel for decoding, a stack of sources, and three gates on the way out. Why models fall into repetition loops, which knobs actually break them, and a layered defense against hallucination for regulated outputs.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e06-repetition-hallucination.mp3" length="8195882" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e6-repetition-hallucination</guid>
+      <pubDate>Tue, 10 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:45</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E07 · LLM-as-a-Judge: Selecting Representative Evaluation Examples</title>
+      <description>A map of production traffic, a small display case, a judge and a human panel: how to pick evaluation examples that actually represent your users, using stratified sampling, embedding clusters, difficulty mixes and adversarial cases, how many you need, how to calibrate the judge against humans with Cohen's kappa, and how to keep the set fresh and leak-free.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e07-llm-judge-sampling.mp3" length="7252114" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e7-llm-judge-sampling</guid>
+      <pubDate>Wed, 11 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:08</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E08 · RAG Document Versioning: Section Edits, Removals, Index Consistency</title>
+      <description>The interview question every production RAG system eventually has to answer: when a document changes, a section is edited, or a section disappears, how do you keep the index consistent? Stable section IDs, content hashes, a manifest ledger, delete-then-verify writes, tombstones, as-of versions for regulated documents, blue-green index aliases, cache invalidation and reconciliation.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e08-rag-document-versioning.mp3" length="8317001" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e8-rag-document-versioning</guid>
+      <pubDate>Thu, 12 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:23:06</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E09 · Tables in RAG: Multi-Page Tables, Parsing &amp; Ingestion Strategies</title>
+      <description>Answers the interview questions on large tables that span multiple pages and on table parsing and ingestion: why naive chunking shreds tables, how layout-aware parsers and vision models recover structure, how to stitch continued tables across page breaks, which representations to index, when to route to text-to-SQL, and how to evaluate it all.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e09-tables-in-rag.mp3" length="7118342" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e9-tables-in-rag</guid>
+      <pubDate>Fri, 13 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:46</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>9</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E10 · Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</title>
+      <description>The classical ML questions that still show up in agentic AI interviews: how to handle an imbalanced dataset, and the difference between micro, macro and weighted F1. Resampling and SMOTE, class weights, threshold tuning, PR-AUC and recall at fixed precision, and a fraud-flavoured worked example you can say out loud.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e10-imbalanced-data-f1.mp3" length="7000693" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e10-imbalanced-data-f1</guid>
+      <pubDate>Sat, 14 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:26</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>10</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E11 · Live Coding: A Working LangGraph Summarizer Agent</title>
+      <description>How to talk your way through the live-coding question 'write a working LangGraph summarizer agent': clarify first, then build a map-reduce graph on a whiteboard — state with reducers, Send fan-out over chunks, a bounded collapse loop, a final summary, a checkpointer that resumes only the failed branch, split error handling and three-channel streaming.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e11-langgraph-summarizer-live-coding.mp3" length="8110920" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e11-langgraph-summarizer-live-coding</guid>
+      <pubDate>Sun, 15 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:31</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>11</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E12 · The Project Deep-Dive Round: Presenting Your Architecture</title>
+      <description>How to run the ten-minute project architecture deep dive: a seven-segment ribbon (problem, constraints, architecture, decisions and rejected alternatives, numbers, failures, next steps) drawn above a growing diagram, worked through an agentic document-QA assistant for a regulated financial firm — plus handling interruptions, 'why not X', latency metrics, deployment framework choices, and the role-expectations conversation.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e12-project-deep-dive.mp3" length="7579280" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e12-project-deep-dive</guid>
+      <pubDate>Mon, 16 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:03</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>12</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S9E13 · DRILL: Agentic AI Engineer Interview Rapid-Fire</title>
+      <description>Fifteen rapid-fire questions straight from a two-round Agentic AI Engineer interview: the inference microservice, KV cache, serving parameters, autoscaling, latency metrics, deployment frameworks, distillation and quantization, repetition, hallucination, LLM-as-a-judge, RAG versioning, tables, imbalanced data and F1, the LangGraph summarizer, and the project deep dive. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/09-interview-lab/s9e13-interview-lab-drill.mp3" length="4769110" type="audio/mpeg"/>
+      <guid isPermaLink="false">t9e13-interview-lab-drill</guid>
+      <pubDate>Tue, 17 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:13:14</itunes:duration>
+      <itunes:season>9</itunes:season>
+      <itunes:episode>13</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
       <itunes:explicit>false</itunes:explicit>
     </item>
