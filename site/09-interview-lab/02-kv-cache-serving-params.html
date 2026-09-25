@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KV Cache Management & Serving Parameters (max seqs, batched tokens) — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="active" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 2</div>
+<h1 class="lesson">KV Cache Management & Serving Parameters (max seqs, batched tokens)</h1>
+<div class="meta">19 min listen · How the KV cache really works and is managed in vLLM: sizing math, paged blocks, prefix caching, LRU eviction and preemption, chunked prefill, and exactly what max_num_seqs, max_num_batched_tokens, gpu_memory_utilization and max_model_len trade off, with a step-by-step tuning procedure.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/02-kv-cache-serving-params" onclick="toggleDone('09-interview-lab/02-kv-cache-serving-params')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (vLLM v0.30.0 source: <code>vllm/config/cache.py</code>, <code>vllm/config/scheduler.py</code>, <code>vllm/engine/arg_utils.py</code>, <code>vllm/v1/core/kv_cache_utils.py</code>; docs: optimization, prefix caching design, benchmarking sweeps)</p>
+<p><strong>Thesis:</strong> on a self-hosted LLM the KV cache — not compute — caps concurrency; vLLM manages it as a fixed pool of paged blocks, and four knobs (<code>gpu_memory_utilization</code>, <code>max_model_len</code>, <code>max_num_seqs</code>, <code>max_num_batched_tokens</code>) decide how that pool is sized, admitted into, and fed each step.</p>
+<p><strong>Interview questions this answers:</strong> "How does the KV cache work, and how is it managed?" · "Explain serving parameters like number of sequences and batched tokens — how would you set them?"</p>
+<h2 id="the-mental-image-the-car-park-seen-from-above">The mental image: the car park (seen from above)</h2>
+<ul>
+<li><strong>Plot of land</strong> = one GPU's HBM (e.g. 80 GB).</li>
+<li><strong>Fence</strong> = <code>gpu_memory_utilization</code> (default <strong>0.92</strong> in v0.30.0; per-instance fraction of total GPU memory).</li>
+<li><strong>Concrete building (left)</strong> = weights; <strong>small workshop</strong> = activations / CUDA-graph scratch.</li>
+<li><strong>Painted grid</strong> = KV cache pool. <strong>Bay</strong> = one token's K+V across all layers. <strong>Row of 16 bays</strong> = one <strong>block</strong> (<code>block_size</code> default 16).</li>
+<li><strong>Tour group</strong> = request; <strong>attendant's clipboard</strong> = block table (PagedAttention).</li>
+<li><strong>Gate sign</strong> = <code>max_model_len</code>; <strong>gate counter</strong> = <code>max_num_seqs</code>; <strong>single lane, N cars per green light</strong> = <code>max_num_batched_tokens</code> per engine step.</li>
+<li><strong>Painted rows keep fingerprints</strong> = prefix caching (hash of block tokens + parent hash; <code>cache_salt</code> for tenant isolation); <strong>scrubbing oldest paint</strong> = LRU eviction; <strong>sending newest group back to the street</strong> = preemption (RECOMPUTE).</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph GPU["GPU HBM (80 GB)"]
+        direction LR
+        subgraph FENCE["Inside fence: gpu_memory_utilization = 0.92"]
+            W["Weights ~16 GB (8B, BF16)"]
+            A["Activations + CUDA graphs (few GB)"]
+            KV["KV block pool ~54 GB = ~400k tokens (blocks of 16 tokens)"]
+        end
+        M["Margin outside fence"]
+    end
+    Q["Waiting queue"] -->|"admit if running below max_num_seqs AND full prompt fits in free blocks"| KV
+    KV -->|"pool exhausted mid-decode: preempt newest (RECOMPUTE)"| Q
+</pre>
+
+<pre class="mermaid">flowchart TB
+    S["Engine step budget = max_num_batched_tokens (e.g. 8192)"]
+    S --> D["1. All running decodes: 1 token each (e.g. 200 tokens)"]
+    D --> P["2. Remaining budget (~7992) to prefills"]
+    P --> C{"Prompt fits remaining budget?"}
+    C -->|yes| F["Prefill whole prompt this step"]
+    C -->|no| CH["Chunk it: part now, rest in later steps (chunked prefill)"]
+    CH --> L["Optional cap per request: long_prefill_token_threshold"]
+</pre>
+
+<h2 id="sizing-math">Sizing math</h2>
+<p><code>KV bytes/token = 2 (K,V) × n_layers × n_kv_heads × head_dim × bytes_per_elem</code></p>
+<table>
+<thead>
+<tr>
+<th>Model (BF16 KV)</th>
+<th>layers</th>
+<th>KV heads</th>
+<th>head_dim</th>
+<th>bytes/token</th>
+<th>8k-token conversation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Llama 3.1 8B</td>
+<td>32</td>
+<td>8</td>
+<td>128</td>
+<td>131,072 B = 128 KiB</td>
+<td>1 GiB</td>
+</tr>
+<tr>
+<td>Llama 3.x 70B</td>
+<td>80</td>
+<td>8</td>
+<td>128</td>
+<td>327,680 B = 320 KiB</td>
+<td>2.5 GiB</td>
+</tr>
+</tbody>
+</table>
+<p>Worked example (8B on one 80 GB GPU): 80 × 0.92 ≈ 73.6 GB − 16 GB weights − ~4 GB activations/graphs ≈ <strong>54 GB → ~410k tokens</strong> → ≈ 50 concurrent at 8k tokens, ≈ 200 at 2k, ≈ 3 at 128k. FP8 KV (<code>--kv-cache-dtype fp8</code>) doubles these. TP=2 halves per-GPU KV per token (each GPU holds half the KV heads).</p>
+<p>Don't trust arithmetic alone — vLLM logs at startup:</p>
+<pre><code class="language-text">GPU KV cache size: 409,600 tokens, Maximum concurrency for 16,384 tokens per request: 25.00x
+</code></pre>
+<p>and refuses to start if one <code>max_model_len</code> request can't fit, printing "the estimated maximum model length is N".</p>
+<h2 id="the-four-knobs-v0300">The four knobs (v0.30.0)</h2>
+<table>
+<thead>
+<tr>
+<th>Knob</th>
+<th>What it is</th>
+<th>Default</th>
+<th>Raise it →</th>
+<th>Lower it →</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gpu_memory_utilization</code></td>
+<td>Fraction of total GPU memory this instance may use (weights + activations + KV)</td>
+<td>0.92</td>
+<td>more KV blocks, fewer preemptions; OOM risk with co-tenants/fragmentation</td>
+<td>safer, less concurrency</td>
+</tr>
+<tr>
+<td><code>max_model_len</code></td>
+<td>Max prompt + output tokens per request</td>
+<td>model's config</td>
+<td>allows long docs; few giants can hog the pool</td>
+<td>protects pool; rejects long requests</td>
+</tr>
+<tr>
+<td><code>max_num_seqs</code></td>
+<td>Max requests in RUNNING per engine (per DP rank); also sizes CUDA-graph/buffers</td>
+<td>OpenAI server: 1024 on ≥70 GB non-A100 (H100/H200) and ≥160 GB (B200/B300); 256 otherwise incl. A100</td>
+<td>throughput ↑ until KV full; ITL ↑; preemptions if &gt; what KV holds</td>
+<td>smoother ITL; queueing ↑ → TTFT ↑</td>
+</tr>
+<tr>
+<td><code>max_num_batched_tokens</code></td>
+<td>Max tokens per engine step (decodes + prefill chunks)</td>
+<td>OpenAI server: 8192 (H100/H200-class), 16384 (≥160 GB), 2048 otherwise</td>
+<td>TTFT ↓, throughput ↑; ITL ↑ (big prefills slow decodes)</td>
+<td>ITL ↓; TTFT ↑</td>
+</tr>
+</tbody>
+</table>
+<p>Related (v0.30.0): <code>enable_prefix_caching</code> (default True) · <code>prefix_caching_hash_algo</code> (default <code>sha256</code>) · chunked prefill (default on where supported) · <code>long_prefill_token_threshold</code> (default 0 = off) · <code>policy</code> = <code>fcfs</code> | <code>priority</code> · <code>max_num_queued_reqs</code> (reject with HTTP 503 when full) · <code>watermark</code> (fraction of blocks kept free at admission, default 0.0) · <code>scheduler_reserve_full_isl</code> (default True: admit only if full prompt fits) · <code>performance_mode</code> = <code>balanced</code> | <code>interactivity</code> | <code>throughput</code> (throughput doubles default <code>max_num_seqs</code> and <code>max_num_batched_tokens</code>) · <code>kv_cache_dtype</code> (<code>auto</code>, <code>fp8</code>, …) · KV offloading via <code>OffloadingConnector</code> (<code>--kv-transfer-config</code>).</p>
+<p>Preemption: V1 default mode is <strong>RECOMPUTE</strong> (not SWAP). Log line: "…is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space…". Remedies (from docs): raise <code>gpu_memory_utilization</code>, lower <code>max_num_seqs</code> / <code>max_num_batched_tokens</code>, raise tensor/pipeline parallel size.</p>
+<h2 id="config-snippet">Config snippet</h2>
+<pre><code class="language-bash">vllm serve meta-llama/Llama-3.1-8B-Instruct \
+  --gpu-memory-utilization 0.94 \
+  --max-model-len 16384 \
+  --kv-cache-dtype fp8 \
+  --max-num-seqs 96 \
+  --max-num-batched-tokens 8192 \
+  --long-prefill-token-threshold 4096 \
+  --scheduling-policy priority
+</code></pre>
+<pre><code class="language-json">// vllm bench sweep serve --serve-params sweep.json  (tune seqs x batched tokens)
+[
+  {&quot;max_num_seqs&quot;: 64,  &quot;max_num_batched_tokens&quot;: 2048},
+  {&quot;max_num_seqs&quot;: 64,  &quot;max_num_batched_tokens&quot;: 8192},
+  {&quot;max_num_seqs&quot;: 128, &quot;max_num_batched_tokens&quot;: 8192},
+  {&quot;max_num_seqs&quot;: 128, &quot;max_num_batched_tokens&quot;: 16384}
+]
+</code></pre>
+<p>Prefix-cache isolation per tenant (OpenAI-compatible request body):</p>
+<pre><code class="language-json">{&quot;model&quot;: &quot;...&quot;, &quot;messages&quot;: [...], &quot;cache_salt&quot;: &quot;tenant-42&quot;}
+</code></pre>
+<h2 id="tuning-procedure">Tuning procedure</h2>
+<ol>
+<li>Measure prompt/output length distributions (p50, p99), peak concurrency; set SLOs (e.g. TTFT p95 &lt; 1 s, ITL p95 &lt; 50 ms).</li>
+<li><code>max_model_len</code> ← p99(prompt + output) + headroom, not the model card max.</li>
+<li><code>gpu_memory_utilization</code> as high as stable (0.92–0.95 on dedicated GPUs); consider <code>kv_cache_dtype=fp8</code>; read startup log (KV tokens, max concurrency).</li>
+<li><code>max_num_seqs</code> ≈ KV tokens ÷ typical live tokens per request (+ credit for prefix sharing), not 1024.</li>
+<li>Sweep <code>max_num_batched_tokens</code> {2048, 4096, 8192, 16384} × 2–3 <code>max_num_seqs</code> values with <code>vllm bench sweep serve</code> / <code>vllm bench serve</code> (or GuideLLM) at target request rate on a realistic mix; choose max <strong>goodput</strong> meeting both SLOs.</li>
+<li>Production: alert on <code>vllm:num_preemptions</code> rate, <code>vllm:kv_cache_usage_perc</code>, <code>vllm:num_requests_waiting</code>, prefix hit rate (<code>vllm:prefix_cache_hits / vllm:prefix_cache_queries</code>), TTFT/ITL histograms.</li>
+<li>Split conflicting workloads (long-doc summarization vs interactive chat) into separate pools with their own knobs.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KV cache</td>
+<td>Per-token, per-layer key and value vectors kept so decode doesn't recompute attention inputs</td>
+</tr>
+<tr>
+<td>Block / block table</td>
+<td>Fixed-size page of KV (16 tokens by default) / per-request map from logical positions to physical blocks</td>
+</tr>
+<tr>
+<td>PagedAttention</td>
+<td>Attention kernel reading KV through block tables; waste limited to last partial block</td>
+</tr>
+<tr>
+<td>Automatic prefix caching</td>
+<td>Full blocks hashed with parent hash + extras (LoRA, multimodal, <code>cache_salt</code>); ref-counted sharing</td>
+</tr>
+<tr>
+<td>LRU eviction</td>
+<td>Freed blocks stay cached in a free queue; head (least recently used) is evicted on reuse</td>
+</tr>
+<tr>
+<td>Preemption (RECOMPUTE)</td>
+<td>When pool is exhausted, newest running request is freed and later re-prefilled</td>
+</tr>
+<tr>
+<td>Chunked prefill</td>
+<td>Long prompts split across steps; decodes scheduled first each step</td>
+</tr>
+<tr>
+<td>Goodput</td>
+<td>Throughput counted only for requests meeting latency SLOs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions with strong answers</h2>
+<ol>
+<li><strong>"How does the KV cache work?"</strong> — Attention for each new token needs K and V of all prior tokens at every layer; caching them avoids quadratic recomputation. Prefill writes them for the whole prompt (compute-bound); each decode step reads all and appends one (memory-bound). Size/token = 2 × layers × KV heads × head_dim × bytes → ~128 KiB for Llama 3.1 8B.</li>
+<li><strong>"How does vLLM manage it?"</strong> — Reserves <code>gpu_memory_utilization</code> of GPU memory, carves post-weights space into 16-token blocks, allocates on demand via block tables (PagedAttention), shares identical prefixes by hashed, ref-counted blocks (salted per tenant), keeps freed blocks cached until LRU eviction, and preempts the newest request (recompute) when the pool runs dry.</li>
+<li><strong>"What do max_num_seqs and max_num_batched_tokens control?"</strong> — <code>max_num_seqs</code> caps requests per batch: more → throughput, but ITL rises and beyond KV capacity causes preemption. <code>max_num_batched_tokens</code> is the per-step token budget: decodes first, prefill chunks fill the rest; small → smoother ITL, large → better TTFT/throughput.</li>
+<li><strong>"You see frequent preemption warnings — what do you do?"</strong> — Confirm with <code>vllm:num_preemptions</code> and KV usage; then lower <code>max_num_seqs</code> toward real KV capacity, cap <code>max_model_len</code>/max output, enable FP8 KV cache, raise <code>gpu_memory_utilization</code>, add TP, or split long-context traffic into its own pool.</li>
+<li><strong>"Prefix cache hit rate is near zero — why?"</strong> — Something variable (timestamp, user name, request ID) at the top of the prompt changes every downstream block hash; also only full 16-token blocks are cached, per-tenant salts partition sharing, and round-robin routing spreads prefixes across replicas (use prefix-aware routing). Move stable content first.</li>
+</ol>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>vLLM optimization &amp; tuning (preemption, chunked prefill): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/configuration/optimization.md · rendered: https://docs.vllm.ai/en/latest/configuration/optimization/</li>
+<li>vLLM automatic prefix caching design (hashing, LRU, cache_salt): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/design/prefix_caching.md</li>
+<li>vLLM cache config (gpu_memory_utilization 0.92, block size 16, prefix caching): https://github.com/vllm-project/vllm/blob/v0.30.0/vllm/config/cache.py</li>
+<li>vLLM scheduler config (max_num_seqs, max_num_batched_tokens, long_prefill_token_threshold, watermark, max_num_queued_reqs): https://github.com/vllm-project/vllm/blob/v0.30.0/vllm/config/scheduler.py</li>
+<li>Hardware-dependent defaults (<code>get_batch_defaults</code>): https://github.com/vllm-project/vllm/blob/v0.30.0/vllm/engine/arg_utils.py</li>
+<li>Quantized (FP8) KV cache: https://github.com/vllm-project/vllm/blob/v0.30.0/docs/features/quantization/quantized_kvcache.md</li>
+<li>KV offloading connector: https://github.com/vllm-project/vllm/blob/v0.30.0/docs/features/kv_offloading_usage.md</li>
+<li>Benchmark sweeps (<code>vllm bench sweep serve</code>): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/benchmarking/sweeps.md</li>
+<li>PagedAttention paper (Kwon et al., SOSP 2023): https://arxiv.org/abs/2309.06180</li>
+<li>Chunked prefill papers cited by vLLM docs: SARATHI https://arxiv.org/abs/2308.16369 · DeepSpeed-FastGen https://arxiv.org/abs/2401.08671</li>
+</ul>
+<p>Related episodes: t7e5 (filing-cabinet KV image), t8e3 (GPU warehouse), t3e6 (scaling &amp; serving), t9e1 (inference microservice), t9e3 (autoscaling on queue/KV signals).</p></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode two: K V cache management and serving parameters.
+
+Last episode we built the building: the A P I layer on the ground floor, and v L L M in the basement, with a foreman holding a clipboard. Today we take that clipboard out of the foreman's hands and read it line by line. We're answering two questions from the same interview loop, asked back to back. First: "How does the K V cache work, and how is it managed?" Second: "Explain serving parameters like the number of sequences and the number of batched tokens. How would you set them?"
+
+The second question is where interviews separate people who ran v L L M with the defaults from people who tuned it under load. So by the end of this episode you'll be able to do the memory math out loud, and you'll have a tuning procedure you could run on Monday.
+
+[PAUSE 1s]
+
+## The cold open
+
+Here's a story in a shape that repeats. A team serves an eight-billion-parameter model on one eighty-gigabyte G P U for a document assistant. It works well in the pilot. Then a new use case arrives, summarizing long regulatory filings, and someone raises the maximum context length to a hundred and twenty-eight thousand tokens and the maximum output to eight thousand, so nothing gets cut off.
+
+A week later, p ninety-nine latency is five times worse, and the logs are full of one warning: a request was preempted because there was not enough K V cache space. The dashboards look healthy. G P U memory sits at ninety-two percent, just like always. The G P U is busy. But thousands of times an hour, the engine is kicking a half-finished request out of memory, and later recomputing everything that request had already processed. The G P U is busy doing the same work twice.
+
+Nobody changed the hardware or the model. They changed who was allowed into the car park, and how big each visitor could get. The car park is today's picture.
+
+[PAUSE 1s]
+
+## Why it matters
+
+A quick refresher. To generate each new token, attention needs the keys and values of every earlier token, at every layer. Recomputing them each step would grow quadratically, so the engine computes them once and keeps them: the K V cache. Prefill writes it for the whole prompt at once; each decode step reads it all and appends one token's worth. We drew it as a filing cabinet in the transformers track, and as the right-hand wall of the G P U warehouse in the LLMOps track. Today is the operator's view: how that memory is carved up, handed out, shared and taken back, and which four settings control it. Interviewers care because on a self-hosted model, the K V cache, not compute, caps how many users you serve at once.
+
+[PAUSE 1s]
+
+## The mental image: the car park
+
+Let's build the picture. In your mind's eye, picture a car park seen from directly above. The whole plot of land is one G P U's memory: eighty gigabytes, say.
+
+Around most of the plot runs a fence. The land inside the fence is what the engine may use. A thin strip outside it is left alone as a safety margin. Where you put that fence is the setting called G P U memory utilization. The default in current v L L M is zero point nine two, so the fence encloses ninety-two percent of the plot.
+
+Inside the fence, on the left, stands a big concrete building. That's the model weights, sixteen gigabytes for an eight-billion model at sixteen bits. It never moves. Next to it is a small workshop, scratch space for activations and the pre-recorded C U D A graphs the engine replays each step.
+
+Everything else inside the fence is painted as a parking grid. The bays are painted in rows of sixteen. Each bay holds exactly one token: that token's keys and values, for every layer of the model. Each row of sixteen bays is a block, the unit the engine hands out.
+
+Every request is a tour group arriving in cars, one car per token. A group doesn't need its rows side by side. It gets a row here and a row there, wherever one is free, and a parking attendant with a clipboard keeps the list of which rows belong to which group. That clipboard is the block table, and that's paged attention: memory handed out in small fixed pages, found through a lookup table.
+
+On the right side of the plot is the entrance gate, with two signs and a counter. The first sign says the longest group allowed through, which is max model len, the maximum context length. The counter shows how many groups can be parked and active at once, which is max num seqs. And in front of the gate is a single lane with a traffic light that turns green once per tick of the engine's clock. On each green, only a fixed number of cars in total may move, across all groups. That per-tick car budget is max num batched tokens.
+
+Hold the picture: the fence, the concrete building and workshop on the left, the painted grid of sixteen-bay rows, the attendant's clipboard, and on the right the gate with its sign, its counter, and the single lane with its car budget per tick.
+
+[PAUSE 2s]
+
+## Under the hood: walk a group through the car park
+
+A new group arrives at the gate: a prompt of three thousand tokens, three thousand cars.
+
+First, the attendant checks for rows that are already painted. This is prefix caching, on by default in current v L L M. Each full row gets a fingerprint, a hash of the sixteen tokens in it combined with the hash of every row before it. So a row's fingerprint means "these exact sixteen tokens, after this exact history". If this group starts with the same system prompt and tool definitions as a group earlier today, the first rows' fingerprints match rows already in the grid, and the new group simply points at them on the clipboard. Those rows now have two groups pointing at them, and a reference count tracks that. No prefill work, no new memory. Only full rows get fingerprints, so sharing happens in steps of sixteen tokens. One detail that matters in finance: a request can carry a cache salt, which is mixed into the first row's fingerprint. Only requests with the same salt can share rows. That stops one tenant from learning, by timing how fast their first token comes back, that another tenant sent the same text.
+
+Second, admission at the gate. The engine checks that the whole prompt will fit in free rows before it lets the group in, and that the counter of active groups isn't at max num seqs. If either check fails, the group waits in the street, in the waiting queue. That queue length is the single most useful number on your dashboard.
+
+Third, the lane. Each tick, the scheduler spends its car budget in a fixed order. Decodes go first: every group already parked and generating moves exactly one car, one new token. Whatever budget is left goes to prefill. If the budget is eight thousand one hundred and ninety-two and two hundred groups are decoding, two hundred cars go through, and about eight thousand are left for new prompts. Our three-thousand-car group goes through in a single tick. But a group of forty thousand cars, a whole regulatory filing, would take up many ticks' worth of budget. So it's split: a chunk this tick, a chunk the next, interleaved with everyone else's decodes. That's chunked prefill, on by default in the current engine. Without it, one huge prompt would take over the lane, and every other group's stream would freeze while it went through.
+
+Fourth, the group settles in and grows. Each decode step adds one car. When a group fills its last row, the attendant hands it a new row from the free list, the next block of sixteen.
+
+Fifth, the group finishes and drives off. Its rows go back on the free list, but the paint stays: they keep their fingerprints and stay reusable until someone needs the space. The free list runs least recently used first, and a group's tail rows are queued for scrubbing ahead of its early rows, because the tail of a conversation is the least likely to be shared. When a new group needs a row and the one at the head of the list still has paint, the attendant scrubs it. That's eviction: least recently used, one block at a time.
+
+Sixth, the bad day. The grid is full, a parked group needs one more row, and the free list is empty. So the engine preempts: it picks a victim, by default the most recently admitted group, frees all its rows, and sends it back to the street. In the current engine the default mode is recompute: when the victim returns, its prefill runs again, though prefix caching may rescue rows not yet scrubbed. Older versions could swap to C P U memory instead; the current design found recompute cheaper. Preemption keeps the system correct, but each one is wasted G P U work plus a latency spike. That's the cold open.
+
+[PAUSE 1s]
+
+## The sizing math, out loud
+
+Now the numbers, the way you'd do it at a whiteboard. The bytes per token of K V cache are: two, for keys and values, times the number of layers, times the number of key-value heads, times the head dimension, times bytes per number.
+
+Take a Llama three point one eight-billion model: thirty-two layers, eight key-value heads, head dimension one hundred twenty-eight, two bytes per number. Two times thirty-two times eight times one hundred twenty-eight times two is one hundred thirty-one thousand bytes, about a hundred and twenty-eight kilobytes per token. One row of sixteen bays is two megabytes.
+
+Now the car park. Eighty gigabytes, fence at ninety-two percent, gives roughly seventy-three gigabytes. The concrete building takes sixteen. Give the workshop a few gigabytes. That leaves around fifty-five gigabytes of grid, which is roughly four hundred thousand tokens. You don't have to trust your arithmetic, though. At startup v L L M logs two lines worth memorizing: the K V cache size in tokens, and the maximum concurrency for your max model len. Read them on every deployment.
+
+Four hundred thousand tokens is about fifty concurrent conversations at eight thousand tokens each. It's about two hundred at two thousand tokens. And it's only three at a hundred and twenty-eight thousand. That's the whole cold open in one sentence.
+
+Three things change the math. First, the cache data type: store it in eight-bit floating point and you get twice the bays on the same grid, usually at a small quality cost you should check on your own evaluation set. Second, attention design: grouped-query attention, eight key-value heads instead of thirty-two, is why modern models fit at all; without it, that eight-billion model would need four times more per token. Compressed latent attention and sliding-window layers shrink it further, and v L L M's hybrid cache manager sizes each layer type separately. Third, tensor parallelism: split a model across two G P Us and each card holds half the key-value heads, so adding a G P U often buys more concurrency than you'd expect.
+
+[PAUSE 1s]
+
+## The four knobs, and what each one trades
+
+Back to the car park, one knob at a time.
+
+The fence: G P U memory utilization, the fraction of the whole G P U this engine instance may use, grabbed at startup, which is why memory graphs sit flat at ninety-two percent. Pushing it toward zero point nine five gives more rows and fewer preemptions, at the risk of out-of-memory errors from fragmentation or anything else on the card. Two instances sharing one G P U each get their own fence, say zero point four five. On dedicated cards, push it as high as proves stable under load.
+
+The sign: max model len, the longest group allowed, prompt plus output. A common misconception: in a paged system it doesn't reserve memory per request. It caps the worst case. The engine refuses to start if even one request that long can't fit, and tells you the largest length that would. Set too high, it allows the cold open: a handful of giant groups legally taking most of the lot. Set it from the ninety-ninth percentile of real prompt plus output, with headroom, and send long-document work to its own pool.
+
+The counter: max num seqs. It's the most groups active in one batch, per engine, per data-parallel rank. The default depends on the G P U: one thousand and twenty-four for the server on H one hundred and H two hundred class cards, two hundred fifty-six on smaller cards, including the A one hundred. Raise it and throughput climbs, because each decode step serves more groups per trip through the weights. But each step takes a bit longer, so inter-token latency rises for everyone, and once the grid can't hold that many real conversations, you get preemptions. Lower it and streams are smoother, but more groups wait in the street, so time to first token rises. The key insight: the counter is only useful up to what the grid can hold. If the startup log says maximum concurrency is about fifty at your typical length, a counter of a thousand doesn't buy a thousand users. It buys preemptions.
+
+The lane budget: max num batched tokens, the most tokens processed in one engine step, decodes and prefill chunks combined. The server default is eight thousand one hundred and ninety-two on H one hundred class cards, sixteen thousand three hundred and eighty-four on the largest, like the B two hundred, and two thousand and forty-eight on smaller ones. The trade is time to first token against inter-token latency. A small budget, like two thousand, keeps steps short and streams smooth, but new prompts take more steps to get through. A large budget does the opposite, and the v L L M docs recommend going above eight thousand for throughput, especially for small models on big G P Us. A related knob, the long prefill token threshold, caps how much of one step a single long prompt can take, so one filing can't crowd out a dozen chat questions.
+
+Two more controls: a performance mode, whose throughput option doubles the default counter and lane budget, and a queue cap that rejects new requests with a five oh three once the line gets too long, so clients retry elsewhere.
+
+[PAUSE 1s]
+
+## The tuning procedure
+
+Here's the procedure, in order.
+
+Step one: write down the workload and the targets. Get the distributions of prompt length and output length, the median and the ninety-ninth percentile, not the averages. Know the peak concurrency. Set the service levels, for example time to first token under one second at p ninety-five and inter-token latency under fifty milliseconds.
+
+Step two: set max model len from those distributions, not from the model card.
+
+Step three: set the fence as high as is stable. Consider an eight-bit K V cache. Then read the startup log for K V cache tokens and maximum concurrency.
+
+Step four: estimate the real concurrency the grid can hold. Divide the K V tokens by the typical tokens a live conversation holds, and give a little credit for prefix sharing. Set max num seqs near that number, not at the default of a thousand.
+
+Step five: sweep the lane budget, say two, four, eight and sixteen thousand, with a couple of counter values, replaying your real traffic mix at your target request rate. v L L M ships benchmark and sweep commands for exactly this. Pick the configuration with the best goodput: the most requests per second that still meet both latency targets.
+
+Step six: watch it in production. Chart K V cache usage, preemptions, waiting requests, prefix cache hit rate, and the time to first token and inter-token latency histograms. Any steady stream of preemptions means you're over-admitting. Lower the counter or add memory.
+
+Step seven: split workloads that fight. Long-document summarization and short interactive chat want opposite settings. Two pools with their own knobs beat one pool with a compromise.
+
+[PAUSE 1s]
+
+## Pitfalls and a war story
+
+Four traps. One: treating G P U memory utilization as a live metric; it's a setting, and memory graphs will read ninety-some percent forever. Two: confusing max num batched tokens, a per-step engine budget, with maximum output length, a per-request cap. Three: leaving max num seqs at a thousand and twenty-four when your grid holds fifty real conversations. Four: breaking prefix caching by putting something variable at the very top of the prompt, like a timestamp or a user's name. Every row after it gets a different fingerprint. Stable content first, variable content last.
+
+A war story in a common shape: an agent platform put the current timestamp at the top of its system prompt, followed by six thousand tokens of tool definitions. Prefix cache hit rate near zero, time to first token over a second. Someone moved the timestamp to the end. Hit rate above ninety percent, time to first token a few hundred milliseconds, same hardware, no settings changed.
+
+[PAUSE 2s]
+
+## The strong answer, out loud
+
+When they ask "how does the K V cache work and how is it managed?", a strong ninety-second answer sounds like this.
+
+"During generation, each token's attention needs the keys and values of all earlier tokens at every layer, so we cache them instead of recomputing. Prefill writes them for the whole prompt, and each decode step reads them all and appends one. Size per token is two, times layers, times K V heads, times head dimension, times bytes. For an eight-billion Llama that's about a hundred and twenty-eight kilobytes per token, so memory, not compute, caps concurrency. v L L M manages it with paged attention. At startup it reserves a fraction of G P U memory, carves what's left after the weights into fixed blocks of sixteen tokens, and gives each request blocks on demand through a block table, so waste is only the last partial block. Full blocks are hashed with their prefix for automatic prefix caching, shared by reference count, with a cache salt for tenant isolation. Freed blocks stay reusable until they're evicted least recently used. When the pool runs out mid-decode, the scheduler preempts the newest request and recomputes it later. So I alert on preemptions and K V usage, and I can shrink the cache with an F P eight K V cache or add memory with tensor parallelism."
+
+When they ask about serving parameters: "Four knobs. G P U memory utilization sets the pool size. Max model len caps the worst-case request. Max num seqs caps how many requests share a batch: more gives throughput, but costs inter-token latency, and past what the cache holds it just causes preemption. Max num batched tokens is the per-step token budget. Decodes go first, and prefill fills the rest in chunks, so smaller favors smooth streaming and larger favors time to first token and throughput. I tune them by measuring the length distributions, reading the startup concurrency estimate, and sweeping configurations under realistic load to maximize goodput against both latency targets."
+
+Follow-ups to expect. "Why not swap preempted requests to C P U?" Recompute is cheaper in the current design; for long, reused contexts, K V offloading to C P U memory through a connector is the modern answer. "Can prefix caching leak between tenants?" Through timing, yes, hence cache salts. "What changes for a hundred-and-twenty-eight-thousand-token workload?" A separate pool, eight-bit cache, tensor parallelism, a low counter, a long-prefill cap.
+
+The traps: saying the cache stores attention scores, since it stores keys and values; saying max model len reserves memory per request; and quoting defaults without saying they depend on G P U and version.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the car park, seen from above.
+
+The whole plot is G P U memory. The fence is G P U memory utilization, ninety-two percent by default. On the left, the concrete building of weights and the small workshop. The rest is a grid of rows, sixteen bays each, one token's keys and values per bay, about a hundred and twenty-eight kilobytes per bay for an eight-billion model. Each request is a tour group parked row by row wherever there's space, tracked on the attendant's clipboard. That's paged attention.
+
+At the gate: the sign for max model len, the counter for max num seqs, and the single lane with its per-tick car budget, max num batched tokens. Decodes move one car each first, and prefill chunks use whatever budget is left.
+
+Painted rows keep their fingerprints and get shared. That's prefix caching, salted per tenant. Old paint is scrubbed least recently used first. When the lot is full, the newest group is sent back to the street and recomputed. That's preemption, and a steady stream of it means you're admitting more than the grid can hold.
+
+The tuning loop: measure the lengths, set the sign, push the fence, read the concurrency log, size the counter, sweep the lane budget for goodput, watch preemptions, and split the workloads that fight.
+
+Next episode, we leave the single car park and build more of them: autoscaling on Kubernetes, and how to pick the metric that tells you when. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-llm-inference-microservice.html">← Building an LLM Inference Microservice</a><a class="btn" href="03-autoscaling-llms-k8s.html">Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric →</a></div></main></div></body></html>

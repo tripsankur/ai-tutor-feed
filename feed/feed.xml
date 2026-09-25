@@ -5,7 +5,7 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/site/index.html</link>
     <description>Interview-prep deep dives and rapid-fire drills on the Databricks AI stack, GenAI system design, RAG, agentic AI, MCP, LangChain, transformers and LLMOps.</description>
     <language>en-au</language>
-    <lastBuildDate>Wed, 22 Jul 2026 17:20:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2026 06:05:49 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/feed/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:owner><itunes:name>Ankur Tripathi</itunes:name><itunes:email>ankurtripathi.cs@gmail.com</itunes:email></itunes:owner>
@@ -232,12 +232,540 @@
     <item>
       <title>S2E08 · DRILL: Databricks GenAI Rapid-Fire</title>
       <description>Fifteen rapid-fire interview questions across the whole Databricks AI stack — the five-floor tower, Vector Search, Model Serving, Agent Bricks, MLflow 3, AI Functions and Genie, and AI governance. Answer aloud in the pause, then compare.</description>
-      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e08-databricks-ai-drill.mp3" length="1241666" type="audio/mpeg"/>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/02-databricks-ai/s2e08-databricks-ai-drill.mp3" length="3988601" type="audio/mpeg"/>
       <guid isPermaLink="false">t2e8-databricks-ai-drill</guid>
       <pubDate>Mon, 19 Jan 2026 08:00:00 +0000</pubDate>
-      <itunes:duration>00:03:26</itunes:duration>
+      <itunes:duration>00:11:04</itunes:duration>
       <itunes:season>2</itunes:season>
       <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E01 · Anatomy of a Production LLM System</title>
+      <description>The corridor mental model of a production LLM system: front door, gateway, input guards, orchestrator, context shelves above, model basement below, output guards, and the glass floor of tracing underneath, with the latency budget, costs, and failure modes of each station.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e01-production-llm-anatomy.mp3" length="8174537" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e1-production-llm-anatomy</guid>
+      <pubDate>Tue, 20 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:42</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E02 · "Design a RAG System" — Interview Walkthrough</title>
+      <description>A full forty-five-minute interview walkthrough of designing a RAG system over millions of permissioned documents, built on one whiteboard: the offline indexing lane above the line, the online query lane below it, the index on the line between them, and the evaluation frame around the edge.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e02-design-rag-walkthrough.mp3" length="7618134" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e2-design-rag-walkthrough</guid>
+      <pubDate>Wed, 21 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:09</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E03 · Latency &amp; Cost Engineering: Caching, Batching, Streaming, Model Routing</title>
+      <description>The pipe-to-the-engine mental model of LLM latency and cost: answer caches that let requests exit early, a router that forks easy traffic to small models, a batch side-channel at half price, prompt caching inside the engine, and a streaming tap at the end, with the numbers and failure modes of each.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e03-latency-cost.mp3" length="8002494" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e3-latency-cost</guid>
+      <pubDate>Thu, 22 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:13</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E04 · Evals: LLM-as-Judge, Golden Sets, Regression Gates</title>
+      <description>How production teams know an LLM change is actually better: golden sets built from real traffic, three kinds of graders including a calibrated LLM judge, honest statistics, and a regression gate that blocks a release before users ever see it.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e04-evals.mp3" length="8118825" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e4-evals</guid>
+      <pubDate>Fri, 23 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:33</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E05 · Guardrails, PII, Prompt-Injection Defense</title>
+      <description>Why prompt injection is an architecture problem, not a prompt problem: layered input and output rails, PII handling across every place data lands, and the blast-radius controls — least privilege, the lethal trifecta, quarantined models — that keep a compromised model from doing damage.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e05-guardrails-security.mp3" length="7704816" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e5-guardrails-security</guid>
+      <pubDate>Sat, 24 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:24</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E06 · Scaling &amp; Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</title>
+      <description>What actually limits how many users one GPU can serve: KV-cache memory arithmetic, paged blocks and prefix sharing, continuous batching and chunked prefill, and the queues, token budgets, and fairness rules that keep one noisy tenant from ruining everyone else's latency.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e06-scaling-serving.mp3" length="7527716" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e6-scaling-serving</guid>
+      <pubDate>Sun, 25 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:54</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S3E07 · DRILL: GenAI System Design Rapid-Fire</title>
+      <description>Fourteen rapid-fire interview questions across the whole GenAI system design track — the production corridor, designing a RAG system, latency and cost, evals, guardrails and prompt injection, and scaling and multi-tenancy. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/03-genai-system-design/s3e07-system-design-drill.mp3" length="3841436" type="audio/mpeg"/>
+      <guid isPermaLink="false">t3e7-system-design-drill</guid>
+      <pubDate>Mon, 26 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:10:40</itunes:duration>
+      <itunes:season>3</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E01 · Embeddings &amp; Vector Similarity from First Principles</title>
+      <description>The map of meaning that every R A G system stands on: what an embedding actually is, how a model learns to place text on that map, why cosine similarity is really about angles, and what dimensions, cost, and model swaps do to you in production.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e01-embeddings.mp3" length="8169067" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e1-embeddings</guid>
+      <pubDate>Tue, 27 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:41</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E02 · Chunking Strategies</title>
+      <description>Where you cut a document decides where its pins land on the map of meaning. Fixed, recursive, structure-aware, and semantic chunking, overlap, late chunking and contextual retrieval, with the numbers and failure stories that tell you which to reach for.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e02-chunking.mp3" length="7102282" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e2-chunking</guid>
+      <pubDate>Wed, 28 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:43</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E03 · Retrieval: BM25, Hybrid, Reranking, Query Rewriting</title>
+      <description>The retrieval funnel, top to bottom: rewrite the question, send a keyword scout and a meaning scout in parallel, fuse their lists with reciprocal rank fusion, and let a cross-encoder judge pick the final few. How B M twenty-five works, why hybrid wins, and what each stage costs in latency.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e03-retrieval.mp3" length="7328106" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e3-retrieval</guid>
+      <pubDate>Thu, 29 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:21</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E04 · Vector DB Internals: HNSW, IVF, Quantization</title>
+      <description>How a vector database finds the nearest pins among a hundred million without checking them all: H N S W's stack of transparent sheets, I V F's neighborhoods and capitals, and quantization's shorthand coordinates, with the memory math, tuning dials, and filtering traps that decide cost and recall.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e04-vector-db-internals.mp3" length="7300595" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e4-vector-db-internals</guid>
+      <pubDate>Fri, 30 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:16</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E05 · Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</title>
+      <description>Four upgrades to a plain retrieval pipeline, each fixing a different failure: HyDE fixes the question-shaped query, parent-document fixes the too-small chunk, GraphRAG fixes the question no single chunk can answer, and agentic RAG fixes the one-shot retrieval that never checks its own work.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e05-advanced-rag.mp3" length="7581985" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e5-advanced-rag</guid>
+      <pubDate>Sat, 31 Jan 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:03</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E06 · RAG Evaluation: RAGAS &amp; Friends</title>
+      <description>How to stop judging a RAG system on vibes: the triangle of question, context and answer, the metrics that live on each edge, how RAGAS computes them underneath, and why your LLM judge needs its own evaluation.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e06-rag-evaluation.mp3" length="6997462" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e6-rag-evaluation</guid>
+      <pubDate>Sun, 01 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:26</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E07 · Production RAG Failure Modes &amp; Fixes</title>
+      <description>A walk down the water line from source documents to the model's answer, stopping at every place production RAG actually breaks — dirty sources, bad parsing, stale indexes, leaky filters, overfilled context, poisoned documents — and the fix for each.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e07-failure-modes.mp3" length="7057803" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e7-failure-modes</guid>
+      <pubDate>Mon, 02 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:36</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S4E08 · DRILL: RAG Rapid-Fire</title>
+      <description>Fifteen rapid-fire interview questions across the whole R A G track — embeddings, chunking, hybrid retrieval and reranking, vector index internals, advanced techniques, evaluation, and production failure modes. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/04-rag/s4e08-rag-drill.mp3" length="3891516" type="audio/mpeg"/>
+      <guid isPermaLink="false">t4e8-rag-drill</guid>
+      <pubDate>Tue, 03 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:10:48</itunes:duration>
+      <itunes:season>4</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E01 · What an Agent Is: The Loop, ReAct, Function Calling Internals</title>
+      <description>Strip away the hype and an agent is a stateless model in a sealed room, a runner looping outside it, and a row of tools the model can only request, never touch. This episode builds that picture and walks the tool-calling contract, the ReAct pattern, and the costs that compound with every lap.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e01-what-is-an-agent.mp3" length="7979009" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e1-what-is-an-agent</guid>
+      <pubDate>Wed, 04 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:09</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E02 · Planning &amp; Reasoning Patterns: CoT, Reflection, Plan-Execute</title>
+      <description>Chain of thought, plan-and-execute, and reflection, built as a planner's room, a sealed room with a private chalkboard, and an inspector's booth. Includes how modern reasoning models with adaptive, effort-controlled thinking absorb some of these patterns and make others more valuable.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e02-planning-reasoning.mp3" length="7503808" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e2-planning-reasoning</guid>
+      <pubDate>Thu, 05 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:50</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E03 · Agent Memory: Short-Term, Long-Term, Summarization</title>
+      <description>A stateless model only knows what's on the scroll. This episode builds the scribe at the in-slot who trims and compacts the scroll, and the basement archive of semantic, episodic, and procedural memory, then covers write paths, read paths, and the ways memory fails: lost constraints, poisoning, leakage, and staleness.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e03-agent-memory.mp3" length="7305078" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e3-agent-memory</guid>
+      <pubDate>Fri, 06 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:17</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E04 · Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</title>
+      <description>One office floor, three layouts: how orchestrator-worker, handoffs, and debate actually move context between agents, what each costs in tokens and failure modes, and why the strongest multi-agent systems keep writes single-threaded.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e04-multi-agent-patterns.mp3" length="7548015" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e4-multi-agent-patterns</guid>
+      <pubDate>Sat, 07 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:57</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E05 · MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</title>
+      <description>The Model Context Protocol as of its 2026-07-28 revision: host, clients and servers drawn as one hub-and-spoke picture, the three server primitives and who controls each, the two transports, and why the protocol just went stateless.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e05-mcp-protocol.mp3" length="7337210" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e5-mcp-protocol</guid>
+      <pubDate>Sun, 08 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:22</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E06 · MCP vs Function Calling; Security &amp; Auth in Real Deployments</title>
+      <description>Function calling is how a model decides; MCP is how that decision gets delivered to a tool you don't own. Then the security half: OAuth 2.1 with protected resource metadata, PKCE, resource-bound tokens and client ID metadata documents, plus the attacks that actually hit MCP deployments.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e06-mcp-vs-function-calling.mp3" length="6984688" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e6-mcp-vs-function-calling</guid>
+      <pubDate>Mon, 09 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:24</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E07 · Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</title>
+      <description>Four agent frameworks placed on one map: who owns the control flow — you or the model — and whether the unit of work is one agent or a team. Covers LangGraph 1.x, CrewAI Crews and Flows, AutoGen's move to maintenance mode and its successor Microsoft Agent Framework, and the Claude Agent SDK.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e07-framework-survey.mp3" length="8696568" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e7-framework-survey</guid>
+      <pubDate>Tue, 10 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:24:09</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E08 · Agent Evals, Guardrails, Human-in-the-Loop</title>
+      <description>How you prove an agent works and keep it from doing damage: outcome, trajectory, and step-level evals with code, model, and human graders; pass-at-k versus pass-to-the-k; layered input, tool, and output guardrails; and human approval gates built on checkpoints and interrupts.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e08-agent-evals.mp3" length="7229902" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e8-agent-evals</guid>
+      <pubDate>Wed, 11 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:04</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S5E09 · DRILL: Agents + MCP Rapid-Fire</title>
+      <description>Fifteen rapid-fire interview questions across the whole agentic track — the agent loop and function calling, planning and reasoning, memory, multi-agent patterns, the Model Context Protocol and its security, frameworks, and evals and guardrails. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/05-agentic-mcp/s5e09-agentic-drill.mp3" length="4428802" type="audio/mpeg"/>
+      <guid isPermaLink="false">t5e9-agentic-drill</guid>
+      <pubDate>Thu, 12 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:12:18</itunes:duration>
+      <itunes:season>5</itunes:season>
+      <itunes:episode>9</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E01 · LangChain Core: LCEL, Runnables, Chains vs Agents</title>
+      <description>The foundation of the LangChain stack in its version-one shape: one universal Runnable interface, the pipe that composes it into fixed chains, and the create-agent loop with middleware that replaced a decade's worth of legacy agent classes.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e01-langchain-core.mp3" length="7477306" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e1-langchain-core</guid>
+      <pubDate>Fri, 13 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:46</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E02 · LangGraph: State Machines, Nodes, Edges, Checkpoints</title>
+      <description>LangGraph opened up as a board game: a shared scoreboard of state with per-column merge rules, squares that do the work, arrows that route, ticks that run in lockstep, and a camera that photographs every tick into a per-thread filing cabinet — which is what makes agents durable, resumable, and debuggable.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e02-langgraph-state.mp3" length="6794893" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e2-langgraph-state</guid>
+      <pubDate>Sat, 14 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:18:52</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E03 · LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</title>
+      <description>Three production patterns built on the LangGraph board: boards hidden inside squares (subgraphs and their persistence modes), a red square that freezes the game for a human (interrupt and Command resume), and a broadcast booth that streams every move live (stream modes and the newer event-streaming projections).</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e03-langgraph-patterns.mp3" length="6696836" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e3-langgraph-patterns</guid>
+      <pubDate>Sun, 15 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:18:36</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E04 · LangSmith: Tracing, Datasets, Evals</title>
+      <description>How LangSmith turns a non-deterministic agent into something you can observe and test: runs and traces captured from the live river of traffic, failures scooped into versioned datasets, and experiments scored by code, L L M judges, and humans before and after every release.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e04-langsmith.mp3" length="7937372" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e4-langsmith</guid>
+      <pubDate>Mon, 16 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:02</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E05 · When NOT LangChain — Tradeoffs &amp; Alternatives</title>
+      <description>A staircase of abstraction from the raw model A P I up to managed agent platforms: what each step gives you for free, what it takes away, where LangChain and LangGraph sit on it, and how to pick the lowest step that holds your problem.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e05-when-not-langchain.mp3" length="7520648" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e5-when-not-langchain</guid>
+      <pubDate>Tue, 17 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:53</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S6E06 · DRILL: LangChain/LangGraph Rapid-Fire</title>
+      <description>Fourteen rapid-fire interview questions across the whole LangChain and LangGraph track — Runnables and chains versus agents, graph state and checkpoints, interrupts, subgraphs and streaming, LangSmith tracing and evals, and when not to use a framework at all. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/06-langchain-langgraph/s6e06-langchain-drill.mp3" length="3572302" type="audio/mpeg"/>
+      <guid isPermaLink="false">t6e6-langchain-drill</guid>
+      <pubDate>Wed, 18 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:09:55</itunes:duration>
+      <itunes:season>6</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E01 · From RNNs to Attention: Why Transformers Won</title>
+      <description>Why the transformer replaced recurrent networks: a single messenger walking a shelf of words versus a web of direct threads between every word — parallel training, short paths between distant words, and the quadratic bill that came with it.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e01-why-transformers.mp3" length="7860488" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e1-why-transformers</guid>
+      <pubDate>Thu, 19 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:50</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E02 · Self-Attention Mechanics: Q, K, V by Analogy</title>
+      <description>Self-attention with no equations read aloud: every word tile raises a question flag, wears a label, and carries a bucket of content — flags match labels, scores become a pie of percentages, and each tile walks away with a weighted blend of buckets. Plus scaling, the causal curtain, and why the grid of scores is the memory problem.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e02-self-attention.mp3" length="7011032" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e2-self-attention</guid>
+      <pubDate>Fri, 20 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:28</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E03 · Multi-Head Attention, RoPE, Residuals, LayerNorm</title>
+      <description>The full transformer block as a building: a conveyor belt of tiles rising through identical floors, an attention room with many desks on the left, a feed-forward room on the right, leveling gates at every door, and clock dials that tell each tile where it sits — plus the modern variants every current open model uses: grouped-query attention, RMSNorm, pre-norm, and rotary positions.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e03-multihead-rope.mp3" length="7223868" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e3-multihead-rope</guid>
+      <pubDate>Sat, 21 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:03</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E04 · Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</title>
+      <description>The two ends of the building: a cutting table that turns text into tokens by merging frequent byte pairs, a wall of pigeonholes that turns tokens into vectors, a rooftop scoreboard that scores every possible next token, and a grader measuring surprise — how one simple objective, predict the next token, trains a decoder-only LLM.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e04-decoder-only-llms.mp3" length="7354927" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e4-decoder-only-llms</guid>
+      <pubDate>Sun, 22 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:25</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E05 · Inference: KV Cache, Sampling, Speculative Decoding</title>
+      <description>What actually happens between hitting enter and seeing tokens stream back: prefill versus decode, why the KV cache turns inference into a memory problem, how sampling picks each word, and how speculative decoding lets a small draft model buy speed without changing a single output.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e05-inference.mp3" length="7933215" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e5-inference</guid>
+      <pubDate>Mon, 23 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:02</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E06 · Scaling Laws, Mixture-of-Experts, Long Context</title>
+      <description>How the field decides how big to build a model and how much to feed it, why nearly every large open model is now a mixture-of-experts that only wakes a small slice of itself per token, and what a million-token context window really costs and really delivers.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e06-scaling-moe.mp3" length="7076410" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e6-scaling-moe</guid>
+      <pubDate>Tue, 24 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:19:39</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E07 · Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</title>
+      <description>How a raw pre-trained model becomes a useful assistant: supervised fine-tuning, LoRA and QLoRA for doing it cheaply, preference tuning with RLHF and DPO, and the reinforcement learning with verifiable rewards and on-policy distillation that power today's reasoning models.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e07-finetuning.mp3" length="7298743" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e7-finetuning</guid>
+      <pubDate>Wed, 25 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:16</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S7E08 · DRILL: Transformers Rapid-Fire</title>
+      <description>Fifteen rapid-fire interview questions across the whole transformer track — why transformers beat RNNs, self-attention, multi-head attention and RoPE, decoder-only training and tokenization, the KV cache and speculative decoding, scaling laws and mixture-of-experts, and fine-tuning from LoRA to GRPO. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/07-transformers/s7e08-transformers-drill.mp3" length="4219866" type="audio/mpeg"/>
+      <guid isPermaLink="false">t7e8-transformers-drill</guid>
+      <pubDate>Thu, 26 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:11:43</itunes:duration>
+      <itunes:season>7</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E01 · LLMOps vs MLOps: What Actually Changes</title>
+      <description>Opening Track 8: what carries over from classical MLOps, and what really changes once the model is a rented, non-deterministic text engine and the prompt, context and token meter matter as much as the weights.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e01-llmops-vs-mlops.mp3" length="8013116" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e1-llmops-vs-mlops</guid>
+      <pubDate>Fri, 27 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:15</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E02 · Prompt vs RAG vs Fine-Tune: The Decision Tree</title>
+      <description>A staircase with a fork: climb from prompting to retrieval to fine-tuning only as far as the problem needs, and diagnose first whether the gap is knowledge or behavior, because each step fixes a different kind of gap.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e02-prompt-rag-finetune.mp3" length="7820739" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e2-prompt-rag-finetune</guid>
+      <pubDate>Sat, 28 Feb 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:43</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E03 · Quantization &amp; Efficient Serving</title>
+      <description>Inside the GPU warehouse: why generating text is limited by memory bandwidth, how quantization shrinks the weight crates, and how paged KV cache, continuous batching, prefix caching and speculative decoding turn one expensive GPU into a high-throughput server.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e03-quantization-serving.mp3" length="7876742" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e3-quantization-serving</guid>
+      <pubDate>Sun, 01 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:21:52</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E04 · Monitoring, Drift, Feedback Loops</title>
+      <description>Why an L L M system can return a perfect two hundred OK while being quietly wrong, and how to see it: a three-layer monitoring picture of operational dials, sampled quality judging, and a feedback return pipe, plus the four kinds of drift that break production assistants.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e04-monitoring.mp3" length="8272311" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e4-monitoring</guid>
+      <pubDate>Mon, 02 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:22:58</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E05 · Prompt Engineering Patterns That Matter in Interviews</title>
+      <description>The prompt patterns that still matter in twenty twenty-six, and the shift from prompt engineering to context engineering: one page, a fixed attention budget, and a disciplined order for everything you put on it, plus structured outputs, caching, reasoning models, and prompt injection.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e05-prompt-engineering.mp3" length="7350011" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e5-prompt-engineering</guid>
+      <pubDate>Tue, 03 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:20:24</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>S8E06 · DRILL: LLMOps Rapid-Fire</title>
+      <description>Fourteen rapid-fire interview questions across the whole L L M ops track: what changes from M L ops, prompt versus retrieval versus fine-tuning, quantization and serving, monitoring and drift, and prompt and context engineering. Answer aloud in the pause, then compare.</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/audio/08-llmops/s8e06-llmops-drill.mp3" length="3602238" type="audio/mpeg"/>
+      <guid isPermaLink="false">t8e6-llmops-drill</guid>
+      <pubDate>Wed, 04 Mar 2026 08:00:00 +0000</pubDate>
+      <itunes:duration>00:10:00</itunes:duration>
+      <itunes:season>8</itunes:season>
+      <itunes:episode>6</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
       <itunes:explicit>false</itunes:explicit>
     </item>

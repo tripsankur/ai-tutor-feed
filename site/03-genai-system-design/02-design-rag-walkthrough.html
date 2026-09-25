@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>"Design a RAG System" — Interview Walkthrough — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk" open><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="active" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 3 · GenAI System Design · Episode 2</div>
+<h1 class="lesson">"Design a RAG System" — Interview Walkthrough</h1>
+<div class="meta">17 min listen · A full forty-five-minute interview walkthrough of designing a RAG system over millions of permissioned documents, built on one whiteboard: the offline indexing lane above the line, the online query lane below it, the index on the line between them, and the evaluation frame around the edge.</div>
+<audio controls preload="metadata" src="../../audio/03-genai-system-design/s3e02-design-rag-walkthrough.mp3"></audio>
+<button class="btn complete" data-ep="03-genai-system-design/02-design-rag-walkthrough" onclick="toggleDone('03-genai-system-design/02-design-rag-walkthrough')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>A strong RAG design answer starts from requirements (permissions, freshness, traffic, cost of error), separates an incremental offline indexing lane from an online query lane that meet only at the index, enforces permissions as a pre-filter inside retrieval, and wraps everything in retrieval-vs-generation evaluation.</p>
+<h2 id="the-mental-image-the-whiteboard-with-a-line-across-it">The mental image: the whiteboard with a line across it</h2>
+<ul>
+<li><strong>Top-left box</strong>: requirements + back-of-envelope (start here, every time).</li>
+<li><strong>Above the line (offline, left → right)</strong>: sources/connectors (content + metadata + ACLs) → parse (keep tables) → chunk (structure-aware, contextualized) → embed + keyword index.</li>
+<li><strong>On the line, center</strong>: the index cylinder — the only thing both lanes touch.</li>
+<li><strong>Below the line (online, left → right)</strong>: question + identity → rewrite → hybrid retrieve with permission pre-filter → RRF → rerank → prompt assembly → generate → cite.</li>
+<li><strong>Frame around the board</strong>: evaluation — retrieval metrics separate from generation metrics.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph Offline["Above the line: indexing lane (incremental)"]
+        S["Sources: wiki, tickets, contracts"] --> P["Parse (layout-aware, tables intact)"]
+        P --> CH["Chunk (structure-aware + context line)"]
+        CH --> EM["Embed"]
+        CH --> KW["Keyword index (BM25)"]
+    end
+    EM --> IDX[("Index: vectors + terms + text + metadata + ACL groups")]
+    KW --> IDX
+    subgraph Online["Below the line: query lane"]
+        Q["Question + user identity"] --> RW["Rewrite to standalone query"]
+        RW --> HY["Hybrid search with ACL pre-filter"]
+        HY --> RRF["Reciprocal rank fusion"]
+        RRF --> RR["Rerank top ~50 to top 5"]
+        RR --> PA["Prompt: sources labelled, cite or say unknown"]
+        PA --> GEN["Generate (stream)"]
+        GEN --> CIT["Answer + citations"]
+    end
+    IDX --> HY
+</pre>
+
+<pre class="mermaid">flowchart TB
+    subgraph Eval["Evaluation frame"]
+        GS["Golden set: 100-300 real questions + source docs + reference answers"]
+        GS --> RM["Retrieval: recall@k, context precision / recall"]
+        GS --> GM["Generation: faithfulness, answer relevancy"]
+        PROD["Production thumbs-down + escalations"] --> GS
+        RM --> GATE{"Regression gate on every change"}
+        GM --> GATE
+    end
+</pre>
+
+<h2 id="back-of-envelope-the-scenario-2m-docs-20k-employees">Back-of-envelope (the scenario: 2M docs, 20k employees)</h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corpus tokens</td>
+<td>2M docs × ~5k tokens ≈ 10B tokens</td>
+</tr>
+<tr>
+<td>Chunks</td>
+<td>~500 tokens + overlap → ~20M chunks</td>
+</tr>
+<tr>
+<td>Raw vector size</td>
+<td>20M × 1024 dims × 4 bytes ≈ 82 GB (int8 ≈ 20 GB) + index overhead</td>
+</tr>
+<tr>
+<td>Embedding cost (one-time)</td>
+<td>order of hundreds of dollars with a small hosted embedding model</td>
+</tr>
+<tr>
+<td>Traffic</td>
+<td>20k users × 10 q/day = 200k/day → single-digit QPS avg, ~20–30 peak</td>
+</tr>
+<tr>
+<td>Latency target</td>
+<td>first token within ~1–2 s</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-reciprocal-rank-fusion">Code: reciprocal rank fusion</h2>
+<pre><code class="language-python">def rrf(result_lists, k=60):
+    &quot;&quot;&quot;result_lists: list of ranked lists of doc ids (e.g. [bm25_ids, vector_ids]).&quot;&quot;&quot;
+    scores = {}
+    for ranked in result_lists:
+        for rank, doc_id in enumerate(ranked, start=1):
+            scores[doc_id] = scores.get(doc_id, 0.0) + 1.0 / (k + rank)
+    return sorted(scores, key=scores.get, reverse=True)
+</code></pre>
+<p>Permission pre-filter (pseudocode — filter is part of the search, not applied afterwards):</p>
+<pre><code class="language-python">groups = idp.groups_for(user)                     # Entra ID / IAM Identity Center / IdP
+hits = index.hybrid_search(query_text, query_vec,
+                           filter={&quot;acl_groups&quot;: {&quot;any_of&quot;: groups}},
+                           top_k=50)
+top5 = reranker.rerank(query_text, hits)[:5]
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hybrid search</td>
+<td>Vector + keyword (BM25) in parallel</td>
+<td>"Meaning plus exact identifiers"</td>
+</tr>
+<tr>
+<td>RRF</td>
+<td>Sum of 1/(k + rank) across lists, k≈60</td>
+<td>"Fuse ranks, ignore incomparable scores"</td>
+</tr>
+<tr>
+<td>Reranker (cross-encoder)</td>
+<td>Scores question+chunk jointly</td>
+<td>"Accurate but slow — run on 50, not 20M"</td>
+</tr>
+<tr>
+<td>Contextual chunk</td>
+<td>Chunk prefixed with doc/section context</td>
+<td>Reported ~49% fewer retrieval failures, ~67% with reranking</td>
+</tr>
+<tr>
+<td>ACL pre-filter</td>
+<td>Permission filter inside the search</td>
+<td>"Never filter after retrieval"</td>
+</tr>
+<tr>
+<td>Query rewriting</td>
+<td>Turn follow-ups into standalone queries</td>
+<td>"What about the second one?" → searchable</td>
+</tr>
+<tr>
+<td>Recall@k</td>
+<td>Share of questions whose gold chunk is in top k</td>
+<td>Retrieval-lane health</td>
+</tr>
+<tr>
+<td>Faithfulness</td>
+<td>Answer claims supported by retrieved context</td>
+<td>Generation-lane health</td>
+</tr>
+<tr>
+<td>Freshness SLA</td>
+<td>Time from source change to searchable</td>
+<td>Alert on it</td>
+</tr>
+</tbody>
+</table>
+<h2 id="failure-modes-fixes">Failure modes → fixes</h2>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Index built by an all-reading service account, no ACLs</td>
+<td>Carry ACLs as metadata, pre-filter by user groups, audit cross-boundary</td>
+</tr>
+<tr>
+<td>Stale / duplicate document versions</td>
+<td>Dedup at ingestion, only current version active, recency boost</td>
+</tr>
+<tr>
+<td>Tables mangled</td>
+<td>Layout-aware parsing, keep tables whole</td>
+</tr>
+<tr>
+<td>Codes / acronyms missed</td>
+<td>Hybrid search</td>
+</tr>
+<tr>
+<td>Aggregation questions ("how many…")</td>
+<td>Route to a structured / text-to-SQL tool</td>
+</tr>
+<tr>
+<td>Over-stuffed context</td>
+<td>Rerank, keep top 5–10, put best first</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cloud-anchoring">Cloud anchoring</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Azure</th>
+<th>AWS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Managed retrieval</td>
+<td>Azure AI Search: hybrid (RRF) + semantic ranker</td>
+<td>Bedrock Knowledge Bases (hybrid on OpenSearch Serverless, metadata filters)</td>
+</tr>
+<tr>
+<td>Identity for ACLs</td>
+<td>Entra ID groups</td>
+<td>IAM / IAM Identity Center; ACLs stored as metadata</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Private Link</td>
+<td>PrivateLink VPC endpoints</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Design a RAG system over 2M permissioned internal documents.</strong>
+Requirements first (corpus types, ACLs, freshness, traffic, latency, cost of error) + back-of-envelope. Offline lane: connectors with content+metadata+ACLs, layout-aware parsing, structure-aware contextual chunking, embeddings + BM25, incremental updates including deletes and permission changes. Online lane: rewrite, hybrid search with ACL pre-filter, RRF, rerank to top 5, grounded prompt with citations, streaming. Evaluation: retrieval and generation measured separately, golden set, regression gate.</p>
+<p><strong>Q2. How do you enforce document permissions?</strong>
+Ingest ACLs with content, store as chunk metadata, resolve user groups at query time from the IdP, apply as a pre-filter inside search. Propagate permission changes incrementally like content, and audit with cross-group probes. Post-filtering risks empty results and leaks.</p>
+<p><strong>Q3. Answers are wrong — how do you debug?</strong>
+Split the problem: measure recall@k on the labelled set. Low recall → parsing, chunking, hybrid search, reranker, query rewriting. Good recall but bad answers → prompt, context ordering, model. Use traces to see what was actually retrieved for failing questions.</p>
+<p><strong>Q4. Why hybrid search and a reranker?</strong>
+Vectors catch paraphrase but miss exact identifiers; BM25 catches identifiers but misses paraphrase. RRF merges without score normalization. A cross-encoder reranker is far more accurate than similarity and cheap enough on ~50 candidates; it's one of the highest-return additions.</p>
+<p><strong>Q5. When would you not use RAG?</strong>
+Small, stable corpora (a few hundred pages) fit in modern context windows; with prompt caching, reusing that context is cheap. RAG earns its complexity for large, frequently changing, or permission-bounded corpora. Aggregation questions belong to structured queries, not retrieval.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — Contextual Retrieval: https://www.anthropic.com/engineering/contextual-retrieval</li>
+<li>Elasticsearch — Reciprocal rank fusion: https://www.elastic.co/docs/reference/elasticsearch/rest-apis/reciprocal-rank-fusion</li>
+<li>Azure AI Search — Hybrid search scoring (RRF): https://learn.microsoft.com/en-us/azure/search/hybrid-search-ranking</li>
+<li>Azure AI Search — Semantic ranking: https://learn.microsoft.com/en-us/azure/search/semantic-search-overview</li>
+<li>Amazon Bedrock Knowledge Bases — metadata filtering: https://aws.amazon.com/blogs/machine-learning/amazon-bedrock-knowledge-bases-now-supports-metadata-filtering-to-improve-retrieval-accuracy/</li>
+<li>Ragas — available metrics: https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track three, episode two: "design a R A G system", the interview walkthrough.
+
+Last episode we built the corridor, the full request path of a production L L M system, and we said the shelves above the orchestrator hold the context: retrieval, memory, tools. Today we take the retrieval shelf down and design it end to end, exactly the way you'd do it in a forty-five-minute system design round. Track four goes much deeper into each piece, embeddings, chunking, vector index internals, advanced techniques. Today is about the shape of a great answer.
+
+Here's the cold open. An interviewer says: "Our company has about two million internal documents: policies, wikis, contracts, support tickets. Twenty thousand employees want to ask questions and get answers with sources. Design it." And a candidate says, "Sure. We chunk the documents, embed them, put them in a vector database, retrieve the top five, and send them to the model." Thirty seconds. Technically correct. And the interviewer's face goes flat, because that answer is what every tutorial says, and it skips every question that actually decides whether the system works. Who is allowed to see which document? How fresh does it need to be? What happens when the answer is in a table? How do you know it's right? Today we build the answer that asks those questions first.
+
+## Why it matters
+
+Retrieval-augmented generation is the most common generative A I pattern in enterprises, by a wide margin, because it solves the two biggest problems of a raw model: it doesn't know your private data, and its knowledge is frozen at training time. Retrieval fixes both by looking things up at question time and handing the model the evidence. Which is why "design a R A G system" is the single most likely design question you'll get for an A I engineering role. And because it's so common, the bar is high: the interviewer has heard the thirty-second version a hundred times. What they're scoring is whether you think about permissions, freshness, retrieval quality, and evaluation as first-class parts of the design, not as afterthoughts.
+
+[PAUSE 1s]
+
+## The mental image: the whiteboard with a line across it
+
+In your mind's eye, picture a whiteboard. Draw one horizontal line straight across the middle, left edge to right edge. Everything above the line happens offline, before any question is asked: that's the indexing lane. Everything below the line happens online, while a user is waiting: that's the query lane. Both lanes flow from left to right.
+
+Now, right in the center of the line, straddling it, draw a cylinder. That's the index. It's the only thing both lanes touch. The top lane writes into it from above. The bottom lane reads from it from below.
+
+Two more things. In the top-left corner of the board, before anything else, draw a small box labelled "requirements". That's where you start, every time. And around the entire edge of the whiteboard, draw a frame. That frame is evaluation. It surrounds everything, because every box on this board gets measured.
+
+So: requirements box top left, indexing lane above the line, query lane below it, the index cylinder on the line in the middle, and the evaluation frame around the edge. Let's fill it in, in the order you'd do it in the interview.
+
+[PAUSE 1s]
+
+## Step one: the requirements box
+
+Spend the first five minutes here. It feels slow. It's the highest-scoring five minutes of the interview. Ask these questions out loud.
+
+What's in the corpus? File types matter enormously. Clean wiki pages are easy. Scanned P D Fs, slide decks, and spreadsheets are hard. Contracts with tables are harder.
+
+Are there permission boundaries? In almost every real company, yes. H R documents, legal matters, board papers, customer contracts. This one question changes the architecture more than any other.
+
+How fresh does it need to be? If a policy changes at nine A M, must the assistant know by nine-oh-five, or is tomorrow morning fine? That decides between streaming updates and a nightly batch.
+
+What's the traffic? Twenty thousand employees, say ten questions each per working day, is two hundred thousand questions a day. Spread over a working day, that's single-digit queries per second on average, maybe twenty to thirty at peak. That's modest. Say so: it tells the interviewer you won't over-engineer the serving side.
+
+What's the latency target? For a chat assistant, first words within a second or two.
+
+What's the cost of a wrong answer? An internal I T helpdesk can tolerate an occasional miss. A contract or compliance assistant cannot, and must cite its sources and say "I don't know" when the evidence isn't there.
+
+Then do a quick back-of-envelope, because numbers are what staff-level candidates bring. Two million documents at an average of maybe five thousand tokens each is around ten billion tokens. Cut into chunks of roughly five hundred tokens with a little overlap, that's on the order of twenty million chunks. Each chunk becomes an embedding vector; at a thousand and twenty-four dimensions stored as four-byte floats, that's four kilobytes per vector, so around eighty gigabytes of raw vectors, before index overhead. Quantize to one byte per dimension and it drops to about twenty gigabytes. Embedding ten billion tokens once, with a small hosted embedding model, costs in the order of hundreds of dollars, not hundreds of thousands. So the one-time indexing cost is small; the ongoing costs are re-indexing, the vector store, and the generation calls. You've just shown the interviewer where the money actually goes.
+
+[PAUSE 1s]
+
+## Step two: the indexing lane, above the line
+
+Now move to the top lane and walk left to right.
+
+Far left: the sources. SharePoint, Confluence, a ticketing system, a contract repository, a file share. For each, you need a connector, and the connector must bring three things, not one: the content, the metadata, meaning title, owner, date, document type, and the access control list, who is allowed to read it. Say that third item out loud. It's the one most candidates forget.
+
+Next box: parsing. Turn P D Fs, slides, and spreadsheets into clean text while preserving structure: headings, lists, and especially tables. A table flattened into a stream of numbers is garbage to the model. Layout-aware parsers or a vision-capable model can extract tables into a structured form. Parsing quality is the most underrated lever in the entire system; bad parsing caps your accuracy no matter what you do downstream.
+
+Next box: chunking. Split each document into retrievable pieces. The naive approach is fixed-size windows, say five hundred tokens with fifty tokens of overlap. Better is structure-aware chunking: split on headings and sections, keep tables whole, and never cut a sentence in half. And a technique worth naming: add context to each chunk. A chunk that says "the limit is thirty days" is useless if you don't know which policy it came from. So you prepend a short line, the document title, the section, and perhaps a one-sentence summary of where this chunk sits. One well-known published experiment, contextual retrieval, did exactly this with a model-generated context line and reported cutting retrieval failures by around half, and by about two thirds when combined with reranking.
+
+Next box: embedding. Each chunk goes through an embedding model to become a vector. And in parallel, the same chunk goes into a keyword index, the classic B M twenty-five kind. Keep both. You'll see why in the query lane.
+
+Then everything drops down into the cylinder on the line: the index. Each entry holds the vector, the keyword terms, the chunk text, the metadata, and the permissions: which groups may read this chunk.
+
+One more thing on the top lane: it isn't a one-time job. It's a pipeline that runs continuously. Documents get edited, deleted, and re-permissioned. So the connectors should pick up changes incrementally, through change feeds or modified-date polling, re-chunk and re-embed only what changed, and, critically, propagate deletes and permission changes. If someone's access is revoked at noon, the index must reflect that as fast as the content itself. This is ordinary data engineering, and it's where a data engineering background is a genuine advantage in the interview: incremental processing, change data capture, idempotent upserts, and backfills are exactly what this lane needs.
+
+[PAUSE 2s]
+
+## Step three: the query lane, below the line
+
+Now drop below the line and walk the query lane, left to right.
+
+Far left: the user's question arrives, along with the user's identity. The identity is not optional. It travels with the question all the way.
+
+First box: query understanding. In a conversation, the raw question is often unusable on its own. "What about the second one?" means nothing to a search index. So a small, fast model rewrites it into a standalone query using the conversation history. Some systems also expand the query, or split a compound question into two sub-queries.
+
+Second box: retrieval, and here the lane reaches straight up into the cylinder. Two searches run in parallel. Vector search finds chunks with similar meaning, great for paraphrase, "time off" matching "annual leave". Keyword search finds exact terms, great for product codes, error numbers, names, and acronyms, which embeddings are surprisingly bad at. That's hybrid search. The two ranked lists get merged, commonly with reciprocal rank fusion, which ignores the raw scores and just rewards documents that rank high on either list: each document gets one over sixty-plus-its-rank from each list, summed. Sixty is the usual default constant. Simple, no tuning, robust.
+
+And here's the permission step, the most important sentence of this episode. The permission filter is applied inside the search, as a pre-filter, using the user's group memberships: only chunks this user is allowed to read are even candidates. Not after. If you filter after retrieval, two things go wrong: you might retrieve fifty chunks the user can't see and end up with nothing, and worse, anyone who gets the filtering order wrong leaks data. Pre-filter, always.
+
+Third box: reranking. Hybrid search is fast but coarse. So take the top fifty or so candidates and pass them through a reranker, typically a cross-encoder model that reads the question and each chunk together and scores how well that chunk actually answers the question. It's much more accurate than vector similarity, and much slower, which is why you only run it on fifty, not twenty million. Keep the top five to ten. Reranking adds maybe fifty to two hundred milliseconds and is one of the highest-return additions to any R A G system.
+
+Fourth box: prompt assembly. Build the prompt: instructions, the retrieved chunks each labelled with a source identifier, and the question. The instructions say: answer only from the provided sources, cite the source for each claim, and if the sources don't contain the answer, say so. Put the most relevant chunks first; models attend less reliably to material buried in the middle of a long context.
+
+Fifth box: generation. The model writes the answer, streaming.
+
+Far right: citation and delivery. Every claim links back to its source document, and the user can click through. Citations do two jobs: they let users verify, and they let you measure whether answers were actually grounded.
+
+[PAUSE 2s]
+
+## Step four: the evaluation frame
+
+Now trace the frame around the edge of the board. This is where strong candidates pull away.
+
+Evaluate the two lanes separately, because they fail separately. For retrieval, the question is: did the right chunk make it into the top five? Measure recall at five, or at ten, against a labelled set of questions with known source documents. For generation, the questions are: is the answer faithful to the retrieved chunks, meaning no claims beyond the evidence, and is it relevant to what was asked? Frameworks like Ragas name these directly: context precision and context recall for the retrieval lane, faithfulness and answer relevancy for the generation lane.
+
+Where does the labelled set come from? Start with a hundred to three hundred real questions, gathered from subject-matter experts or support logs, each with the correct source document and a reference answer. Then keep growing it from production: every thumbs-down, every escalation, becomes a candidate test case. That's the return pipe from last episode's corridor.
+
+And the operational discipline: this evaluation set runs on every change, whether it's a new chunk size, a new embedding model, a new prompt, or a new generation model. If recall at five drops, the change doesn't ship. Episode four goes deep on this.
+
+[PAUSE 1s]
+
+## War story: the index that could read everything
+
+Here's a failure that has happened, in some form, at more than one company. A team built an internal assistant quickly. The ingestion connector ran under a service account that had read access to the entire document store, which was convenient, because it never hit a permission error. Nobody carried the access control lists into the index. For a few weeks, everything looked great. Then someone in a sales team asked the assistant about compensation guidelines for their role. The retrieval lane happily found the most relevant chunks, which came from a restricted H R folder containing salary bands for every level. The assistant summarized them, with citations.
+
+Nothing was hacked. The system did exactly what it was built to do. The flaw was on the whiteboard all along: permissions were missing from the top lane, so there was nothing to filter on in the bottom lane. The fix was structural: carry access control lists as chunk metadata, resolve the user's groups from the identity provider at query time, apply them as a pre-filter inside the search, and treat permission changes as updates that must flow through the pipeline as quickly as content changes. Plus an audit: sample questions from users in different groups and verify nothing crosses a boundary. In the interview, telling this story in two sentences is worth more than any clever retrieval trick.
+
+## Other failure modes to name
+
+Stale and duplicate versions. The index holds version three and version seven of the same policy, and retrieval returns the old one. Fix: deduplicate at ingestion, keep only the current version active, and boost recency where it matters.
+
+Tables and numbers. Answers that live in a table get mangled by naive parsing and chunking. Fix: structure-aware parsing and keeping tables intact, sometimes converting them into a text form the model reads well.
+
+Acronyms and codes. Pure vector search misses exact identifiers. Fix: hybrid search.
+
+Questions that need aggregation. "How many contracts renew next quarter?" isn't a retrieval question at all; it's a database query. Fix: route it to a structured tool, a text-to-sequel path, instead of forcing it through R A G.
+
+Over-stuffing. Twenty mediocre chunks in the prompt cost more, run slower, and often answer worse than five good ones. Fix: rerank and keep the top few.
+
+## Tradeoffs to volunteer
+
+Chunk size. Small chunks are precise but lose context; large chunks keep context but dilute relevance and cost more tokens. Start around three hundred to eight hundred tokens, structure-aware, and let the evaluation set decide.
+
+Managed versus self-built. On Azure, Azure A I Search gives you hybrid search with reciprocal rank fusion and a semantic reranker in one service, with Entra I D for identity. On A W S, Bedrock Knowledge Bases gives you a managed ingestion-to-retrieval pipeline with metadata filtering, typically backed by OpenSearch Serverless, which supports hybrid search, with I A M controlling access. Managed services get you to a working system in days; self-built gives you control over parsing, chunking, and ranking, which is usually where quality is won. A common path: start managed, then replace the pieces that limit quality.
+
+And the staff-level tradeoff: do you need R A G at all? Context windows are now hundreds of thousands of tokens, and prompt caching makes a large, stable context cheap to reuse. If the corpus is a few hundred pages that rarely change, just put it in the context and cache it. R A G earns its complexity when the corpus is large, changes often, or has permission boundaries, which our two million documents clearly do. Saying this shows you design from requirements rather than from habit.
+
+[PAUSE 2s]
+
+## The interview angle
+
+Here's the forty-five-minute shape, so you can pace yourself. Five minutes on the requirements box and back-of-envelope. Ten minutes drawing both lanes and the index. Fifteen minutes on deep dives, usually the interviewer's choice, and the three they pick most often are permissions, retrieval quality, and freshness. Ten minutes on evaluation and failure modes. Five minutes for their questions.
+
+When they ask "how do you handle permissions?", a strong answer sounds like: "Access control lists come in with the content at ingestion, get stored as chunk metadata, and are enforced as a pre-filter inside the search using the user's groups resolved from the identity provider at query time. Permission changes flow through the incremental pipeline like content changes, and I'd run an audit that checks for cross-boundary leaks."
+
+When they ask "retrieval quality is poor, what do you do?", a strong answer is: "First measure: is it a retrieval problem or a generation problem? Check recall at five on the labelled set. If recall is low, look at parsing and chunking first, then add hybrid search if it's missing, then a reranker, then query rewriting. If recall is fine but answers are wrong, it's the prompt or the model."
+
+When they ask "how do you keep it fresh?", say: "Incremental ingestion from change feeds, re-embedding only changed chunks, deletes and permission changes propagated as first-class events, and a freshness metric: time from source change to searchable, with an alert on it."
+
+And when they ask "how do you know it works?", say: "Separate retrieval metrics from generation metrics, a golden set of a few hundred real questions that grows from production feedback, and a regression gate on every change."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the whiteboard. Top-left corner, the requirements box: corpus types, permissions, freshness, traffic, latency, and the cost of a wrong answer, plus the back-of-envelope, twenty million chunks, tens of gigabytes of vectors, cheap to embed. Above the line, the indexing lane, left to right: connectors that bring content, metadata, and permissions; parsing that respects tables; structure-aware chunks with added context; embeddings and a keyword index in parallel; and all of it running incrementally, deletes and permission changes included. On the line in the middle, the index cylinder, the only thing both lanes touch. Below the line, the query lane: identity travels with the question; rewrite into a standalone query; hybrid search reaching up into the index with a permission pre-filter; reciprocal rank fusion; a reranker narrowing fifty to five; a grounded prompt that demands citations; a streamed answer with sources. And around the edge, the evaluation frame: retrieval measured separately from generation, a golden set that grows from production, and a gate on every change. Next episode, we go back to the corridor's basement and talk latency and cost: caching, batching, streaming, and model routing. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-production-llm-anatomy.html">← Anatomy of a Production LLM System</a><a class="btn" href="03-latency-cost.html">Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing →</a></div></main></div></body></html>

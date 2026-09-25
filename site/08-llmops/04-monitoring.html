@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monitoring, Drift, Feedback Loops — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk" open><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="active" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 8 · LLMOps + Prompting · Episode 4</div>
+<h1 class="lesson">Monitoring, Drift, Feedback Loops</h1>
+<div class="meta">19 min listen · Why an L L M system can return a perfect two hundred OK while being quietly wrong, and how to see it: a three-layer monitoring picture of operational dials, sampled quality judging, and a feedback return pipe, plus the four kinds of drift that break production assistants.</div>
+<audio controls preload="metadata" src="../../audio/08-llmops/s8e04-monitoring.mp3"></audio>
+<button class="btn complete" data-ep="08-llmops/04-monitoring" onclick="toggleDone('08-llmops/04-monitoring')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> An LLM system's worst failures return <code>200 OK</code> at normal latency, so monitoring must layer cheap operational metrics on 100% of traffic, sampled + targeted quality judging, drift detection at four points, and a feedback loop that turns production failures into release-gating tests.</p>
+<h2 id="the-mental-image-the-conveyor">The mental image: the conveyor</h2>
+<ul>
+<li><strong>Belt (left → right):</strong> requests drop on at the left, pass through the <strong>box</strong> (prompt + retrieval + model + tools), exit right as answers.</li>
+<li><strong>Dials above the belt:</strong> operational metrics on every request (latency/TTFT, tokens, cost, errors) — cheap, 100%.</li>
+<li><strong>Tap + tasting room below:</strong> 5–10% random sample <strong>plus every flagged trace</strong> judged for quality (code checks → LLM judges → humans).</li>
+<li><strong>Return pipe underneath (right → left):</strong> explicit + implicit feedback flows back to become golden-set cases that gate releases.</li>
+<li><strong>Drift entry points:</strong> input (left end), model + knowledge (inside the box), output (right end), judge (tasting room).</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    U["Requests"] --> APP["App box: prompt, retrieval, model, tools"]
+    APP --> A["Answers to user"]
+    APP -. "traces (100%)" .-> D["Dials: TTFT, p95/p99, tokens, cost, errors"]
+    A -. "tap: 5-10% + flagged" .-> T["Tasting room: code checks, LLM judges, humans"]
+    A --> F["Feedback: thumbs, regenerate, rephrase, escalate, edits"]
+    F --> Q["Triage queue"]
+    T --> Q
+    Q --> G["Golden set / regression evals"]
+    G --> R["Release gate (CI)"]
+    R --> APP
+</pre>
+
+<pre class="mermaid">flowchart TB
+    subgraph Drift["Where drift enters"]
+      I["Input drift: query topics, languages, new intents"]
+      M["Model drift: alias/snapshot change, quantization, engine upgrade"]
+      K["Knowledge drift: stale index, re-chunking, embedding mismatch"]
+      O["Output drift: length, refusal rate, tone"]
+      J["Judge drift: judge model changed"]
+    end
+    I --> O
+    M --> O
+    K --> O
+</pre>
+
+<h2 id="what-to-measure">What to measure</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Metric</th>
+<th>Coverage</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operational</td>
+<td>TTFT, total latency p50/p95/p99</td>
+<td>100%</td>
+<td>Agent p99 is often 5–10× p50</td>
+</tr>
+<tr>
+<td>Operational</td>
+<td>Input/output tokens per step</td>
+<td>100%</td>
+<td>Early warning for context bloat</td>
+</tr>
+<tr>
+<td>Operational</td>
+<td>Cost per request by feature/tenant</td>
+<td>100%</td>
+<td>Averages hide looping agents</td>
+</tr>
+<tr>
+<td>Operational</td>
+<td>429s, timeouts, tool errors, schema failures, empty/refusal</td>
+<td>100%</td>
+<td>Plain code checks</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Groundedness, retrieval relevance, safety, correctness</td>
+<td>Sample + flagged</td>
+<td>LLM judges, calibrated</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Human review</td>
+<td>Small rotating sample</td>
+<td>Ground truth for judge calibration</td>
+</tr>
+<tr>
+<td>Inputs</td>
+<td>Index freshness (age of newest doc), retrieval score, zero-hit rate</td>
+<td>100% / scheduled</td>
+<td>Would have caught the stale-index story</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>Embedding cluster shift, intent frequency</td>
+<td>Batch daily</td>
+<td>New fast-growing cluster = new use case or attack</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Thumbs, regenerate, rephrase, abandon, escalate, edit distance</td>
+<td>100%</td>
+<td>Explicit response rates are low single-digit %</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-mlflow-3-production-monitoring-sampled-scorers">Code: MLflow 3 production monitoring (sampled scorers)</h2>
+<pre><code class="language-python">import mlflow
+from mlflow.genai.scorers import Safety, RelevanceToQuery, ScorerSamplingConfig
+
+mlflow.set_experiment(&quot;/Shared/support-assistant-prod&quot;)
+
+# Register a built-in judge against the experiment, then start it with sampling
+safety = Safety().register(name=&quot;safety_judge&quot;)
+safety = safety.start(sampling_config=ScorerSamplingConfig(sample_rate=0.10))
+
+relevance = RelevanceToQuery().register(name=&quot;relevance_judge&quot;)
+relevance = relevance.start(
+    sampling_config=ScorerSamplingConfig(sample_rate=0.05)  # optional filter_string also supported
+)
+# Scores are attached back to sampled production traces as feedback.
+</code></pre>
+<h2 id="code-judge-calibration-agreement-with-human-labels">Code: judge calibration (agreement with human labels)</h2>
+<pre><code class="language-python">from sklearn.metrics import cohen_kappa_score
+
+human = [1, 0, 1, 1, 0, ...]   # expert labels on a few hundred traces
+judge = [1, 0, 1, 0, 0, ...]   # LLM judge verdicts on the same traces
+print(&quot;agreement:&quot;, sum(h == j for h, j in zip(human, judge)) / len(human))
+print(&quot;kappa:&quot;, cohen_kappa_score(human, judge))
+# Low agreement -&gt; fix rubric / add examples / change judge model; pin judge version.
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTFT</td>
+<td>Time to first token — perceived responsiveness when streaming</td>
+</tr>
+<tr>
+<td>Trace / span</td>
+<td>Tree of timed steps for one request (root + child spans for retrieval, LLM, tools)</td>
+</tr>
+<tr>
+<td>OTel GenAI semantic conventions</td>
+<td>Standard <code>gen_ai.*</code> attribute/operation names; still <strong>Development</strong> status (moved to a dedicated repo in 2026)</td>
+</tr>
+<tr>
+<td>Online evaluation</td>
+<td>Running evaluators on production traces with sampling + filters</td>
+</tr>
+<tr>
+<td>LLM-as-a-judge</td>
+<td>A model scoring outputs against a rubric; has position, verbosity, self-preference biases</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>Measuring judge agreement vs human labels before trusting it</td>
+</tr>
+<tr>
+<td>Input drift</td>
+<td>Query distribution shift (watch embedding clusters / intents)</td>
+</tr>
+<tr>
+<td>Model drift</td>
+<td>Behavior change from model version/alias/serving change (pin snapshots)</td>
+</tr>
+<tr>
+<td>Knowledge drift</td>
+<td>Retrieval corpus stale or embeddings out of sync</td>
+</tr>
+<tr>
+<td>Golden set</td>
+<td>Curated eval dataset; grows from confirmed production failures; gates releases</td>
+</tr>
+<tr>
+<td>Implicit feedback</td>
+<td>Behavioral signals: regenerate, rephrase, copy, abandon, escalate, edit distance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-war-story-shaped">Pitfalls (war-story shaped)</h2>
+<ul>
+<li><strong>Stale index, green dashboards:</strong> refresh job silently stopped; groundedness judge passed (answers matched the stale docs); only escalation rate revealed it. Monitor the <em>inputs</em> to the model (index freshness), not just outputs.</li>
+<li><strong>Optimizing for thumbs:</strong> OpenAI's April 2025 GPT-4o update was rolled back for sycophancy; OpenAI cited an added reward signal from thumbs-up/down data as a contributing factor. Feedback finds failures; don't train on it naively.</li>
+<li><strong>Random sampling misses rare disasters:</strong> add targeted sampling (every refusal, schema failure, negative thumb, escalation).</li>
+<li><strong>Traces are personal data:</strong> redact at capture, retention limits, access control.</li>
+<li><strong>Floating model aliases in prod:</strong> pin snapshots; treat upgrades as releases gated by evals. Pin the judge model too.</li>
+</ul>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>1. How would you monitor an LLM application in production?</strong>
+Three layers: operational metrics on 100% via tracing (TTFT, p95/p99 latency, tokens and cost per feature/tenant, error/429/timeout/schema-failure rates); quality on a sample plus flagged traces (deterministic checks, calibrated LLM judges for groundedness/relevance/safety, small human sample); and a feedback loop where explicit and implicit signals feed triage, confirmed failures become golden-set cases, and every release must pass the set.</p>
+<p><strong>2. Where does drift come from in an LLM system and how do you detect each kind?</strong>
+Input drift (embedding clusters, intent frequency), model drift (pin snapshots, eval-gate upgrades), knowledge drift (index freshness, retrieval scores, zero-hit rate, embedding version consistency), output drift (length, refusal rate, tone — usually a symptom). Plus judge drift if the evaluator model changes.</p>
+<p><strong>3. Can you trust LLM-as-a-judge?</strong>
+Only after calibration: known biases (position, verbosity, self-preference). Measure agreement with human labels on a few hundred traces, iterate the rubric, pin the judge version, keep a permanent small human review sample, and use judges for trends/triage rather than as sole release authority unless calibrated.</p>
+<p><strong>4. How do you keep evaluation cost under control at a million requests a day?</strong>
+Deterministic checks on everything; LLM judges on a 5–10% random sample plus 100% of flagged traces; judge only the relevant span; smaller judge models for simple criteria; keep full payloads only for sampled/flagged traces and lightweight metrics for all.</p>
+<p><strong>5. What feedback signals would you collect and how do they improve the system?</strong>
+Explicit (thumbs, ratings — sparse and extreme-biased) and implicit (regenerate, immediate rephrase, copy, abandon, escalate to human, edit distance on drafts). Route negatives to triage, have humans confirm and write correct answers, add them to the golden set, fix root cause, and gate the fix on the expanded set. Avoid feeding raw thumbs straight into training (sycophancy risk).</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Databricks — Monitor GenAI apps in production (MLflow 3 scorers, sampling): https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/production-monitoring</li>
+<li>Azure Databricks — same page: https://learn.microsoft.com/en-us/azure/databricks/mlflow3/genai/eval-monitor/production-monitoring</li>
+<li>MLflow — Production tracing &amp; monitoring: https://mlflow.org/docs/latest/genai/tracing/prod-tracing/</li>
+<li>OpenTelemetry — GenAI semantic conventions (attribute registry): https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/</li>
+<li>OpenTelemetry GenAI conventions dedicated repo: https://github.com/open-telemetry/semantic-conventions-genai</li>
+<li>Langfuse — LLM-as-a-judge (online evals, sampling): https://langfuse.com/docs/evaluation/evaluation-methods/llm-as-a-judge</li>
+<li>LangSmith — Evaluation concepts (offline vs online): https://docs.langchain.com/langsmith/evaluation-concepts</li>
+<li>OpenAI — Expanding on what we missed with sycophancy: https://openai.com/index/expanding-on-sycophancy/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track eight, episode four: monitoring, drift, and feedback loops.
+
+Let's start with a failure that nobody saw. A large telco runs a customer support assistant. It's a retrieval-augmented setup: customer asks a question, the system searches a knowledge base of plans and policies, hands the best chunks to the model, and the model writes the answer. For months it works well. Then an upstream pipeline that refreshes the knowledge base breaks. Not loudly. The job just stops picking up new documents. Every dashboard the team owns stays green. Latency is normal. Error rate is near zero. Token spend is flat. The model is up, the vector index is up, every request returns a perfectly healthy status code. And for three weeks the assistant confidently quotes last quarter's plan prices to customers, because last quarter's documents are the only ones in the index. The problem is finally caught, not by any monitor, but by someone in the contact center asking why so many chats are being escalated to human agents with the phrase "that's not what your website says."
+
+[PAUSE 2s]
+
+That's the whole episode in one story. Classical monitoring asks: is the system up, and is it fast? For a language model system that question is necessary and nowhere near sufficient, because the most expensive failures happen while the system is up and fast. A wrong answer returns a two hundred OK. A hallucination has the same latency as a correct answer. So today we build the monitoring stack that would have caught that story in hours rather than weeks: what to measure, where drift actually comes from, and how to turn user feedback into a loop that makes the system better instead of quietly worse.
+
+## Why this matters
+
+Three things make L L M monitoring genuinely different from monitoring a classic machine learning model.
+
+First, there is no label at inference time. When a fraud model scores a transaction, you eventually learn whether it was fraud, and you can compute accuracy after the fact. When an assistant answers a free-text question, nobody hands you the correct answer later. Quality has to be estimated, by rules, by other models acting as judges, and by humans on a sample.
+
+Second, the thing that changes is usually not your code. The inputs change as users discover new ways to use the product. The knowledge base changes, or stops changing when it should. And the model itself can change underneath you, because if you call a hosted model through a floating alias, the provider can point that alias at a new snapshot, and your prompt, which was tuned for the old behavior, now runs against a different brain.
+
+Third, the outputs are unbounded text, often driven by multi-step agents. One request might fan out into a dozen model calls and tool calls. A single slow tool can blow up your tail latency, and a single retry loop can multiply your cost by ten x without any visible error.
+
+So we need a picture that holds all of this at once.
+
+## The mental image: the conveyor
+
+[PAUSE 1s]
+
+Picture this. A long conveyor belt running horizontally, left to right, across the middle of your mind's eye. On the far left, requests drop onto the belt: user questions, each one a small parcel. In the middle of the belt sits a box, and that box is your application: the prompt, the retrieval step, the model, any tools. Parcels ride into the box on the left and come out the right side as answers, then roll off the far right end of the belt to the user.
+
+Now add three things around the belt.
+
+Above the belt, mounted in a row like gauges on a wall, are the dials. These are your operational metrics: latency, tokens, cost, errors. They read every single parcel, one hundred percent of traffic, cheaply.
+
+Below the belt, near the right end, there's a small tap in the floor. A fraction of the finished answers, maybe five percent, drops through that tap into a room underneath. Call it the tasting room. In the tasting room, judges inspect answers for quality: was it grounded, was it relevant, was it safe, did it follow the format.
+
+And finally, from the far right end, where answers leave to the user, a return pipe runs back underneath everything, below the tasting room, all the way to the left end. That return pipe carries what users tell you, explicitly and implicitly, back to the start, where it becomes test cases and fixes. That's the feedback loop.
+
+Dials above. Tasting room below. Return pipe underneath, right to left. Keep that image; we'll walk parcels through it several times.
+
+## Under the hood: the dials above the belt
+
+Let's start with the row of dials, because it's the cheapest layer and it catches a surprising amount.
+
+The first dial is latency, and for L L M systems you want two numbers, not one. Time to first token is how long the user stares at nothing before text starts streaming; for a chat experience you generally want that well under a second, often a few hundred milliseconds. Total latency is how long the whole answer takes. And you watch both at the tail, the ninety-fifth and ninety-ninth percentiles, not just the median. With agents, the tail is where the pain lives. It's normal to see a p ninety-nine that's five to ten times the median, because a few requests take the long path: extra tool calls, a retry, a huge retrieved context.
+
+The second dial is tokens. Input tokens and output tokens per request, split by step. This is your early warning for context bloat. If average input tokens per request creeps from four thousand to twelve thousand over a month, something is stuffing more into the prompt: conversation history not being trimmed, retrieval returning more chunks, a tool dumping raw output. That creep shows up here weeks before it shows up on the invoice.
+
+The third dial is cost per request, which is really tokens times price, plus judge costs, plus tool costs. Watch it per feature and per tenant, because an average hides the one customer whose agent loops twelve times per question.
+
+The fourth dial is errors, and here "error" means more than a failed call. Rate-limit responses from the provider. Timeouts. Tool calls that returned an error the agent silently swallowed. Structured outputs that failed schema validation. Empty answers. Refusals. Every one of those is cheap to detect with plain code, on one hundred percent of traffic.
+
+How do the dials read the parcels? Through tracing. Every request becomes a trace, a tree of spans: a root span for the whole request, and child spans for each retrieval, each model call, each tool call, each with timing, token counts, and inputs and outputs. The industry is converging on OpenTelemetry for this, and OpenTelemetry has a set of generative A I semantic conventions, standard names for things like the model, the operation, input and output tokens, and agent operations like invoking an agent or executing a tool. One honest caveat for interviews: as of mid twenty twenty-six those conventions are still marked as in development, not stable, and they recently moved into their own dedicated repository so they can evolve faster. So the practical advice is: instrument with OpenTelemetry-compatible tooling, but expect attribute names to shift. Most observability platforms, M L flow, LangSmith, Langfuse, Arize Phoenix and others, either speak OpenTelemetry natively or can ingest it.
+
+Now walk the telco story through the dials. Parcels come in on the left, ride through the box, come out the right. Latency dial: normal. Token dial: normal. Cost dial: normal. Error dial: zero. Every dial above the belt is green, and every one of them is telling the truth. The dials are simply not pointed at the thing that broke. Which is why we need the room below the belt.
+
+## Under the hood: the tasting room
+
+Back to the tap in the floor near the right end of the belt. A fraction of finished answers drops into the tasting room, and this is where quality gets estimated.
+
+The tasting room has three kinds of judges, and they're arranged by cost.
+
+The cheapest judges are code. Deterministic checks. Does the output parse against the schema? Does it contain something that looks like a credit card number or other personal data? Is it suspiciously short? Does it cite a source at all? Did the model refuse? These are so cheap you actually run them up on the belt against every parcel, which is why some of them also appear as dials.
+
+The middle judges are models: L L M as a judge. You give a separate model a rubric and the trace, and it scores the answer. Is the answer grounded in the retrieved context? Is it relevant to the question? Is it safe? For retrieval systems, groundedness and retrieval relevance are the two that matter most, because they separate "the model made something up" from "retrieval handed the model the wrong documents."
+
+The most expensive judges are humans. Domain experts reviewing a small sample, labeling what's actually right.
+
+Why the tap, and why only a fraction? Cost. Picture a system doing a million requests a day. If you run a large judge model over every answer, with the full retrieved context in the judge's prompt, the judging bill can rival the serving bill. So you sample. Five to ten percent of traffic is a common starting point and is usually enough to see trends, and you target the sample: judge the final answer span rather than the whole trace so the judge reads less text, oversample new features and high-risk intents, and use a smaller judge model for simple criteria. The tooling supports exactly this. In M L flow three, for example, you register a scorer against an experiment and start it with a sampling configuration, a sample rate between zero and one plus an optional filter, and the monitoring service attaches the scores back onto the sampled production traces as feedback. Langfuse and LangSmith have the same idea under the name online evaluation: an evaluator attached to production traffic with a sampling percentage and filter rules.
+
+Now, the tasting room has its own failure mode, and interviewers love it: who judges the judges? L L M judges have well-documented biases. Position bias: in a side-by-side comparison, they tend to prefer whichever answer is shown first. Verbosity bias: they tend to score longer answers higher, even when the extra length adds nothing. Self-preference: a judge tends to favor text written in the style of its own model family. So a judge is itself a model you have to validate. The pattern is calibration: take a few hundred traces, have humans label them, run the judge on the same traces, and measure agreement. If the judge and the humans disagree too often, you fix the rubric, add examples to the judge prompt, or change the judge model, and you keep a small rotating human sample forever, because judges drift too, especially when the provider updates the judge model.
+
+Walk the telco story through the tasting room. The sampled answers drop through the tap. A groundedness judge reads each answer and the retrieved chunks and says: yes, grounded; the answer faithfully matches the documents. Which is true! The documents were stale, not missing. So groundedness alone still misses it. What catches it is a freshness check pointed at the knowledge base itself, the age of the newest document in the index, plus a correctness judge that compares against a small set of known current facts. That's the lesson hiding in the story: monitor the inputs to the box, not only its outputs.
+
+## Drift: four things that move
+
+Let's talk about drift properly, and let's place each kind on the conveyor, because that's how you'll remember them.
+
+The first kind enters at the far left end of the belt: input drift. The parcels themselves change. Users start asking about a new product launch, a new language shows up, a marketing campaign sends a wave of a question type you never tested. For classic models you'd measure drift on feature distributions, with something like the population stability index. For text, the practical move is to embed incoming queries and watch the distribution in embedding space: the distance of this week's centroid from last month's, and more usefully, clusters of queries that don't sit near any cluster you've seen before. A new cluster growing fast is either a new use case or an attack, and you want to know either way.
+
+The second kind happens inside the box, in the middle of the belt: model drift. The model behaves differently than it did yesterday. With hosted models the most common cause is a version change behind an alias, or a scheduled deprecation that forces you onto a successor. With self-hosted models it's a new quantization, a new serving engine version, a changed sampling setting. The defense is boring and effective: pin exact model snapshots in production, treat a model upgrade exactly like a code release, and run your full evaluation suite against the new version before switching. Never let a floating alias reach production traffic unexamined.
+
+The third kind also lives in the box but comes from the side: knowledge drift. The retrieval corpus goes stale, or changes shape. Documents get restructured and chunking breaks. An embedding model gets upgraded on the query side but the index was built with the old one, so similarity scores quietly degrade. You watch this with index freshness, retrieval scores over time, and the rate of queries where retrieval returned nothing above threshold. The telco story is knowledge drift.
+
+The fourth kind shows up on the right end, in the answers: output drift. Average answer length climbing. Refusal rate doubling. Tone shifting. Output drift is usually a symptom of one of the other three, which is why it's valuable: it's the smoke that tells you to go look for the fire upstream.
+
+And there's a fifth kind worth one sentence: judge drift, down in the tasting room. If your judge model changes, your quality scores can move without your application changing at all. Pin the judge version too, and re-calibrate whenever it changes.
+
+One practical rule across all of them: alert on rates and trends, segmented, not on single traces. One bad answer is a support ticket. A groundedness score that drops from ninety-one to eighty-four percent for one intent over three days is an incident. Segment by feature, intent, tenant, language, and model version, because a global average will hide a disaster in a five percent slice.
+
+## Under the hood: the return pipe
+
+Now the return pipe, running underneath everything from the right end back to the left.
+
+What flows through it is feedback, in two flavors.
+
+Explicit feedback is the thumbs up and thumbs down, the star rating, the "report a problem" button. It's clean when you get it, but you rarely get it: response rates are typically a low single-digit percentage of interactions, and they're biased toward the extremes, mostly people who are delighted or furious.
+
+Implicit feedback is far richer and it's already in your logs. Did the user regenerate the answer? Did they copy it? Did they rephrase the same question immediately, which usually means the first answer missed? Did they abandon the session? Did they escalate to a human agent? If the assistant drafts emails or code, how much did the user edit before sending? An edit distance near zero is a strong positive; a full rewrite is a strong negative. In the telco story, the escalation rate was the signal that eventually fired. Had it been on a dial with an alert, the story ends in days, not weeks.
+
+Here's how the return pipe turns signals into improvement. Walk a single bad parcel all the way around. A user asks something, gets a wrong answer, and rephrases twice. That trace gets flagged, drops into a triage queue, and a human confirms it was wrong and writes the correct answer. Now it travels back along the return pipe to the left end of the belt and becomes a row in your evaluation dataset, your golden set. Someone fixes the cause, a prompt change, a retrieval tweak, a missing document. And before that fix goes live, it runs against the golden set, including the new row, as a regression gate in the release pipeline. Deploy only if it passes. Then the dials and the tasting room watch the fix in production. That is the flywheel: production failures become test cases, and test cases guard every future release.
+
+## Tradeoffs and pitfalls
+
+Let's go through what breaks.
+
+Pitfall one: optimizing directly for the thumbs. This one has a famous public example. In April twenty twenty-five, OpenAI rolled back an update to a widely used chat model after users found it excessively flattering and agreeable, praising bad decisions. In their own write-up, one contributing factor they identified was an additional reward signal built from user thumbs up and thumbs down data, which can favor more agreeable responses. That's Goodhart's law in production: when the feedback signal becomes the target, it stops measuring quality. Use feedback to find failures and build test cases; be very careful about feeding it straight into training.
+
+Pitfall two: logging without a privacy plan. Traces contain user inputs, retrieved documents, and outputs, which means they contain personal data. Redact or mask at capture time, set retention limits, and restrict who can read raw traces. A trace store is a data store, and it needs the same governance as your warehouse.
+
+Pitfall three: sampling that misses the rare disaster. A five percent random sample of a million requests is fifty thousand judged answers a day, great for trends, useless for a failure that hits one request in ten thousand. Pair random sampling with targeted sampling: every trace with a refusal, a schema failure, a negative thumb, or an escalation gets judged, regardless of the random tap.
+
+Pitfall four: trusting a single judge score. Use judges for trends and triage, not as ground truth, and never let a judge that hasn't been calibrated against human labels gate a release.
+
+Pitfall five: monitoring the model but not the pipes feeding it. As the telco story showed, the index refresh job, the embedding model version, and document freshness all deserve their own dials.
+
+## The interview angle
+
+When they ask, "How would you monitor an L L M application in production?", a strong answer sounds like this: "I'd layer it. First, operational metrics on one hundred percent of traffic via tracing: time to first token and total latency at p ninety-five and p ninety-nine, tokens and cost per request by feature and tenant, error, timeout, rate-limit and schema-failure rates. Second, quality on a sample: deterministic checks everywhere, L L M judges for groundedness, relevance and safety on five to ten percent plus every flagged trace, with the judges calibrated against human labels. Third, a feedback loop: explicit and implicit signals like regenerations, rephrases and escalations feed a triage queue, confirmed failures become golden-set cases, and every release has to pass that set."
+
+When they ask, "What is drift for an L L M system?", a strong answer sounds like: "Four places. Input drift, where the query distribution shifts, which I'd watch with embedding clusters and intent frequencies. Model drift, where the model changes under a version bump or alias, which I'd prevent by pinning snapshots and gating upgrades on evals. Knowledge drift, where the retrieval corpus goes stale or the embeddings get out of sync, which I'd watch with index freshness and retrieval scores. And output drift, length, refusals, tone, which is usually a symptom of the other three."
+
+And when they push with, "Can you trust L L M as a judge?", say: "Only after calibration. Judges have position, verbosity and self-preference biases, so I measure their agreement with human labels on a few hundred examples, fix the rubric until agreement is acceptable, pin the judge version, and keep a small human review sample running permanently."
+
+## Sixty-second recap
+
+[PAUSE 1s]
+
+Back to the conveyor one more time. Parcels, user requests, drop on at the left, ride through the box in the middle, your prompt, retrieval, model and tools, and roll off the right as answers.
+
+Above the belt, the dials read every parcel: time to first token and total latency at the tail, tokens, cost, errors, schema failures, all captured through traces built on OpenTelemetry-style conventions.
+
+Below the belt, a tap drops five to ten percent of answers, plus every flagged one, into the tasting room, where code checks, calibrated L L M judges, and a few humans estimate quality.
+
+Drift enters at four points: input drift at the left end, model drift and knowledge drift inside the box, output drift at the right end, and judge drift down in the tasting room.
+
+And underneath it all, the return pipe carries thumbs, regenerations, rephrases and escalations from the right end back to the left, where confirmed failures become golden-set tests that gate every future release.
+
+Dials above, tasting room below, return pipe underneath. If the telco had had all three, the stale index would have been caught in a day.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-quantization-serving.html">← Quantization & Efficient Serving</a><a class="btn" href="05-prompt-engineering.html">Prompt Engineering Patterns That Matter in Interviews →</a></div></main></div></body></html>

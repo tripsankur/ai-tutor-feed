@@ -1,0 +1,369 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangGraph: State Machines, Nodes, Edges, Checkpoints — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk" open><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="active" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 6 · LangChain / LangGraph · Episode 2</div>
+<h1 class="lesson">LangGraph: State Machines, Nodes, Edges, Checkpoints</h1>
+<div class="meta">16 min listen · LangGraph opened up as a board game: a shared scoreboard of state with per-column merge rules, squares that do the work, arrows that route, ticks that run in lockstep, and a camera that photographs every tick into a per-thread filing cabinet — which is what makes agents durable, resumable, and debuggable.</div>
+<audio controls preload="metadata" src="../../audio/06-langchain-langgraph/s6e02-langgraph-state.mp3"></audio>
+<button class="btn complete" data-ep="06-langchain-langgraph/02-langgraph-state" onclick="toggleDone('06-langchain-langgraph/02-langgraph-state')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (langgraph 1.2.12 on PyPI; docs source langchain-ai/docs @ 2026-09-24)</p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LangGraph is a durable runtime for state machines: nodes return partial updates merged into shared state by per-key <strong>reducers</strong>, execution advances in Pregel-style <strong>super-steps</strong>, and a <strong>checkpointer</strong> snapshots the whole state at every super-step per <strong>thread</strong> — which is what gives you memory, crash recovery, time travel and human-in-the-loop.</p>
+<h2 id="the-mental-image-the-board-game">The mental image: the board game</h2>
+<table>
+<thead>
+<tr>
+<th>Board element</th>
+<th>LangGraph concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Squares around the edge (START top-left, END)</td>
+<td>Nodes (plain functions)</td>
+</tr>
+<tr>
+<td>Painted arrows</td>
+<td>Normal edges</td>
+</tr>
+<tr>
+<td>Signpost on the right square</td>
+<td>Conditional edge (routing function)</td>
+</tr>
+<tr>
+<td>Square that writes and moves the token itself</td>
+<td><code>Command(update=..., goto=...)</code></td>
+</tr>
+<tr>
+<td>Dispatching N copies of a square with private slices</td>
+<td><code>Send</code> (map-reduce)</td>
+</tr>
+<tr>
+<td>Scoreboard in the center</td>
+<td>State schema</td>
+</tr>
+<tr>
+<td>Small-print rule on each column</td>
+<td>Reducer (replace / append / <code>add_messages</code>)</td>
+</tr>
+<tr>
+<td>Clock ticks</td>
+<td>Super-steps (+ <code>recursion_limit</code>)</td>
+</tr>
+<tr>
+<td>Ceiling camera photo each tick</td>
+<td>Checkpoint (<code>StateSnapshot</code>)</td>
+</tr>
+<tr>
+<td>Filing cabinet, one drawer per game</td>
+<td>Checkpointer, keyed by <code>thread_id</code></td>
+</tr>
+<tr>
+<td>A different cabinet in another room</td>
+<td>Store (cross-thread long-term memory)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart LR
+    S(["START"]) --> M["model node"]
+    M --> R{"route: tool calls?"}
+    R -->|"yes"| T["tools node"]
+    R -->|"no"| E(["END"])
+    T --> M
+    ST[("State: messages (add_messages), draft (replace), docs (append)")]
+    M -.->|"partial update"| ST
+    T -.->|"partial update"| ST
+    CP[("Checkpointer: thread_id -> snapshots per super-step")]
+    ST -.->|"snapshot each super-step"| CP
+</pre>
+
+<pre class="mermaid">sequenceDiagram
+    participant C as Caller
+    participant G as Graph runtime
+    participant K as Checkpointer
+    C->>G: invoke(input, thread_id=t1)
+    G->>K: load latest checkpoint for t1
+    loop each super-step
+        G->>G: run active nodes in parallel
+        G->>G: apply updates via reducers
+        G->>G: evaluate edges -> next active nodes
+        G->>K: write checkpoint (sync / async / exit)
+    end
+    G-->>C: final state
+</pre>
+
+<h2 id="code">Code</h2>
+<pre><code class="language-python">import operator
+from typing import Annotated, Literal
+from typing_extensions import TypedDict
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langgraph.types import Command, Send, RetryPolicy
+from langgraph.checkpoint.postgres import PostgresSaver
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]        # append / update-by-id
+    summaries: Annotated[list[str], operator.add]  # append (safe for parallel writes)
+    draft: str                                     # default reducer: replace
+
+def model_node(state: State):
+    return {&quot;messages&quot;: [llm_with_tools.invoke(state[&quot;messages&quot;])]}
+
+def route(state: State) -&gt; Literal[&quot;tools&quot;, &quot;__end__&quot;]:
+    return &quot;tools&quot; if state[&quot;messages&quot;][-1].tool_calls else END
+
+def review(state: State) -&gt; Command[Literal[&quot;model&quot;, &quot;__end__&quot;]]:
+    ok = len(state[&quot;draft&quot;]) &gt; 0
+    return Command(update={&quot;draft&quot;: state[&quot;draft&quot;].strip()}, goto=END if ok else &quot;model&quot;)
+
+def fan_out(state: State):
+    return [Send(&quot;summarize&quot;, {&quot;doc&quot;: d}) for d in state[&quot;docs&quot;]]   # map-reduce
+
+builder = StateGraph(State)
+builder.add_node(&quot;model&quot;, model_node, retry_policy=RetryPolicy(max_attempts=3))
+builder.add_node(&quot;tools&quot;, tool_node)
+builder.add_edge(START, &quot;model&quot;)
+builder.add_conditional_edges(&quot;model&quot;, route)
+builder.add_edge(&quot;tools&quot;, &quot;model&quot;)
+
+with PostgresSaver.from_conn_string(DB_URI) as saver:
+    saver.setup()
+    graph = builder.compile(checkpointer=saver)
+    cfg = {&quot;configurable&quot;: {&quot;thread_id&quot;: &quot;user-42:conv-9f1c&quot;}, &quot;recursion_limit&quot;: 50}
+    graph.invoke({&quot;messages&quot;: [(&quot;user&quot;, &quot;hi&quot;)]}, cfg, durability=&quot;sync&quot;)
+    snap = graph.get_state(cfg)                       # latest StateSnapshot
+    history = list(graph.get_state_history(cfg))      # newest first
+    graph.update_state(cfg, {&quot;draft&quot;: &quot;edited&quot;})      # creates a NEW checkpoint (fork)
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StateGraph</td>
+<td>Graph parameterized by a state schema (TypedDict / dataclass / Pydantic)</td>
+<td>"A state machine with a shared blackboard"</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>Function: state in → partial update out</td>
+<td>"Nodes do the work"</td>
+</tr>
+<tr>
+<td>Edge / conditional edge</td>
+<td>Fixed transition / routing function returning next node(s)</td>
+<td>"Edges tell what to do next"</td>
+</tr>
+<tr>
+<td>Reducer</td>
+<td><code>(current, update) -&gt; new</code> per key; default = replace</td>
+<td>Makes parallel writes safe</td>
+</tr>
+<tr>
+<td><code>add_messages</code></td>
+<td>Message reducer: append, update in place by message ID</td>
+<td>Enables human edits without duplicates</td>
+</tr>
+<tr>
+<td><code>Overwrite</code></td>
+<td>Bypass a reducer (e.g. clear an append list)</td>
+<td>Empty list + append ≠ clear</td>
+</tr>
+<tr>
+<td><code>Command</code></td>
+<td>Return update + <code>goto</code> from a node (also <code>graph=Command.PARENT</code>)</td>
+<td>Route and update in one move</td>
+</tr>
+<tr>
+<td><code>Send</code></td>
+<td>Dispatch a node with custom per-item state</td>
+<td>Dynamic fan-out / map-reduce</td>
+</tr>
+<tr>
+<td>Super-step</td>
+<td>One tick: active nodes run in parallel, updates merged, edges evaluated</td>
+<td>Pregel-inspired</td>
+</tr>
+<tr>
+<td><code>recursion_limit</code></td>
+<td>Max super-steps per run; Python default 10007 in LangGraph 1.2.x (was 25, then 1000; JS 25) — set your own</td>
+<td>Raises <code>GraphRecursionError</code></td>
+</tr>
+<tr>
+<td>Checkpointer</td>
+<td>Saves <code>StateSnapshot</code> per super-step, keyed by <code>thread_id</code></td>
+<td>InMemory / SQLite / Postgres / MongoDB</td>
+</tr>
+<tr>
+<td>Pending writes</td>
+<td>Per-task writes saved even if a sibling node fails</td>
+<td>Successful parallel nodes don't re-run</td>
+</tr>
+<tr>
+<td>Durability modes</td>
+<td><code>sync</code> / <code>async</code> (default) / <code>exit</code></td>
+<td>Durability vs speed</td>
+</tr>
+<tr>
+<td>Time travel</td>
+<td>Replay from / fork at a prior checkpoint</td>
+<td>Replays re-execute LLM calls</td>
+</tr>
+<tr>
+<td>Store</td>
+<td>Cross-thread long-term memory</td>
+<td>Checkpointer = short-term, per thread</td>
+</tr>
+<tr>
+<td>DeltaChannel (beta, 1.2)</td>
+<td>Store only per-step deltas in checkpoints</td>
+<td>Shrinks long-thread checkpoints; not reversible casually</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>InMemorySaver is not production</strong> — multi-replica or restart = lost threads. Use Postgres (or MongoDB).</li>
+<li><strong>thread_id is the only key</strong> — opaque, per-conversation, scoped to the authenticated user; Postgres saver column limit 255 chars.</li>
+<li><strong>Checkpoint growth</strong> — full state per super-step; prune, keep large blobs out of state (store references), consider DeltaChannel (beta).</li>
+<li><strong>Nodes re-run from the top</strong> on resume/retry — side effects must be idempotent or isolated after the decision point.</li>
+<li><strong>Parallel writes to a replace key error out</strong> — declare reducers upfront.</li>
+<li><strong>Durability mode</strong> — <code>async</code> default can lose the last checkpoint on a crash; <code>sync</code> if every step must be durable.</li>
+</ol>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Why LangGraph instead of a while loop around the model?</strong>
+The loop keeps state in memory; crashes, deploys or human pauses lose it. LangGraph checkpoints full state every super-step into a persistent store keyed by thread, giving durable execution, memory, long human pauses, and time travel; reducers make parallel branches safe; the graph is inspectable.</p>
+<p><strong>Q2. Explain LangGraph's execution model.</strong>
+Pregel-style super-steps: active nodes run in parallel, return partial updates, updates are merged via per-key reducers, edges determine next active nodes, checkpoint written at the boundary; ends when no nodes active or at <code>recursion_limit</code>.</p>
+<p><strong>Q3. What's a reducer, and when do you need a custom one?</strong>
+A function <code>(existing, update) -&gt; new</code> per state key. Default replaces. You need an append/merge reducer when multiple nodes (especially parallel branches or <code>Send</code> fan-outs) write the same key, and <code>add_messages</code> for chat history so edits by ID update in place.</p>
+<p><strong>Q4. Conditional edge vs Command vs Send?</strong>
+Conditional edge: route only, based on state. <code>Command</code>: a node both updates state and routes (and can jump to a parent graph). <code>Send</code>: dynamic fan-out of the same node with different per-item inputs for map-reduce.</p>
+<p><strong>Q5. What do you check before production?</strong>
+Persistent checkpointer (Postgres), opaque user-scoped thread IDs, deliberate durability mode, idempotent side effects, reducers on shared keys, checkpoint retention, explicit recursion limits, per-node <code>RetryPolicy</code> and (1.2+) timeouts / error handlers.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Graph API (state, reducers, nodes, edges, Send, Command, recursion limit): https://docs.langchain.com/oss/python/langgraph/graph-api</li>
+<li>Persistence overview: https://docs.langchain.com/oss/python/langgraph/persistence</li>
+<li>Checkpointers (super-steps, pending writes, durability modes, libraries): https://docs.langchain.com/oss/python/langgraph/checkpointers</li>
+<li>Time travel: https://docs.langchain.com/oss/python/langgraph/use-time-travel</li>
+<li>Fault tolerance (retries, timeouts, error handlers): https://docs.langchain.com/oss/python/langgraph/fault-tolerance</li>
+<li>Pregel runtime / DeltaChannel: https://docs.langchain.com/oss/python/langgraph/pregel</li>
+<li>What's new in LangGraph v1: https://docs.langchain.com/oss/python/releases/langgraph-v1</li>
+<li>Changelog (1.1 v2 streaming/invoke, 1.2 timeouts/DeltaChannel/v3 events): https://docs.langchain.com/oss/python/releases/changelog</li>
+<li>PyPI: https://pypi.org/project/langgraph/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track six, episode two: LangGraph — state machines, nodes, edges, and checkpoints. Last episode we ended with an agent as a roundabout: a model at the center, tools hanging below, the loop going round until the model stops calling tools. We also said that the roundabout, when you build it with create agent, is really a LangGraph graph underneath. Today we take it off the wall and open up the engine.
+
+## The cold open
+
+Picture an agent that's twenty minutes into a long research task. It has called a dozen tools, gathered notes, drafted half a report. Then the container it's running on gets recycled — a deployment, an autoscaler, a spot instance reclaimed, it doesn't matter which. What happens to those twenty minutes of work?
+
+In a plain Python loop, the answer is: gone. The conversation lived in a variable in memory, and the memory is gone. You start over, pay for every model call again, and hope the user didn't notice. In LangGraph, if you set it up right, the answer is: it resumes from the last completed step, on a different machine, as if nothing happened. That difference — between an agent that lives in a variable and an agent whose every step is written down — is the whole reason LangGraph exists, and it's what this episode is about.
+
+## Why it matters
+
+LangGraph arrived in early twenty twenty-four, because LangChain's original high-level chains and agents didn't give developers enough control over the exact flow. It hit version one in October twenty twenty-five alongside LangChain, with a stability promise: the core graph primitives — state, nodes, edges — and the execution model are unchanged. It's now on the one point two line, which added per-node timeouts, node-level error handlers, graceful shutdown, a new typed streaming A P I, and a beta channel type that shrinks checkpoints for long conversations.
+
+Here's the framing for an interview. LangChain gives you components. LangGraph gives you a runtime: a way to describe a workflow as a state machine, and an engine that executes it durably — with persistence, resumability, human pauses, and streaming built in. If you've used an orchestrator like Airflow or Lakeflow Jobs, you already have half the intuition: tasks, dependencies, retries, state. The difference is that LangGraph graphs can loop, the routing can be decided by a model at run time, and the whole thing runs in-process, step by step, at the speed of a conversation rather than a batch schedule.
+
+[PAUSE 1s]
+
+## The mental image: the board game
+
+Let's build one picture and keep it for this episode and the next.
+
+In your mind's eye, picture a large square game board lying on a table in front of you. Around the board are squares, and each square is a station where some work gets done. Those are nodes. In the top-left corner is a special square marked START, where the game begins. Somewhere else is a square marked END. Between the squares, painted on the board, are arrows. Those are edges. Some arrows are plain: when you finish on this square, you always move to that one. But one square — let's put it on the right side of the board — has a signpost standing on it, with arrows fanning out in two or three directions. The signpost reads the situation and decides which way to go. That's a conditional edge.
+
+Now the most important part. In the very center of the board sits a scoreboard. It has columns, and every column has a name — messages, documents, draft, retry count — and at the top of each column, written in small print, is a rule for how new entries get combined with what's already there. Some columns say "replace": a new value wipes out the old one. Some say "append": new values get added to the end of the list. That scoreboard is the state. The small-print rules are reducers.
+
+Hovering above the board is a clock that ticks. And mounted on the ceiling above the clock is a camera. Every time the clock ticks, the camera takes a photograph of the whole board. Each photo gets filed in a cabinet standing to the right of the table — one drawer per game in progress, and each drawer is labeled with a thread I D.
+
+Squares around the edge. Arrows between them. A signpost on the right. The scoreboard in the center. The clock and the camera above. The filing cabinet on the right. Hold that.
+
+[PAUSE 1s]
+
+## Under the hood: the scoreboard and its rules
+
+Start in the center, because in LangGraph everything revolves around the state. You define the state as a schema — in Python, usually a typed dictionary, a data class if you want defaults, or a Pydantic model if you want validation, at some performance cost. Every node reads from this shared scoreboard, and every node returns an update: not the whole scoreboard, just the columns it wants to change.
+
+Here's the mechanism that trips people up. A node doesn't write directly onto the scoreboard. It hands back a slip of paper with its proposed changes, and the scoreboard applies each change using that column's rule. The rule is a function with two inputs: on the left, what's already in the column; on the right, what the node just proposed. The default rule ignores the left and keeps the right — replace. An append rule concatenates them. And for chat messages there's a purpose-built rule, add messages, that appends new messages but, if a message arrives with the same I D as one already there, updates it in place. That's what lets a human correct a message later without duplicating it.
+
+Why does this matter so much? Because of parallelism. If two squares run at the same moment and both write to a "replace" column, which one wins? LangGraph doesn't guess; by default it raises an error, telling you the column can only receive one value per step. The fix is to give that column an append or merge rule. So the reducer isn't a detail — it's how you make concurrent updates safe. And the classic gotcha on the other side: with an append rule, returning an empty list does not clear the column, because an empty list appended to a full one is still the full one. To wipe it, you wrap the update in a special overwrite marker that bypasses the rule.
+
+## Under the hood: squares, arrows, and the signpost
+
+Now the squares around the edge. A node is just a function. It takes the current state, does something — calls a model, runs a tool, queries a database, or just runs plain code — and returns its slip of updates. The documentation puts it bluntly: nodes do the work, edges tell you what to do next. And nodes don't have to involve an L L M at all. Some of the most useful nodes are ten lines of ordinary validation logic.
+
+The arrows. A normal edge is a fixed arrow: after this square, go to that one. A conditional edge is the signpost: a routing function reads the scoreboard and returns the name of the next square — or several names, in which case all of them run in parallel on the next tick. Our agent from last episode is exactly this: a model square, a signpost that asks "did the model request any tools?", an arrow to the tools square if yes, an arrow to END if no, and a fixed arrow from tools back to the model. That's the roundabout, flattened onto the board.
+
+Two more pieces of routing machinery. First, Command. Sometimes a node wants to both update the scoreboard and choose where to go next, in one move. Instead of returning a slip, it returns a Command that carries an update and a go-to destination. Think of it as a square that writes its slip and also physically picks up the token and places it on the next square. Second, Send. Picture a square that produces a list of items — say, five documents to summarize — and you don't know in advance how many there will be. From the signpost, you can dispatch one Send per item, each carrying its own private slice of state, to the same summarize square. Five copies run in parallel on the next tick, and their results flow back into an append column on the scoreboard. That's map-reduce, drawn on the board.
+
+Before any of this runs, you compile the graph. Compiling checks the structure — no orphaned squares, no arrows pointing nowhere — and it's where you attach the camera: the checkpointer.
+
+[PAUSE 1s]
+
+## Under the hood: the clock ticks
+
+Now the clock. This is the part that separates people who've read the docs from people who've only used the prebuilt agent.
+
+LangGraph's execution model is inspired by Google's Pregel system for large-scale graph processing. The program moves in discrete ticks called super-steps. At each tick, every square that has something to do becomes active and runs — in parallel if there are several. Each active square produces its slip. When all of them have finished, the slips are applied to the scoreboard through the column rules, all together. Then the arrows are evaluated to decide which squares are active on the next tick. When no squares are active and nothing is in transit, the game ends.
+
+Walk a token around the board. Tick one: the user's message enters at START and lands in the messages column. Tick two: the model square runs, reads the messages, and returns a slip containing an A I message with two tool calls. The slip is applied; the signpost on the right reads the scoreboard, sees tool calls, and points to the tools square. Tick three: the tools square runs both tools and returns two tool messages; they're appended. The fixed arrow sends the token back to the model. Tick four: the model reads everything and answers with no tool calls; the signpost points to END. Four ticks. And the clock has a limit — the recursion limit — which caps the number of ticks in one run. In current Python versions it defaults to just over ten thousand, so set your own lower limit per call. When it's hit, you get a graph recursion error rather than an infinite loop.
+
+## Under the hood: the camera and the cabinet
+
+And now the camera. At the end of every tick, the checkpointer photographs the entire scoreboard — every column — along with which squares are due to run next, and files the photo in the drawer for this thread. For that simple four-tick run, you'd find a stack of photos in the drawer: an empty board with START next, then the board after the input, then after the model, and so on.
+
+Everything valuable about LangGraph comes out of that cabinet. Memory: send a follow-up message on the same thread I D, and the graph opens the drawer, takes the latest photo, sets the board up exactly as it was, and continues — that's how a conversation remembers. Fault tolerance: if the container dies mid-run, a new process opens the drawer and resumes from the last completed tick. There's a subtlety here worth knowing. If two squares were running in the same tick and one finished while the other crashed, the finished one's slip was already written to the drawer as a pending write. On resume, only the failed square re-runs. Time travel: pull out any earlier photo, set the board up from it, and either replay forward or change something on the scoreboard first and play forward differently — a fork. The original photos are never modified; an edit creates a new photo. And human pauses — which we'll open up properly next episode — depend entirely on this cabinet, because a pause is nothing more than "stop after this photo, and wait."
+
+The cabinet itself comes in several models. An in-memory saver for experiments. A SQLite saver for local development. A Postgres saver — the one used in LangChain's own hosted platform — and a MongoDB saver for production. Checkpointers are a separate interface, so other stores exist through integrations. Note that the checkpointer holds per-thread, short-term state. For facts you want to remember across threads — a user's preferences, say — LangGraph has a separate store, which is a different cabinet in a different room.
+
+And you can tune how eagerly the camera develops its film. The durability mode has three settings. Sync: wait until each photo is safely filed before the next tick starts — most durable, a little slower. Async, the default: file the photo in the background while the next tick runs — fast, with a small risk of losing the last photo if the process dies at exactly the wrong moment. Exit: only file a photo when the run ends, pauses, or errors — fastest, but a mid-run crash loses everything since the last exit.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Now the sharp edges.
+
+First, a war story shape that shows up again and again. A team prototypes an assistant with the in-memory saver. It works beautifully in the demo — conversations remember, approvals pause and resume. It goes to production on a few containers behind a load balancer. And users start reporting that the assistant randomly forgets everything mid-conversation. The cause: the cabinet lived inside each container's memory. When a follow-up request landed on a different container, or a container restarted during a deploy, the drawer simply wasn't there. The fix is a shared, persistent checkpointer — Postgres is the common choice — and the lesson is that the in-memory saver is a toy, not a tier.
+
+Second, thread I D design is a security decision, not a detail. The thread I D is the only key to the drawer. If you derive it from something guessable, or reuse one thread for multiple users, one user's conversation state can be loaded into another user's run. Use an opaque, unique I D per conversation, scope it to the authenticated user at the application layer, and keep it under the database column limit — the Postgres saver documents a two-hundred-fifty-five character cap.
+
+Third, checkpoint growth. By default, every photo contains the full value of every column. A messages column in a long conversation grows with every turn, so a thread with two hundred messages and dozens of ticks is storing that growing list over and over. Storage climbs, and loading the latest photo gets slower. Mitigations: prune old checkpoints on a retention schedule, keep bulky artifacts like retrieved documents out of the state and store references instead, and in version one point two there's a beta delta channel that stores only what changed at each tick rather than the whole column. It's beta, and switching a persisted column between the two formats isn't safely reversible, so treat it as a deliberate migration.
+
+Fourth, re-execution. Photos are taken at tick boundaries, not in the middle of a square. If a square is interrupted or retried, it runs again from the top. Any side effect before that point — sending an email, inserting a row, charging a card — happens again. So side effects inside nodes must be idempotent, or isolated in their own square after the decision to perform them is final.
+
+Fifth, reducers for parallel writes. If you fan out to several squares that write the same column, give that column a merge rule up front. Otherwise the first time two branches collide in production, the run errors out.
+
+[PAUSE 1s]
+
+## The interview angle
+
+Three ways this comes up.
+
+When they ask, "Why use LangGraph instead of just writing a while loop around the model?" — a strong answer sounds like: a while loop keeps state in memory, so a crash, a deploy, or a human pause loses everything. LangGraph models the workflow as a state graph and checkpoints the full state at every super-step into a persistent store keyed by thread. That gives me durable execution and resume after failure, conversation memory, human-in-the-loop pauses that can last days, and time travel for debugging. Plus explicit reducers make parallel branches safe, and the structure is inspectable.
+
+When they ask, "Walk me through how LangGraph executes a graph," — a strong answer sounds like: it's Pregel-style super-steps. At each step, all active nodes run in parallel, each returns a partial state update, the updates are applied through per-key reducers, then edges — fixed or conditional — decide the next set of active nodes. A checkpoint is written at each super-step boundary. Execution ends when no nodes are active, or errors out at the recursion limit.
+
+When they ask, "What would you check before putting a LangGraph agent in production?" — a strong answer sounds like: a persistent checkpointer, typically Postgres, never the in-memory one. Opaque per-user thread I Ds. A durability mode chosen deliberately. Idempotent side effects, since nodes re-run on resume. Reducers on every key that parallel branches write. A retention policy for checkpoint growth. Explicit recursion limits and per-node retry policies and timeouts.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the board one last time. Around the edge, squares — nodes — plain functions that do the work and hand back slips of updates. Between them, painted arrows — edges — some fixed, some fanning out from a signpost on the right that reads the situation and picks the route; and nodes can use Command to write and move at once, or Send to fan work out in parallel. In the center, the scoreboard — the state — with a small-print rule on every column: replace, append, or add messages. Those are reducers, and they make parallel writes safe. Above, a clock ticks in super-steps: all active squares run together, their slips merge, the arrows pick the next squares. And on the ceiling, the camera photographs the whole board after every tick, filing each photo in a drawer labeled with the thread I D. From that cabinet come memory, crash recovery, time travel, and human pauses. Persistent cabinet, opaque thread I Ds, idempotent squares.
+
+Next episode, we use that cabinet for its most powerful trick: boards inside boards, freezing the game for a human, and broadcasting every move live. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-langchain-core.html">← LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="btn" href="03-langgraph-patterns.html">LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming →</a></div></main></div></body></html>

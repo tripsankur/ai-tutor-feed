@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>From RNNs to Attention: Why Transformers Won — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="active" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 1</div>
+<h1 class="lesson">From RNNs to Attention: Why Transformers Won</h1>
+<div class="meta">18 min listen · Why the transformer replaced recurrent networks: a single messenger walking a shelf of words versus a web of direct threads between every word — parallel training, short paths between distant words, and the quadratic bill that came with it.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e01-why-transformers.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/01-why-transformers" onclick="toggleDone('07-transformers/01-why-transformers')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Transformers won not because of attention (which RNNs already had since 2014) but because they <strong>removed recurrence entirely</strong> — every token connects directly to every other token, so training parallelizes across the sequence and distant tokens are one hop apart; the price is compute and memory that grow with the <strong>square</strong> of sequence length.</p>
+<h2 id="track-7-map">Track 7 map</h2>
+<table>
+<thead>
+<tr>
+<th>Ep</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why transformers won (this note)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Self-attention: Q, K, V</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Multi-head, RoPE, residuals, norms (GQA/MQA, RMSNorm, pre-norm)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Decoder-only LLMs: next-token objective, BPE, embeddings</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Inference: KV cache, sampling, speculative decoding</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Scaling laws, MoE, long context</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Fine-tuning: LoRA/PEFT, RLHF, DPO</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Drill</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-mental-image-the-shelf-the-messenger-the-web">The mental image: the shelf, the messenger, the web</h2>
+<ul>
+<li><strong>Shelf</strong> of word tiles, left to right = the input sequence.</li>
+<li><strong>Messenger</strong> walking below the shelf with a fixed-size <strong>backpack</strong> = RNN with hidden state. Must walk step by step (no parallelism), backpack forgets the far-left tiles, lessons fade on the long walk back (vanishing gradients).</li>
+<li><strong>Snapshots under each tile</strong> that a second messenger can look back at = Bahdanau attention (2014) bolted onto RNNs.</li>
+<li><strong>Web of strings</strong> above the shelf, every tile to every tile, strings pulled tight or slack = self-attention (2017). All strings computed at once; one hop between any two tiles. Strings = n² → the quadratic bill.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph RNN["RNN: sequential walk"]
+        direction LR
+        h0["h0"] --> h1["h1: The"] --> h2["h2: trophy"] --> h3["h3: ..."] --> hn["hn: big"]
+    end
+    subgraph TF["Transformer: all-pairs attention"]
+        direction LR
+        A["The"] <--> B["trophy"]
+        B <--> C["it"]
+        A <--> C
+        C <--> D["big"]
+        B <--> D
+        A <--> D
+    end
+</pre>
+
+<h2 id="timeline">Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Milestone</th>
+<th>Why it mattered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1997</td>
+<td>LSTM (Hochreiter &amp; Schmidhuber)</td>
+<td>Gated "backpack" eased vanishing gradients; still sequential</td>
+</tr>
+<tr>
+<td>2014</td>
+<td>Seq2seq encoder-decoder RNNs</td>
+<td>Whole sentence squeezed into one fixed vector at the handoff</td>
+</tr>
+<tr>
+<td>2014</td>
+<td>Bahdanau, Cho, Bengio — additive attention</td>
+<td>Decoder looks back over all encoder states; big translation gains</td>
+</tr>
+<tr>
+<td>2017</td>
+<td>Vaswani et al. — "Attention Is All You Need"</td>
+<td>Recurrence removed; WMT14 En-De 28.4 BLEU; big model trained 3.5 days on 8 P100 GPUs</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>FlashAttention</td>
+<td>Exact attention with linear memory via tiling; compute still quadratic</td>
+</tr>
+<tr>
+<td>2025–26</td>
+<td>Hybrid stacks (e.g. Qwen3-Next / Qwen3.5: 3 Gated DeltaNet layers per 1 full-attention layer; Nemotron-H: Mamba-2 + attention)</td>
+<td>Linear-time "smarter messengers" for most layers, full attention every few layers</td>
+</tr>
+</tbody>
+</table>
+<h2 id="complexity-comparison-from-the-2017-paper-n-sequence-length-d-width">Complexity comparison (from the 2017 paper, n = sequence length, d = width)</h2>
+<table>
+<thead>
+<tr>
+<th>Layer type</th>
+<th>Compute per layer</th>
+<th>Sequential ops</th>
+<th>Max path length</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Self-attention</td>
+<td>O(n²·d)</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Recurrent</td>
+<td>O(n·d²)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>Convolutional (kernel k)</td>
+<td>O(k·n·d²)</td>
+<td>O(1)</td>
+<td>O(log_k n)</td>
+</tr>
+</tbody>
+</table>
+<p>Concrete: 1,000 tokens → 1M attention scores per head per layer; 100,000 tokens → 10B. Doubling context ≈ 4× attention work.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RNN</td>
+<td>Processes tokens one step at a time through a fixed-size hidden state</td>
+<td>"Sequential, forgetful, hard to train over long ranges"</td>
+</tr>
+<tr>
+<td>Hidden state</td>
+<td>The fixed-size memory vector carried step to step</td>
+<td>The backpack</td>
+</tr>
+<tr>
+<td>Vanishing/exploding gradients</td>
+<td>Error signal multiplied by ~the same factor at every step back</td>
+<td>Why RNNs struggle with long-range dependencies</td>
+</tr>
+<tr>
+<td>LSTM / GRU</td>
+<td>Gated RNNs that control what to keep/forget</td>
+<td>Better backpack, same walk</td>
+</tr>
+<tr>
+<td>Attention (2014)</td>
+<td>Decoder weights over all encoder states</td>
+<td>Helper bolted onto RNNs</td>
+</tr>
+<tr>
+<td>Self-attention</td>
+<td>Every token attends to every token in the same sequence</td>
+<td>Constant path length, fully parallel</td>
+</tr>
+<tr>
+<td>Quadratic cost</td>
+<td>Score matrix is n × n</td>
+<td>Double context → ~4× attention compute</td>
+</tr>
+<tr>
+<td>Positional encoding</td>
+<td>Injected order information</td>
+<td>Attention is permutation-invariant without it</td>
+</tr>
+<tr>
+<td>Inductive bias</td>
+<td>Built-in assumptions (locality, recency)</td>
+<td>Transformers have little → data-hungry but flexible</td>
+</tr>
+<tr>
+<td>SSM / linear attention</td>
+<td>Fixed-size-state sequence layers trainable in parallel (Mamba, Gated DeltaNet)</td>
+<td>"The messenger's comeback" in hybrids</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Why did transformers replace RNNs?</strong>
+RNNs are sequential through a fixed-size hidden state: no parallelism along the sequence and O(n) path length between distant tokens (forgetting, vanishing gradients). Attention already existed on RNNs; the transformer removed recurrence, giving O(1) path length and turning the sequence into large parallel matmuls that GPUs are built for — which unlocked scale. Price: O(n²) attention and explicit position encoding.</p>
+<p><strong>Q2. What are the main weaknesses of transformers?</strong>
+Quadratic attention compute/memory in sequence length; hard context limits; permutation invariance (position must be added, and the choice limits length generalization); data hunger from weak inductive bias; at inference, a KV cache that grows linearly with context and dominates serving memory.</p>
+<p><strong>Q3. What did "Attention Is All You Need" actually change versus 2014 attention?</strong>
+2014 attention was an add-on letting an RNN decoder look back at encoder states, but the encoder/decoder still walked sequentially. The 2017 paper dropped recurrence and convolution entirely and used self-attention inside both encoder and decoder, so all positions are processed simultaneously.</p>
+<p><strong>Q4. When would you not use a transformer?</strong>
+Small labeled datasets, short narrow sequences, tight latency/edge budgets — a small RNN/CNN or gradient-boosted model on features may be cheaper and as accurate. For extremely long streams, consider SSM or hybrid architectures.</p>
+<p><strong>Q5. Is attention being replaced?</strong>
+Partially. 2025–26 open-weight flagships increasingly use hybrids: mostly linear-time layers (Mamba-2, Gated DeltaNet) with full softmax attention every few layers (e.g. 3:1 in Qwen3-Next), which keeps exact long-range retrieval while making long-context throughput scale far more gently. Pure attention remains the default elsewhere.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Vaswani et al., 2017 — Attention Is All You Need: https://arxiv.org/abs/1706.03762</li>
+<li>Bahdanau, Cho, Bengio, 2014 — Neural Machine Translation by Jointly Learning to Align and Translate: https://arxiv.org/abs/1409.0473</li>
+<li>Dao et al., 2022 — FlashAttention: https://arxiv.org/abs/2205.14135</li>
+<li>Sebastian Raschka — Hybrid Attention (LLM architecture gallery): https://sebastianraschka.com/llm-architecture-gallery/hybrid-attention/</li>
+<li>Sebastian Raschka — Beyond Standard LLMs: https://magazine.sebastianraschka.com/p/beyond-standard-llms</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode one: from recurrent networks to attention — why transformers won.
+
+This episode opens a new track, so let me frame it first. Track seven is the engine room. Everything else in this course — retrieval pipelines, agents, evaluation harnesses, serving platforms — sits on top of one architecture, the transformer. Over eight episodes we're going to open it up. Today, the history and the core idea: why the field abandoned recurrent networks almost overnight. Episode two, self-attention itself — queries, keys, and values, by picture, not by equation. Episode three, the rest of the block: multiple heads, rotary position encoding, residual connections, normalization, and the modern variants every current open-weight model uses. Episode four, how a decoder-only language model is actually trained, plus tokenization and embeddings. Then inference and the K V cache, scaling laws and mixture-of-experts, the fine-tuning landscape, and a rapid-fire drill to close. No equations read aloud, anywhere. Every piece of math gets a picture instead. The companion notes carry the formulas if you want them on paper.
+
+## The cold open
+
+Here's a question that shows up in interviews at every level, from new-grad to staff: "Why did transformers replace recurrent neural networks?" Most people answer with one word. Attention. And that answer is wrong in an instructive way, because attention existed three years before the transformer, bolted onto recurrent networks, and it didn't cause the revolution on its own. The paper that introduced the transformer, published in twenty seventeen by a team at Google, was titled "Attention Is All You Need." The key word in that title isn't "attention." It's "all." The breakthrough was what they took away.
+
+By the end of this episode you'll be able to say exactly what was taken away, why removing it unlocked graphics cards at scale, and what bill the field has been paying for that choice ever since — a bill that, as of twenty twenty-six, is pushing some of the newest models to partly bring back the very thing that was removed.
+
+[PAUSE 2s]
+
+## Why this matters
+
+If you work anywhere near production A I, you are paying transformer costs every day, whether you see them or not. The reason a model has a context window limit at all. The reason doubling the prompt length more than doubles the memory pressure on the serving side. The reason long-context requests cost more per token on some pricing pages. The reason an inference server spends most of its memory on something called a K V cache. Every one of those traces straight back to the design decision we're going to walk through today. Understand the decision, and those operational facts stop being trivia you memorize and become consequences you can derive on the spot, in front of an interviewer.
+
+## The mental image
+
+Let's build the picture. One image, and we'll keep it for the whole episode — in fact, for the whole track.
+
+Picture a long wooden shelf running left to right across your field of view. On that shelf sits a row of wooden tiles, like letter tiles from a word game, except each tile holds a whole word. Read from left to right, the tiles spell out a sentence: "The trophy didn't fit in the suitcase because it was too big." Twelve tiles, evenly spaced, left to right.
+
+Now, below the shelf, on the floor, picture a single messenger. The messenger wears a small backpack. That backpack is the only memory the messenger has, and it has a fixed size — it never gets bigger, no matter how long the shelf is.
+
+That messenger is a recurrent neural network. Hold the shelf and the messenger in your mind's eye. We're going to watch them work, and then we're going to change the picture in exactly one way.
+
+## How the messenger works
+
+The messenger starts at the far left end of the shelf. Step one: look up at the first tile, "The." Squeeze what matters about it into the backpack. Step two: take one step right, look up at "trophy," open the backpack, blend the new word with what's already inside, repack it. Step three: one step right, "didn't," blend, repack. And so on, tile by tile, left to right, until the messenger reaches the far right end of the shelf. Whatever is in the backpack at the end is the network's entire understanding of the sentence.
+
+That's a recurrent network in one image. The backpack is what practitioners call the hidden state — a fixed-length list of numbers, typically a few hundred to a couple of thousand of them. The "blend and repack" at each step is the same learned function applied again and again. That repetition is the "recurrent" in the name.
+
+Now watch what goes wrong. Three failures, all visible in the picture.
+
+Failure one: the messenger must walk. Step three can't happen until step two is finished, because step three needs the backpack that step two packed. There is no way to send twelve messengers to twelve tiles at once. Now think about the hardware. A modern graphics card has thousands of cores, and it's fast only when all of them work at the same time on independent pieces of the problem. The messenger forces the whole card to wait on one step at a time along the sentence. You can still batch many different sentences side by side, but within each sentence, the walk is strictly sequential. On a thousand-word document, that's a thousand steps in a row, each waiting on the last.
+
+Failure two: the backpack forgets. By the time the messenger reaches the word "it," near the right end of the shelf, the tiles "trophy" and "suitcase" are nine and six steps behind. Everything about them has been squeezed, blended, and repacked over and over. And to decide what "it" refers to, the network needs to know that trophies can be too big to fit into things. That knowledge has to survive the whole walk inside a fixed-size backpack. For a twelve-word sentence, it mostly survives. For a paragraph, it degrades. For a document, the early pages are effectively gone.
+
+Failure three is the subtle one, and it's about learning, not memory. When the network trains, the error signal has to travel backwards along the walk — from the far right end, back step by step toward the left, to adjust the blending function. At every step the signal gets multiplied by roughly the same factor. If that factor is a little less than one, multiply it by itself fifty times and the signal shrinks to almost nothing. That's the vanishing gradient problem. If the factor is a little more than one, it explodes instead. Either way, the network struggles to learn connections between words that are far apart on the shelf, because the lesson can't travel back that far intact.
+
+## The patches that came first
+
+The field didn't sit still. In the late nineteen-nineties, researchers gave the messenger a smarter backpack — the long short-term memory network, or L S T M. Picture the backpack gaining little latched compartments with gates: a gate that decides what to throw out, a gate that decides what new information to let in, a gate that decides what to show at each step. The gates let important information ride along untouched for longer, and they eased the vanishing signal. L S T Ms powered speech recognition, machine translation, and keyboard prediction for most of the twenty-tens. But the messenger still walked. The walk was still sequential. The gates were a better backpack, not a different design.
+
+Then, around twenty fourteen, translation systems split the job in two: one messenger walks the source sentence and hands its final backpack to a second messenger, who walks out the translation word by word. The problem was obvious in the picture. The entire meaning of a fifty-word sentence had to be crammed into one fixed-size backpack at the handoff. Long sentences translated badly.
+
+And that's when attention first appeared, in a twenty fourteen paper by Bahdanau, Cho, and Bengio. Here's the change in our image. Imagine the first messenger, as it walks, leaves a small snapshot of its backpack under every tile. Now the second messenger, producing each output word, is allowed to look back at the whole row of snapshots and decide which ones to lean on — mostly the snapshot under "suitcase" when translating "suitcase," say. That looking-back is attention. It was a huge win for translation quality.
+
+But notice what's still in the picture: the messengers. Attention was a helper bolted onto a walking recurrent network. The snapshots still had to be produced by a walk, one step at a time. The hardware problem remained.
+
+[PAUSE 2s]
+
+## The one change: remove the messenger
+
+Now the twenty seventeen move. Back to the shelf. Same row of twelve tiles, left to right.
+
+Delete the messenger. Delete the backpack. Delete the walk.
+
+Instead, picture this: above the shelf, strings. Every tile sends a thin string directly to every other tile. "It" has a string running straight to "trophy," another straight to "suitcase," another to "big," another to "The," and so on — one to every tile on the shelf, including itself. And so does every other tile. Above the shelf now hangs a dense web of direct threads connecting every word to every word.
+
+Each string can be pulled tight or left slack. When the network processes "it," it tugs hardest on the strings leading to the tiles that matter for understanding "it" — here, "trophy," and also "big" — and leaves the rest slack. What comes back along the tight strings gets blended into a new, richer version of the tile for "it": a version that now carries the knowledge "this 'it' is the trophy." That blending, using the web of strings, is self-attention. Exactly how each tile decides which strings to pull is the whole of episode two. For now, hold the web.
+
+Then stack it. One web of strings is one layer. The transformer repeats this: the updated tiles form a new shelf, a new web is strung above that, and so on up. The original transformer stacked six layers on each side. A modern large model stacks on the order of eighty to more than a hundred and twenty.
+
+## Why the web beats the walk
+
+Walk the three failures again, in the new picture.
+
+Failure one, the forced walk. Gone. Every tile's strings can be computed at the same time, because no tile waits on its left neighbor's backpack. The whole web for the whole shelf becomes one big batch of multiplications — exactly the workload graphics cards are built for. This is the actual revolution. The original transformer reached a new state of the art on English-to-German translation, a blue score of twenty-eight point four, and trained its big configuration in three and a half days on eight graphics cards. That was a fraction of the training cost of the best recurrent systems of the day. Cheaper training at the same quality meant you could spend the same budget on a much bigger model, or on much more data. Everything since — the models with hundreds of billions of parameters trained on trillions of words — is that parallelism, pushed to its limit.
+
+Failure two, the leaky backpack. Gone, at least in principle. "It" doesn't need "trophy" to survive a nine-step walk. There's a direct string. Researchers call this the path length: in the messenger picture, information between two words travels a number of steps proportional to how far apart they are. In the web picture, it's one hop, regardless of distance. First word to thousandth word, one string.
+
+Failure three, the vanishing lesson. Greatly eased, for the same reason. The error signal during training flows back along the same direct strings, so a lesson about a long-range connection doesn't have to survive a long multiplied chain. Combined with tricks we'll cover in episode three — residual connections and normalization — this is what makes very deep stacks trainable.
+
+There's a fourth win the picture shows, and it matters for everything that came later. The web makes no assumption about which words matter to which. A recurrent network is built to believe that nearby words matter most. A convolutional network — the other contender back then — is built to look at small local windows. The transformer believes nothing in advance. It learns, from data, which strings to pull. With little data that's a weakness. With internet-scale data it's a superpower, because the model isn't limited by its designer's assumptions. That's why the same architecture ended up running text, code, images cut into patches, audio, and protein sequences.
+
+[PAUSE 2s]
+
+## The bill: counting the strings
+
+Now the tradeoffs, because a strong candidate names the cost before anyone asks.
+
+Count the strings. Twelve tiles, every tile connected to every tile: that's twelve times twelve, a hundred and forty-four strings. Fine. A thousand tiles: a million strings. A hundred thousand tiles — a long document — ten billion strings. For every layer. For every attention head within each layer. The work grows with the square of the length. Double the context, and the attention work roughly quadruples. That's the quadratic cost, and it's the single most important number to carry out of this episode.
+
+It shows up everywhere downstream. It's why every model has a context window and why extending it is expensive research rather than a config flag. It's why engineering work like Flash Attention — which computes the web in small tiles in the chip's fastest memory instead of laying out the whole grid of strings at once — was such a big deal: it didn't remove the quadratic work, but it stopped the memory for the grid from blowing up. And it's why, at inference time, a model generating text has to remember something about every previous tile, which becomes the K V cache we'll open in episode five.
+
+Here's the war-story version. A team fine-tuned an open model on internal documents with a moderate context length, and it worked well. Then product asked for longer inputs, and someone simply raised the maximum sequence length by four times in the training config. The run fell over with out-of-memory errors on the first large batch. The reflex was "we need four times the memory." The honest math, in the picture, was worse: four times the tiles means sixteen times the strings in every attention layer. The fix was a combination — memory-efficient attention kernels, smaller micro-batches with gradient accumulation, and activation checkpointing — plus a budget conversation, because training time went up far more than four-fold. The lesson for an interview: when someone says "just give it more context," your reflex should be "the attention cost goes with the square of that."
+
+The second cost is subtler. The web has no sense of order. Look at the picture: strings are strings. If you shuffled the tiles on the shelf, every tile would still have a string to every other tile, and nothing in the web itself would notice. "Dog bites man" and "man bites dog" would look identical. The messenger got order for free, because it walked left to right. The transformer has to be told position explicitly. The original design stamped a pattern of waves onto each tile according to its position. Modern models rotate things according to position instead — rotary position encoding, the "rope" in episode three's title. Remember: order is not free anymore; it's a component you add, and the choice of component decides how well the model handles lengths it never saw in training.
+
+Third cost: data hunger. Because the web assumes nothing, it needs a lot of examples to learn what a recurrent network would have assumed. On small datasets, a well-tuned L S T M or a gradient-boosted model on good features can still win. Don't let anyone tell you the transformer is always the right tool. For a narrow sequence problem with a few thousand labeled examples and tight latency — say, classifying short sensor streams — a small recurrent or convolutional model can be cheaper and just as accurate.
+
+## The messenger's comeback
+
+And here's the part that makes this a twenty twenty-six answer rather than a twenty eighteen one. Because of the quadratic bill, researchers never stopped trying to get back the messenger's best property: a fixed-size memory whose cost doesn't grow with length. State-space models, the best known being Mamba, and linear-attention designs such as gated delta networks, are essentially smarter messengers — they keep a fixed-size state, but they're designed so training can still run in parallel across the sequence.
+
+The practical outcome has been hybrids. Several major open-weight model families released through twenty twenty-five and twenty twenty-six stack mostly messenger-style layers, with a full web of strings inserted every few layers — in one prominent design, three linear layers for every one full attention layer. In our picture: messengers walking most floors of the building, with a full web of strings strung on every fourth floor so that exact long-range lookups are still possible. The result is long-context throughput that grows far more gently with length than pure attention. So the honest summary isn't "attention killed recurrence." It's "attention won because it trained in parallel and connected everything directly, and the field is now carefully reintroducing recurrence where the web gets too expensive."
+
+[PAUSE 2s]
+
+## The interview angle
+
+Three ways this shows up.
+
+First, the classic: "Why did transformers replace R N Ns?" A weak answer says "attention." A strong answer sounds like this: "Recurrent networks process a sequence one step at a time through a fixed-size hidden state, so training can't be parallelized along the sequence, and information between distant tokens has to survive a long chain — which causes forgetting and vanishing gradients. Attention had already been added to recurrent models in twenty fourteen; the transformer's move was removing recurrence entirely, so every token attends directly to every other token. That gives constant path length between any two positions, and it turns the whole sequence into big parallel matrix multiplications that graphics cards are built for. That's what let us scale to billions of parameters and trillions of tokens. The price is compute and memory that grow with the square of the sequence length, and the need to inject position information explicitly."
+
+Second: "What are the weaknesses of transformers?" Strong answer: quadratic attention cost in sequence length; a context window you can't exceed without cost; no built-in sense of order, so position encoding choices affect how well the model generalizes to longer inputs; data hunger; and at inference, a per-token memory cache that grows with context — then mention that state-space and linear-attention hybrids exist specifically to attack the quadratic cost.
+
+Third, the staff-level variant: "Would you ever not use a transformer?" Strong answer: yes — for small, narrow, latency-critical sequence problems with limited labeled data, a small recurrent, convolutional, or tree-based model on engineered features can be cheaper and just as accurate; and for very long streams, hybrid or state-space architectures deserve a look. Choosing the architecture from the data size, sequence length, and latency budget is the senior move.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the shelf. A row of word tiles, left to right.
+
+Below it, the old way: one messenger with a fixed-size backpack walking left to right, one tile at a time. It can't be parallelized, because every step waits for the last. Its backpack forgets the far-left tiles by the time it reaches the right. And its lessons fade on the long walk back during training. Gated backpacks — the L S T M — helped but didn't change the walk. Attention, in twenty fourteen, let a second messenger look back at snapshots, but the walking stayed.
+
+The twenty seventeen move: delete the messenger. String a web above the shelf — every tile connected directly to every tile, pulling tight the strings that matter. All of it computed at once, on graphics cards, stacked into layers. One hop between any two words. That's why transformers won: parallel training and direct connections, which together unlocked scale.
+
+The bill: the strings grow with the square of the tiles. Double the context, quadruple the attention work. And the web doesn't know the order of the shelf, so position has to be added back. Today's hybrids bring a few smarter messengers back to handle length cheaply.
+
+Next episode, we climb up into the web and look at a single string: how does a tile decide which strings to pull? Queries, keys, and values. See you in the next episode.</div></details>
+<div class="navrow"><span></span><a class="btn" href="02-self-attention.html">Self-Attention Mechanics: Q, K, V by Analogy →</a></div></main></div></body></html>

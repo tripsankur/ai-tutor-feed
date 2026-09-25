@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vector DB Internals: HNSW, IVF, Quantization — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk" open><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="active" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 4 · RAG · Episode 4</div>
+<h1 class="lesson">Vector DB Internals: HNSW, IVF, Quantization</h1>
+<div class="meta">17 min listen · How a vector database finds the nearest pins among a hundred million without checking them all: H N S W's stack of transparent sheets, I V F's neighborhoods and capitals, and quantization's shorthand coordinates, with the memory math, tuning dials, and filtering traps that decide cost and recall.</div>
+<audio controls preload="metadata" src="../../audio/04-rag/s4e04-vector-db-internals.mp3"></audio>
+<button class="btn complete" data-ep="04-rag/04-vector-db-internals" onclick="toggleDone('04-rag/04-vector-db-internals')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Vector databases avoid brute-force search with approximate indexes (HNSW graphs, IVF partitions, disk graphs like DiskANN) and shrink memory with quantization plus rescoring; every setting trades recall against latency and memory, and filtered search is where those trades break silently.</p>
+<h2 id="the-mental-image-the-map-with-overlays">The mental image: the map, with overlays</h2>
+<p>Same map of meaning as episode 1, now with 100M pins like sand.
+- <strong>Stack of transparent sheets above the map</strong> = HNSW (few pins + long threads on top, every pin + short threads at the bottom).
+- <strong>Borders and capitals drawn on the map</strong> = IVF (k-means centroids, search only the nearest <code>nprobe</code> neighborhoods).
+- <strong>Shorthand coordinates on each pin</strong> = quantization (fp16, int8, binary, PQ codes), rescored with exact coordinates.</p>
+<pre class="mermaid">flowchart TB
+    subgraph HNSW["HNSW: layered proximity graph"]
+        L2["Top layer: few nodes, long links"] --> L1["Middle layer: more nodes"]
+        L1 --> L0["Bottom layer: all nodes, short links"]
+    end
+    Q["Query vector"] --> L2
+    L0 --> C["Candidate list (size ef_search)"]
+    C --> F{"Filter?"}
+    F --> R["Top-k results"]
+</pre>
+
+<pre class="mermaid">flowchart LR
+    Q["Query vector"] --> CEN["Compare to all centroids (nlist)"]
+    CEN --> P["Pick nearest nprobe lists"]
+    P --> SCAN["Scan vectors in those lists (PQ codes)"]
+    SCAN --> OS["Oversampled candidates"]
+    OS --> RS["Rescore with full-precision vectors"]
+    RS --> K["Top-k"]
+</pre>
+
+<h2 id="memory-math">Memory math</h2>
+<ul>
+<li>Raw vector: <code>d × 4</code> bytes (float32). 1,024-d = 4 KB; 100M vectors ≈ 400 GB.</li>
+<li>HNSW (Faiss guideline): <code>(d × 4 + M × 2 × 4)</code> bytes/vector → M=16 adds ~128 B. <strong>Vectors dominate.</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Encoding</th>
+<th>Bytes (1,024-d)</th>
+<th>Compression</th>
+<th>Typical recall impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float32</td>
+<td>4,096</td>
+<td>1×</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>float16 / <code>halfvec</code></td>
+<td>2,048</td>
+<td>2×</td>
+<td>negligible</td>
+</tr>
+<tr>
+<td>int8 scalar</td>
+<td>1,024</td>
+<td>4×</td>
+<td>small</td>
+</tr>
+<tr>
+<td>binary (1 bit/dim)</td>
+<td>128</td>
+<td>32×</td>
+<td>needs oversampling + rescoring</td>
+</tr>
+<tr>
+<td>PQ (m=64, 8 bits)</td>
+<td>64</td>
+<td>64×</td>
+<td>needs rescoring</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tuning-dials">Tuning dials</h2>
+<table>
+<thead>
+<tr>
+<th>Index</th>
+<th>Dial</th>
+<th>Effect</th>
+<th>Common start</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HNSW</td>
+<td><code>M</code></td>
+<td>Links per node: recall ↑, memory ↑, insert slower</td>
+<td>16 (pgvector default)</td>
+</tr>
+<tr>
+<td>HNSW</td>
+<td><code>ef_construction</code></td>
+<td>Build quality ↑, build time ↑</td>
+<td>64 (pgvector default) to a few hundred</td>
+</tr>
+<tr>
+<td>HNSW</td>
+<td><code>ef_search</code></td>
+<td>Query-time recall ↑, latency ↑ (≥ k)</td>
+<td>40 (pgvector default)</td>
+</tr>
+<tr>
+<td>IVF</td>
+<td><code>nlist</code></td>
+<td>Number of clusters</td>
+<td>4·√N to 16·√N (Faiss)</td>
+</tr>
+<tr>
+<td>IVF</td>
+<td><code>nprobe</code></td>
+<td>Clusters searched: recall ↑, latency ↑</td>
+<td>single / low double digits, tune</td>
+</tr>
+<tr>
+<td>Quantized</td>
+<td>oversampling</td>
+<td>Candidates before rescoring</td>
+<td>1.5–3× (Qdrant guidance)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql">-- pgvector
+CREATE INDEX ON chunks USING hnsw (embedding vector_cosine_ops)
+  WITH (m = 16, ef_construction = 64);
+SET hnsw.ef_search = 100;
+
+-- half precision index (up to 4,000 dims)
+CREATE INDEX ON chunks USING hnsw ((embedding::halfvec(3072)) halfvec_cosine_ops);
+
+-- pgvector &gt;= 0.8: iterative scans for filtered queries
+SET hnsw.iterative_scan = relaxed_order;
+SELECT id FROM chunks
+WHERE tenant_id = 42
+ORDER BY embedding &lt;=&gt; $1 LIMIT 10;
+</code></pre>
+<pre><code class="language-python">import faiss
+d, nlist, m = 1024, 16384, 64
+quantizer = faiss.IndexFlatIP(d)
+index = faiss.IndexIVFPQ(quantizer, d, nlist, m, 8)  # 64 bytes/vector
+index.train(sample_vectors)
+index.add(all_vectors)
+index.nprobe = 16
+D, I = index.search(query_vectors, 100)  # oversample, then rescore exactly
+</code></pre>
+<h2 id="hnsw-vs-ivf-vs-diskann">HNSW vs IVF vs DiskANN</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HNSW</th>
+<th>IVF (+PQ)</th>
+<th>DiskANN (Vamana)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Structure</td>
+<td>Multi-layer graph</td>
+<td>k-means partitions</td>
+<td>Single-layer graph on SSD</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>Highest (vectors in RAM)</td>
+<td>Low (with PQ)</td>
+<td>Compressed vectors in RAM, rest on SSD</td>
+</tr>
+<tr>
+<td>Recall at equal latency</td>
+<td>Best</td>
+<td>Lower</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Inserts</td>
+<td>Incremental, natural</td>
+<td>Easy, but clusters go stale</td>
+<td>Supported in newer versions</td>
+</tr>
+<tr>
+<td>Deletes</td>
+<td>Tombstones, degrade until rebuild</td>
+<td>Easy</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>Sweet spot</td>
+<td>Up to ~100M in RAM</td>
+<td>Billion-scale, memory-bound</td>
+<td>Billion-scale on one machine</td>
+</tr>
+</tbody>
+</table>
+<p>DiskANN original result: ~1B vectors, single machine with 64 GB RAM, &gt;95% recall@1, few-ms latency.</p>
+<h2 id="filtered-search-pitfall">Filtered search pitfall</h2>
+<p>Post-filtering an ANN candidate list (e.g. <code>ef_search = 40</code>) with a selective filter (one small tenant) leaves too few or wrong results. Fixes: filter-aware traversal / iterative scans (pgvector 0.8 <code>hnsw.iterative_scan</code>, bounded by <code>hnsw.max_scan_tuples</code>), exact search on small filtered subsets, partition per tenant. Always measure recall with real filters.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ANN</td>
+<td>Approximate nearest neighbour search</td>
+</tr>
+<tr>
+<td>Recall@k</td>
+<td>Fraction of true top-k returned</td>
+</tr>
+<tr>
+<td>HNSW</td>
+<td>Hierarchical Navigable Small World graph (Malkov &amp; Yashunin)</td>
+</tr>
+<tr>
+<td>IVF</td>
+<td>Inverted file index: k-means partitions</td>
+</tr>
+<tr>
+<td>PQ</td>
+<td>Product quantization: sub-vector codebooks</td>
+</tr>
+<tr>
+<td>Scalar / binary quantization</td>
+<td>Fewer bits per dimension</td>
+</tr>
+<tr>
+<td>Oversampling + rescoring</td>
+<td>Retrieve extra candidates, re-rank with full precision</td>
+</tr>
+<tr>
+<td>DiskANN / Vamana</td>
+<td>SSD-resident graph ANN from Microsoft Research</td>
+</tr>
+<tr>
+<td>RaBitQ</td>
+<td>Binary-style quantization with theoretical error bounds</td>
+</tr>
+<tr>
+<td>Tombstone</td>
+<td>Deleted marker left in graph</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How does HNSW work?</strong>
+Multi-layer proximity graph; each node appears in the bottom layer and, with exponentially decaying probability, higher layers. Greedy search descends from the sparse top to the dense bottom, then explores with a candidate list of size <code>ef_search</code>. <code>M</code> and <code>ef_construction</code> trade memory/build time for graph quality.</p>
+<p><strong>Q2. HNSW or IVF?</strong>
+HNSW: best recall/latency in memory, incremental inserts, but high RAM and awkward deletes. IVF: k-means partitions probed by <code>nprobe</code>, less memory, faster builds, pairs with PQ for billion scale, but lower recall at equal latency and needs retraining as data drifts.</p>
+<p><strong>Q3. Cut vector memory 10×?</strong>
+Quantize: binary (32×), PQ (64×+), int8 (4×), fp16 (2×). Recover recall via 2–3× oversampling and full-precision rescoring from disk. Also Matryoshka-truncate embeddings. Validate recall against exact search.</p>
+<p><strong>Q4. Why does filtered search return too few results?</strong>
+The ANN shortlist is built before the filter; a selective filter removes most candidates. Use filter-aware traversal or iterative scans, brute-force the small subset, or partition by tenant.</p>
+<p><strong>Q5. How do you know your index is good enough?</strong>
+Compute ground-truth neighbours by exact search on a query sample, measure recall@k and p95 latency across <code>ef_search</code>/<code>nprobe</code> values, with real filters, and pick the cheapest setting that meets the recall target. Re-check after heavy inserts/deletes.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>HNSW paper (Malkov &amp; Yashunin): https://arxiv.org/abs/1603.09320</li>
+<li>hnswlib parameter guide: https://github.com/nmslib/hnswlib/blob/master/ALGO_PARAMS.md</li>
+<li>Faiss, Guidelines to choose an index: https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-an-index</li>
+<li>pgvector README (HNSW, IVFFlat, halfvec, iterative scans): https://github.com/pgvector/pgvector</li>
+<li>pgvector CHANGELOG: https://github.com/pgvector/pgvector/blob/master/CHANGELOG.md</li>
+<li>Qdrant quantization docs: https://qdrant.tech/documentation/manage-data/quantization/</li>
+<li>Pinecone, Product quantization explainer: https://www.pinecone.io/learn/series/faiss/product-quantization/</li>
+<li>OpenSearch, Practical guide to HNSW hyperparameters: https://opensearch.org/blog/a-practical-guide-to-selecting-hnsw-hyperparameters/</li>
+<li>Microsoft DiskANN: https://github.com/microsoft/DiskANN</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track four, episode four: vector database internals. H N S W, I V F, and quantization. Last episode we built the retrieval funnel, with a keyword scout on the left and a meaning scout on the right. Today we open up the meaning scout's channel and look at the machinery inside. Because "find the nearest arrows on the map" is one sentence to say, and a surprisingly deep engineering problem to do at a hundred million vectors in under fifty milliseconds.
+
+Here's a scenario to hold. A platform team runs a multi-tenant R A G service on a popular vector store. Every query is filtered to one customer's documents. Most customers are large and everything works. Then a small customer complains: their assistant keeps saying "I couldn't find anything relevant," even for questions whose answers are obviously in their uploaded documents. The team checks: the documents are indexed, the embeddings are fine, and running the same query without the tenant filter finds the right chunk instantly, sitting at rank three. With the filter, the search returns two results instead of ten, neither of them right. Nothing is broken in the usual sense. The index did exactly what it was designed to do. By the end of this episode, you'll know precisely why that happens, and three ways to fix it.
+
+## Why it matters
+
+Remember the numbers from episode one. A one thousand and twenty-four dimension vector in thirty-two bit floats is four kilobytes. A hundred million of them is about four hundred gigabytes. Comparing a query against every single one, which is called brute-force or exact search, means four hundred gigabytes of arithmetic per query. That's seconds, not milliseconds, and it doesn't scale to many users at once. So every vector database, and every vector feature bolted onto an existing database, uses an approximate nearest neighbor index: a structure that finds most of the true nearest neighbors while touching only a tiny fraction of the vectors. The word "most" is the crux. You're trading a little recall for a huge speedup, and the settings that control that trade are exactly the things an interviewer probes, and exactly the things that bite in production.
+
+One vocabulary item before we start: recall at ten means, of the true ten nearest neighbors, what fraction did the index actually return. Ninety-five percent recall at ten means on average nine and a half of the true top ten. That's the number every dial in this episode moves.
+
+[PAUSE 1s]
+
+## The mental image: the map, with overlays
+
+Picture this. Go back to the map of meaning from episode one, laid flat on the table: cooking pins clustered on the left, finance on the right, software errors at the top, travel at the bottom. But now there are a hundred million pins, so densely packed the map looks like fine sand. Finding the pins nearest to a new question pin by measuring the distance to every grain is brute force. We need shortcuts. And there are three shortcuts, each one something we lay over, or onto, this same map.
+
+First shortcut: above the map, a stack of transparent sheets, like tracing paper, held a few centimeters apart. The bottom sheet, lying right on the map, has every pin, and each pin has short threads tied to its nearest neighbors. The sheet above it has only a small fraction of the pins, with longer threads between them. The sheet above that has even fewer pins, with even longer threads. And the top sheet has just a handful of pins, spread across the whole map, joined by long threads that cross from the cooking side to the finance side in one hop. That stack of sheets is H N S W.
+
+Second shortcut: on the map itself, draw borders. Carve the whole map into a few thousand neighborhoods, and in the middle of each neighborhood, place a capital city marker. Every pin belongs to the neighborhood whose capital it's closest to. That's I V F.
+
+Third shortcut: the pins themselves. Instead of writing each pin's exact coordinates with full precision, write them in shorthand, coarse and compact, like rounding every position to the nearest grid square. That's quantization.
+
+Sheets above the map, borders on the map, shorthand on the pins. Let's walk a question through each.
+
+[PAUSE 2s]
+
+## Under the hood: H N S W, the stack of sheets
+
+H N S W stands for Hierarchical Navigable Small World, from a paper by Malkov and Yashunin. It's the default index in most vector databases and in P G vector, the Postgres extension. Let's walk a search.
+
+Your question gets embedded and becomes a new pin. The search starts on the top sheet, at a fixed entry pin. It looks at that pin's few long threads and asks: which neighbor is closer to my question? It hops there. It repeats, greedily, always hopping to a closer neighbor, until no neighbor on this sheet is closer. With only a handful of pins and long threads, a few hops cross the whole map, say from the travel region at the bottom to the software-errors region at the top. Then it drops straight down to the sheet below, landing on the same pin, and continues hopping, now with more pins and shorter threads, refining its position. Drop again, refine again. By the time it reaches the bottom sheet, with every pin, it's already standing in almost exactly the right spot, and it explores just the local neighborhood to collect the closest pins. Instead of measuring against a hundred million pins, it measures against a few thousand. That's why search is logarithmic-ish: double the data and you add roughly one more hop, not double the work.
+
+How does a pin decide which sheets it lives on? At insert time, each new pin rolls a die, with exponentially decreasing odds of reaching each higher sheet. Every pin is on the bottom sheet; a fraction of them are also on the next sheet up; a fraction of those on the next; and so on. Then it gets threaded to its nearest neighbors on each sheet it lives on, using a small search just like the query search.
+
+Three dials control all of this.
+
+M is the number of threads each pin keeps per sheet. Commonly sixteen; the bottom sheet usually gets double that. More threads means better connectivity and higher recall, but more memory and slower inserts.
+
+ef construction is how hard the index searches for good neighbors when inserting a pin. Higher means a better-quality graph, and a slower build. Values from sixty-four to a few hundred are common.
+
+ef search is the one you tune at query time: how many candidates the search keeps in its shortlist while exploring the bottom sheet. It has to be at least the number of results you want. Raise it and recall goes up, latency goes up. P G vector's default is forty, a reasonable starting point for ten results, and something you should measure rather than trust.
+
+Now the memory math, because this is where H N S W's cost lives. The Faiss library documentation gives it plainly: roughly the vector itself, four bytes per dimension, plus about M times two times four bytes of thread pointers per vector. For a one thousand and twenty-four dimension vector with M of sixteen, that's about four kilobytes of vector plus about a hundred and twenty-eight bytes of graph. So the graph is cheap; the vectors are the bill. And H N S W is fast precisely because the whole thing, vectors and threads, sits in R A M, with random access hopping all over it. A hundred million such vectors want roughly four hundred gigabytes of memory. That is why the third shortcut exists.
+
+Two more H N S W properties to know. Builds are slow and memory-hungry: inserting a hundred million vectors can take hours. And deletes are awkward: removing a pin leaves holes in the threading, so most implementations mark deleted pins as tombstones and skip them, and heavy churn slowly degrades recall until you rebuild or compact. If your corpus updates constantly, plan for periodic rebuilds.
+
+[PAUSE 1s]
+
+## Under the hood: I V F, neighborhoods and capitals
+
+Now look down at the borders on the map. I V F stands for inverted file index, the same inverted-index idea as the keyword scout's book, but with neighborhoods instead of words.
+
+Building it: take a sample of your vectors and run k-means clustering to find, say, four thousand center points: the capitals. Then assign every one of the hundred million pins to its nearest capital, and store each neighborhood's pins together in a list. The Faiss guidance for the number of neighborhoods is roughly four to sixteen times the square root of the number of vectors. For a hundred million vectors, the square root is ten thousand, so tens of thousands to over a hundred thousand neighborhoods.
+
+Searching: compare the question pin to all the capitals, which is cheap because there are only thousands of them. Pick the closest few neighborhoods. Then brute-force only the pins in those neighborhoods. The dial here is n probe: how many neighborhoods you visit. Visit one, and you'll miss true neighbors sitting just across a border, because a question pin near the edge of one neighborhood can have its closest matches in the next one over. Visit more, and recall climbs while latency climbs with it. Starting values in single or low double digits are common, tuned against measured recall.
+
+Compared with the stack of sheets: I V F uses much less memory for its structure, since it's just capitals plus lists, builds faster, and handles large, disk-friendly layouts well, because each neighborhood's list can be read sequentially. But at the same latency it typically delivers lower recall than H N S W, and it has a subtle weakness: the capitals were chosen from the data at build time. If your data drifts, say a whole new product line arrives and all its pins crowd into a few neighborhoods, those lists grow lopsided and search slows or recall drops until you retrain the capitals. P G vector offers I V F under the name I V F flat, and it explicitly recommends creating the index only after the table has data, precisely because the capitals are learned from the data present at build time.
+
+[PAUSE 1s]
+
+## Under the hood: quantization, shorthand on the pins
+
+Now the pins themselves. Both shortcuts still hold full-precision vectors, four bytes per number. Quantization writes them in shorthand. Three levels, from gentle to extreme.
+
+Scalar quantization: store each number in fewer bits. Half precision, two bytes, halves memory with almost no quality loss; P G vector calls this the half vec type, and it also raises the maximum indexable dimensions from two thousand to four thousand. Eight-bit integers take it to a quarter of the original memory, usually with a small recall loss.
+
+Binary quantization: keep just one bit per dimension, whether each number is positive or negative. That's thirty-two times smaller. A one thousand and twenty-four dimension vector becomes a hundred and twenty-eight bytes, and comparing two of them is a lightning-fast bit count. On the map, it's like recording only which side of each axis a pin sits on. It works surprisingly well for high-dimensional embeddings from modern models, and badly for low-dimensional ones.
+
+Product quantization, P Q, the cleverest: chop each vector into, say, sixty-four sub-vectors of sixteen dimensions each. For each sub-vector position, learn a codebook of two hundred and fifty-six representative patterns, and replace every sub-vector with the one-byte code of its nearest pattern. The whole vector becomes sixty-four bytes: from four kilobytes, a sixty-four times compression. Distances can be computed approximately straight from lookup tables. I V F combined with P Q, I V F P Q, is the classic recipe for billion-scale search in modest memory. There's also active research here: newer schemes like Ra Bit Q offer binary-style compression with provable error bounds, and are appearing in several engines.
+
+The price of shorthand is accuracy: distances computed from shorthand are approximate, so the ranking is a little scrambled. The universal fix is rescoring with oversampling. Search the compressed pins, but ask for more candidates than you need, say two or three times more. Then fetch those candidates' full-precision vectors, which can live on cheaper disk rather than in R A M, compute exact distances, and re-sort. Qdrant's documentation, for example, recommends oversampling in roughly the one and a half to three times range with binary quantization. You get most of the memory saving and most of the recall back.
+
+And one more member of the family is worth naming: disk-based graph indexes, most famously Disk A N N from Microsoft Research, built on a single-layer graph called Vamana. It keeps compressed vectors in R A M for navigation and the full graph and full vectors on fast solid-state disk, reading a few disk blocks per query. The original work searched a billion vectors on a single machine with sixty-four gigabytes of memory at a few milliseconds per query. Several managed services and databases now offer variants of it for large collections.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls: filtering, and the empty result
+
+Now back to the cold open, because filtering is the pitfall that catches the most teams.
+
+Walk it on the sheets. The query from the small tenant enters the top sheet, hops down, reaches the bottom sheet, and collects its shortlist of forty candidates, ef search of forty, the default. Then the filter is applied: keep only pins belonging to this tenant. But this tenant owns a tiny fraction of the pins on the map, maybe one in a thousand. Among forty nearby candidates, almost none belong to them. So after filtering, two results survive, and the true best match, which belongs to the tenant but was the forty-fifth closest pin overall, never made the shortlist. That's post-filtering, and it fails exactly when the filter is selective.
+
+Three fixes. First, pre-filtering or filter-aware traversal: engines that check the filter while walking the graph, only counting matching pins toward the shortlist; many modern vector databases do this, and P G vector since version zero point eight supports iterative index scans, which keep scanning further until enough rows pass the filter, bounded by a maximum number of tuples to visit. Second, when the filter is very selective, skip the index entirely: if a tenant only has fifty thousand vectors, brute-forcing those fifty thousand exactly is fast and perfectly accurate, and good query planners switch strategies automatically. Third, partition: give large tenants their own index or partition, so their searches never wade through other tenants' pins. The general lesson: always test recall with your real filters applied, not just on unfiltered benchmarks.
+
+Other tradeoffs to name. Recall is a dial, not a constant: benchmarks quoting "ninety-nine percent recall" used specific parameters and data. Measure recall on your own vectors by comparing against brute-force results on a sample of queries. Memory drives cost: in-memory H N S W over full-precision vectors is the most expensive configuration, and quantization with rescoring, or a disk-based index, can cut the bill several times over. Freshness costs: frequent inserts and deletes slow H N S W and unbalance I V F. And don't over-engineer small collections: under a million or so vectors, exact search or a default H N S W with no quantization is fast enough, and the complexity isn't worth it.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask, "How does H N S W work?", a strong answer sounds like this. It's a multi-layer proximity graph. Every vector is in the bottom layer, a random, exponentially shrinking subset is in each higher layer, and each node links to its nearest neighbors per layer. Search greedily descends from a sparse top layer to the dense bottom layer, then explores locally with a candidate list of size ef search. M and ef construction trade memory and build time for graph quality; ef search trades latency for recall at query time. Memory is dominated by the vectors themselves, about four bytes per dimension, plus a small per-link overhead.
+
+When they ask, "H N S W or I V F?", strong answer: H N S W gives the best recall-latency trade in memory and handles incremental inserts naturally, at high memory cost and awkward deletes. I V F partitions with k-means and searches the nearest n probe clusters: less memory, faster builds, disk-friendly, and a natural fit with product quantization, but typically lower recall at equal latency and it needs retraining as data drifts. At billion scale, you reach for I V F with P Q or a disk-based graph like Disk A N N.
+
+When they ask, "How would you cut vector search memory by ten times?", strong answer: quantize. Binary quantization gives thirty-two times, product quantization can give sixty-four times or more, scalar gives two to four times, then recover accuracy by oversampling two to three times and rescoring with full-precision vectors kept on disk. Also consider Matryoshka truncation of the embeddings themselves, from episode one. Validate recall against exact search.
+
+And when they ask, "Why does filtered vector search return too few results?", strong answer: post-filtering an approximate top-k candidate list removes most candidates when the filter is selective. Fix it with filter-aware traversal or iterative scans, with exact search over the filtered subset when it's small, or with partitioning by tenant, and test recall with real filters.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Picture the map one last time, a hundred million pins like sand. Above it, the stack of transparent sheets: H N S W. Few pins and long threads on top, every pin and short threads at the bottom; the search hops greedily down through the sheets and explores locally. M sets the threads, ef construction the build quality, ef search the recall-latency dial. Fast and accurate, but it wants everything in memory. On the map, the borders and capitals: I V F. Compare against capitals, brute-force only the n probe nearest neighborhoods. Leaner and disk-friendly, lower recall at equal speed, and capitals go stale as data drifts. On the pins, the shorthand: quantization. Half precision, eight-bit, one-bit binary, or product-quantized codes, cutting memory two to sixty-four times, with oversampling and full-precision rescoring to win recall back. For billions, a disk-based graph. And whenever a filter is applied, remember the small tenant whose best match never made the shortlist.
+
+Next episode, we build on everything so far: advanced R A G, with Hyde, parent-document retrieval, graph R A G, and agentic R A G. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-retrieval.html">← Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="btn" href="05-advanced-rag.html">Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG →</a></div></main></div></body></html>

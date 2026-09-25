@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAG Evaluation: RAGAS & Friends — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk" open><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="active" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 4 · RAG · Episode 6</div>
+<h1 class="lesson">RAG Evaluation: RAGAS & Friends</h1>
+<div class="meta">16 min listen · How to stop judging a RAG system on vibes: the triangle of question, context and answer, the metrics that live on each edge, how RAGAS computes them underneath, and why your LLM judge needs its own evaluation.</div>
+<audio controls preload="metadata" src="../../audio/04-rag/s4e06-rag-evaluation.mp3"></audio>
+<button class="btn complete" data-ep="04-rag/06-rag-evaluation" onclick="toggleDone('04-rag/06-rag-evaluation')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>RAG evaluation is decomposition: measure retrieval and generation on separate edges of the question–context–answer triangle, so a regression points at the component that caused it — and evaluate the LLM judge before trusting any judge-based score.</p>
+<h2 id="the-mental-image-the-triangle-and-the-lamp">The mental image: the triangle and the lamp</h2>
+<ul>
+<li><strong>Bottom-left corner</strong> = question. <strong>Top corner</strong> = retrieved context. <strong>Bottom-right corner</strong> = answer.</li>
+<li><strong>Lamp hanging above</strong> = the human-written reference (ground truth). Only exists in the offline golden set.</li>
+<li>Every metric is a line between two points: three triangle edges (reference-free → can run on production traffic) and two dashed lines from the lamp (need references → offline only).</li>
+</ul>
+<pre class="mermaid">flowchart TB
+    REF(["Reference answer (ground truth)"])
+    Q["Question"]
+    C["Retrieved context"]
+    A["Generated answer"]
+    Q -->|"Context relevance / precision"| C
+    C -->|"Faithfulness / groundedness"| A
+    A -->|"Answer relevance"| Q
+    REF -.->|"Context recall"| C
+    REF -.->|"Answer / factual correctness"| A
+</pre>
+
+<h2 id="metric-map">Metric map</h2>
+<table>
+<thead>
+<tr>
+<th>Edge</th>
+<th>Metric (RAGAS name / others)</th>
+<th>Needs reference?</th>
+<th>How it's computed</th>
+<th>Blind spot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q → C</td>
+<td>Recall@k, Precision@k, MRR, nDCG</td>
+<td>Needs relevant doc IDs</td>
+<td>Deterministic, no LLM</td>
+<td>Needs labelled IDs</td>
+</tr>
+<tr>
+<td>Q → C</td>
+<td>Context Precision (RAGAS), Contextual Precision/Relevancy (DeepEval), Context Relevance (TruLens)</td>
+<td>Optional</td>
+<td>Judge marks each chunk useful/not; rank-aware average</td>
+<td>Judge bias</td>
+</tr>
+<tr>
+<td>REF → C</td>
+<td>Context Recall</td>
+<td>Yes</td>
+<td>Split reference into claims; fraction attributable to context</td>
+<td>Needs reference</td>
+</tr>
+<tr>
+<td>C → A</td>
+<td>Faithfulness (RAGAS/DeepEval), Groundedness (TruLens)</td>
+<td>No</td>
+<td>Split answer into atomic claims; fraction inferable from context</td>
+<td>Faithful to bad context still scores 1.0</td>
+</tr>
+<tr>
+<td>Q ← A</td>
+<td>Response/Answer Relevancy</td>
+<td>No</td>
+<td>Generate N questions from answer; mean cosine similarity to original question</td>
+<td>Confident wrong on-topic answer scores well</td>
+</tr>
+<tr>
+<td>REF → A</td>
+<td>Factual Correctness / Answer Correctness</td>
+<td>Yes</td>
+<td>Claim-level precision/recall vs reference</td>
+<td>Needs reference</td>
+</tr>
+<tr>
+<td>Robustness</td>
+<td>Noise Sensitivity (RAGAS)</td>
+<td>Yes</td>
+<td>How often incorrect claims appear when irrelevant chunks are in context</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="golden-set-checklist">Golden set checklist</h2>
+<ul>
+<li>50–200 questions to start; tag each with a <strong>slice</strong> (prose, table, numeric, multi-hop, unanswerable).</li>
+<li>Sources, best first: sampled production questions → expert-written hard cases → synthetic (RAGAS test set generator). Synthetic-only sets flatter the retriever (questions written in the chunk's own vocabulary).</li>
+<li>Store: question, reference answer, relevant doc IDs, slice.</li>
+<li>Owner + refresh cadence (references go stale when docs change). Feed bad production conversations back in.</li>
+</ul>
+<h2 id="where-each-layer-runs">Where each layer runs</h2>
+<pre class="mermaid">flowchart LR
+    COMMIT["Every commit"] --> DET["Deterministic retrieval metrics: recall@k, MRR"]
+    NIGHT["Nightly / pre-release gate"] --> JUDGE["Judge suite on golden set: faithfulness, relevancy, context precision/recall, correctness"]
+    PROD["Production (sampled traces)"] --> TRIAD["Reference-free triad + user signals: thumbs, citation clicks, rephrase rate, escalations"]
+</pre>
+
+<h2 id="code-sketch-ragas-api-shape-changes-between-versions-check-the-docs-for-your-version">Code sketch (RAGAS; API shape changes between versions — check the docs for your version)</h2>
+<pre><code class="language-python"># ragas 0.4.x — metric classes live under ragas.metrics; older 0.1 tutorials use evaluate(dataset, metrics=[faithfulness, ...])
+from ragas import evaluate, EvaluationDataset
+from ragas.metrics import Faithfulness, ResponseRelevancy, LLMContextPrecisionWithReference, LLMContextRecall
+
+ds = EvaluationDataset.from_list([
+    {&quot;user_input&quot;: q, &quot;retrieved_contexts&quot;: ctxs, &quot;response&quot;: ans, &quot;reference&quot;: ref}
+    for q, ctxs, ans, ref in rows
+])
+result = evaluate(ds, metrics=[Faithfulness(), ResponseRelevancy(),
+                               LLMContextPrecisionWithReference(), LLMContextRecall()],
+                  llm=judge_llm, embeddings=embedder)
+df = result.to_pandas()   # then group by slice!
+</code></pre>
+<p>Deterministic retrieval metrics need no framework:</p>
+<pre><code class="language-python">def recall_at_k(retrieved_ids, relevant_ids, k=10):
+    return len(set(retrieved_ids[:k]) &amp; set(relevant_ids)) / len(relevant_ids)
+
+def mrr(retrieved_ids, relevant_ids):
+    for rank, d in enumerate(retrieved_ids, 1):
+        if d in relevant_ids:
+            return 1 / rank
+    return 0.0
+</code></pre>
+<h2 id="judge-pitfalls-and-statistics">Judge pitfalls and statistics</h2>
+<ul>
+<li><strong>Biases</strong>: position (pairwise order flips verdicts), verbosity (longer rated higher), self-preference (same-family judge is kinder).</li>
+<li><strong>Calibrate</strong>: 100–200 human-labelled items → measure judge–human agreement; ~90% = trust the trend, ~70% = you're measuring the judge. Cross-family judge; randomise/both orderings in pairwise; re-calibrate when the judge model changes.</li>
+<li><strong>Noise</strong>: n=200, p≈0.8 → 95% margin ≈ ±5.5 points (1.96·√(0.16/200)). Use paired comparisons (count fail→pass vs pass→fail flips on the same items) or larger sets.</li>
+<li><strong>Cost</strong>: 200 questions × 4 judge metrics × 2–3 calls ≈ 1,600–2,400 LLM calls per run → run nightly, not per commit.</li>
+</ul>
+<p>War story (generic): faithfulness sat at 0.95 for months while users got "I don't have information on that" for documented topics — a re-index broke metadata filters, retrieval returned the wrong department's docs, the model faithfully refused. Adding context recall + recall@10 on a labelled subset exposed it on the first run.</p>
+<h2 id="frameworks-friends">Frameworks ("friends")</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Angle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAGAS (open source; 0.4.x line, latest 0.4.3 as of Jan 2026; repo now under vibrantlabsai)</td>
+<td>Reference implementation of RAG metrics + synthetic test set generation</td>
+</tr>
+<tr>
+<td>TruLens</td>
+<td>RAG triad (context relevance, groundedness, answer relevance) as feedback functions on traced apps</td>
+</tr>
+<tr>
+<td>DeepEval</td>
+<td>Pytest-native metrics (faithfulness, answer relevancy, contextual precision/recall/relevancy) → CI gates</td>
+</tr>
+<tr>
+<td>MLflow GenAI evaluation, Arize Phoenix, LangSmith</td>
+<td>Attach judges/scorers to production traces for online evaluation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden set</td>
+<td>Fixed, versioned evaluation set of questions (+ references, relevant IDs, slices)</td>
+</tr>
+<tr>
+<td>RAG triad</td>
+<td>Context relevance, groundedness, answer relevance — reference-free</td>
+</tr>
+<tr>
+<td>Faithfulness</td>
+<td>Fraction of answer claims supported by retrieved context</td>
+</tr>
+<tr>
+<td>Context recall</td>
+<td>Fraction of reference claims attributable to retrieved context</td>
+</tr>
+<tr>
+<td>Context precision</td>
+<td>Rank-aware share of retrieved chunks that are relevant</td>
+</tr>
+<tr>
+<td>MRR</td>
+<td>Mean reciprocal rank of the first relevant result</td>
+</tr>
+<tr>
+<td>nDCG</td>
+<td>Graded, position-discounted ranking quality</td>
+</tr>
+<tr>
+<td>LLM-as-judge</td>
+<td>Model scoring outputs against a rubric; must be calibrated against humans</td>
+</tr>
+<tr>
+<td>Paired comparison</td>
+<td>Old vs new on identical items; count flips instead of comparing averages</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How would you evaluate a RAG system?</strong>
+Separate retrieval from generation. Golden set of ~100–200 tagged questions (production samples + expert hard cases, synthetic for coverage) with references and relevant IDs. Retrieval: recall@k/MRR (deterministic, every commit) + context precision/recall. Generation: faithfulness, answer relevance, correctness vs reference, reported per slice. Judge suite gates releases; reference-free triad on sampled production traces; judge calibrated against humans.</p>
+<p><strong>Q2. Faithfulness is high but users are unhappy. Why?</strong>
+Faithfulness only checks answer against context. Wrong, stale or missing context → the model can be perfectly faithful to bad evidence, or faithfully refuse. Check context recall and recall@k; look for broken filters, stale index, chunking regressions.</p>
+<p><strong>Q3. How does RAGAS compute faithfulness and answer relevancy?</strong>
+Faithfulness: judge splits the answer into atomic claims, checks each against the context, score = supported/total. Response relevancy: judge generates questions the answer would answer, embeds them, averages cosine similarity to the original question.</p>
+<p><strong>Q4. Can you trust LLM-as-judge?</strong>
+Only after calibration: known position, verbosity and self-preference biases. Human-label a sample, measure agreement, use a different model family from the generator, randomise order in pairwise tests, re-calibrate when the judge changes.</p>
+<p><strong>Q5. Your new version scores 81 vs 78 on 200 questions. Ship it?</strong>
+Not on that evidence: ±~5.5 points sampling margin at that size. Run a paired comparison (count per-item flips), repeat runs to average out judge non-determinism, and check per-slice results for hidden regressions (e.g. tables) before deciding.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>RAGAS metrics list: https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/</li>
+<li>RAGAS on PyPI (versions): https://pypi.org/project/ragas/</li>
+<li>RAGAS repo: https://github.com/vibrantlabsai/ragas</li>
+<li>RAGAS paper: https://arxiv.org/abs/2309.15217</li>
+<li>TruLens RAG triad: https://www.trulens.org/getting_started/core_concepts/rag_triad/</li>
+<li>DeepEval vs RAGAS / metrics docs: https://deepeval.com/blog/deepeval-vs-ragas</li>
+<li>MLflow GenAI evaluation: https://mlflow.org/docs/latest/genai/eval-monitor/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track four, episode six: R A G evaluation — RAGAS and friends. Last episode we met four advanced techniques and I kept saying the same thing: measure first, then upgrade. Today is the measuring.
+
+Here's the scene. A team has spent three weeks improving their R A G assistant. New chunking, a reranker, a rewritten prompt. In the review meeting, someone asks the obvious question: is it better? And the answer is a demo. Five questions, picked by the person who built it, typed live, and the answers look good. Everyone nods. It ships. A week later, support tickets show that questions involving numbers — prices, limits, dates — got noticeably worse, because the new chunking split tables in half. Nobody tested a single table question. The five demo questions were all prose.
+
+That's evaluation by vibes, and it's how most R A G systems are judged. The fix isn't more demos. It's a fixed set of questions, a handful of metrics that each measure one specific thing, and the discipline to run them on every change. By the end of this episode you'll know which metrics exist, what each one actually computes underneath, where each one lies to you, and what an interviewer wants to hear when they ask how you'd evaluate a R A G system.
+
+## Why it matters
+
+A R A G system is two systems glued together: a retriever and a generator. When the final answer is wrong, the first question is always which half failed. Did retrieval never find the right passage? Or did it find it, and the model ignored it, or misread it, or added something that wasn't there? Those two failures have completely different fixes. One sends you to chunking, embeddings, and reranking. The other sends you to the prompt, the model, or the context size. A single overall score — "seventy-two percent correct" — can't tell you which. So the core idea of R A G evaluation is decomposition: separate metrics for separate stages, so a drop points at a component.
+
+[PAUSE 1s]
+
+## The mental image: the triangle
+
+Picture a triangle lying flat on a table in front of you.
+
+Bottom-left corner: the question. What the user asked.
+
+Top corner: the context. The chunks the retriever brought back.
+
+Bottom-right corner: the answer. What the model wrote.
+
+Now, floating above the whole triangle, like a lamp hanging over the table, put a fourth point: the reference. That's the ground-truth answer a human expert wrote in advance for this question. Not every evaluation has one — hold that thought, because it matters.
+
+Every useful R A G metric is a line between two of these points. Three edges on the triangle itself, and dashed lines dropping down from the lamp. Let's walk them.
+
+The left edge, from the question up to the context: did retrieval bring back things relevant to the question? That's context relevance, or context precision.
+
+The right edge, from the context down to the answer: is everything in the answer actually supported by the context? That's faithfulness, also called groundedness. This is your hallucination detector.
+
+The bottom edge, from the answer back to the question: does the answer actually address what was asked? That's answer relevance.
+
+Those three edges are what the TruLens project calls the R A G triad, and the nice property is that none of them needs a reference. You can compute all three on live production traffic where nobody wrote a ground-truth answer.
+
+Now the dashed lines from the lamp. From the reference down to the context: does the retrieved context contain everything the reference answer needs? That's context recall. And from the reference down to the answer: does the answer match the reference's facts? That's answer correctness. These two need the lamp — a human-written reference — so they live in your offline test set, not in production.
+
+Hold the triangle and the lamp. Every framework today — RAGAS, DeepEval, TruLens, the M L flow scorers, Phoenix, Lang Smith — is drawing some subset of these same five lines with different names.
+
+[PAUSE 2s]
+
+## Before metrics: the golden set
+
+Metrics need questions. The thing that decides whether your evaluation means anything is the test set, usually called the golden set.
+
+A good golden set for a first system is fifty to two hundred questions. Not ten — ten can't show you a five-point change with any confidence. And not ten thousand — nobody reviews ten thousand, and the judge bill gets silly. Each item has the question, and ideally a reference answer and the IDs of the documents that should be retrieved.
+
+Where do questions come from? Three sources, in order of value. First, real user questions from production logs, sampled across categories. Second, questions written by domain experts, deliberately including the hard cases: table lookups, multi-part comparisons, questions whose honest answer is "that isn't documented." Third, synthetic questions, generated by a model reading your documents. RAGAS has a test set generator for exactly this, and it's useful for coverage. But synthetic questions have a known bias: a model reading a chunk writes questions that the chunk answers neatly, in that chunk's vocabulary. Those are the easiest possible questions for your retriever. A golden set that's entirely synthetic will flatter you.
+
+And tag every question with a slice: prose, table, numeric, multi-hop, unanswerable. That's the lesson from the opening story. The average went up; the table slice collapsed. You only see that if you report per slice.
+
+[PAUSE 1s]
+
+## Under the hood: the left edge and the lamp — retrieval metrics
+
+Start with the left edge, question to context, because it's the cheapest to measure and the most often skipped.
+
+If your golden set records which document IDs are correct for each question, you don't need a language model at all. Classic information retrieval metrics do the job, deterministically, in milliseconds. Recall at k: of the correct documents, what fraction appeared in the top k? If the right answer needed two documents and your top ten contained one, recall at ten is one half. Precision at k: of the k results, what fraction were correct? Mean reciprocal rank: how high did the first correct result appear — first place scores one, second place scores one half, tenth place one tenth. And N D C G, normalised discounted cumulative gain, which rewards putting the most relevant results highest, with graded relevance.
+
+These are your first line of defence, and they're free to run on every commit. If recall at ten is poor, stop. Nothing downstream can fix a passage that was never retrieved. The writer in the reading room only sees what's carried in.
+
+When you don't have document ID labels, RAGAS offers language-model versions. Context precision in RAGAS asks a judge, for each retrieved chunk, whether it was useful for answering, and then computes a rank-aware score: relevant chunks near the top score higher than relevant chunks buried at position nine. That matters because models pay most attention to the start and end of context — more on that in episode seven. Context recall — that dashed line from the lamp — breaks the reference answer into individual claims, and for each claim asks the judge: can this be attributed to the retrieved context? Recall is the fraction attributable. If the reference says "the limit is fifty requests per second, per workspace," and the context only mentions the fifty, recall on that item is one half.
+
+[PAUSE 1s]
+
+## Under the hood: the right edge — faithfulness
+
+Now the right edge, context down to answer, and the metric people care about most: faithfulness. Here's how RAGAS computes it, step by step, because the mechanism explains its failure modes.
+
+Step one: a judge model reads the generated answer and breaks it into atomic claims. "The refund window is thirty days, and it applies only to annual contracts" becomes two claims.
+
+Step two: for each claim, the judge reads the retrieved context and decides whether that claim can be inferred from it. Yes or no.
+
+Step three: faithfulness is the fraction of claims supported. Two claims, one supported: zero point five.
+
+Walk it on the triangle: you're checking the right edge, and only the right edge. Faithfulness never looks at the question and never looks at the lamp. And that's the trap. An answer can be perfectly faithful and completely wrong. If retrieval brought back last year's superseded pricing document, and the model faithfully summarised it, faithfulness is one point zero. The right edge is fine; the left edge was broken. Which is why no single metric is enough.
+
+Also notice what it costs. One call to split claims, then verification calls — so several model calls per question, per run. Two hundred questions times four judge-based metrics times two or three calls each is well over a thousand model calls per evaluation run. With a small, cheap judge model that's cents to a few dollars; with a frontier model on every commit, it adds up. Most teams run the cheap deterministic retrieval metrics on every commit and the judge-based suite nightly or before release.
+
+RAGAS also has a metric called noise sensitivity, which measures how often the system produces incorrect claims when irrelevant chunks are mixed into the context. It's a robustness test: does junk on the left edge leak across to the right?
+
+[PAUSE 1s]
+
+## Under the hood: the bottom edge — answer relevance
+
+The bottom edge, answer back to question. RAGAS's version — response relevancy — uses a clever reverse trick. The judge reads the answer and generates a few questions that this answer would be a good response to. Then it embeds those generated questions and the original question, and computes the average cosine similarity. If the answer is on topic, the reverse-engineered questions look like the original. If the answer wandered off, or is padded with unrelated material, they don't.
+
+What it catches: evasive answers, off-topic answers, answers to a different question. What it misses: correctness. A confident, on-topic, wrong answer scores well here. Again: one edge, one property.
+
+And then the lamp's second dashed line: answer correctness, or in RAGAS's current naming, factual correctness — comparing the answer's claims against the reference's claims, closer to precision and recall over facts. This is the closest thing to "is it right," and it's only available where a human wrote the reference.
+
+[PAUSE 1s]
+
+## The friends
+
+Quick tour of the rest of the landscape, placed on the triangle.
+
+RAGAS — open source, Python, the reference implementation of most of these metrics, plus the synthetic test set generator. It's on its zero point four release line as of this year, with a newer, more modular metrics interface, so tutorials from twenty twenty-four may use older function names.
+
+TruLens — coined the triad framing, the three edges with no lamp; strong on tracing an app and attaching those three feedback functions.
+
+DeepEval — also open source, and its pitch is testing ergonomics: metrics written as assertions inside pytest, so a R A G regression fails a build in C I like any other test. Faithfulness, answer relevancy, contextual precision, recall, and relevancy — the same five lines.
+
+And the platform tools — M L flow's evaluation and scorers, Arize Phoenix, Lang Smith — which attach these judges to production traces, so the triad runs on a sample of live traffic, not just the golden set. That's the move from offline evaluation to online monitoring: the same edges, measured continuously.
+
+The pattern in an interview is not to pick a favourite. It's to say: they all draw the same five lines; I choose based on where the evaluation runs — in C I, in notebooks, or on production traces.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls: who judges the judge?
+
+Every metric on the right edge and the bottom edge, and most of the dashed lines, depends on a language model acting as judge. And judges have documented biases. Position bias: in pairwise comparisons, many judges prefer whichever answer is shown first; swap the order and the verdict flips on a meaningful fraction of pairs. Verbosity bias: longer answers get rated higher, even when they aren't better. And self-preference: a judge from the same model family as the generator tends to rate that family's style more kindly.
+
+So the judge itself needs evaluating. The practice looks like this. Take one hundred to two hundred items. Have humans label them — supported or not, relevant or not. Run the judge on the same items. Measure agreement. If the judge agrees with humans on, say, ninety percent of items, you can trust its trend lines. If it's at seventy, your dashboard is measuring the judge's opinions, not your system's quality. Use a different model family for judge and generator, randomise order in pairwise comparisons, and re-check agreement whenever you change the judge model — because swapping the judge silently moves every score.
+
+Here's the war story. A team tracked faithfulness as their headline metric. It sat at zero point nine five for months. Meanwhile, users complained more and more that the assistant said "I don't have information about that" for things that were clearly documented. What happened? A re-indexing job had broken metadata filters, so retrieval was quietly returning the wrong department's documents. The model, well-prompted, refused to answer beyond its context — perfectly faithful. The right edge was green. The left edge was broken, and nobody was measuring it. Once they added context recall and plain recall at ten on a labelled subset, the problem showed up on the first run. The lesson: one metric per edge, minimum, and at least one metric that looks at the lamp.
+
+Two more pitfalls, quickly. Score drift from non-determinism: judge-based metrics wobble a point or two between identical runs. Don't celebrate a one-point gain; run multiple times or use a larger set before calling a change real. Put a number on it. With two hundred questions and a system scoring around eighty percent, simple sampling error alone gives you a margin of roughly plus or minus five and a half points at ninety-five percent confidence. So a jump from seventy-eight to eighty-one on two hundred questions is noise, not progress. If you need to detect two-point changes, you need a much larger set, or a paired comparison — run the old and new system on the exact same questions and count how many items flipped from fail to pass versus pass to fail. Paired comparisons squeeze far more signal out of a small golden set.
+
+And don't forget the signals your users already give you for free. Thumbs up and thumbs down, whether they clicked a citation, whether they rephrased the same question thirty seconds later, whether the conversation ended in an escalation to a human. None of these is a clean metric on its own — thumbs are sparse and skew negative — but a sudden change in rephrase rate after a release is often the earliest warning you'll get, days before the nightly suite catches up. Feed the worst of those conversations back into the golden set, and it gets harder and more realistic every month. And golden-set rot: when documents change, reference answers go stale. A golden set needs an owner and a refresh cadence, just like any other test fixture.
+
+[PAUSE 1s]
+
+## Interview angle
+
+When they ask, "how would you evaluate a R A G system?", a strong answer sounds like this. "I evaluate retrieval and generation separately, because they fail differently. I build a golden set of a hundred or so questions, sampled from real traffic and expert-written hard cases, tagged by slice, with reference answers and relevant document IDs where possible. For retrieval, deterministic recall at k and M R R on labelled items, plus judge-based context precision and recall. For generation, faithfulness to catch hallucination, answer relevance, and answer correctness against references. Deterministic metrics run on every commit; the judge suite runs nightly and gates releases; and the reference-free triad runs on sampled production traces. And I validate the judge against human labels before I trust any of it."
+
+When they ask, "faithfulness is high but users are unhappy — what's going on?", a strong answer: "Faithfulness only checks answer against context. If the context is wrong or missing, the model can be perfectly faithful to bad evidence, or faithfully refuse. I'd check the retrieval side — context recall and recall at k — and look for a retrieval regression like a broken filter or a stale index."
+
+When they ask, "can you trust L L M-as-judge?", a strong answer names position, verbosity, and self-preference bias, and describes calibration: human-labelled sample, measured agreement, cross-family judge, and re-calibration whenever the judge changes.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the table. A triangle: question bottom-left, context at the top, answer bottom-right. The lamp hanging above: the human-written reference.
+
+Left edge, question to context: is retrieval relevant — context precision, and when you have labels, recall at k and M R R, cheap and deterministic.
+
+Right edge, context to answer: faithfulness — split the answer into claims, check each against context. Catches hallucination; blind to bad retrieval.
+
+Bottom edge, answer to question: answer relevance — reverse-generate questions from the answer, compare to the original.
+
+Those three need no lamp, so they run on live traffic. The dashed lines from the lamp — context recall and answer correctness — need references, so they live in the golden set.
+
+RAGAS, TruLens, DeepEval, and the tracing platforms all draw these same lines. Report per slice, measure every edge, and evaluate your judge before you trust it. Next episode: what those metrics catch when production goes wrong — R A G failure modes and fixes. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="05-advanced-rag.html">← Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="btn" href="07-failure-modes.html">Production RAG Failure Modes & Fixes →</a></div></main></div></body></html>

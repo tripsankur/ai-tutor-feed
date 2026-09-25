@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk" open><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="active" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 5 · Agentic AI + MCP · Episode 4</div>
+<h1 class="lesson">Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</h1>
+<div class="meta">17 min listen · One office floor, three layouts: how orchestrator-worker, handoffs, and debate actually move context between agents, what each costs in tokens and failure modes, and why the strongest multi-agent systems keep writes single-threaded.</div>
+<audio controls preload="metadata" src="../../audio/05-agentic-mcp/s5e04-multi-agent-patterns.mp3"></audio>
+<button class="btn complete" data-ep="05-agentic-mcp/04-multi-agent-patterns" onclick="toggleDone('05-agentic-mcp/04-multi-agent-patterns')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Multi-agent is a <strong>context-management and compute-spending technique</strong>, not an org chart: orchestrator-worker wins on breadth-first, parallel, read-heavy tasks; handoffs win on sequential conversational flows; debate rarely beats plain majority voting at equal compute — and in every pattern, <strong>writes should stay single-threaded</strong>.</p>
+<h2 id="the-mental-image-one-office-floor-three-layouts-seen-from-above">The mental image: one office floor, three layouts (seen from above)</h2>
+<ul>
+<li><strong>Top half — raised desk + row of worker desks</strong>: orchestrator writes detailed assignments down the lines; workers start with clean contexts, work in parallel, send compressed summaries back up. Workers never talk to each other.</li>
+<li><strong>Bottom right — row of service counters</strong>: the user is walked from counter to counter; control transfers, and whoever holds the current counter owns the conversation (handoff / swarm).</li>
+<li><strong>Bottom left — round table + judge's chair</strong>: agents propose, read each other, revise over rounds; a judge decides (debate / generator-critic).</li>
+</ul>
+<pre class="mermaid">flowchart TB
+    U["User request"] --> O["Orchestrator (lead agent)"]
+    O -->|"assignment: objective, output format, tools, boundaries"| W1["Worker 1 (clean context)"]
+    O -->|assignment| W2["Worker 2 (clean context)"]
+    O -->|assignment| W3["Worker 3 (clean context)"]
+    W1 -->|"compressed summary"| O
+    W2 -->|"compressed summary"| O
+    W3 -->|"compressed summary"| O
+    O -->|"single-threaded write / final answer"| R["Result"]
+</pre>
+
+<pre class="mermaid">flowchart LR
+    User(("User")) --> T["Triage agent"]
+    T -->|"handoff: transfer_to_billing"| B["Billing agent"]
+    B -->|"handoff: transfer_to_tech"| TS["Tech support agent"]
+    TS -.->|"max hops guard"| T
+</pre>
+
+<pre class="mermaid">flowchart LR
+    Q["Question"] --> A1["Debater A"]
+    Q --> A2["Debater B"]
+    Q --> A3["Debater C"]
+    A1 <-->|"round 2..n: read + revise"| A2
+    A2 <--> A3
+    A1 <--> A3
+    A1 & A2 & A3 --> J["Judge / aggregator"]
+    J --> F["Final answer"]
+</pre>
+
+<h2 id="how-each-is-implemented-framework-mapping">How each is implemented (framework mapping)</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Mechanism</th>
+<th>OpenAI Agents SDK</th>
+<th>LangGraph</th>
+<th>Microsoft Agent Framework</th>
+<th>Claude Agent SDK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orchestrator-worker</td>
+<td>Worker = a tool call that runs a sub-agent loop and returns its final message</td>
+<td>"Agents as tools"</td>
+<td>Supervisor (<code>langgraph-supervisor</code>)</td>
+<td>Sequential / concurrent orchestration</td>
+<td>Subagents</td>
+</tr>
+<tr>
+<td>Handoff</td>
+<td>A tool call that <strong>swaps the active agent</strong> (new instructions + tools, same conversation)</td>
+<td>Handoffs</td>
+<td>Swarm (<code>langgraph-swarm</code>), <code>Command(goto=..., graph=Command.PARENT)</code></td>
+<td>Handoff orchestration</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Debate / group chat</td>
+<td>Multiple agents share a thread over rounds + selector/judge</td>
+<td>(custom)</td>
+<td>Custom graph</td>
+<td>Group chat orchestration</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Minimal agents-as-tools vs handoff sketch (OpenAI Agents SDK, Python):</p>
+<pre><code class="language-python">from agents import Agent, Runner
+
+researcher = Agent(name=&quot;Researcher&quot;, instructions=&quot;Research ONE platform's governance model. Return &lt;=200 words.&quot;)
+billing = Agent(name=&quot;Billing&quot;, instructions=&quot;Resolve billing disputes.&quot;)
+
+# Orchestrator-worker: parent stays in control, gets result back
+lead = Agent(
+    name=&quot;Lead&quot;,
+    instructions=&quot;Split the comparison into sub-tasks, call researcher per platform, then synthesize.&quot;,
+    tools=[researcher.as_tool(tool_name=&quot;research_platform&quot;, tool_description=&quot;Research one platform&quot;)],
+)
+
+# Handoff: control transfers, Billing owns the conversation
+triage = Agent(name=&quot;Triage&quot;, instructions=&quot;Route the user.&quot;, handoffs=[billing])
+
+result = Runner.run_sync(lead, &quot;Compare governance in A, B, C for a regulated bank&quot;)
+</code></pre>
+<h2 id="numbers-to-quote">Numbers to quote</h2>
+<ul>
+<li>Anthropic research system (orchestrator-worker, Opus 4 lead + Sonnet 4 subagents): <strong>+90.2%</strong> vs single-agent Opus 4 on internal research eval.</li>
+<li>Tokens: agents ≈ <strong>4×</strong> chat; multi-agent ≈ <strong>15×</strong> chat. Token usage explained <strong>~80%</strong> of performance variance on BrowseComp.</li>
+<li>Parallelism (3–5 subagents, 3+ parallel tool calls each) cut research time <strong>up to 90%</strong> on complex queries.</li>
+<li>Effort scaling rule: simple fact = 1 agent, 3–10 tool calls; comparison = 2–4 subagents; complex research = 10+ subagents.</li>
+<li>War story: early versions spawned <strong>50 subagents</strong> for simple queries.</li>
+<li>Error compounding: 0.95^5 ≈ <strong>0.77</strong> end-to-end for a five-agent chain.</li>
+<li>MAST (Berkeley, NeurIPS 2025 D&amp;B): <strong>14 failure modes</strong> in 3 categories — system design/specification, inter-agent misalignment, task verification.</li>
+<li>Debate vs voting: multiple 2025 studies find majority voting (self-consistency) captures most debate gains at equal compute.</li>
+</ul>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Cost</strong> — multi-agent multiplies tokens (workers × calls, debaters × rounds). Only for tasks valuable enough.</li>
+<li><strong>Context fragmentation</strong> (Cognition, "Don't Build Multi-Agents") — actions carry implicit decisions; parallel writers make conflicting choices. Later principle: <em>writes single-threaded, extra agents contribute intelligence, not actions</em>.</li>
+<li><strong>Vague assignments</strong> → duplicated or misdirected work. Give objective, output format, tool/source guidance, boundaries.</li>
+<li><strong>Handoff pathologies</strong> — ping-pong loops (cap hops), lost context in summaries, no global view.</li>
+<li><strong>Debate echo chambers</strong> — same-model debaters share blind spots; make them different (model, tools, evidence) or give the judge a verifier.</li>
+<li><strong>Synchronous bottleneck</strong> — orchestrator waits for slowest worker; async adds coordination complexity.</li>
+<li><strong>Observability</strong> — shared run ID, every assignment/result as a span; limits on subagents, hops, rounds.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orchestrator / lead / supervisor</td>
+<td>Agent that plans, delegates, synthesizes</td>
+<td>"Raised desk; stays in control"</td>
+</tr>
+<tr>
+<td>Worker / subagent / agent-as-tool</td>
+<td>Sub-agent invoked like a tool with fresh context</td>
+<td>"Clean context in, compressed summary out"</td>
+</tr>
+<tr>
+<td>Handoff</td>
+<td>Tool call that transfers control to another agent</td>
+<td>"New agent owns the conversation"</td>
+</tr>
+<tr>
+<td>Swarm</td>
+<td>Peer agents handing off to each other, no supervisor</td>
+<td>"Faster, harder to debug"</td>
+</tr>
+<tr>
+<td>Debate</td>
+<td>Agents propose/critique/revise over rounds; judge decides</td>
+<td>"Beat majority vote first"</td>
+</tr>
+<tr>
+<td>Self-consistency</td>
+<td>Sample N independent answers, majority vote</td>
+<td>"The baseline debate must beat"</td>
+</tr>
+<tr>
+<td>Effort scaling</td>
+<td>Prompted rules on how many agents/calls per query complexity</td>
+<td>"Or it spawns 50 workers"</td>
+</tr>
+<tr>
+<td>A2A (Agent2Agent)</td>
+<td>Linux Foundation protocol for agent↔agent delegation via Agent Cards; v1.0 Apr 2026</td>
+<td>"MCP = agent↔tools; A2A = agent↔agent"</td>
+</tr>
+<tr>
+<td>MAST</td>
+<td>Multi-Agent System failure Taxonomy (14 modes, 3 categories)</td>
+<td>"Most failures are design, not model"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. When would you choose a multi-agent architecture over a single agent?</strong>
+Only when the task is breadth-first and parallelizable (research, due diligence across many sources) and valuable enough to justify ~15× chat tokens. First try one agent with good context engineering and a lean tool set. If I split, I use orchestrator-worker, give workers detailed assignments and clean contexts, and have them return compressed summaries.</p>
+<p><strong>Q2. Handoff vs sub-agent (agent-as-tool) — what's the difference?</strong>
+Both are usually tool calls. A sub-agent returns its result to the parent, which stays in control and synthesizes. A handoff transfers control: the receiving agent owns the user conversation, usually with the prior history (full or filtered). Handoffs fit sequential conversational flows like support triage; sub-agents fit decomposition with one synthesis point.</p>
+<p><strong>Q3. Would you use multi-agent debate to improve accuracy?</strong>
+Not by default. At equal compute, majority voting over independent samples captures most of debate's gains, and same-model debaters can converge on shared mistakes. Debate or a critic helps when the critic has something the generator lacks — a different model, a verifier (tests, DB lookups), or grounded sources.</p>
+<p><strong>Q4. What's the most common way multi-agent systems fail in production?</strong>
+Design, not model quality: vague role specs, inter-agent misalignment, and missing verification (MAST's three buckets). Concretely, parallel agents making conflicting implicit decisions. Mitigation: share context/plans, keep writes single-threaded in one agent, and add an explicit verification step.</p>
+<p><strong>Q5. How do you make a multi-agent system observable and bounded?</strong>
+Distributed tracing with one run ID — orchestrator as root span, each worker/handoff as child spans with inputs, outputs, tokens, latency. Explicit limits: max subagents, max handoff hops, max debate rounds, token budget per run. Evaluate both per-agent and end-to-end.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — How we built our multi-agent research system: https://www.anthropic.com/engineering/multi-agent-research-system</li>
+<li>Cognition — Don't Build Multi-Agents: https://cognition.com/blog/dont-build-multi-agents</li>
+<li>OpenAI Agents SDK — Handoffs: https://openai.github.io/openai-agents-python/handoffs/</li>
+<li>OpenAI — Orchestration and handoffs guide: https://developers.openai.com/api/docs/guides/agents/orchestration</li>
+<li>LangGraph Supervisor: https://github.com/langchain-ai/langgraph-supervisor-py</li>
+<li>LangGraph Swarm: https://github.com/langchain-ai/langgraph-swarm-py</li>
+<li>Microsoft Agent Framework 1.0 (GA Apr 2026): https://techcommunity.microsoft.com/blog/azuredevcommunityblog/the-future-of-agentic-ai-inside-microsoft-agent-framework-1-0/4510698</li>
+<li>Why Do Multi-Agent LLM Systems Fail? (MAST): https://arxiv.org/abs/2503.13657</li>
+<li>Debate or Vote (debate vs majority voting): https://arxiv.org/abs/2508.17536</li>
+<li>Improving Factuality and Reasoning through Multiagent Debate (Du et al., 2023): https://arxiv.org/abs/2305.14325</li>
+<li>A2A protocol: https://github.com/a2aproject/A2A</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track five, episode four: multi-agent patterns. Orchestrator and workers, handoffs, and debate.
+
+Here's a story that plays out in a lot of teams. Someone builds a single agent that works nicely: one model, a loop, a handful of tools. It answers questions, it calls an A P I or two, it gets the job done. Then the scope grows. More tools, more domains, longer tasks. The agent starts to wobble, picking the wrong tool, forgetting what it was doing twenty steps ago. Somebody in a design review says the magic words: "Let's make it multi-agent. One agent per specialty. They'll collaborate." Three weeks later the system is slower, costs four times as much, and fails in ways nobody can reproduce. One agent built half of a feature assuming one convention; another built the other half assuming a different one. Each agent's work looked fine in isolation. The combination was broken.
+
+Now here's the other side of the story. Anthropic published a detailed write-up of their research feature, which uses a lead agent that spawns parallel sub-agents. On their internal research evaluation, the multi-agent version beat a single agent of the stronger model by about ninety percent. Same company, same models, dramatic win.
+
+So which is it? Is multi-agent a trap or a superpower? The honest answer is: it depends on the pattern, and it depends on the shape of the task. That's what this episode is for. By the end, you'll be able to look at a problem and say which of three patterns fits, what it costs, and exactly where it breaks.
+
+[PAUSE 1s]
+
+## Why it matters
+
+Why should you care, beyond the hype? Two reasons.
+
+First, context windows are finite, and attention is even more finite than the window. Every tool definition, every retrieved document, every intermediate result you stuff into one agent's context competes for the model's attention. Splitting work across agents is, underneath everything, a context management technique. Each agent gets a clean, focused context. That is the real benefit, and it's worth saying plainly in an interview.
+
+Second, it's an economics question. Anthropic's own numbers are a good anchor: a single agent uses roughly four times the tokens of a plain chat interaction, and their multi-agent system used roughly fifteen times the tokens of a chat. They also found that token usage alone explained about eighty percent of the performance difference on their browsing benchmark. Read that carefully. A big part of why multi-agent wins is simply that it spends more compute on the problem, in parallel, with clean contexts. That means multi-agent only makes sense when the task is valuable enough to pay for that compute.
+
+Keep both of those in your head, context and cost, because every tradeoff we discuss comes back to one of them.
+
+[PAUSE 1s]
+
+## The mental image: one office floor, three layouts
+
+Picture this. You're looking down on a large, open office floor from above, like a floor plan. It's divided into three zones, and each zone is one pattern.
+
+In your mind's eye, look at the top half of the floor. At the very top, in the center, there's a raised desk. That's the orchestrator, sometimes called the lead agent, or the supervisor. Below that raised desk, in a neat row across the floor, sit several smaller desks. Those are the workers. Draw lines from the raised desk down to each worker desk. Work flows down those lines as assignments, and results flow back up. The workers never talk to each other. Everything goes through the desk at the top.
+
+Now look at the bottom right corner of the floor. There's a row of service counters running left to right, like a series of counters at a bank or a government office. A customer, the user, stands at the first counter on the left. When that counter can't help, the customer is walked over to the next counter to the right, and the next clerk takes over completely. That's the handoff zone. Control moves sideways, from counter to counter, and whoever is at the current counter owns the conversation.
+
+Finally, look at the bottom left corner. There's a small round table with three or four chairs, and next to it, a single chair slightly apart. The people at the round table argue: each proposes an answer, reads the others' answers, and revises. The chair set apart is the judge, who listens and makes the final call. That's the debate zone.
+
+So: raised desk and row of worker desks at the top. Service counters bottom right. Round table and judge's chair bottom left. We're going to walk data through each zone.
+
+[PAUSE 2s]
+
+## Zone one: orchestrator and workers
+
+Start at the raised desk at the top. A user question arrives: say, "Compare the data governance features of three platforms and recommend one for a regulated bank." The orchestrator doesn't answer it directly. It reads the question, thinks, and writes a plan. Then it writes assignments. Worker one: research platform A's governance model. Worker two: platform B. Worker three: platform C. Each assignment travels down its line to a worker desk.
+
+Here's the mechanical detail that matters. Each worker starts with a fresh context. It does not see the user's whole conversation. It sees only what the orchestrator wrote in the assignment. That's both the superpower and the danger. The superpower: the worker's context is clean, focused, and small, so it spends its attention on one job. The danger: if the assignment is vague, the worker will fill the gaps with its own assumptions. Anthropic's write-up describes exactly this failure in early versions. With short instructions like "research the semiconductor shortage," sub-agents duplicated each other's work, or went off in the wrong direction. The fix was richer assignments: an objective, an output format, guidance on which tools and sources to use, and clear task boundaries so two workers don't dig the same hole.
+
+Now watch the results travel back up the lines. Each worker does its searching and tool calls, maybe ten or fifteen calls each, and then compresses what it found into a condensed summary. That compression is the second big idea. The worker might have read fifty pages; it sends up two paragraphs. The orchestrator never sees the fifty pages. It sees three tidy summaries, which fit easily in its context, and it synthesizes the final answer.
+
+Mechanically, in most frameworks, a worker is just a tool from the orchestrator's point of view. The orchestrator's model emits a tool call named something like "research sub-task" with the assignment text as the argument. The framework spins up a sub-agent loop, runs it to completion, and returns its final message as the tool result. The OpenAI Agents S D K calls this "agents as tools." In Lang Graph it's the supervisor pattern. In the Claude Agent S D K they're sub-agents. The Microsoft Agent Framework, which is the successor to AutoGen and Semantic Kernel and reached version one point oh in April twenty twenty-six, ships sequential and concurrent orchestrations for the same shape. Different names, same raised desk.
+
+Parallelism is where the time savings come from. The orchestrator can fire off three to five workers at once, and each worker can make several tool calls at once. Anthropic reported cutting research time by up to ninety percent on complex queries this way. But notice the shape of task that benefits: breadth-first, parallelizable, read-heavy. Research. Due diligence. Searching many sources. The workers are gathering information, not changing the world.
+
+How many workers? Anthropic's rule of thumb is a useful one to quote. A simple fact lookup: one agent, three to ten tool calls. A direct comparison: two to four sub-agents. Complex research: ten or more, with clearly divided responsibilities. And the war story that goes with it: early on, their system spawned fifty sub-agents for simple queries, scouring the web for sources that didn't exist. The orchestrator had no sense of proportion. You have to teach it effort scaling explicitly, in the prompt.
+
+[PAUSE 1s]
+
+## Zone two: handoffs
+
+Now walk down to the service counters on the bottom right. The customer is at the first counter, the triage agent. The customer says, "I was double-charged on my invoice last month." The triage agent recognizes this is a billing issue. Instead of answering, it hands off. The customer moves one counter to the right, to the billing agent, and the billing agent now owns the conversation.
+
+The key difference from the raised desk: control transfers. In orchestrator-worker, the orchestrator stays in charge and the worker's result comes back up. In a handoff, the first agent is done. The new agent talks directly to the user. The OpenAI documentation describes it exactly this way: in a handoff, the new agent takes over the conversation and, by default, sees the entire previous conversation history.
+
+Mechanically, a handoff is also a tool call, just with a different effect. The triage agent's model emits a call to a tool named something like "transfer to billing agent." Instead of running something and returning a result, the framework swaps which agent is active: new system prompt, new tool set, same conversation. In Lang Graph, the handoff tool returns a command that tells the graph to jump to a different node. Lang Graph's name for a system of peers handing off to each other is a swarm.
+
+What travels across the counter? That's the design decision. Option one, the full history: simple, and the billing agent has every detail, but the context keeps growing as the customer walks down the row, and the billing agent inherits the triage agent's clutter. Option two, a filtered or summarized history: cleaner, cheaper, but you risk dropping the one detail that mattered, like the invoice number mentioned in the first message.
+
+Handoffs shine when the work is naturally sequential and conversational, and each specialty wants to talk directly to the user. Customer support is the classic case. Triage, then billing, then technical support, then maybe back to triage. The latency advantage is real: there's no middle manager relaying every message, so you save one model call per turn.
+
+The failure modes live between counters. Ping-pong: billing hands back to triage, triage hands to billing, forever. You need a maximum hop count. Lost context: the summary dropped a key fact. And the hardest one: there's no single place with a global view. Nobody sits at a raised desk watching the whole floor, so when something goes wrong, you reconstruct the path from traces.
+
+A practical rule many practitioners land on: start with the raised desk, a supervisor, because every routing decision is visible in one place and it's easier to debug. Move to peer handoffs only when you have data showing that the supervisor's extra hop is your latency bottleneck and your agents rarely misroute.
+
+[PAUSE 1s]
+
+## Zone three: debate
+
+Now the round table in the bottom left. Three agents get the same question. Each writes an answer independently. Then, round two: each agent reads the others' answers and revises its own. Maybe a third round. Finally the judge in the chair set apart reads the final positions and picks, or synthesizes, the answer. Sometimes the table is set up adversarially: one agent is the proposer, another is explicitly the critic whose job is to attack. That's also called generator and critic, or reflection with a second model.
+
+The idea came from research around twenty twenty-three showing that agents debating over rounds improved factuality and math reasoning compared to one agent answering once. It's intuitive: a second opinion catches errors.
+
+But here's the part a staff-level answer must include. Later studies ran the fair comparison: debate versus simply sampling the same number of independent answers and taking a majority vote, at equal compute. Several found that majority voting alone accounts for most of the gains, and that debate often doesn't reliably beat it. Some found that same-model agents at the table converge on a shared mistake: they agree with each other politely and confidently, because they share the same blind spots. The round table can turn into an echo chamber.
+
+So when does debate earn its seat? When the agents at the table are genuinely different: different models, different tools, different evidence. Or when the judge has access to a verifier the debaters don't, like running the code, checking a database, or citing a source. Debate is a way of spending compute for accuracy on high-stakes, hard-to-verify decisions. It's rarely the right default.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls
+
+Let's step back and look down at the whole floor at once.
+
+Cost first. Every lane on the floor multiplies tokens. The row of worker desks multiplies by the number of workers. The round table multiplies by agents times rounds. Three debaters over three rounds is at least nine model calls before the judge even speaks. If your multi-agent system is fifteen times the tokens of chat, the task had better be worth fifteen times the money.
+
+Second, the context-sharing problem, and this is the war story from the opening. Cognition, the team behind a well-known coding agent, published an essay titled "Don't Build Multi-Agents." Their argument: actions carry implicit decisions. If two workers each build part of the same artifact without seeing each other's decisions, they'll make conflicting choices. Their example was a game where one sub-agent builds a background in one visual style and another builds a character in a completely different style, and the parent has to reconcile two incompatible pieces. That's exactly the team in our opening story. Later writing from the same team sharpened this into a principle worth quoting: multi-agent systems work best today when writes stay single-threaded, and the extra agents contribute intelligence rather than actions.
+
+Put that on the floor plan. Workers at the lower desks should mostly read, search, analyze, and review. The raised desk, one agent, does the writing: the code change, the database update, the final document. That single rule avoids most of the conflicting-decision failures.
+
+Third, error compounding. If each agent in a chain is ninety-five percent reliable, five agents in sequence is roughly seventy-seven percent end to end. Multi-agent systems are long-running and stateful; a small error early can cascade. Researchers at Berkeley built a failure taxonomy from hundreds of multi-agent traces across popular frameworks and grouped fourteen failure modes into three buckets: system design and specification problems, misalignment between agents, and weak verification of the final result. Notice that most of those are not "the model was dumb." They're design failures: vague roles, ignored peer input, nobody checking the output.
+
+Fourth, observability. On the raised-desk layout, you have one trace tree: the orchestrator's span at the root, each worker a child span. That's debuggable. On the handoff layout, the trace is a chain that can loop. On the round table, it's a tangle. Whatever you build, trace every agent, every assignment, every result, and tag them with a shared run I D. Without that, you cannot answer "why did the system do that."
+
+Fifth, synchronous bottlenecks. In most orchestrator designs today, the raised desk waits for all workers to finish before moving on. One slow worker holds up the whole floor. Asynchronous orchestration is possible, but it adds coordination complexity: now the orchestrator must handle results arriving at different times and possibly redirect workers mid-flight.
+
+And a quick note on crossing company boundaries. When the workers aren't your agents at all, but another team's or another vendor's agents, you need a protocol. That's what the Agent to Agent protocol, usually called A to A, is for. It came from Google, moved to the Linux Foundation, and reached version one point oh in April twenty twenty-six. Agents publish an agent card describing what they can do, and other agents delegate tasks over H T T P. Think of it as the lines on our floor plan extending out through the wall to another company's building. Compare that with the Model Context Protocol, which we cover in the next episode: M C P connects an agent to tools and data; A to A connects an agent to other agents.
+
+[PAUSE 2s]
+
+## Interview angle
+
+When they ask, "Would you use a multi-agent architecture for this?", a strong answer doesn't start with yes. It sounds like this: "First I'd check whether one agent with good context engineering and a well-designed tool set can do it, because multi-agent costs several times the tokens and adds coordination failures. I'd reach for orchestrator-worker when the task is breadth-first and parallelizable, like research across many sources, where each worker benefits from a clean context and returns a compressed result. I'd keep writes single-threaded in the orchestrator and use workers for reading and analysis."
+
+When they ask, "What's the difference between a handoff and a sub-agent?", strong answer: "Both are usually implemented as tool calls. With a sub-agent, or agent as tool, the parent stays in control and gets the result back. With a handoff, control transfers: the new agent owns the conversation with the user. Handoffs fit sequential, conversational flows like support triage; sub-agents fit decomposition with a single point of synthesis."
+
+When they ask, "How would you improve answer accuracy with multiple agents?", strong answer: "Before building a debate, I'd baseline against self-consistency, sampling several answers and majority voting, because research shows voting captures most of debate's gains at equal compute. Debate or a critic agent adds value when the critic has something the generator lacks: a different model, a verifier, or ground-truth tools."
+
+And when they ask, "How do you debug a multi-agent system?", strong answer: "Distributed tracing with a shared run I D, every assignment and result logged as spans, plus evaluation at the agent level and the system level, and explicit limits: maximum sub-agents, maximum handoff hops, maximum debate rounds."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Let's walk the floor one more time.
+
+At the top, the raised desk and the row of worker desks below it. The orchestrator writes detailed assignments, workers start with clean contexts, work in parallel, and send compressed summaries back up. Best for breadth-first research. Costs roughly fifteen times chat tokens. Teach it effort scaling, or it spawns fifty workers for a simple question.
+
+Bottom right, the service counters. Control moves sideways; the agent at the current counter owns the user conversation. Great for support flows. Decide what history crosses the counter, cap the hops, and accept that nobody has the global view.
+
+Bottom left, the round table and the judge's chair. Agents propose, critique, revise; a judge decides. Beat majority voting at equal compute before you believe it's helping, and make the debaters genuinely different.
+
+Across the whole floor: context is the reason to split, cost is the price, and the golden rule is that writes stay single-threaded at the raised desk while the other desks contribute intelligence.
+
+Next episode, we leave the office floor and look at the wiring in the walls: the Model Context Protocol. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-agent-memory.html">← Agent Memory: Short-Term, Long-Term, Summarization</a><a class="btn" href="05-mcp-protocol.html">MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports →</a></div></main></div></body></html>

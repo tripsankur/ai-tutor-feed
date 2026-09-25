@@ -1,0 +1,327 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scaling Laws, Mixture-of-Experts, Long Context — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="active" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 6</div>
+<h1 class="lesson">Scaling Laws, Mixture-of-Experts, Long Context</h1>
+<div class="meta">16 min listen · How the field decides how big to build a model and how much to feed it, why nearly every large open model is now a mixture-of-experts that only wakes a small slice of itself per token, and what a million-token context window really costs and really delivers.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e06-scaling-moe.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/06-scaling-moe" onclick="toggleDone('07-transformers/06-scaling-moe')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Scaling laws tell you how to spend training compute (and why production models are deliberately overtrained), mixture-of-experts decouples what a model knows (total parameters) from what each token costs (active parameters), and long context is mostly a memory-and-attention bill whose effective length is shorter than the advertised one.</p>
+<h2 id="the-mental-image-the-library-seen-from-above">The mental image: the library (seen from above)</h2>
+<ul>
+<li><strong>Chart on the south wall above the entrance</strong> = scaling law; three dials: staff (parameters N), books read (tokens D), hours of work (compute C). A fourth dial now: thinking time (test-time compute).</li>
+<li><strong>Receptionist at the front left</strong> = MoE router; <strong>specialist desks along the north wall</strong> = experts. Each visitor (token) goes to only top-k desks.</li>
+<li><strong>Long reading table down the centre</strong> = context window; the reader skims the middle ("lost in the middle").</li>
+</ul>
+<h2 id="scaling-laws">Scaling laws</h2>
+<p>Kaplan et al. (2020): loss falls as a power law in N, D, C over many orders of magnitude. Chinchilla (Hoffmann et al. 2022) fit:</p>
+<p>$$L(N, D) = E + \frac{A}{N^{\alpha}} + \frac{B}{D^{\beta}}, \qquad C \approx 6ND$$</p>
+<p>Compute-optimal: N and D scale ~equally with C → <strong>≈ 20 tokens per parameter</strong>. Chinchilla (70B, 1.4T tokens) beat Gopher (280B) at the same compute.</p>
+<table>
+<thead>
+<tr>
+<th>Regime</th>
+<th>Tokens/param</th>
+<th>Example</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compute-optimal (Chinchilla)</td>
+<td>~20</td>
+<td>Chinchilla 70B / 1.4T</td>
+<td>minimizes training cost for a target loss</td>
+</tr>
+<tr>
+<td>Inference-aware (overtrained)</td>
+<td>100s–1000s</td>
+<td>Llama 3 8B / 15T (~1,875)</td>
+<td>smaller model = cheaper forever at serving</td>
+</tr>
+<tr>
+<td>Test-time scaling</td>
+<td>n/a</td>
+<td>reasoning models</td>
+<td>spend more tokens thinking per query</td>
+</tr>
+</tbody>
+</table>
+<p>Rule of thumb for training FLOPs: C ≈ 6 × N_active × D. Scaling predicts <em>loss</em>, not specific capabilities.</p>
+<h2 id="mixture-of-experts">Mixture-of-Experts</h2>
+<pre class="mermaid">flowchart LR
+    T["Token hidden state"] --> A["Self-attention (shared by all tokens)"]
+    A --> R{"Router: scores per expert, pick top-k"}
+    R -->|w1| E1["Expert 3 (FFN)"]
+    R -->|w2| E2["Expert 41 (FFN)"]
+    R -.->|idle| E3["Other experts (resident in memory, not computed)"]
+    SH["Shared expert (always on)"] --> SUM
+    E1 --> SUM["Weighted sum"]
+    E2 --> SUM
+    SUM --> O["Next layer"]
+</pre>
+
+<p>$$y = \sum_{i \in \text{TopK}(g(x))} g_i(x)\, E_i(x), \qquad g(x) = \text{softmax}(W_r x)$$</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Total params</th>
+<th>Active/token</th>
+<th>Experts (routing)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mixtral 8x7B</td>
+<td>46.7B</td>
+<td>12.9B</td>
+<td>8, top-2</td>
+</tr>
+<tr>
+<td>DeepSeek-V3</td>
+<td>671B</td>
+<td>37B</td>
+<td>256 routed + 1 shared, top-8; aux-loss-free balancing; MLA</td>
+</tr>
+<tr>
+<td>Llama 4 Scout</td>
+<td>109B</td>
+<td>17B</td>
+<td>16 experts; 10M-token advertised context</td>
+</tr>
+<tr>
+<td>gpt-oss-120b</td>
+<td>117B</td>
+<td>5.1B</td>
+<td>128, top-4</td>
+</tr>
+</tbody>
+</table>
+<p>Costs and pitfalls:
+- <strong>Memory ≈ total params</strong> (all experts resident) even though <strong>compute ≈ active params</strong>.
+- <strong>Expert parallelism</strong> → all-to-all token shuffles across GPUs; interconnect becomes the bottleneck.
+- <strong>Load balancing / routing collapse</strong> → auxiliary balance loss, capacity factor, token dropping; DeepSeek-V3 uses a per-expert bias adjustment (auxiliary-loss-free).
+- <strong>Batch effect</strong>: at large batch nearly all experts are active every step → benchmark at real concurrency.
+- Fine-tuning can destabilize routers.</p>
+<pre><code class="language-python"># Minimal top-k MoE layer (PyTorch-style sketch)
+import torch, torch.nn as nn, torch.nn.functional as F
+class MoE(nn.Module):
+    def __init__(self, d, n_experts=8, k=2, d_ff=4096):
+        super().__init__()
+        self.router = nn.Linear(d, n_experts, bias=False)
+        self.experts = nn.ModuleList(nn.Sequential(nn.Linear(d, d_ff), nn.SiLU(), nn.Linear(d_ff, d)) for _ in range(n_experts))
+        self.k = k
+    def forward(self, x):                      # x: [tokens, d]
+        w, idx = self.router(x).topk(self.k, dim=-1)
+        w = F.softmax(w, dim=-1)
+        out = torch.zeros_like(x)
+        for slot in range(self.k):
+            for e in idx[:, slot].unique():
+                m = idx[:, slot] == e
+                out[m] += w[m, slot, None] * self.experts[e](x[m])
+        return out
+</code></pre>
+<h2 id="long-context">Long context</h2>
+<p>Three obstacles:
+1. <strong>Attention cost</strong> O(n²) in prefill → FlashAttention (exact, tiled, O(n) memory), ring/context parallelism across GPUs, hybrid stacks mixing full attention with sliding-window/linear layers.
+2. <strong>KV cache</strong> grows linearly with n (see episode 5) → at 1M tokens, tens–hundreds of GB per request.
+3. <strong>Positions</strong> beyond training length → RoPE scaling: position interpolation, NTK-aware, <strong>YaRN</strong> (frequency-dependent scaling + attention temperature; 128K extension with &lt;0.1% of pre-training data in fine-tuning).</p>
+<p>Quality: <strong>Lost in the Middle</strong> (Liu et al. 2023) — U-shaped accuracy vs position of relevant info. <strong>RULER</strong> (NVIDIA) separates claimed vs <em>effective</em> context length using multi-needle, multi-hop, aggregation tasks. Many frontier models advertise ≥1M tokens in 2026; effective length is shorter and task-dependent.</p>
+<p>Practical: long context for one big artefact needing holistic reasoning; RAG for large/changing corpora; instructions first, question last; prefix-cache shared documents; evaluate at your real length.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power-law scaling</td>
+<td>loss ∝ (N, D, C)^-α; straight line on log-log axes</td>
+</tr>
+<tr>
+<td>Compute-optimal</td>
+<td>best loss for fixed training FLOPs (~20 tok/param)</td>
+</tr>
+<tr>
+<td>Overtraining</td>
+<td>training beyond compute-optimal to get a smaller, cheaper-to-serve model</td>
+</tr>
+<tr>
+<td>Test-time compute</td>
+<td>extra inference tokens (reasoning) that improve accuracy</td>
+</tr>
+<tr>
+<td>Router / gating</td>
+<td>learned layer choosing top-k experts per token</td>
+</tr>
+<tr>
+<td>Active vs total params</td>
+<td>compute cost vs memory footprint of an MoE</td>
+</tr>
+<tr>
+<td>Expert parallelism</td>
+<td>experts sharded across GPUs, all-to-all communication</td>
+</tr>
+<tr>
+<td>Routing collapse</td>
+<td>router favours few experts; others starve</td>
+</tr>
+<tr>
+<td>FlashAttention</td>
+<td>IO-aware exact attention kernel</td>
+</tr>
+<tr>
+<td>YaRN</td>
+<td>RoPE context-extension method</td>
+</tr>
+<tr>
+<td>Effective context</td>
+<td>longest length at which quality stays above threshold</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. What is the Chinchilla result and why do labs violate it?</strong>
+For fixed training compute, parameters and tokens should grow together (~20 tokens/param); prior large models were under-trained. Labs overtrain smaller models (e.g., 8B on 15T tokens) because inference cost over the model's lifetime dominates, and quality keeps improving log-linearly.</p>
+<p><strong>Q2. Explain total vs active parameters in MoE and the serving implications.</strong>
+Total parameters (all experts) determine memory footprint and knowledge capacity; active parameters (top-k experts + shared parts) determine FLOPs per token. Serving needs memory for all weights, expert parallelism, all-to-all communication, and good load balance; large batches activate most experts.</p>
+<p><strong>Q3. What is routing collapse and how is it prevented?</strong>
+The router over-uses a few experts, which get better and attract more traffic while others starve. Mitigations: auxiliary load-balancing loss, capacity factors and token dropping, noise in routing, or DeepSeek-V3-style bias adjustment without an auxiliary loss.</p>
+<p><strong>Q4. How do models extend context beyond training length?</strong>
+RoPE-based models rescale rotary frequencies (position interpolation, NTK-aware, YaRN) so new positions map into seen angle ranges, then fine-tune briefly on long sequences; systems side uses FlashAttention, context/ring parallelism, KV compression.</p>
+<p><strong>Q5. When would you choose long context over RAG?</strong>
+For one bounded artefact requiring holistic reasoning (codebase, contract). Prefer RAG for large, changing corpora or cost/latency-sensitive paths. Effective context is shorter than advertised and mid-context recall degrades, so evaluate at your real length and combine both when needed.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Scaling Laws for Neural Language Models (Kaplan et al. 2020): https://arxiv.org/abs/2001.08361</li>
+<li>Training Compute-Optimal Large Language Models (Chinchilla): https://arxiv.org/abs/2203.15556</li>
+<li>Beyond Chinchilla-Optimal (inference-aware scaling): https://arxiv.org/abs/2401.00448</li>
+<li>Mixtral of Experts: https://arxiv.org/abs/2401.04088</li>
+<li>DeepSeek-V3 Technical Report: https://arxiv.org/abs/2412.19437</li>
+<li>gpt-oss model card: https://arxiv.org/abs/2508.10925</li>
+<li>Llama 4 announcement: https://ai.meta.com/blog/llama-4-multimodal-intelligence/</li>
+<li>Lost in the Middle: https://arxiv.org/abs/2307.03172</li>
+<li>YaRN: https://arxiv.org/abs/2309.00071</li>
+<li>RULER: https://arxiv.org/abs/2404.06654</li>
+<li>FlashAttention: https://arxiv.org/abs/2205.14135</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode six: scaling laws, mixture-of-experts, and long context. Last episode we lived inside a single request — the shelf of tokens, the cabinet of keys and values, the sampling wheel. Today we step back and ask the questions that decide what gets built in the first place. How big should the model be? How much data should it read? Why do the biggest open models now carry hundreds of billions of parameters yet run as though they were a fraction of that size? And when a vendor says their model reads a million tokens at once, what does that actually buy you?
+
+Here is the cold open. In early twenty twenty-two, a DeepMind team trained a seventy-billion-parameter model called Chinchilla. Their own previous flagship, Gopher, had two hundred and eighty billion parameters — four times larger. Chinchilla beat it across the board. Same compute budget, a quarter of the size. The trick was not a clever new layer. It was a spreadsheet question: given a fixed amount of compute, how should you split it between making the model bigger and feeding it more data? The industry had been getting that split wrong. The answer reshaped how every lab since has planned a training run — and then, a year later, labs deliberately started breaking the rule on purpose, for reasons that tie directly back to last episode's inference costs.
+
+[PAUSE 1s]
+
+## Why it matters
+
+These three topics look separate, but they are one conversation: where does the compute go? Scaling laws tell you how to spend training compute. Mixture-of-experts changes how much compute each token costs at training and inference time without shrinking what the model knows. Long context decides how much a single request can carry, and what that costs in memory and attention. When you choose between a hosted frontier model and a self-hosted open model, when you size G P Us, when you decide whether to stuff a whole document set into context or build retrieval, you are making exactly these tradeoffs. An interviewer who asks "why is this model cheap to run despite being huge" or "why not just put everything in the context window" is testing whether you understand them.
+
+[PAUSE 1s]
+
+## The mental image: the library
+
+Let us build one picture and live in it.
+
+In your mind's eye, picture a great library seen from above, as if you were floating over it with the roof removed. The entrance is at the bottom of the picture, on the south wall.
+
+Above the entrance, painted on the inside of the south wall so every visitor sees it as they come in, is a huge chart. That chart is the scaling law. On it are three dials: one labelled staff — how many parameters the model has; one labelled books read — how many training tokens it saw; and one labelled hours of work — the total compute budget. The chart shows a smooth curve sloping downward: the more you turn the dials, the lower the error, in a predictable way.
+
+Just inside the entrance, on the left, sits a reception desk with one receptionist. That receptionist is the router. Along the whole back wall — the north wall, at the top of the picture — runs a long row of small specialist desks. Those are the experts. Every visitor who walks in is a token. The receptionist glances at each one and sends it to just a couple of those desks, never to all of them. That is mixture-of-experts.
+
+And running down the centre of the library, from the entrance all the way toward the back wall, is one enormously long reading table. Every document the user has handed over is laid out along it, page after page. The length of that table is the context window. A single reader walks along it, trying to keep every page in view at once. That is long context.
+
+Chart on the south wall. Receptionist at the front left, specialists along the north wall. The long table down the middle. Let us walk each one.
+
+[PAUSE 1s]
+
+## Under the hood: the chart on the south wall
+
+Start at the chart. In twenty twenty, researchers at OpenAI published the first widely cited scaling laws. They showed that a language model's loss — its average surprise at the next token — falls as a smooth power law as you increase parameters, data, or compute, across many orders of magnitude. Picture the curve on the wall: plotted on log-scaled axes, it is nearly a straight line sloping down. Each ten-times increase in compute knocks the loss down by a roughly constant fraction. That predictability is what let labs justify hundred-million-dollar training runs: train a family of small models, fit the line, and extrapolate where a big one will land before spending the money.
+
+The first reading of that chart suggested that when you get more compute, you should mostly grow the staff — parameters — and not bother reading proportionally more books. Chinchilla re-ran the experiment more carefully, with learning-rate schedules tuned for each run length, and found that staff and books should grow together, in roughly equal proportion. The rule of thumb that fell out is about twenty training tokens per parameter for compute-optimal training. A seventy-billion model wants about one point four trillion tokens — which is exactly what Chinchilla got, and why it beat Gopher, which was big but under-read.
+
+Now the twist. Compute-optimal means optimal for the training bill. But a model that is trained once is served billions of times. From last episode, you know that every served token streams the model's weights through memory — so a smaller model is cheaper forever after. So labs deliberately overtrain: they build a smaller staff and make it read far more books than the chart says is efficient. The famous example is an eight-billion-parameter open model trained on fifteen trillion tokens — nearly two thousand tokens per parameter, close to a hundred times past the Chinchilla point — and its quality was still improving when training stopped. Training cost more than strictly necessary; every inference afterward got cheaper. That is the inference-aware reading of the chart, and it is what almost every production model since has done.
+
+There is now a third dial beside the chart, added in the last two years: thinking time at inference. Reasoning models spend extra tokens working through a problem before answering, and quality on maths and code climbs predictably with how much of that test-time compute they spend. So when someone says scaling has hit a wall, the honest answer is: pre-training scaling on internet text faces a data supply problem — high-quality text is finite — but compute has found new places to go, including reinforcement learning after pre-training, which is next episode, and reasoning at inference time.
+
+One caution about the chart. The line predicts loss, not specific abilities. A smooth drop in average surprise can show up as a sudden jump on a particular benchmark. Plan budgets with the curve; do not promise a customer a capability from it.
+
+[PAUSE 1s]
+
+## Under the hood: the receptionist and the specialists
+
+Now walk in through the entrance and turn left, to the receptionist.
+
+In the transformer blocks we built earlier in this track, each layer has an attention sub-block and then a feed-forward sub-block — a wide two-layer network that every token passes through. That feed-forward part holds most of the parameters and does most of the per-token compute. Mixture-of-experts replaces that single wide feed-forward network with many smaller ones — the specialist desks along the north wall — plus a small router, the receptionist.
+
+Watch one token walk in. The receptionist is just a tiny learned layer: it looks at the token's current vector and produces a score for every desk. It picks the top few — often two, sometimes eight — and sends the token to only those desks. Each chosen specialist processes the token, and their outputs are blended back together, weighted by the receptionist's scores. Every other desk stays dark for that token. Attention, by the way, is still shared: every token still passes through the same attention layers. Only the feed-forward part is split into experts.
+
+Now the numbers, because this is where the magic trick is visible. Mixtral eight by seven B, from Mistral, had eight desks per layer and sent each token to two. Total parameters about forty-seven billion; active per token about thirteen billion. It matched or beat a dense seventy-billion model of its day at a fraction of the per-token compute. DeepSeek V three took it much further: six hundred and seventy-one billion total parameters, but only thirty-seven billion active per token, using two hundred and fifty-six fine-grained routed experts per layer with eight chosen, plus a shared expert every token visits. OpenAI's open-weight G P T O S S one-twenty B has a hundred and seventeen billion parameters with about five billion active, routing to four of a hundred and twenty-eight experts. The pattern is clear: the library's total knowledge — its full staff — is enormous, but any one visitor only costs a few specialists' time.
+
+Why does that work? Because knowledge and compute get decoupled. The total parameter count sets how much the model can store. The active parameter count sets how many floating-point operations each token costs. Mixture-of-experts lets you raise the first without raising the second.
+
+[PAUSE 1s]
+
+## What mixture-of-experts costs
+
+Now the bill, because nothing is free.
+
+First, memory. The receptionist may only wake two desks, but all the desks have to be in the building. Every expert's weights must sit in G P U memory, because the next token might need any of them. So a six-hundred-and-seventy-billion-parameter mixture-of-experts model needs the memory footprint of a six-hundred-and-seventy-billion-parameter model, even though it computes like a thirty-seven-billion one. It is cheap in compute, not cheap in memory. That is why such models are served across many G P Us, with experts spread across devices — expert parallelism — which means tokens have to be shipped between G P Us to reach their desks, and the network between G P Us becomes a real bottleneck.
+
+Second, load balancing. Picture what happens if the receptionist develops favourites: sends most visitors to the same three desks. Those desks get swamped, the rest sit idle, and in distributed serving the G P U holding the popular experts becomes the straggler that everyone waits for. Worse, during training, a neglected expert never gets gradient updates, so it never gets better, so it gets neglected more — routing collapse. Classic fixes add an auxiliary loss that penalises uneven routing, and set a capacity limit per expert, dropping or rerouting overflow tokens. DeepSeek V three introduced an auxiliary-loss-free approach, nudging a per-expert bias up or down to keep traffic even without distorting the main training objective.
+
+Third, a war story, generic but common. A team benchmarked a large open mixture-of-experts model on one prompt at a time and saw wonderful latency — it computes like a small model, after all. They sized a deployment on that basis. Under real concurrent load with a big batch, different tokens in the batch wanted different experts, so effectively every expert was active every step, the memory traffic looked like a dense model, and cross-G P U all-to-all communication dominated. Throughput per G P U landed far below the single-request estimate. The lesson: with mixture-of-experts, benchmark at the batch size and concurrency you will actually run, and on the interconnect you will actually have.
+
+Fourth, fine-tuning is fiddlier — routers can be destabilised, and parameter-efficient adapters have to decide whether to touch every expert or only shared parts. We will pick that up next episode.
+
+[PAUSE 1s]
+
+## Under the hood: the long table
+
+Now walk down the centre of the library, along the reading table.
+
+Long context sounds simple — make the table longer. Three separate things get in the way.
+
+First, attention cost. Remember from episode two that every token's query is compared against every other token's key. Double the table and you quadruple those comparisons during prefill. Engineering has tamed this remarkably well: FlashAttention computes exact attention in tiles that stay in the G P U's fast on-chip memory and never materialise the full comparison grid, so memory grows linearly and speed is excellent. Very long contexts are split across many G P Us with ring-style attention, each device holding a segment of the table and passing keys and values around. And some newer architectures interleave full-attention layers with cheaper sliding-window or linear-attention layers so only a few floors see the whole table.
+
+Second, the cabinet from last episode. Every page on the table means another folder of keys and values. At a million tokens, even with grouped-query attention, the K V cache for a single request can run to tens or hundreds of gigabytes. Long context is, again, mostly a memory bill.
+
+Third, positions. The model learned positions with rotary embeddings, from episode three — think of each seat along the table as having a label that encodes angle, rotating at many different speeds. If training only ever saw tables of eight thousand seats, seat number fifty thousand produces rotations the model has never seen. Context extension methods like position interpolation and YaRN relabel the seats — squeeze the new, longer table into the range of angles the model already knows, treating fast and slow rotation frequencies differently — then fine-tune briefly on long documents. YaRN reported extending models to a hundred and twenty-eight thousand tokens with fine-tuning on well under one percent of the original pre-training data.
+
+[PAUSE 1s]
+
+## Advertised versus effective
+
+Now picture the reader walking that table. Pages near the entrance end — the start of the prompt — and pages at the far end — the most recent text — get read carefully. Pages in the middle get skimmed. The Stanford paper "Lost in the Middle" measured exactly this in twenty twenty-three: a U-shaped curve, where accuracy was highest when the relevant fact sat at the start or end of the context and dropped when it was buried in the middle. Models have improved a lot since, but the pattern — attention thinning out over very long inputs — persists in subtler forms, sometimes called context rot.
+
+Today many frontier models advertise context windows of a million tokens or more, and Meta's Llama four Scout advertised ten million. But benchmarks like NVIDIA's RULER distinguish claimed length from effective length — the longest input at which the model still performs above a threshold on multi-needle retrieval and reasoning tasks. Effective length is routinely well short of advertised length. Finding one needle in a haystack is easy; reasoning across twenty facts scattered through the haystack is not.
+
+So the practical guidance. Long context is superb for a single large artefact you need holistically — a codebase, a long contract, a full transcript. It is a poor substitute for retrieval over a large, changing corpus: you pay for every token on every call, latency climbs with prefill, and quality sags in the middle. Put the most important instructions at the start and the question at the end. Use prefix caching so a big shared document is paid for once. And measure on your own task at your real length, not on the vendor's needle test.
+
+[PAUSE 1s]
+
+## Interview angle
+
+When they ask, "What did Chinchilla change?" a strong answer sounds like: "It showed that for a fixed training compute budget, parameters and tokens should scale roughly equally — about twenty tokens per parameter — and that earlier large models were under-trained. In practice we now overtrain smaller models far past that point, because inference cost dominates over the lifetime of a model, so a smaller model trained longer is cheaper to serve."
+
+When they ask, "How can a six-hundred-billion-parameter model be cheap to run?" — "It is a mixture-of-experts: a router sends each token to a few experts out of many, so only tens of billions of parameters are active per token. Compute per token is small, but all weights must still be resident in memory, so you need many G P Us, expert parallelism, good load balancing, and fast interconnect. It is compute-cheap, not memory-cheap."
+
+When they ask, "Why not just put everything in a million-token context instead of R A G?" — "Cost and latency scale with every token on every call, attention and the K V cache get expensive, and effective context is shorter than advertised — models still lose information in the middle. I would use long context for one big artefact needing holistic reasoning, retrieval for large or changing corpora, and often both: retrieve, then give the model a generous but focused context."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back into the library, one last time, looking down from above. On the south wall above the entrance, the chart: staff, books read, hours of work — loss falls on a smooth, predictable power law. Chinchilla said grow staff and books together, about twenty books per staff member; production practice overtrains small staffs on huge reading lists because serving cost lasts forever; and a new dial, thinking time at inference, has joined the chart. Inside the entrance on the left, the receptionist — the router — sends each visitor to two or eight desks out of dozens or hundreds along the north wall. Huge total knowledge, small active compute, but every desk must stay in the building, so memory, balancing and interconnect become the bill. And down the centre, the long reading table: attention cost tamed by FlashAttention and ring attention, a K V cabinet that balloons, seat labels stretched with YaRN, and a reader who still skims the middle. Advertised length is not effective length.
+
+Next episode: how a pre-trained model becomes a useful assistant — the fine-tuning landscape, from LoRA to R L H F, D P O, and the reinforcement learning methods behind today's reasoning models. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="05-inference.html">← Inference: KV Cache, Sampling, Speculative Decoding</a><a class="btn" href="07-finetuning.html">Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO →</a></div></main></div></body></html>

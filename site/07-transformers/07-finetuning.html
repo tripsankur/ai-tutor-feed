@@ -1,0 +1,358 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="active" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 7</div>
+<h1 class="lesson">Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</h1>
+<div class="meta">16 min listen · How a raw pre-trained model becomes a useful assistant: supervised fine-tuning, LoRA and QLoRA for doing it cheaply, preference tuning with RLHF and DPO, and the reinforcement learning with verifiable rewards and on-policy distillation that power today's reasoning models.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e07-finetuning.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/07-finetuning" onclick="toggleDone('07-transformers/07-finetuning')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Post-training turns a knowledgeable next-token predictor into a useful assistant in stages — SFT for behaviour and format, preference tuning (RLHF or DPO) for "better vs worse", and RL with verifiable rewards (GRPO family, plus on-policy distillation) for reasoning — and parameter-efficient methods like LoRA/QLoRA make most of it affordable on one GPU.</p>
+<h2 id="the-mental-image-the-great-console">The mental image: the great console</h2>
+<ul>
+<li><strong>Great console against the back wall</strong> = the base model; billions of knobs (parameters) set by pre-training; mostly taped down (frozen).</li>
+<li><strong>Clip-on panel at its side</strong> = LoRA adapter; two thin strips (low-rank A and B) are the only trained knobs.</li>
+<li><strong>Classroom (left)</strong> = SFT on worked examples.</li>
+<li><strong>Judging table (middle)</strong> = preference pairs → RLHF (reward model + PPO) or DPO.</li>
+<li><strong>Practice arena with scoreboard (right)</strong> = RLVR with GRPO/DAPO; teacher grading each token = on-policy distillation.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    B["Base model (pre-trained)"] --> S["SFT: instruction/response pairs, loss on response tokens"]
+    S --> P{"Preference tuning"}
+    P --> R1["RLHF: reward model + PPO + KL to reference"]
+    P --> R2["DPO: direct loss on chosen vs rejected"]
+    R1 --> V["RLVR: GRPO / DAPO with verifiers (tests, exact match)"]
+    R2 --> V
+    V --> OPD["On-policy distillation: student samples, teacher scores every token"]
+    OPD --> A["Deployed assistant / reasoning model"]
+    L["LoRA / QLoRA adapters"] -.->|can be applied at any stage| S
+    L -.-> R2
+</pre>
+
+<h2 id="memory-why-full-fine-tuning-hurts">Memory: why full fine-tuning hurts</h2>
+<p>Mixed-precision Adam ≈ 16 bytes/param (BF16 weights 2 + grads 2 + FP32 master 4 + Adam m 4 + v 4), before activations.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Full FT (≈16 B/param)</th>
+<th>LoRA (frozen BF16 base)</th>
+<th>QLoRA (4-bit base)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7–8B</td>
+<td>~115–130 GB</td>
+<td>~16–20 GB + adapters</td>
+<td>~6–10 GB</td>
+</tr>
+<tr>
+<td>65–70B</td>
+<td>~1.1 TB</td>
+<td>~140 GB</td>
+<td>fits a single 48 GB GPU (QLoRA paper)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="lora-and-qlora">LoRA and QLoRA</h2>
+<p>$$W' = W_0 + \Delta W = W_0 + \frac{\alpha}{r} B A,\quad B \in \mathbb{R}^{d \times r},\ A \in \mathbb{R}^{r \times k},\ r \ll \min(d,k)$$</p>
+<ul>
+<li>W₀ frozen; only A, B trained. LoRA paper (GPT-3 175B): ~10,000× fewer trainable params, ~3× less GPU memory, no added inference latency once merged.</li>
+<li>Typical r = 8–64; target attention projections or all linear layers.</li>
+<li>QLoRA: 4-bit <strong>NF4</strong> frozen base + <strong>double quantization</strong> + <strong>paged optimizers</strong>; 65B on one 48 GB GPU at 16-bit fine-tuning quality.</li>
+<li>Multi-LoRA serving: one base in memory, many adapters swapped per request.</li>
+<li>"LoRA learns less and forgets less": less capacity for big distribution shifts, less catastrophic forgetting.</li>
+</ul>
+<pre><code class="language-python">from peft import LoraConfig, get_peft_model
+from transformers import AutoModelForCausalLM, BitsAndBytesConfig
+import torch
+
+bnb = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type=&quot;nf4&quot;,
+                         bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.bfloat16)
+model = AutoModelForCausalLM.from_pretrained(&quot;meta-llama/Llama-3.1-8B-Instruct&quot;, quantization_config=bnb)
+cfg = LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05, target_modules=&quot;all-linear&quot;, task_type=&quot;CAUSAL_LM&quot;)
+model = get_peft_model(model, cfg)
+model.print_trainable_parameters()   # typically well under 1% trainable
+</code></pre>
+<h2 id="rlhf-vs-dpo-vs-grpo">RLHF vs DPO vs GRPO</h2>
+<p><strong>RLHF (InstructGPT, 2022)</strong>: SFT → reward model on pairwise comparisons → PPO maximizing reward − β·KL(π‖π_ref). Four models in memory (policy, reference, reward, value). InstructGPT 1.3B was preferred by labelers over 175B GPT-3.</p>
+<p><strong>DPO (Rafailov et al., 2023)</strong>: no reward model, no sampling:</p>
+<p>$$\mathcal{L}<em>\text{DPO} = -\log \sigma!\left(\beta \log\frac{\pi</em>\theta(y_w|x)}{\pi_\text{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_\text{ref}(y_l|x)}\right)$$</p>
+<p>Relatives: KTO (unpaired thumbs-up/down), ORPO (folds SFT in), SimPO (reference-free). Offline — cannot explore.</p>
+<p><strong>RLVR + GRPO</strong>: reward = verifier (unit tests, exact-match math, schema check). "RLVR" named in AI2's Tülu 3. GRPO (DeepSeekMath, then DeepSeek-R1): sample G completions per prompt, advantage = (r_i − mean(r)) / std(r), clipped policy-gradient update with KL; <strong>no value model</strong>.</p>
+<ul>
+<li>DAPO: removes length bias and stabilizes training — the <strong>default <code>loss_type</code> in TRL's GRPOTrainer</strong>. GSPO: sequence-level importance weights (reproduce in TRL with <code>importance_sampling_level="sequence"</code>, <code>loss_type="grpo"</code>).</li>
+<li><strong>On-policy distillation</strong>: student generates; teacher assigns per-token reverse-KL grades. Thinking Machines reported ~70% AIME'24 for Qwen3-8B-Base (teacher Qwen3-32B) at ~1/10 the compute of RL. 2026 research pipelines commonly combine OPD with RLVR.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Signal</th>
+<th>Models in memory</th>
+<th>Online?</th>
+<th>Main risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFT</td>
+<td>demonstrations</td>
+<td>1</td>
+<td>no</td>
+<td>imitation ceiling, forgetting</td>
+</tr>
+<tr>
+<td>RLHF (PPO)</td>
+<td>learned reward model</td>
+<td>4</td>
+<td>yes</td>
+<td>reward hacking (verbosity, sycophancy), instability</td>
+</tr>
+<tr>
+<td>DPO</td>
+<td>preference pairs</td>
+<td>2</td>
+<td>no</td>
+<td>stale off-policy data</td>
+</tr>
+<tr>
+<td>GRPO/DAPO (RLVR)</td>
+<td>verifier</td>
+<td>2 (+ rollout engine)</td>
+<td>yes</td>
+<td>verifier gaming, compute for rollouts</td>
+</tr>
+<tr>
+<td>On-policy distillation</td>
+<td>teacher per-token</td>
+<td>2</td>
+<td>yes</td>
+<td>capped by teacher quality</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">from trl import GRPOConfig, GRPOTrainer
+
+def correctness_reward(completions, answer, **kw):
+    return [1.0 if c.strip().endswith(a) else 0.0 for c, a in zip(completions, answer)]
+
+cfg = GRPOConfig(num_generations=8, use_vllm=True)   # loss_type defaults to &quot;dapo&quot; in current TRL
+trainer = GRPOTrainer(model=&quot;Qwen/Qwen3-1.7B&quot;, reward_funcs=correctness_reward,
+                      args=cfg, train_dataset=math_ds)
+trainer.train()
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Post-training</td>
+<td>everything after pre-training: SFT, preference tuning, RL</td>
+</tr>
+<tr>
+<td>SFT</td>
+<td>next-token loss on curated instruction/response data</td>
+</tr>
+<tr>
+<td>PEFT</td>
+<td>parameter-efficient fine-tuning (LoRA, adapters, prefix tuning, DoRA)</td>
+</tr>
+<tr>
+<td>LoRA rank r</td>
+<td>bottleneck width of the low-rank update</td>
+</tr>
+<tr>
+<td>NF4</td>
+<td>4-bit NormalFloat format used by QLoRA</td>
+</tr>
+<tr>
+<td>Reward model</td>
+<td>network scoring (prompt, response) from preference data</td>
+</tr>
+<tr>
+<td>PPO</td>
+<td>policy-gradient RL algorithm used in classic RLHF</td>
+</tr>
+<tr>
+<td>KL penalty / β</td>
+<td>tether to reference model preventing drift</td>
+</tr>
+<tr>
+<td>DPO</td>
+<td>direct preference loss, no reward model</td>
+</tr>
+<tr>
+<td>RLVR</td>
+<td>RL with programmatic, verifiable rewards</td>
+</tr>
+<tr>
+<td>GRPO</td>
+<td>group-relative advantages, no critic</td>
+</tr>
+<tr>
+<td>DAPO / GSPO</td>
+<td>GRPO refinements (length bias, sequence-level weighting)</td>
+</tr>
+<tr>
+<td>On-policy distillation</td>
+<td>student samples, teacher grades each token</td>
+</tr>
+<tr>
+<td>Reward hacking</td>
+<td>exploiting judge/verifier flaws</td>
+</tr>
+<tr>
+<td>Catastrophic forgetting</td>
+<td>losing general skills after narrow tuning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. When should you fine-tune rather than use RAG or prompting?</strong>
+Prompt first (cheapest iteration). RAG for knowledge that changes or needs citations. Fine-tune for behaviour — format, tone, tool-calling patterns, domain phrasing, latency/cost via distilling into a smaller model. Fine-tuning is a poor, uncitable way to inject facts.</p>
+<p><strong>Q2. How does LoRA work and why is it popular?</strong>
+Freeze W₀ and learn ΔW = BA with small rank r on selected layers. Trainable params and optimizer memory drop by orders of magnitude, adapters are megabytes, can be merged (no latency) or hot-swapped per tenant. QLoRA adds a 4-bit frozen base so a 65B model fits on one 48 GB GPU.</p>
+<p><strong>Q3. Compare RLHF and DPO.</strong>
+RLHF: reward model from preferences, then online PPO with a KL tether — powerful but four models, unstable, reward-hackable. DPO: closed-form loss on the same preference pairs against a frozen reference — no reward model or sampling, cheap and stable, but offline.</p>
+<p><strong>Q4. What is GRPO and why did it matter for reasoning models?</strong>
+For each prompt sample a group of completions, score with a verifier, and use each completion's reward relative to the group mean/std as its advantage — no value network. Paired with verifiable rewards (RLVR) it scaled RL cheaply and produced emergent long chain-of-thought in DeepSeek-R1; DAPO/GSPO refine its stability and length bias.</p>
+<p><strong>Q5. What can go wrong in post-training?</strong>
+Reward hacking (verbosity, sycophancy, gaming tests), catastrophic forgetting (including safety), chat-template mismatch between training and serving, overfitting to eval sets that overlap training data, and verifier weaknesses. Mitigate with broad regression evals, KL tethers, mixed general data, LoRA, and robust verifiers.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>LoRA: https://arxiv.org/abs/2106.09685</li>
+<li>QLoRA: https://arxiv.org/abs/2305.14314</li>
+<li>InstructGPT (Training language models to follow instructions with human feedback): https://arxiv.org/abs/2203.02155</li>
+<li>DPO: https://arxiv.org/abs/2305.18290</li>
+<li>DeepSeekMath (introduces GRPO): https://arxiv.org/abs/2402.03300</li>
+<li>DeepSeek-R1: https://arxiv.org/abs/2501.12948</li>
+<li>Tülu 3 (RLVR): https://arxiv.org/abs/2411.15124</li>
+<li>DAPO: https://arxiv.org/abs/2503.14476</li>
+<li>TRL GRPO Trainer docs: https://huggingface.co/docs/trl/grpo_trainer</li>
+<li>Thinking Machines — On-Policy Distillation: https://thinkingmachines.ai/blog/on-policy-distillation/</li>
+<li>Hugging Face PEFT docs: https://huggingface.co/docs/peft</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode seven: the fine-tuning landscape — LoRA and parameter-efficient fine-tuning, R L H F, D P O, and the newer reinforcement learning methods behind reasoning models. Over the last six episodes we built a transformer, trained it to predict the next token on trillions of tokens, served it, and scaled it. What comes out of pre-training, though, is not an assistant. Ask a raw base model "what is the capital of France?" and it might reply with three more quiz questions, because on the internet, a quiz question is usually followed by more quiz questions. It knows an enormous amount. It just does not know it is supposed to help you.
+
+Here is the cold open that made the whole field pay attention. In twenty twenty-two, OpenAI published the InstructGPT paper. Human raters compared answers from the full one-hundred-and-seventy-five-billion-parameter G P T three against answers from a model with just one point three billion parameters — more than a hundred times smaller — that had been through fine-tuning with human feedback. The raters preferred the small, fine-tuned model. A hundred times fewer parameters, and it won, because it had learned to behave. Everything in today's episode is about that step: the post-training that turns a knowledgeable autocomplete into something you can deploy.
+
+[PAUSE 1s]
+
+## Why it matters
+
+In your work, fine-tuning is the most over-requested and under-understood tool in the kit. Stakeholders ask for it when what they need is better prompting or retrieval. And when it is the right tool, the choice between full fine-tuning, LoRA, D P O and reinforcement learning decides whether the project costs a few hundred dollars on one G P U or a small fortune on a cluster. Interviewers probe this area because it separates people who have read a blog post from people who understand what each method actually optimises and what it breaks.
+
+[PAUSE 1s]
+
+## The mental image: the great console
+
+Let us build one picture.
+
+In your mind's eye, picture an enormous mixing console standing against the back wall of a large room — a wall of knobs, floor to ceiling, billions of them. Each knob is one parameter. Pre-training set every one of those knobs. That console is the base model, and it is the centrepiece of everything we will do. Most of the time, we will tape most of those knobs down.
+
+In front of the console, running across the room from left to right, are three stations. Think of them as three rooms the model walks through, in order.
+
+On the left, the classroom: a desk piled with worked examples — a question on one side of each card, a model answer on the other. That is supervised fine-tuning.
+
+In the middle, the judging table: two answers laid side by side, and a judge pointing at the better one. That is preference tuning — R L H F and D P O.
+
+On the right, the practice arena, with a big automatic scoreboard mounted above it: the model attempts problems, and the scoreboard lights up green or red by itself, because the answers can be checked — a maths result matches or it does not, the code passes its tests or it does not. That is reinforcement learning with verifiable rewards.
+
+And one last detail. Clipped onto the right side of the great console is a small, slim add-on panel with only a handful of knobs. That panel is LoRA. Hold the picture: the great console against the back wall, the clip-on panel at its side, and in front, the classroom on the left, the judging table in the middle, the practice arena with its scoreboard on the right.
+
+[PAUSE 1s]
+
+## Under the hood: the classroom
+
+Start on the left. Supervised fine-tuning, S F T, is exactly the pre-training objective you already know — predict the next token — but on a curated dataset of instructions and ideal responses, formatted in a chat template with special markers for system, user and assistant turns. One detail matters: the loss is usually computed only on the response tokens, not on the prompt. You are teaching the model how to answer, not how to write questions.
+
+Two surprising facts about the classroom. First, it needs less data than people expect. Research on small, carefully curated sets showed that around a thousand high-quality examples can teach format and style remarkably well, because the knowledge is already on the console; S F T mostly teaches it which knobs to reach for. Second, S F T teaches behaviour and format far better than it teaches facts. It is poor at injecting new knowledge reliably, and when it does absorb a fact it cannot tell you where it came from.
+
+## The console and the clip-on panel: why full fine-tuning hurts
+
+Now, how do you actually move the knobs? The naive way is full fine-tuning: unlock every knob on the console and let gradient descent turn all of them. The cost is brutal. With standard mixed-precision training and the Adam optimiser, you hold the weights, the gradients, and two optimiser moments for every parameter, plus a full-precision master copy — roughly sixteen bytes per parameter before you count activations. For a seven-billion-parameter model that is over a hundred gigabytes. For seventy billion, over a terabyte, which means a multi-G P U cluster just to fine-tune. And at the end you have a complete new copy of the model to store and serve, for every customer or task.
+
+So look at the clip-on panel. LoRA, low-rank adaptation, from Microsoft researchers in twenty twenty-one, tapes every knob on the great console down. Frozen. Then for selected weight matrices — typically the attention projections, and increasingly all the linear layers — it adds a small side-path: two thin matrices multiplied together. Picture them as two slim strips on the clip-on panel: the first squeezes the layer's wide input down to a narrow bottleneck, the rank, often eight, sixteen or sixty-four; the second expands it back out. The product of the two strips is the change applied to the big weight matrix. Only the strips are trained.
+
+The payoff is dramatic. The LoRA paper reported cutting trainable parameters for the hundred-and-seventy-five-billion G P T three by about ten thousand times, and G P U memory by about three times, with quality on par with full fine-tuning on the tasks tested. The adapter files are megabytes, not gigabytes. After training you can merge the strips back into the big weights, so there is no extra inference latency. Or keep them separate and swap them: one base model in memory, dozens of customer-specific panels hot-swapped per request. Serving engines support exactly this — multi-LoRA serving.
+
+Then Q LoRA pushed further. Store the frozen console itself in four-bit precision, using a special four-bit number format designed for the bell-curve shape of neural network weights, quantize even the quantization constants, and page optimiser state to C P U memory when it spikes. Train the LoRA strips in sixteen-bit on top. The Q LoRA paper fine-tuned a sixty-five-billion-parameter model on a single forty-eight-gigabyte G P U while matching sixteen-bit fine-tuning quality on their benchmarks. That paper is why fine-tuning became something a small team can do in an afternoon.
+
+The honest tradeoff, often summarised as "LoRA learns less and forgets less": a low-rank panel cannot express every possible change, so for big shifts — a new language, a new domain with lots of data — full fine-tuning can still win. But because the console is taped down, the model also forgets less of what it knew. For most enterprise tasks — format, tone, domain phrasing, a classification head — LoRA is the default, and rank and target layers are the knobs you tune.
+
+[PAUSE 1s]
+
+## Under the hood: the judging table
+
+Walk to the middle of the room. The classroom taught the model to answer. But for many tasks there is no single correct answer to imitate — there are better and worse answers: more helpful, more honest, less harmful, better calibrated. Humans find it much easier to compare two answers than to write the perfect one. So we lay two answers side by side on the judging table and record which one wins.
+
+Classic R L H F, reinforcement learning from human feedback, as in InstructGPT, uses that table in three steps. Step one, S F T, the classroom. Step two, train a reward model: a separate network that reads a prompt and an answer and outputs a single score, trained so that preferred answers score higher than rejected ones. It is a learned judge you can consult millions of times. Step three, reinforcement learning with the P P O algorithm: the model generates answers, the reward model scores them, and the model's knobs are nudged toward higher scores — while a penalty keeps it from drifting too far from the original S F T model, measured by K L divergence. That tether matters, and we will see why.
+
+It works, but it is heavy. During P P O you hold four models at once: the policy being trained, a frozen reference copy for the tether, the reward model, and a value model that estimates expected reward. It is finicky to tune, and it invites reward hacking — the model finds whatever the learned judge over-rewards. The classic symptoms are answers that grow longer and longer because the judge liked thoroughness, and sycophancy, agreeing with the user because raters liked being agreed with.
+
+Then in twenty twenty-three, D P O — direct preference optimisation, from a Stanford team — collapsed the judging table into the classroom. The key insight: with a bit of algebra, the optimal policy under the R L H F objective can be written directly in terms of the preference data, so you never need a separate reward model or any sampling loop. You take each pair — chosen answer, rejected answer — and apply a simple classification-style loss that raises the model's probability of the chosen answer relative to a frozen reference copy, and lowers the rejected one. One knob, usually called beta, sets how tightly the tether holds. Two models in memory instead of four, stable, cheap, and it runs on the same tooling as S F T. D P O and its relatives — variants that need only thumbs-up or thumbs-down labels, or that fold the S F T step in — became the standard way to do preference tuning in open-source work, and it combines happily with LoRA.
+
+The catch: D P O is offline. It learns only from the pairs on the table, which were generated by some older model. It cannot explore answers the model would produce now. That limitation is exactly what the right-hand station addresses.
+
+[PAUSE 1s]
+
+## Under the hood: the practice arena
+
+Walk to the right, to the practice arena under the big scoreboard. This is where the most important post-training shift of the last two years happened.
+
+For maths, code, and many structured tasks, you do not need a human judge or a learned reward model. You can check the answer. The maths result matches the reference or it does not. The code passes the unit tests or it does not. The output is valid against the schema or it is not. Replace the learned judge with a verification function and you get reinforcement learning with verifiable rewards, R L V R — a name popularised by the Allen Institute's Tulu three work. Because the scoreboard is a program, not a network, it is much harder to fool, so you can run far more reinforcement learning without the model gaming its judge.
+
+The algorithm that made this practical is G R P O, group relative policy optimisation, introduced in DeepSeek's maths work and made famous by DeepSeek R one. Here is how it looks in the arena. For each practice problem, the model attempts it, say, eight or sixteen times. The scoreboard marks each attempt. Then, instead of training a value model to estimate how good an attempt should have been, G R P O simply compares each attempt to its own group: attempts that scored above the group average get pushed up, attempts below get pushed down. The group is its own baseline. That removes the value model entirely, cutting memory and complexity, and it fits sparse right-or-wrong rewards perfectly.
+
+The striking result from DeepSeek R one was that long chains of reasoning — checking work, backtracking, trying another approach — emerged from this reinforcement learning with verifiable rewards, rather than being hand-written into demonstrations. Since then, variants have fixed rough edges: DAPO addressed a bias toward length and training instabilities, and is now the default loss in Hugging Face's T R L library's G R P O trainer; other variants move the importance weighting from single tokens to whole sequences, which helps stability, especially for mixture-of-experts models. Most open reasoning models released since have used some member of this family.
+
+One more technique in the arena worth knowing: on-policy distillation. The student model attempts the problem itself — on-policy, its own mistakes — and a stronger teacher model grades every single token of that attempt, not just the final answer. That gives the dense feedback of distillation with the relevance of reinforcement learning. Thinking Machines reported reaching strong maths reasoning with an eight-billion-parameter student at roughly a tenth of the compute of reinforcement learning. In twenty twenty-six, research pipelines commonly combine it with R L V R: dense teacher guidance, plus the scoreboard for final correctness.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Now the sharp edges.
+
+First and most important: do not fine-tune for facts. Here is the war story, generic but repeated in many companies. A team wanted an internal assistant that knew their product catalogue, so they fine-tuned a model on thousands of question-and-answer pairs generated from the catalogue. Evaluation on those same questions looked great. In production, the model answered in perfect house style — and confidently invented prices and specifications for products it had seen only a few times, and it could never say where an answer came from. Catalogue updates meant retraining. The fix was retrieval for the facts, plus a small LoRA for tone and output format. Fine-tuning teaches behaviour; retrieval supplies knowledge.
+
+Second, catastrophic forgetting. Aggressive fine-tuning on a narrow task can erode general abilities, including safety behaviours. Mix in some general data, prefer LoRA, keep learning rates modest, and always evaluate on a broad regression suite, not just your target task.
+
+Third, the template trap. A model fine-tuned with one chat template and served with a slightly different one — a missing special token, a different system-prompt position — can degrade badly and mysteriously. Use the tokenizer's own template in both training and serving.
+
+Fourth, reward hacking never fully goes away. Verifiable rewards are harder to game, but not impossible: models have learned to special-case the test inputs, or to satisfy a checker's format without solving the problem. The scoreboard is only as good as its tests.
+
+And on costs, order of magnitude: a LoRA or Q LoRA run on a seven-to-eight-billion model with a few thousand examples is hours on a single G P U. D P O is a similar order. Full reinforcement learning with G R P O needs many rollouts per prompt, which means serving and training at the same time — commonly an inference engine like v L L M generating attempts next to the trainer — and quickly becomes a multi-G P U project.
+
+[PAUSE 1s]
+
+## Interview angle
+
+When they ask, "When would you fine-tune instead of using R A G?" a strong answer sounds like: "Retrieval for knowledge that changes or needs citations. Fine-tuning for behaviour: output format, tone, domain phrasing, tool-calling patterns, or distilling a big model's behaviour into a small cheap one. And I would exhaust prompting first, because it is the cheapest to iterate."
+
+When they ask, "Explain LoRA." — "Freeze the pre-trained weights and learn a low-rank update — two thin matrices whose product is added to selected weight matrices. It trains a tiny fraction of parameters, cuts optimiser memory, produces megabyte-size adapters that can be merged for zero latency or swapped per tenant. Q LoRA adds a four-bit frozen base so large models fit on one G P U. The tradeoff is less capacity for big distribution shifts."
+
+When they ask, "R L H F versus D P O?" — "R L H F trains a reward model on preference pairs, then optimises the policy with P P O under a K L tether — powerful, online, but four models in memory and prone to reward hacking. D P O derives a direct loss on the same preference pairs against a frozen reference — no reward model, no sampling, stable and cheap, but offline."
+
+And the question that shows you are current: "How are reasoning models trained?" — "Reinforcement learning with verifiable rewards, typically G R P O or a successor like DAPO: sample a group of attempts per problem, score them with a checker, and push up the above-average ones — no value model. Increasingly combined with on-policy distillation from a stronger teacher."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Walk the room once more. Against the back wall, the great console — billions of knobs set by pre-training, knowing everything, helping no one. Clipped to its side, the slim LoRA panel: tape the console down, train two thin strips, megabytes instead of gigabytes; Q LoRA shrinks the taped-down console to four bits so it fits on one G P U. In front, left to right. The classroom: supervised fine-tuning on worked examples, loss on the answers, teaching format and behaviour, not facts. The judging table: two answers side by side — R L H F learns a judge and runs P P O with a tether; D P O skips the judge and trains directly on the pairs. And the practice arena under the scoreboard: verifiable rewards, G R P O comparing each attempt to its own group, reasoning emerging from practice, and a teacher grading every token in on-policy distillation. Behaviour from the console, knowledge from retrieval.
+
+Next episode is the Track Seven drill — rapid-fire questions across the whole transformer track. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="06-scaling-moe.html">← Scaling Laws, Mixture-of-Experts, Long Context</a><a class="btn" href="08-transformers-drill.html">DRILL: Transformers Rapid-Fire →</a></div></main></div></body></html>

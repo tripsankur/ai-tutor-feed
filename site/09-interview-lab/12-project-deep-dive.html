@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Project Deep-Dive Round: Presenting Your Architecture — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="active" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 12</div>
+<h1 class="lesson">The Project Deep-Dive Round: Presenting Your Architecture</h1>
+<div class="meta">17 min listen · How to run the ten-minute project architecture deep dive: a seven-segment ribbon (problem, constraints, architecture, decisions and rejected alternatives, numbers, failures, next steps) drawn above a growing diagram, worked through an agentic document-QA assistant for a regulated financial firm — plus handling interruptions, 'why not X', latency metrics, deployment framework choices, and the role-expectations conversation.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/12-project-deep-dive" onclick="toggleDone('09-interview-lab/12-project-deep-dive')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>The deep-dive round is won by structure, not by knowing your project: a ten-minute, seven-segment walkthrough (problem → constraints → architecture → decisions &amp; rejected alternatives → numbers → failures → next) that builds one diagram as one request travels through it, backed by percentile numbers and honest failures, followed by sharp questions about how the team actually ships.</p>
+<h2 id="the-mental-image-the-ribbon-and-the-drawing">The mental image: the ribbon and the drawing</h2>
+<p>A whiteboard. Across the top, a <strong>ribbon</strong> = your ten minutes in seven segments. Below it, the <strong>architecture drawing</strong>, which only grows when your finger moves one segment right along the ribbon. Interruption? Answer, then put your finger back on the ribbon.</p>
+<table>
+<thead>
+<tr>
+<th>Ribbon segment</th>
+<th>Time</th>
+<th>What gets added to the drawing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Problem</td>
+<td>~1 min</td>
+<td>User (left), document corpus (right), empty space between</td>
+</tr>
+<tr>
+<td>2. Constraints</td>
+<td>~1 min</td>
+<td>Dashed trust boundary + lock (residency, audit, entitlements, latency SLO, scale)</td>
+</tr>
+<tr>
+<td>3. Architecture</td>
+<td>~3 min</td>
+<td>Gateway → orchestrator → retrieval (below) → model serving (right) → citation checker → audit log (bottom), eval loop (top)</td>
+</tr>
+<tr>
+<td>4. Decisions</td>
+<td>~2 min</td>
+<td>Crossed-out alternatives in the margins</td>
+</tr>
+<tr>
+<td>5. Numbers</td>
+<td>~1 min</td>
+<td>Stopwatch / metric callouts on each box</td>
+</tr>
+<tr>
+<td>6. Failures</td>
+<td>~1.5 min</td>
+<td>Red "scar" marks on the boxes that broke</td>
+</tr>
+<tr>
+<td>7. Next</td>
+<td>~0.5 min</td>
+<td>Dotted future boxes</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart LR
+    P["1 Problem"] --> C["2 Constraints"] --> A["3 Architecture"] --> D["4 Decisions"] --> N["5 Numbers"] --> F["6 Failures"] --> X["7 Next"]
+</pre>
+
+<h2 id="worked-example-agentic-document-qa-assistant-for-a-regulated-financial-firm">Worked example: agentic document-QA assistant for a regulated financial firm</h2>
+<p>(Generic, illustrative numbers — present your own real ones, or orders of magnitude, never invented precision.)</p>
+<pre class="mermaid">flowchart LR
+    U["User (RM / ops / compliance)"] --> GW
+    subgraph TBOUND["Trust boundary (firm cloud, data residency)"]
+        GW["Gateway: SSO auth, entitlements lookup, PII redaction, input-length cap"] --> OR["Orchestrator: LangGraph state machine (classify, retrieve, answer, clarify, refuse)"]
+        OR --> RET["Hybrid retrieval (BM25 + vector), section-level chunks, entitlement filter in-query, version-aware"]
+        RET --> IDX[("Versioned index: doc_id, section_id, version, hash")]
+        OR --> SRV["vLLM on Kubernetes (open-weight model), autoscaled on queue depth"]
+        OR -.->|"redacted hard queries only"| MG["Model gateway: approved hosted model"]
+        SRV --> CC["Citation checker / guardrails"]
+        MG --> CC
+        CC --> OR
+        EV["Eval harness: golden set replay on every change"] -.-> OR
+        AUD[("Audit log: question (redacted), section IDs + versions, model + prompt versions, answer, latency breakdown")]
+    end
+    OR --> U
+    OR -.-> AUD
+</pre>
+
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Example value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corpus</td>
+<td>~40k policy/product/procedure documents, a few million section-level chunks</td>
+</tr>
+<tr>
+<td>Users / load</td>
+<td>several hundred daily users, peak ~15–20 req/s</td>
+</tr>
+<tr>
+<td>Latency SLOs</td>
+<td>TTFT p95 ≈ 1.5 s; ITL a few tens of ms; E2E p95 &lt; ~8 s (includes citation check); retrieval p95 ≈ 250 ms</td>
+</tr>
+<tr>
+<td>Quality</td>
+<td>Groundedness (LLM judge, calibrated vs humans) ~90% → ~96% after citation checker; refusal rate ~5% (a feature)</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>on the order of 1–2 cents per answered question (self-hosted, at target utilization)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="decisions-chosen-rejected-what-would-change-our-mind">Decisions: chosen / rejected / what would change our mind</h3>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Chosen</th>
+<th>Rejected</th>
+<th>Would revisit if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where the model runs</td>
+<td>Self-hosted for client-data queries; hosted model for redacted hard queries</td>
+<td>Hosted API only</td>
+<td>An in-region, contractually isolated deployment passes vendor-risk review</td>
+</tr>
+<tr>
+<td>Serving engine</td>
+<td>vLLM (PagedAttention, continuous batching, prefix caching, Prometheus metrics)</td>
+<td>SGLang (strong prefix reuse/structured output), TensorRT-LLM (top NVIDIA throughput, heavier build); TGI (maintenance mode since Dec 2025, HF recommends vLLM/SGLang)</td>
+<td>Benchmarks on <em>our</em> prompts show a material TTFT/throughput win worth the migration</td>
+</tr>
+<tr>
+<td>Knowledge strategy</td>
+<td>RAG with version-aware index + citations</td>
+<td>Fine-tuning the answer model</td>
+<td>Stable, rarely-changing knowledge where citations aren't required</td>
+</tr>
+<tr>
+<td>Orchestration</td>
+<td>LangGraph (explicit branches, checkpoints for audit/HITL)</td>
+<td>Free-form agent loop</td>
+<td>Flow collapses to a single retrieve-then-answer chain</td>
+</tr>
+<tr>
+<td>Autoscaling signal</td>
+<td><code>vllm:num_requests_waiting</code> (queue depth) via custom/external metrics</td>
+<td>CPU utilization</td>
+<td>— (CPU says nothing about a GPU-bound server)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="latency-metrics-what-to-measure-and-why-vllm-prometheus-names">Latency metrics: what to measure and why (vLLM Prometheus names)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>vLLM metric</th>
+<th>Why you watch it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time to first token</td>
+<td><code>vllm:time_to_first_token_seconds</code> (histogram)</td>
+<td>Perceived responsiveness in a streaming UI; dominated by queueing + retrieval + prefill</td>
+</tr>
+<tr>
+<td>Inter-token latency</td>
+<td><code>vllm:inter_token_latency_seconds</code> (histogram)</td>
+<td>Smoothness of streaming; decode-bound</td>
+</tr>
+<tr>
+<td>End-to-end</td>
+<td><code>vllm:e2e_request_latency_seconds</code> (histogram) + app-level span incl. retrieval &amp; citation check</td>
+<td>What the user actually waits for before acting</td>
+</tr>
+<tr>
+<td>Queue depth</td>
+<td><code>vllm:num_requests_waiting</code> (gauge)</td>
+<td>Leading indicator — rises before TTFT does; autoscaling signal</td>
+</tr>
+<tr>
+<td>KV-cache pressure</td>
+<td><code>vllm:kv_cache_usage_perc</code> (gauge)</td>
+<td>Near 100% → preemption, waiting requests</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-promql"># p95 time to first token over 5 minutes
+histogram_quantile(0.95, sum by (le) (rate(vllm:time_to_first_token_seconds_bucket[5m])))
+</code></pre>
+<p>Always percentiles (p95/p99), never averages; always a per-component breakdown (gateway, retrieval, prefill/TTFT, decode, checker).</p>
+<h3 id="failure-stories-symptom-root-cause-fix-guardrail">Failure stories (symptom → root cause → fix → guardrail)</h3>
+<ol>
+<li><strong>Superseded fee schedule quoted with a valid-looking citation.</strong> Root cause: re-indexing appended new chunks, deleted sections left orphaned old chunks. Fix: section-level content hashing, version-stamped chunks, tombstoning of removed sections. Guardrail: nightly index-vs-source reconciliation alerting on orphans. (See episode 8.)</li>
+<li><strong>Morning p99 TTFT spikes + stuttering streams.</strong> Root cause: users pasting whole documents → huge prefills. vLLM V1 chunks prefills by default (decodes are scheduled first), so the batch isn't frozen, but long prefills consume the <code>max_num_batched_tokens</code> budget for many steps and other prompts queue. Fix: gateway input-length cap; lower <code>max_num_batched_tokens</code> on the latency-sensitive pool (smaller → better ITL, larger → better TTFT/throughput per vLLM docs); route very long requests to a separate pool. (See episode 2.)</li>
+</ol>
+<h2 id="handling-interruptions-and-why-not-x">Handling interruptions and "why not X"</h2>
+<ul>
+<li><strong>Interruption:</strong> answer in 2–3 sentences → "Coming back to the drawing, the question has reached retrieval." If it belongs to a later segment: "That's one of the decisions I'll cover in two minutes — can I come back to it?" — then do.</li>
+<li><strong>"Why not X?"</strong> three beats: (1) what X is genuinely good at, (2) the specific constraint that ruled it out <em>for you</em>, (3) what would change your mind. Never trash X; never "we just preferred it".</li>
+<li><strong>I vs we:</strong> "we" for the system, "I" for what you owned; say who owned the rest.</li>
+</ul>
+<h2 id="role-expectations-questions-to-ask">Role &amp; expectations: questions to ask</h2>
+<ol>
+<li>What does success look like in this role at 90 days and at one year?</li>
+<li>How does an agent/model change reach production — which evaluation gates and model-risk approvals, and how long does it take?</li>
+<li>Who owns evaluation sets / golden data — engineering, the business, or a risk function?</li>
+<li>Hosted vs self-hosted models: what's the split today and is it changing?</li>
+<li>What is on-call like for these systems, and what was the last serious incident?</li>
+<li>What does the team wish it had done differently on its current agent platform?</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTFT</td>
+<td>Time to first token — queueing + prefill (+ your retrieval if measured at the app)</td>
+</tr>
+<tr>
+<td>ITL / TPOT</td>
+<td>Inter-token latency / time per output token — decode speed</td>
+</tr>
+<tr>
+<td>E2E latency</td>
+<td>Request start to final token (plus post-processing such as citation checks)</td>
+</tr>
+<tr>
+<td>Goodput</td>
+<td>Requests/s that meet all latency SLOs, not raw throughput</td>
+</tr>
+<tr>
+<td>Chunked prefill</td>
+<td>Splitting long prompt prefill into slices interleaved with decode (on by default in vLLM V1, bounded by <code>max_num_batched_tokens</code>)</td>
+</tr>
+<tr>
+<td>Trust boundary</td>
+<td>The infrastructure perimeter client data may not leave unredacted</td>
+</tr>
+<tr>
+<td>Entitlement filtering</td>
+<td>Access control applied inside the retrieval query, not post-hoc</td>
+</tr>
+<tr>
+<td>Citation checker</td>
+<td>Post-generation guard verifying each claim is supported by a cited retrieved section</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions with strong answers</h2>
+<p><strong>Q1. Walk me through the architecture of a project you built.</strong>
+"Ten minutes: problem, constraints, architecture, decisions, numbers, failures, next — interrupt any time." Then problem in business terms with a number, constraints (residency, audit, entitlements, latency SLO, scale), and the architecture drawn by following one request left to right, stating what you personally owned.</p>
+<p><strong>Q2. Which latency metrics did you measure and why?</strong>
+TTFT (perceived responsiveness in streaming UI), inter-token latency (streaming smoothness), end-to-end including post-generation checks (when the user can act), and a per-component breakdown (where to optimize) — all as p95/p99, not averages — plus queue depth as the leading indicator and autoscaling signal. Mention the vLLM histogram names you scraped.</p>
+<p><strong>Q3. What frameworks did you use for LLM deployment, and why not the alternatives?</strong>
+vLLM on Kubernetes for PagedAttention, continuous batching, prefix caching and Prometheus metrics; considered SGLang (prefix reuse, structured output) and TensorRT-LLM (throughput, heavier builds); TGI is in maintenance mode since Dec 2025 so it would need a specific reason. Hosted model behind a gateway for redacted hard queries. Would switch engines only on a benchmark win on our own traffic.</p>
+<p><strong>Q4. Tell me about something that went wrong.</strong>
+Symptom → root cause → fix → guardrail. E.g. superseded section served with valid-looking citation because deletions left orphaned chunks; fixed with version-stamped section chunks, tombstones and nightly reconciliation.</p>
+<p><strong>Q5. Why not just use a managed hosted API?</strong>
+Acknowledge: faster to ship, stronger frontier models. Constraint: client data couldn't leave the boundary unredacted and redaction hurt quality on the questions that mattered. Would revisit with an in-region isolated deployment that passes vendor-risk review.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>vLLM production metrics (metric names): https://docs.vllm.ai/en/stable/design/metrics/</li>
+<li>vLLM optimization &amp; tuning (chunked prefill, <code>max_num_batched_tokens</code>, preemption): https://docs.vllm.ai/en/stable/configuration/optimization/</li>
+<li>Hugging Face TGI (maintenance-mode notice, recommends vLLM/SGLang): https://huggingface.co/docs/text-generation-inference/index</li>
+<li>TGI repository: https://github.com/huggingface/text-generation-inference</li>
+<li>Kubernetes Horizontal Pod Autoscaler: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/</li>
+<li>LangGraph persistence (checkpoints for audit/HITL): https://docs.langchain.com/oss/python/langgraph/persistence</li>
+<li>Related: Track 9 episodes 2 (KV cache &amp; serving params), 3 (autoscaling), 4 (latency metrics &amp; frameworks), 8 (RAG document versioning); Track 3 episode 3 (latency &amp; cost).</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode twelve: the project deep-dive round — presenting your architecture.
+
+Here are the exact prompts, from the second round of a real Agentic A I Engineer interview at a financial-services firm. First: "Walk me through the architecture of a project you've built." Then, woven through it: "Which latency metrics did you measure, and why those?" "What frameworks did you use for L L M deployment?" And near the end, the one people under-prepare for: "Let's talk about the role — what are you expecting, and what questions do you have for us?"
+
+This round feels like the easy one. It's your own project. You know it better than anyone in the room. And that's exactly why candidates fail it. They know too much, so they wander: fifteen minutes on the data ingestion they're proud of, two minutes on the decision the interviewer actually cared about, and no numbers at all. The interviewer walks away with a vague impression of "built a R A G thing" instead of "this person made hard calls under real constraints and can prove it."
+
+Today we fix that with a structure you can reuse for any project, and we'll rehearse it on one worked example: an agentic document question-answering assistant for a regulated financial firm. It's generic on purpose — swap in your own project, keep the skeleton.
+
+## Why this round decides offers
+
+The technical round tests whether you know things. The deep dive tests whether you've done things — and whether your judgment scales. Interviewers are listening for four signals. Can you frame a problem in business terms, not technology terms? Do you know why each component exists, including what you rejected? Do you have numbers — real latencies, real quality scores, real costs? And do you learn — can you name what broke and what you changed? At senior and staff level, there's a fifth: can you separate what you personally drove from what the team did, without either hiding behind "we" or taking credit for everything?
+
+The format matters too. Most deep dives give you around ten minutes of uninterrupted-ish presentation, then thirty minutes of probing. If your ten minutes are well structured, the probing lands on your strengths. If they aren't, the interviewer goes hunting, and they'll find the thing you're least ready for.
+
+[PAUSE 1s]
+
+## The mental image: the ribbon and the drawing
+
+Picture a whiteboard. Across the very top, running left to right, a thin ribbon — a timeline of your ten minutes, divided into seven segments. From left to right, the segments read: problem. Constraints. Architecture. Decisions. Numbers. Failures. Next.
+
+Below the ribbon, the rest of the board is empty. That's where the architecture drawing will grow. And here's the rule that makes this image work: every time your finger moves one segment to the right along the ribbon, something gets added to the drawing below. The drawing never appears all at once. It builds, in step with the story.
+
+Let me give you the rough budget, so the ribbon has proportions. Problem: about one minute. Constraints: about one minute. Architecture: three minutes — the widest segment. Decisions and rejected alternatives: two minutes. Numbers: one minute. Failures and what you changed: one and a half minutes. What's next: thirty seconds. Ten minutes, give or take.
+
+Hold that. Ribbon on top, seven segments, drawing growing underneath. Now let's walk the finger along it with the worked example.
+
+[PAUSE 2s]
+
+## Segment one: the problem
+
+Finger on the leftmost segment. Say the problem in one or two sentences, in business language, with a number. For the worked example: "Relationship managers and operations staff at a regulated financial firm spent a large share of their day searching tens of thousands of policy documents, product disclosures, and procedure manuals to answer client and compliance questions. Answers were slow and inconsistent, and a wrong answer carries regulatory risk." Then the target: "The goal was an assistant that answers in seconds, cites the exact section it relied on, and refuses when it isn't sure."
+
+What goes on the drawing below? Just two things, on the far left and far right. On the left, a small figure: the user. On the far right, a stack of paper: the document corpus. Nothing in between yet. The empty space between them is the problem.
+
+## Segment two: the constraints
+
+Finger moves right. Constraints are where regulated-industry projects become interesting, and where most candidates are too brief. Name four or five, crisply. Data: the documents and the questions can contain client personal information, so data residency matters and prompts can't leave approved infrastructure without redaction. Audit: every answer must be reproducible — which documents, which versions, which model, which prompt. Entitlements: not every user may see every document; a trader and a retail adviser have different permissions. Latency: an interactive target, say first token on screen within about one and a half seconds at the ninety-fifth percentile. Scale: around forty thousand documents, a few million chunks, several hundred daily users with a peak of maybe fifteen to twenty requests per second.
+
+On the drawing, add a dashed boundary box around the empty middle — the trust boundary — and a small lock icon on it. That's where the constraints live, visually. Everything you draw next goes inside that box.
+
+[PAUSE 1s]
+
+## Segment three: the architecture
+
+Now the widest segment. Draw left to right, following one question as it travels, and name each box as the question reaches it.
+
+The question leaves the user on the left and hits the first box inside the boundary: a gateway. It authenticates the user against the corporate identity provider, looks up their entitlements, and runs a P I I redaction step on the question text.
+
+Next box to the right: the orchestrator — the agent. Say what framework and why: "a Lang Graph state machine," because the flow has explicit branches — clarify, retrieve, answer, or refuse — and needs checkpoints for audit and human review. The agent first classifies the question: a simple policy lookup, a comparison across documents, or something it should hand to a human.
+
+Below the orchestrator, draw the retrieval box, reaching right toward the document stack. Hybrid search — keyword plus vector — over section-level chunks, with a metadata filter on entitlements applied inside the search, not after it. And the index is version-aware: each chunk carries its document I D, section I D, and version, so superseded sections are never served. We covered how to keep that index consistent under section edits and removals in episode eight.
+
+To the right of the orchestrator, the model serving box. Here's where you answer "which frameworks did you use for deployment." For the worked example: an open-weight model served with v L L M on a Kubernetes cluster inside the firm's own cloud boundary, because client data couldn't go to an external A P I. And behind a model gateway, an approved hosted frontier model, used only for a small share of hard, redacted, non-client queries. Mention autoscaling in one breath: scaled on queue depth — requests waiting in the engine — rather than C P U, which says nothing about a G P U-bound server. Episode three covered why.
+
+Between the model and the user, a final box on the return path: a guardrail and citation checker. It verifies every claim in the answer cites a retrieved section, and that the cited section actually contains the claim. If not, the answer is regenerated once or replaced with a refusal and a link to the relevant documents.
+
+And last, draw a long cylinder along the bottom edge of the boundary box, under everything: the audit log. Every request writes to it — the redacted question, retrieved section I Ds with versions, model and prompt versions, the answer, the latency breakdown. Above the whole box, a small loop: the evaluation harness, replaying a golden set on every change.
+
+Three minutes. One question travelled left to right, and the picture built with it.
+
+[PAUSE 2s]
+
+## Segment four: decisions and the alternatives you rejected
+
+Finger moves right. This is where you earn seniority. Pick two or three decisions, and for each, use the same three-beat shape: what we chose, what we rejected, and what would make us change our minds.
+
+Decision one: self-hosted serving versus a hosted A P I only. We chose self-hosted for client-data queries, because data residency ruled out sending unredacted client context outside the boundary, and redaction alone destroyed too much meaning for some questions. We rejected hosted-only. We'd revisit if an approved provider offered in-region, contractually isolated deployment that passed the firm's vendor risk review.
+
+Decision two: the serving engine. We chose v L L M for its paged K V cache, continuous batching, prefix caching for our long shared system prompt, and its Prometheus metrics, which our autoscaler needed. We seriously considered S G Lang, which is very strong on prefix reuse and structured output, and a Tensor R T based stack, which can squeeze out more throughput on Nvidia hardware at the cost of a heavier build pipeline. One freshness note worth saying if it comes up: Hugging Face's text generation inference server went into maintenance mode at the end of twenty twenty-five, and Hugging Face itself now points new deployments to v L L M or S G Lang — so choosing it today would need a reason.
+
+Decision three: retrieval-augmented generation versus fine-tuning. We chose retrieval, because policies change weekly, answers must cite the current version, and a fine-tuned model can't tell you which document version it learned something from. Fine-tuning a small model for the question classifier was a later optimization, not the core.
+
+On the drawing, the decisions don't add new boxes. Instead, next to three of the existing boxes, write a small crossed-out alternative in the margin: next to model serving, a crossed-out "hosted only"; next to the engine, crossed-out names of the runners-up; next to retrieval, a crossed-out "fine-tune". Rejected alternatives, visibly present. That's what "why not X" readiness looks like.
+
+## Segment five: the numbers
+
+Finger moves right. One minute, and every sentence has a number. This is where the latency-metrics question gets answered on your terms — episode four has the mechanics of each metric; here is how you present them.
+
+Say which latency metrics you measured, and why each. Time to first token, because in a streaming interface it's what the user perceives as responsiveness — our target was about one and a half seconds at the ninety-fifth percentile, dominated by retrieval plus prefill. Inter-token latency — the gap between streamed tokens — because it decides whether the answer reads smoothly; we held it around a few tens of milliseconds, well faster than reading speed. End-to-end latency, because the citation checker runs after generation and the user can't act until it passes; target under about eight seconds at the ninety-fifth percentile. And the component breakdown — retrieval p ninety-five, around two hundred and fifty milliseconds — because an aggregate number can't tell you where to optimize. We watched percentiles, never averages, because averages hide the users who are suffering, and we watched the waiting-queue depth, because it moves before latency does.
+
+Then quality and cost. Groundedness on the golden set, judged by an L L M judge calibrated against human review, moved from roughly ninety to roughly ninety-six percent after the citation checker. Refusal rate held around five percent — and say why that's a feature in a regulated setting. Cost per answered question on the order of a cent or two on self-hosted G P Us at our utilization.
+
+On the drawing: small numeric callouts next to each box. A stopwatch next to retrieval, next to the model, next to the checker. The picture now has a dashboard stuck to it.
+
+A word of honesty that interviewers respect: if you don't remember a number exactly, give the order of magnitude and say so. Invented precision is the fastest way to lose trust in this round, because follow-ups will pull the thread.
+
+[PAUSE 1s]
+
+## Segment six: failures and what you changed
+
+Finger moves right. One and a half minutes, and this is the segment interviewers remember. Give one or two real failures in the same shape: symptom, root cause, fix, and the guardrail you added so it can't recur.
+
+Failure one, the classic regulated-document war story. A few weeks after launch, a compliance reviewer found the assistant confidently quoting a fee schedule that had been superseded. Symptom: correct-looking, well-cited, wrong. Root cause: the ingestion pipeline re-indexed changed documents by appending new chunks, but a section that was deleted from the new version left its old chunks in the index. Fix: section-level content hashing, version-stamped chunks, and a reconciliation job that tombstones any chunk whose section no longer exists. Guardrail: a nightly check comparing index contents against the source of truth, alerting on any orphaned chunk.
+
+Failure two, a latency one. Every morning, time to first token at p ninety-nine spiked to many seconds, and streaming stuttered for everyone. Root cause: a handful of users pasted entire long documents into the question box. Current v L L M already chunks long prefills by default, so they didn't freeze the batch outright — but each one soaked up the per-step batched-token budget for many steps, so other users' prompts queued behind it. Fix: an input-length cap at the gateway with a friendly message, a lower batched-token budget on the latency-sensitive pool to protect inter-token latency, and routing unusually long requests to a separate pool. That's straight out of episode two.
+
+On the drawing: a small red scar mark on the retrieval box and on the model box. Scars are credibility.
+
+## Segment seven: what's next
+
+Finger on the last segment. Thirty seconds. Two or three things you'd do with another quarter: evaluate a smaller distilled model for the classifier to cut cost, add human review queues for low-confidence answers, and move from nightly reconciliation to change-data-capture from the document system. This tells them you see the system's limits clearly.
+
+[PAUSE 2s]
+
+## Handling interruptions and "why not X"
+
+Now the reality: the interviewer won't let you run ten minutes straight. They'll interrupt in segment three with "wait, why Lang Graph?" Here's how the ribbon helps. When interrupted, answer briefly — two or three sentences — and then say where you are: "…and that's why. Coming back to the drawing, the question has reached retrieval." Your finger goes back on the ribbon. If the interruption is a big topic that belongs in a later segment, park it explicitly: "Great question — that's exactly one of the decisions I'll cover in two minutes; can I come back to it there?" Then actually come back to it. Interviewers notice.
+
+For "why not X," use the three beats from segment four: acknowledge what X is genuinely good at, name the specific constraint that ruled it out for you, and say what would change your mind. "Why not just use a managed hosted A P I?" — "It would have been faster to ship and the frontier models are stronger. But client data couldn't leave our boundary unredacted, and redaction hurt answer quality on exactly the questions users cared about. If an in-region, isolated deployment passed our vendor review, I'd move the hard-query tier there." Never trash X. Never say "we just preferred it."
+
+And the "I versus we" discipline. Say "we" for the team's system and "I" for what you owned: "I designed the retrieval versioning and the citation checker; the platform team owned the cluster." If asked about something you didn't own, say so and say how you worked with the owner. Overclaiming gets caught in follow-ups.
+
+## The role and expectations conversation
+
+The last ten minutes. Two halves: what you expect, and what you ask.
+
+What you expect: be concrete about the work you want to do and where you add value. "I'm looking for a role where I own agentic systems end to end, from retrieval and evaluation through serving, in a setting where reliability and auditability matter." Tie it to what you've just shown them.
+
+What you ask: questions that reveal how the team really operates. Here are six worth having ready. What does success look like for this role at ninety days and at one year? How does an agent or model change get to production here — what evaluation gates and model-risk approvals does it pass, and how long does that usually take? Who owns the evaluation sets and the golden data — engineering, the business, or a risk function? What's the split between building on hosted models and self-hosting, and is that changing? What's on-call like for these systems, and what was the last serious incident? And what's the biggest thing the team wishes it had done differently on its current agent platform?
+
+Those questions do double duty: you learn whether you want the job, and they signal you've operated in regulated production before, because you already know those are the hard parts.
+
+[PAUSE 1s]
+
+## The interview angle
+
+When they say "walk me through a project you've built," a strong opening ninety seconds sounds like this:
+
+"I'll take about ten minutes: the problem, constraints, architecture, the key decisions and what we rejected, numbers, what broke, and what's next — interrupt me any time. The problem: staff at a regulated financial firm needed fast, cited answers from tens of thousands of policy and product documents, where a wrong answer is a compliance risk. Constraints: client data couldn't leave our boundary, every answer had to be auditable to document versions, per-user entitlements, and first token within about one and a half seconds at p ninety-five. The architecture: a gateway doing auth, entitlements and P I I redaction; a Lang Graph orchestrator that routes between retrieve, answer, clarify, or refuse; version-aware hybrid retrieval with entitlement filters inside the search; v L L M on Kubernetes scaled on queue depth, with an approved hosted model for redacted hard queries; a citation checker; and an audit log under everything. I owned retrieval versioning and the citation checker — let me draw it as a question travels through."
+
+Traps to avoid: starting with the tech stack instead of the problem. Spending half your time on ingestion. Having no numbers, or averages instead of percentiles. Presenting a system with no failures — nobody believes it. Getting lost after an interruption. And ending the role conversation with "no questions."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the whiteboard. Across the top, the ribbon of ten minutes, seven segments, left to right. Problem: one sentence in business terms, user on the left, documents on the right, empty space between. Constraints: data residency, audit, entitlements, a latency target, scale — a dashed trust boundary with a lock. Architecture: follow one question through gateway, orchestrator, version-aware retrieval below, self-hosted serving to the right, citation checker on the way back, audit log along the bottom, eval loop above. Decisions: chosen, rejected, what would change your mind — crossed-out alternatives in the margins. Numbers: time to first token, inter-token latency, end-to-end, component breakdown, percentiles not averages, plus quality and cost — stopwatches on every box. Failures: symptom, root cause, fix, guardrail — red scars on the drawing. Next: one or two moves. When interrupted, answer, then put your finger back on the ribbon. Then close with sharp questions about gates, ownership, and on-call.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="11-langgraph-summarizer-live-coding.html">← Live Coding: A Working LangGraph Summarizer Agent</a><a class="btn" href="13-interview-lab-drill.html">DRILL: Agentic AI Engineer Interview Rapid-Fire →</a></div></main></div></body></html>

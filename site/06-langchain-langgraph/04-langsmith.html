@@ -1,0 +1,425 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangSmith: Tracing, Datasets, Evals — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk" open><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="active" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 6 · LangChain / LangGraph · Episode 4</div>
+<h1 class="lesson">LangSmith: Tracing, Datasets, Evals</h1>
+<div class="meta">18 min listen · How LangSmith turns a non-deterministic agent into something you can observe and test: runs and traces captured from the live river of traffic, failures scooped into versioned datasets, and experiments scored by code, L L M judges, and humans before and after every release.</div>
+<audio controls preload="metadata" src="../../audio/06-langchain-langgraph/s6e04-langsmith.mp3"></audio>
+<button class="btn complete" data-ep="06-langchain-langgraph/04-langsmith" onclick="toggleDone('06-langchain-langgraph/04-langsmith')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LangSmith closes the loop between production and testing: it <strong>records</strong> every agent execution as a trace, lets you <strong>harvest</strong> real failures into versioned datasets, and <strong>scores</strong> every candidate version against them (offline) and against live traffic (online) — and it works with or without LangChain.</p>
+<h2 id="the-mental-image-the-river-and-the-bank">The mental image: the river and the bank</h2>
+<ul>
+<li><strong>River (left → right)</strong> = production traffic, one drop per request.</li>
+<li><strong>Bridge of cameras above the river</strong> = tracing (runs → traces → projects; threads for multi-turn).</li>
+<li><strong>Shelf of labelled jars on the near bank</strong> = datasets (examples with inputs + reference outputs, versioned).</li>
+<li><strong>Test bench downstream on the right, with judges</strong> = experiments + evaluators (code, LLM-as-judge, human, pairwise).</li>
+<li><strong>Buoys in the water</strong> = online evaluators on sampled live traces (no reference outputs).</li>
+<li><strong>The loop</strong>: bad drop → scooped into a jar / annotation queue → becomes a regression test on the bench → only then does the next version enter the river.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    U["User requests"] --> APP["Agent in production"]
+    APP --> OUT["Answers"]
+    APP -. "traces (runs tree)" .-> P["LangSmith project"]
+    P --> ON["Online evaluators (sampled rules)"]
+    ON -->|"low score / thumbs down"| AQ["Annotation queue"]
+    ON -->|"add to dataset"| DS["Dataset (versioned examples)"]
+    AQ --> DS
+    DS --> EXP["Experiment: candidate version x dataset"]
+    EXP --> EV["Evaluators: code, LLM judge, pairwise, summary"]
+    EV -->|"no row-level regressions"| APP
+</pre>
+
+<h2 id="tracing-data-model">Tracing data model</h2>
+<pre class="mermaid">flowchart TB
+    PR["Project (e.g. support-agent-prod)"]
+    TH["Thread (multi-turn conversation, linked by session/thread id)"]
+    T1["Trace = one request (root run: graph invoke)"]
+    N1["Run: agent node"]
+    M1["Run: chat model call (tokens, cost, latency)"]
+    N2["Run: tools node"]
+    TL["Run: tool call"]
+    FB["Feedback (user rating, judge score)"]
+    PR --> TH --> T1
+    T1 --> N1 --> M1
+    T1 --> N2 --> TL
+    FB -.-> T1
+</pre>
+
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run</td>
+<td>One unit of work (model call, tool call, retriever, graph node). Equivalent to an OpenTelemetry span.</td>
+</tr>
+<tr>
+<td>Trace</td>
+<td>Tree of runs for one operation/request. Billing unit.</td>
+</tr>
+<tr>
+<td>Project</td>
+<td>Container for all traces of one app/environment (keep dev and prod separate).</td>
+</tr>
+<tr>
+<td>Thread</td>
+<td>Multiple traces linked as one multi-turn conversation.</td>
+</tr>
+<tr>
+<td>Tags / metadata</td>
+<td>Searchable context: prompt version, model, commit, tenant.</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Named score attached to a run — from users, humans, or evaluators.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="code-snippets">Code snippets</h2>
+<p>Auto-tracing for LangChain / LangGraph (no code change):</p>
+<pre><code class="language-bash">export LANGSMITH_TRACING=true
+export LANGSMITH_API_KEY=...
+export LANGSMITH_PROJECT=support-agent-dev
+</code></pre>
+<p>Tracing plain Python (no LangChain):</p>
+<pre><code class="language-python">from langsmith import traceable
+from langsmith.wrappers import wrap_openai
+import openai
+
+client = wrap_openai(openai.OpenAI())
+
+@traceable(run_type=&quot;chain&quot;, metadata={&quot;prompt_version&quot;: &quot;v7&quot;})
+def answer(question: str) -&gt; str:
+    resp = client.chat.completions.create(
+        model=&quot;gpt-4.1-mini&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: question}],
+    )
+    return resp.choices[0].message.content
+</code></pre>
+<p>Offline experiment with a code evaluator and an LLM judge (openevals):</p>
+<pre><code class="language-python">from langsmith import Client
+from openevals.llm import create_llm_as_judge
+from openevals.prompts import CORRECTNESS_PROMPT
+
+client = Client()
+
+def target(inputs: dict) -&gt; dict:
+    return {&quot;answer&quot;: answer(inputs[&quot;question&quot;])}
+
+def has_disclaimer(outputs: dict) -&gt; bool:          # deterministic check
+    return &quot;not financial advice&quot; in outputs[&quot;answer&quot;].lower()
+
+correctness = create_llm_as_judge(
+    prompt=CORRECTNESS_PROMPT, model=&quot;openai:o3-mini&quot;, feedback_key=&quot;correctness&quot;
+)
+
+def correctness_eval(inputs, outputs, reference_outputs):
+    return correctness(inputs=inputs, outputs=outputs,
+                       reference_outputs=reference_outputs)
+
+client.evaluate(
+    target,
+    data=&quot;support-golden-set&quot;,
+    evaluators=[has_disclaimer, correctness_eval],
+    experiment_prefix=&quot;prompt-v8&quot;,
+    num_repetitions=3,          # non-determinism: look at variance
+)
+</code></pre>
+<p>Evals as CI tests (pytest integration):</p>
+<pre><code class="language-python">import pytest
+from langsmith import testing as t
+
+@pytest.mark.langsmith
+def test_refund_policy():
+    q = &quot;Can I get a refund after 40 days?&quot;
+    t.log_inputs({&quot;question&quot;: q})
+    out = answer(q)
+    t.log_outputs({&quot;answer&quot;: out})
+    assert &quot;30 days&quot; in out
+</code></pre>
+<p>Flushing in short-lived/serverless processes:</p>
+<pre><code class="language-python"># LangChain / LangGraph code: block until queued traces are sent
+from langchain_core.tracers.langchain import wait_for_all_tracers
+wait_for_all_tracers()
+
+# Plain SDK usage: flush the shared client before the handler returns
+# (or disable background tracing: LANGCHAIN_CALLBACKS_BACKGROUND=false for LangChain in Python,
+#  LANGSMITH_TRACING_BACKGROUND=false for the JS SDK — see serverless docs)
+client.flush()
+</code></pre>
+<h2 id="evaluator-types">Evaluator types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>How it scores</th>
+<th>Use for</th>
+<th>Watch out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code / heuristic</td>
+<td>Deterministic function</td>
+<td>Schema validity, required phrases, exact match, tool-call counts</td>
+<td>Can't judge meaning</td>
+</tr>
+<tr>
+<td>LLM-as-judge</td>
+<td>Model grades vs rubric (openevals / agentevals)</td>
+<td>Correctness, groundedness, tone, trajectory quality</td>
+<td>Costs per example; drifts; shared blind spots with same model family</td>
+</tr>
+<tr>
+<td>Human (annotation queue)</td>
+<td>Experts score with rubric; pairwise queues pick A vs B</td>
+<td>Ground truth, judge calibration</td>
+<td>Slow, expensive — sample</td>
+</tr>
+<tr>
+<td>Pairwise</td>
+<td>Compare two experiments per example</td>
+<td>Subjective tasks (summaries, tone)</td>
+<td>Needs two runs on same dataset version</td>
+</tr>
+<tr>
+<td>Summary</td>
+<td>Aggregate over whole experiment</td>
+<td>Precision/recall, pass rate</td>
+<td>Hides row-level regressions if used alone</td>
+</tr>
+</tbody>
+</table>
+<p>Offline vs online: <strong>offline</strong> = dataset examples with reference outputs (pre-deploy, regression, backtesting). <strong>Online</strong> = live traces/threads, no references (groundedness, frustration, loops, PII), configured as rules with filter + sampling rate + action (run evaluator, add to dataset, send to annotation queue). Multi-turn online evals score whole threads; Insights Agent clusters traces into usage patterns and failure modes.</p>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Cost is per trace</strong> (Sep 2026 public pricing, order of magnitude): free Developer tier ≈ 1 seat + 5k traces/month; Plus ≈ $39/seat/month; base traces ≈ $2.50 per 1k (14-day retention), extended ≈ $5.00 per 1k (400-day retention). <strong>Any trace that receives feedback is auto-upgraded to extended</strong> — running an online evaluator on 100% of traffic can silently upgrade everything. Evaluator and playground runs count as traces. Sample production; keep all errors/flagged.</li>
+<li><strong>Privacy</strong>: traces hold raw prompts/outputs → mask inputs/outputs client-side, pick region, self-host (Enterprise) if required. Decide before enabling prod tracing.</li>
+<li><strong>Serverless flush</strong>: tracing is async/batched; short-lived functions can exit before the queue flushes → silently missing traces. Flush explicitly.</li>
+<li><strong>Judge calibration</strong>: periodically route judged samples to humans; if agreement falls (e.g. &gt;20% disagreement), fix the rubric first.</li>
+<li><strong>Lock-in / alternatives</strong>: Langfuse (open source, self-hostable; acquired by ClickHouse Jan 2026), Arize Phoenix (open source), Braintrust (evals), MLflow 3 (Databricks-native tracing + eval). LangSmith accepts OpenTelemetry ingestion, which eases portability.</li>
+</ol>
+<p>Naming (Oct 2025): LangGraph Platform → <strong>LangSmith Deployment</strong>; LangGraph Studio → <strong>LangSmith Studio</strong>. LangSmith is now observability + evaluation + deployment.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Run / trace / project / thread</td>
+<td>Span / request tree / app container / conversation</td>
+</tr>
+<tr>
+<td>Dataset + example</td>
+<td>Versioned golden set: inputs + reference outputs</td>
+</tr>
+<tr>
+<td>Dataset version / split</td>
+<td>Pin experiments for comparability; fast subset for CI</td>
+</tr>
+<tr>
+<td>Experiment</td>
+<td>One app version × one dataset version, scored</td>
+</tr>
+<tr>
+<td>Evaluator</td>
+<td>Code, LLM judge, human, pairwise, summary</td>
+</tr>
+<tr>
+<td>Annotation queue</td>
+<td>Human review workflow; pairwise queues for A-vs-B</td>
+</tr>
+<tr>
+<td>Online evaluator / rule</td>
+<td>Reference-free scoring on sampled production traces</td>
+</tr>
+<tr>
+<td>Feedback</td>
+<td>Score attached to a run; triggers extended retention</td>
+</tr>
+<tr>
+<td>openevals / agentevals</td>
+<td>Open-source prebuilt LLM-judge and trajectory evaluators</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How do you evaluate an LLM agent end to end?</strong>
+Split offline and online. Offline: versioned dataset seeded by hand and grown from production failures; every candidate runs as an experiment scored by deterministic checks first, LLM judges for fuzzy criteria, human-calibrated samples; gate on no row-level regressions, with repetitions for variance. Online: sampled reference-free evaluators on live traces; low scores go to annotation queues and back into the dataset.</p>
+<p><strong>Q2. Quality dropped after a prompt change. How do you find out why?</strong>
+Traces carry prompt version/model/commit as metadata, so filter before vs after and compare the failure signal; open failing traces, walk the run tree to find the diverging node (retrieval, tool, model decision); compare the two experiments row by row; add the failure to the dataset.</p>
+<p><strong>Q3. Does LangSmith require LangChain?</strong>
+No. LangChain/LangGraph get automatic tracing via callbacks with env vars, but plain code uses <code>@traceable</code> or wrapped provider clients, and LangSmith ingests OpenTelemetry spans.</p>
+<p><strong>Q4. What are the risks of LLM-as-judge?</strong>
+Cost per example, non-determinism, rubric ambiguity, and shared blind spots when the judge and app are the same model family. Mitigate with deterministic checks where possible, pairwise instead of absolute scores for subjective tasks, and periodic human agreement checks via annotation queues.</p>
+<p><strong>Q5. What does production tracing cost and how do you control it?</strong>
+Priced per trace with retention tiers; feedback auto-upgrades traces to extended retention; evaluator runs count too. Control with sampling (keep 100% of errors/flagged), separate dev/prod projects, client-side masking for PII, and explicit flush in serverless.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>LangSmith observability concepts: https://docs.langchain.com/langsmith/observability-concepts</li>
+<li>LangSmith evaluation concepts: https://docs.langchain.com/langsmith/evaluation-concepts</li>
+<li>Evaluation types: https://docs.langchain.com/langsmith/evaluation-types</li>
+<li>Annotation queues: https://docs.langchain.com/langsmith/annotation-queues</li>
+<li>Pairwise evaluation: https://docs.langchain.com/langsmith/evaluate-pairwise</li>
+<li>Pytest integration: https://docs.langchain.com/langsmith/pytest</li>
+<li>Usage and billing: https://docs.langchain.com/langsmith/usage-and-billing</li>
+<li>Pricing: https://www.langchain.com/pricing</li>
+<li>Auto-upgrade to extended retention: https://support.langchain.com/articles/3206725817-why-are-my-traces-being-automatically-upgraded-to-extended-retention</li>
+<li>Tracing in serverless environments: https://docs.langchain.com/langsmith/serverless-environments</li>
+<li>OpenTelemetry support: https://blog.langchain.com/opentelemetry-langsmith/</li>
+<li>Insights Agent + multi-turn evals: https://blog.langchain.com/insights-agent-multiturn-evals-langsmith/</li>
+<li>Product naming changes (Deployment / Studio): https://changelog.langchain.com/announcements/product-naming-changes-langsmith-deployment-and-langsmith-studio</li>
+<li>openevals: https://github.com/langchain-ai/openevals · agentevals: https://github.com/langchain-ai/agentevals</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track six, episode four: LangSmith — tracing, datasets, and evals. Over the last three episodes we built things. The chain, the graph, the patterns that let a graph pause for a human and stream its progress. Today we stop building and start asking the question every production team eventually gets asked in a meeting they did not schedule: how do you know it works?
+
+Here is the moment that makes this episode matter. A team ships a support agent built on LangGraph. Demo went well. First week in production goes well. Then somebody improves the system prompt — one sentence, clearly better wording — and ships it on a Thursday afternoon. By Monday, the rate of customers asking to speak to a human has crept up by a few points. Nobody can say why. The prompt change looks harmless. The model version did not change. The code did not change. And the only evidence anyone has is a handful of angry tickets and a gut feeling. That team does not have a model problem. They have an observability problem and a testing problem, and they are the same problem seen from two sides.
+
+LangSmith is LangChain's answer to both sides. It is a hosted platform, with a self-hosted option for enterprises, that does three jobs: it records what your agent actually did, it stores the examples you care about, and it scores new versions of your agent against those examples, before release and on live traffic. One important thing up front, because interviewers love it: LangSmith does not require LangChain. It works with LangChain and LangGraph with almost zero setup, but it also traces plain Python calling a model provider directly, and it ingests OpenTelemetry traces. So think of it as the observability and evaluation layer for an L L M application, which happens to be made by the LangChain company.
+
+[PAUSE 2s]
+
+## The mental image: the river and the bank
+
+Let's build one picture and hang everything off it.
+
+Picture a river flowing from left to right across your mind's eye. That river is your production traffic. Every drop is a user request entering your agent on the left bank and an answer leaving on the right. It never stops flowing, and it is never quite the same twice, because your agent is non-deterministic.
+
+Now, stretched above the river, from one bank to the other, picture a bridge lined with cameras pointing down at the water. Every request that flows underneath gets filmed, frame by frame. That bridge is tracing.
+
+Below the river, on the near bank, picture a row of labelled jars on a long shelf. Every so often you reach into the river with a bucket, scoop out a particularly interesting drop — a failure, an edge case, a request that went beautifully — and you seal it in a jar with a label that says what the right answer should have been. That shelf of jars is your datasets.
+
+And off to the right, downstream, on dry land, picture a test bench: a workbench with a row of judges sitting behind it. Before any new version of your agent is allowed into the river, you set it on this bench, pour every jar from the shelf through it, and the judges score what comes out. That bench is evaluation, and each run on the bench is an experiment.
+
+Last detail. Floating in the river itself, just downstream of the bridge, picture a few small buoys with sensors on them, sampling the live water as it goes past. Those are online evaluators, scoring production traffic in real time with no answer key.
+
+So: river of traffic, left to right. Cameras on the bridge above. Jars on the shelf below. Test bench downstream on the right. Buoys in the water. Hold that. We are going to walk data through every piece of it.
+
+[PAUSE 2s]
+
+## The bridge: runs, traces, threads, projects
+
+Start on the bridge. What exactly does a camera capture?
+
+The atomic unit in LangSmith is a run. A run is one unit of work: a single model call, a single tool call, a single retriever lookup, a single node in your graph. If you know OpenTelemetry, a run is a span. Each run records its inputs, its outputs, start and end time, any error, and for model calls, the token counts and the cost.
+
+Runs nest. When a user request enters your LangGraph agent, the graph invocation is the root run. Underneath it, each node that executes is a child run. Inside the agent node, the chat model call is a grandchild. Inside the tools node, each tool call is its own child. That whole tree, for one request, is a trace. So one drop of water passing under the bridge produces one trace, a tree of runs, filmed in exact order with exact timing.
+
+Traces go into a project, which is simply a container for everything from one application or environment. Most teams run at least two: one for development, one for production, so the dev noise never pollutes the production dashboards. And when a conversation spans many turns — a user going back and forth with your agent for ten minutes — LangSmith links those traces together into a thread, using a shared conversation or session identifier in the metadata. Threads became a first-class concept in LangSmith over the past year, precisely because agents are conversational and a single trace rarely tells the whole story.
+
+How do the cameras get mounted? If you use LangChain or LangGraph, you set a couple of environment variables — turn tracing on, provide an A P I key, optionally name the project — and every chain, graph, model, and tool call is traced automatically, because the framework already emits callbacks at every step. If you are not using LangChain, you add a traceable decorator to your own functions, or wrap your provider client, and you get the same tree. And if your organization has standardized on OpenTelemetry, you point an O T L P exporter at LangSmith's endpoint and the spans arrive there.
+
+Now, a practical point about the cameras that matters enormously in real life: tagging. Every run can carry tags and metadata — the prompt version, the model name, the customer tier, the deployment region, the git commit. That metadata is what turns a pile of footage into something you can search. Go back to that Thursday prompt change. If every trace carries the prompt version as metadata, the Monday question becomes trivial: filter production traces to the old prompt version, filter to the new one, and compare the rate of human escalations. Without that tag, you are guessing which footage came from which week.
+
+And the other thing captured on the bridge is feedback. When a user clicks thumbs up or thumbs down in your app, you send that as feedback attached to the trace identifier. Feedback is just a named score attached to a run — "user rating equals zero" — and it can come from users, from humans reviewing traces, or from automated evaluators. The footage now has a verdict stamped on it.
+
+[PAUSE 2s]
+
+## The shelf: datasets and examples
+
+Now climb down from the bridge to the shelf of jars on the near bank.
+
+A dataset in LangSmith is a collection of examples. Each example has inputs, and usually a reference output — what a correct answer should look like — plus optional metadata. Some teams think of it as a golden set. The jar holds the drop of water and the label says what should have come out.
+
+Where do examples come from? Three sources, and a mature team uses all three. First, hand-written: someone who knows the domain sits down and writes twenty to fifty questions with good answers. That is how you start, and you should start small — a few dozen well-chosen examples beat a thousand random ones. Second, scooped from the river: you are looking at a trace on the bridge, it is an interesting failure, and you add it to a dataset in a couple of clicks, editing the output into what it should have been. This is the most valuable source, because these are real users asking real questions in the real phrasing they use. Third, synthetic: an L L M generates variations of your existing examples to widen coverage. Useful, but treat it as seasoning, not the meal.
+
+Two mechanics about the shelf worth knowing. Datasets are versioned: every time you add, edit, or delete examples, LangSmith records a new version, and you can pin an experiment to a specific version or tag. That matters because if your dataset changes between Tuesday's experiment and Thursday's, the scores are not comparable. And datasets can have splits — for example a "hard cases" split or a "regression" split — so you can run a fast subset on every commit and the full shelf before a release.
+
+[PAUSE 2s]
+
+## The bench: evaluators and experiments
+
+Now walk downstream to the test bench on the right.
+
+An experiment is what happens when you take one version of your application, pour every jar from one dataset through it, and score the outputs. In code, you call an evaluate function, give it your application as a target function, the dataset name, and a list of evaluators. LangSmith runs the target on every example, traces each run, applies each evaluator, and records the results as an experiment, linked to the exact dataset version it ran against.
+
+The judges behind the bench are evaluators, and there are four kinds worth naming.
+
+One: code evaluators, sometimes called heuristic evaluators. Plain deterministic functions. Did the output parse as valid JSON? Does it contain the required disclaimer? Did the agent call the refund tool exactly once? Is the answer an exact match to the reference? These are cheap, fast, and never drift. Use them for everything they can check.
+
+Two: L L M as judge. A model reads the input, the output, and optionally the reference answer, and grades against a rubric you write: is this answer correct, is it grounded in the retrieved documents, is the tone appropriate. LangChain publishes an open source package of ready-made evaluators for exactly this, called openevals, plus a sibling package for agent trajectories. These are powerful and flexible, but a judge is itself a model, so it costs money on every example and it can be wrong. We will come back to that.
+
+Three: human evaluators. This is the annotation queue. You route selected traces or experiment results into a queue, and domain experts work through them with a rubric, leaving scores and corrections. LangSmith also supports pairwise annotation queues, where a reviewer sees two outputs side by side and simply picks the better one, which is much easier for humans than assigning an absolute score out of ten.
+
+Four: pairwise evaluators in the automated sense. Instead of scoring one experiment in isolation, you compare two experiments on the same dataset, and a judge decides, example by example, which output is better. For subjective tasks like summarization or tone, "is B better than A" is a far more stable question than "give A a score."
+
+And there are two shapes of evaluator worth distinguishing: per-example evaluators, which score each row, and summary evaluators, which compute something across the whole experiment, like precision and recall for a classifier or an overall pass rate.
+
+Now the payoff of the bench: comparison. Put two experiments side by side — last week's prompt against Thursday's prompt, on the same dataset version — and LangSmith shows you, row by row, which examples got better and which regressed. That is the view that would have saved our Thursday team. The new wording scored higher on tone. It also, on a specific set of billing questions, started telling users it could not help, which pushed them to ask for a human. Aggregate score: slightly up. Specific regression: invisible unless you look row by row. That is why the comparison view matters more than the headline number.
+
+One more mechanic: repetitions. Because the agent is non-deterministic, running each example once can give you a lucky or unlucky sample. You can ask for several repetitions per example, and look at the variance. If a single example passes two times out of three, that is not a pass. That is a coin flip wearing a green badge.
+
+For teams that live in continuous integration, LangSmith has pytest and Vitest integrations: you write evaluations as ordinary test functions, mark them for LangSmith, and every C I run both asserts pass or fail and logs a full experiment you can open and inspect. That is how evaluation becomes a gate rather than a ceremony.
+
+[PAUSE 2s]
+
+## The buoys: online evaluation and closing the loop
+
+Back to the river, to the buoys floating downstream of the bridge.
+
+Offline evaluation on the bench needs reference outputs, and it only covers the jars you already thought to fill. Online evaluation runs on live production traces, where there is no answer key. So the online evaluators ask questions that do not need one: was the response grounded in the retrieved context, did the user's tone turn frustrated, did the agent loop more than five times, was any personal data echoed back. You configure rules on a project: a filter, a sampling rate, and an action. The action can be run an L L M judge, attach a score, add the trace to a dataset, or send it to an annotation queue.
+
+Newer additions work at the level of whole conversations. Multi-turn online evaluators score an entire thread — did the user actually accomplish what they came for across the whole conversation — rather than a single turn. And there is an insights feature that clusters large volumes of production traces to surface common usage patterns and failure modes without you writing queries.
+
+Now see the full loop in the image. Water flows under the bridge. Cameras film it. Buoys score a sample of it live. A low score or a thumbs down triggers a rule, and that drop gets scooped into a jar or routed to a human reviewer. The jar joins the shelf. The next candidate version goes onto the bench and has to survive that jar. Only then does it enter the river. The failure from production becomes a permanent regression test. That loop, production to dataset to experiment to production, is the whole point of the product, and it is the sentence you want to say in an interview.
+
+[PAUSE 2s]
+
+## Tradeoffs, costs, and sharp edges
+
+Now the costs, because a senior answer names them before anyone asks.
+
+First, the bill. LangSmith pricing is seats plus traces. As of this recording the free developer tier gives you one seat and around five thousand traces a month. The paid team tier is roughly forty dollars per seat per month. Beyond the included volume, base traces cost around two dollars fifty per thousand and are retained for fourteen days. Extended traces are retained for about four hundred days and cost roughly twice as much. And here is the trap: any trace that receives feedback is automatically upgraded to extended retention, because feedback is exactly the data you want to keep. So if you run an online evaluator on every single trace, you may have just upgraded every single trace. A trace, remember, is one full execution — so a busy agent handling a million requests a month is a thousand units of that price, before any upgrades. Teams routinely underestimate their trace volume by several times, because evaluator runs and playground sessions count too. Sample. Trace one hundred percent in development, a sampled percentage in high-volume production, and always keep failures and flagged traffic.
+
+Second, data residency and privacy. Traces contain full prompts and outputs, which means they contain whatever your users typed, including personal data. You can mask inputs and outputs before they leave your process, you can choose a regional deployment, and on the enterprise tier you can self-host inside your own cloud. A war story shaped pitfall here: one team discovered, during a security review, that their production traces had been faithfully recording customer account numbers pasted into chat for months. Nothing was breached, but the retention policy was now a compliance problem. Decide masking before you turn production tracing on, not after.
+
+Third, latency. Tracing is sent asynchronously in a background thread, batched, so it should not add meaningful latency to the request itself. But in short-lived environments — a serverless function that exits right after returning — the background queue can be killed before it flushes, and traces silently vanish. The fix is to flush explicitly before the function returns. Silent missing traces are worse than no tracing, because you trust the gaps.
+
+Fourth, judges drift. An L L M judge is an instrument that needs calibration. If the judge and the application come from the same model family, they can share a blind spot and the judge will reward it. The discipline is to periodically send a sample of judged examples to human reviewers in an annotation queue and measure agreement. If the humans and the judge disagree more than, say, one time in five, fix the rubric before you trust the dashboard.
+
+Fifth, lock-in. LangSmith is a commercial SaaS product. The traces are available through an A P I and exports, and OpenTelemetry ingestion helps, but your evaluators, datasets, and annotation workflows live in its model. Alternatives exist: Langfuse is open source and self-hostable, and was acquired by ClickHouse earlier this year; Arize Phoenix is open source; Braintrust focuses on evals; and if you are on Databricks, M L flow three covers tracing and evaluation natively. The honest framing is that LangSmith is the lowest-friction choice if you are already on LangGraph, and one of several reasonable choices if you are not.
+
+[PAUSE 2s]
+
+## Interview angle
+
+Three questions come up constantly.
+
+When they ask, "How do you evaluate an agent?", a strong answer sounds like this: "I separate offline and online. Offline, I keep a versioned dataset of real examples, seeded by hand and grown from production failures, and every candidate runs as an experiment against it, scored by deterministic checks first, L L M judges for the fuzzy criteria, with a human-calibrated sample to keep the judges honest. I gate releases on no row-level regressions, not just the average. Online, I sample production traces with reference-free evaluators and route low scores into an annotation queue, which feeds the dataset. The loop is production to dataset to experiment to production."
+
+When they ask, "Your agent's quality dropped after a change. How do you debug it?", a strong answer: "Every trace carries the prompt version, model, and commit as metadata, so I filter before and after the change and compare the failure signal. Then I open individual traces, walk the run tree, and find the node where behavior diverged — retrieval, a tool call, or the model's decision. Then I turn that failure into a dataset example so it can never regress silently again."
+
+And when they ask, "What does tracing cost you?", say: "Real money at volume, priced per trace with a retention tier, plus privacy exposure. So I sample routine traffic, keep all errors and flagged traces, mask personal data at the client, and flush explicitly in serverless environments."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Let's walk the river one last time.
+
+Production traffic flows left to right. Above it, the bridge of cameras — tracing. Every request becomes a trace: a tree of runs, one per model call, tool call, and node, with inputs, outputs, tokens, cost, and timing. Traces live in projects, conversations link into threads, metadata makes it searchable, feedback stamps a verdict on it.
+
+Below, the shelf of jars — datasets. Examples with inputs and reference outputs, seeded by hand, scooped from real failures, versioned so experiments stay comparable.
+
+Downstream on the right, the test bench — experiments. Every candidate runs every jar, scored by code checks, L L M judges, human annotation queues, and pairwise comparisons, and you read the row-by-row diff, not just the average.
+
+In the water, the buoys — online evaluators — scoring live traffic without an answer key, and routing the bad drops back onto the shelf.
+
+And the price tag: per trace, with feedback upgrading retention, so sample wisely and mask before you record.
+
+Next episode, we step back and ask the uncomfortable question: when should you not use LangChain at all? See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-langgraph-patterns.html">← LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="btn" href="05-when-not-langchain.html">When NOT LangChain — Tradeoffs & Alternatives →</a></div></main></div></body></html>

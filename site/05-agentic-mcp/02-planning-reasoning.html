@@ -1,0 +1,360 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk" open><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="active" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 5 · Agentic AI + MCP · Episode 2</div>
+<h1 class="lesson">Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</h1>
+<div class="meta">18 min listen · Chain of thought, plan-and-execute, and reflection, built as a planner's room, a sealed room with a private chalkboard, and an inspector's booth. Includes how modern reasoning models with adaptive, effort-controlled thinking absorb some of these patterns and make others more valuable.</div>
+<audio controls preload="metadata" src="../../audio/05-agentic-mcp/s5e02-planning-reasoning.mp3"></audio>
+<button class="btn complete" data-ep="05-agentic-mcp/02-planning-reasoning" onclick="toggleDone('05-agentic-mcp/02-planning-reasoning')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Planning and reasoning patterns are choices about <strong>where thinking happens</strong> (visible output vs. a reasoning model's private, billed thinking), <strong>when the route is decided</strong> (step-by-step ReAct vs. up-front plan with replanning), and <strong>what checks the work</strong> (grounded verifiers vs. ungrounded self-critique). Reasoning models absorb much short-horizon CoT and planning, and make grounded verification more valuable.</p>
+<h2 id="the-mental-image-three-rooms-in-a-row">The mental image: three rooms in a row</h2>
+<ul>
+<li><strong>Left — planner's room (drafting table)</strong>: goal → numbered steps.</li>
+<li><strong>Center — the sealed room (worker)</strong> from episode 1, now with a <strong>chalkboard</strong> on the back wall = a reasoning model's private thinking.</li>
+<li><strong>Right — inspector's booth (magnifying glass, red pen)</strong>: critique / verify.</li>
+<li><strong>Backward arrows</strong>: inspector → worker = "revise"; worker → planner = "replan".</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    G["Goal"] --> P["Planner room: numbered plan"]
+    P --> W["Worker room (model + chalkboard = private thinking)"]
+    W --> I{"Inspector booth: tests, validators, evidence, rubric"}
+    I -->|pass| OUT["Output"]
+    I -->|"revise (cap 2-3 rounds)"| W
+    W -->|"replan on error / empty / surprising result"| P
+    EXT["External signal: unit tests, schema, SQL result, retrieved docs"] -.-> I
+</pre>
+
+<h2 id="pattern-cheat-sheet">Pattern cheat sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Mechanism</th>
+<th>Wins</th>
+<th>Loses</th>
+<th>Reasoning-model era verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain of thought (Wei et al. 2022; "let's think step by step", Kojima et al. 2022)</td>
+<td>Write intermediate steps → more serial compute, readable trail</td>
+<td>Multi-step problems on non-reasoning models</td>
+<td>Visible, costs output tokens, parse answer out</td>
+<td>Redundant for reasoning models; still useful for small/fast models or when visible rationale needed</td>
+</tr>
+<tr>
+<td>Self-consistency (Wang et al. 2022)</td>
+<td>Sample N chains, majority vote</td>
+<td>Reliability on single-answer tasks</td>
+<td>N× cost</td>
+<td>Niche; use where answer is checkable and stakes high</td>
+</tr>
+<tr>
+<td>Tree of thoughts (Yao et al. 2023)</td>
+<td>Branch, evaluate, search/backtrack</td>
+<td>Puzzle-like search</td>
+<td>Very expensive, complex</td>
+<td>Rarely worth it in production agents</td>
+</tr>
+<tr>
+<td>ReAct</td>
+<td>Think → act → observe, one step at a time</td>
+<td>Adaptive</td>
+<td>Myopic, frontier model every step</td>
+<td>Native tool calls + interleaved thinking = default for short tasks</td>
+</tr>
+<tr>
+<td>Plan-and-execute / ReWOO (Xu et al. 2023)</td>
+<td>Plan up front (placeholders), workers fill, solver combines</td>
+<td>~5× token efficiency on HotpotQA (paper), parallel, approvable</td>
+<td>Plans go stale</td>
+<td>Use for long horizons, fan-out, approval gates, cost routing; always add replanning</td>
+</tr>
+<tr>
+<td>Reflection / evaluator-optimizer; Reflexion (Shinn et al. 2023)</td>
+<td>Generate → critique → revise; store verbal lessons across trials</td>
+<td>Big gains with external signal</td>
+<td>Ungrounded self-critique small or negative gains (Huang et al. 2023)</td>
+<td>Ground the inspector; cap rounds</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reasoning-models-mechanics-that-matter-verified-2026-09-25">Reasoning models — mechanics that matter (verified 2026-09-25)</h2>
+<ul>
+<li>Thinking tokens are <strong>billed as output tokens</strong> even when hidden or summarized; billed count ≠ visible count.</li>
+<li><strong>Effort, not budgets</strong>: Anthropic <code>output_config.effort</code> (<code>low</code> / <code>medium</code> / <code>high</code> / <code>xhigh</code> / <code>max</code>, availability varies by model); legacy <code>budget_tokens</code> still works on older models but is not recommended. OpenAI <code>reasoning.effort</code> ladder is model-dependent (values may include <code>none</code>, <code>minimal</code>, <code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code>).</li>
+<li><strong>Adaptive thinking</strong>: model decides per request whether/how much to think — don't assume every turn has a thinking block. In a tool loop, the first call after user input usually carries most thinking.</li>
+<li><strong>Interleaved thinking</strong>: thinks between tool calls (automatic with adaptive thinking on current Claude models).</li>
+<li><strong>Pass reasoning back</strong>: return thinking blocks (Anthropic) / reasoning items incl. <code>encrypted_content</code> for stateless/ZDR (OpenAI Responses) unmodified during tool loops.</li>
+<li><strong>Caching</strong>: changing effort between requests can invalidate prompt-cache breakpoints — hold effort constant per conversation; steer per-turn with message wording.</li>
+<li><strong>Prompting</strong>: give goals, constraints, success criteria; don't prescribe "think step by step".</li>
+<li><strong>Faithfulness</strong>: visible reasoning is evidence, not a guaranteed faithful audit log.</li>
+</ul>
+<pre><code class="language-python"># Anthropic: adaptive thinking + effort
+resp = client.messages.create(
+    model=&quot;claude-opus-5-5&quot;,
+    max_tokens=16000,                    # hard cap: thinking + answer combined
+    thinking={&quot;type&quot;: &quot;adaptive&quot;},
+    output_config={&quot;effort&quot;: &quot;medium&quot;},
+    tools=tools,
+    messages=messages,                   # pass prior thinking blocks back unmodified
+)
+print(resp.usage)  # output_tokens includes thinking; see output_tokens_details.thinking_tokens
+</code></pre>
+<pre><code class="language-python"># OpenAI Responses: reasoning effort (stateless, carry encrypted reasoning)
+resp = client.responses.create(
+    model=&quot;&lt;reasoning-model&gt;&quot;,
+    reasoning={&quot;effort&quot;: &quot;medium&quot;},
+    input=items,
+    tools=tools,
+    store=False,
+    include=[&quot;reasoning.encrypted_content&quot;],
+)
+</code></pre>
+<h2 id="plan-and-execute-with-replanning-pseudo">Plan-and-execute with replanning (pseudo)</h2>
+<pre><code class="language-python">plan = planner(goal)                         # big model, once
+for step in plan:
+    result = executor(step)                  # small model / tool
+    if result.error or result.empty or surprising(result):
+        plan = planner(goal, done_so_far, result)   # replan trigger
+final = verify(solver(results))              # grounded check before shipping
+</code></pre>
+<h2 id="routing-heuristic">Routing heuristic</h2>
+<table>
+<thead>
+<tr>
+<th>Task shape</th>
+<th>Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lookup / extraction / routing</td>
+<td>Fast non-reasoning model, no planner</td>
+</tr>
+<tr>
+<td>Multi-step with tools, &lt; ~10 steps</td>
+<td>Reasoning model + interleaved thinking, moderate effort (ReAct-style)</td>
+</tr>
+<tr>
+<td>Long horizon, parallelizable, or needs human approval</td>
+<td>Explicit planner + replanning triggers</td>
+</tr>
+<tr>
+<td>Checkable output (code, SQL, schema)</td>
+<td>Add grounded inspector (tests/validators), cap 2–3 rounds</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pitfalls-war-stories">Pitfalls / war stories</h2>
+<ol>
+<li><strong>Stale plan</strong> — table renamed, tool returned empty (not error), executor kept going, report said "churn 0%". Fix: tools error loudly, replan on empty/surprising results, grounded final check.</li>
+<li><strong>Uncapped critic loop</strong> — same-model critic always finds something; 8 rounds, blander text, lost a key detail, 8× cost. Fix: cap 2–3, concrete rubric, ground truth, keep best-scoring draft.</li>
+<li><strong>Effort thrash</strong> — toggling effort per turn breaks prompt cache.</li>
+<li><strong>Stripping thinking blocks</strong> in tool loops → model loses reasoning behind its own calls.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain of thought</td>
+<td>Intermediate reasoning written as tokens</td>
+</tr>
+<tr>
+<td>Reasoning model</td>
+<td>Model trained (largely RL) to think at length before answering</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>Soft control over how much the model thinks/outputs</td>
+</tr>
+<tr>
+<td>Adaptive thinking</td>
+<td>Model decides per request whether to think</td>
+</tr>
+<tr>
+<td>Interleaved thinking</td>
+<td>Thinking between tool calls</td>
+</tr>
+<tr>
+<td>Plan-and-execute</td>
+<td>Explicit plan then execution; ReWOO uses placeholders</td>
+</tr>
+<tr>
+<td>Replanning</td>
+<td>Revising the plan on triggers</td>
+</tr>
+<tr>
+<td>Evaluator-optimizer</td>
+<td>Generator + evaluator loop</td>
+</tr>
+<tr>
+<td>Reflexion</td>
+<td>Verbal lessons stored across attempts</td>
+</tr>
+<tr>
+<td>Grounded verification</td>
+<td>Critique backed by external signal</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Why does chain of thought improve accuracy?</strong>
+Each token gets roughly fixed compute; writing intermediate steps buys more serial computation and creates intermediate results the model reads back. Reasoning models internalize this as private thinking billed as output tokens.</p>
+<p><strong>Q2. How do reasoning models change your prompting and architecture?</strong>
+Don't prompt "step by step" — specify goals, constraints, success criteria. Control depth with effort, expect adaptive (sometimes zero) thinking, pass thinking/reasoning items back during tool loops, keep effort stable for caching. Many short tasks no longer need an explicit planner.</p>
+<p><strong>Q3. ReAct vs plan-and-execute?</strong>
+ReAct: adaptive, myopic, frontier model every step. Plan-and-execute: cheaper (big model plans, small models execute), parallel, human-approvable, but stale plans — add replanning triggers. Use a planner for long horizons, fan-out, approval gates, cost routing.</p>
+<p><strong>Q4. Does self-reflection work?</strong>
+With external signal (tests, compilers, validators, evidence, different judge) — yes, strongly. Same-model critique without new information: small or negative gains. Ground it, rubric it, cap at 2–3 rounds, keep best draft.</p>
+<p><strong>Q5. How would you pick reasoning effort for a production agent?</strong>
+Start at the model's default/moderate level, measure quality, latency, and cost on a representative traffic sample, raise effort only on task classes where quality gains justify it, and route simple requests to fast non-reasoning models. Keep effort constant within a conversation.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — Adaptive thinking: https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking</li>
+<li>Anthropic — Extended thinking: https://platform.claude.com/docs/en/build-with-claude/extended-thinking</li>
+<li>Anthropic — Steering thinking &amp; cost: https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost</li>
+<li>Anthropic — Building effective agents: https://www.anthropic.com/engineering/building-effective-agents</li>
+<li>OpenAI — Reasoning models guide: https://developers.openai.com/api/docs/guides/reasoning</li>
+<li>OpenAI Cookbook — Reasoning items with Responses API: https://developers.openai.com/cookbook/examples/responses_api/reasoning_items</li>
+<li>Chain of thought (Wei et al.): https://arxiv.org/abs/2201.11903</li>
+<li>Zero-shot "step by step" (Kojima et al.): https://arxiv.org/abs/2205.11916</li>
+<li>Self-consistency (Wang et al.): https://arxiv.org/abs/2203.11171</li>
+<li>Tree of thoughts (Yao et al.): https://arxiv.org/abs/2305.10601</li>
+<li>ReWOO (Xu et al.): https://arxiv.org/abs/2305.18323</li>
+<li>Reflexion (Shinn et al.): https://arxiv.org/abs/2303.11366</li>
+<li>LLMs cannot self-correct reasoning yet (Huang et al.): https://arxiv.org/abs/2310.01798</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track five, episode two: planning and reasoning patterns — chain of thought, reflection, and plan-and-execute — and how the new generation of reasoning models has changed all three.
+
+Here's a failure that's worth feeling before we explain it. A team builds an agent that writes a weekly analytics report. At the start of each run, the agent makes a plan: pull revenue from the sales table, pull churn from the customer table, join them, chart it, write the summary. Eleven steps. Clean. One week, the churn table has been migrated to a new name. Step three fails quietly — the tool returns an empty result rather than an error. And the agent, loyal to its plan, carries on. It joins revenue to nothing, charts a flat line, and writes a confident paragraph explaining that churn was zero percent this week. Nobody reading the report sees any hesitation. The plan was good. The execution was faithful. The outcome was nonsense.
+
+What went wrong wasn't intelligence. It was architecture: no one ever asked, after step three, "does the plan still make sense?" That question — when to think, where to think, and when to check your own work — is what this episode is about.
+
+[PAUSE 1s]
+
+## Why it matters
+
+Last episode we built the sealed room: a stateless model reading a scroll, pushing out answers or tool slips, and a runner looping around it. That picture tells you how an agent acts. It doesn't tell you how well it decides. Three questions decide quality. How much does the model think before it commits? Does it plan the whole route up front, or one step at a time? And does anything check the work before it ships? Get these wrong and you get either an agent that's cheap and wrong, or one that's right but takes four minutes and costs a dollar per request. Interviewers probe this area because it's where engineering judgment shows: there is no single right pattern, only right patterns for a given task, latency budget, and cost ceiling.
+
+## The picture: three rooms in a row
+
+Picture this. Our sealed room from last episode is back, in the center of your mind's eye. But now it has neighbors, and they sit in a row, left to right.
+
+On the left, upstream, is the planner's room. It has a big drafting table. Its job is to take a goal and turn it into a numbered list of steps — a route.
+
+In the center, the sealed room, where the model does the work, step by step. And today I want you to notice something new inside it. On the back wall of the sealed room, there's a chalkboard. The model can write working-out on that chalkboard before it pushes anything through the right slot. Some models have that chalkboard. Some don't. Hold that thought.
+
+On the right, downstream, is the inspector's booth. It has a magnifying glass and a red pen. Its job is to look at what came out of the center room and say: good enough, or not good enough, and here's why.
+
+Now the arrows. Work flows left to right: plan, then execute, then inspect. But there are two arrows flowing backward. One runs from the inspector's booth back to the center room: "revise this." And one, higher up, runs from the center room back to the planner: "the route is wrong, draw a new one."
+
+Three rooms. Planner left. Worker with a chalkboard center. Inspector right. Two backward arrows. That's the entire landscape of planning and reasoning patterns. Every named technique you'll hear is some choice about which rooms you use, how big the chalkboard is, and which backward arrows are allowed to fire.
+
+[PAUSE 2s]
+
+## Chain of thought: writing the working out
+
+Start in the center room, with the oldest pattern. Chain of thought. In twenty twenty-two, researchers at Google showed that if you give a model a few examples where the answer is preceded by step-by-step working, it gets dramatically better at multi-step problems like arithmetic word questions. A few months later, another group showed you didn't even need examples: appending "let's think step by step" to the prompt produced a large jump on its own.
+
+Why does that work, mechanically? Here's the explanation worth having in your pocket. A model produces one token at a time, and each token gets roughly the same fixed amount of computation. A hard question answered in one token gets one token's worth of thought. But every token the model writes becomes input for the next one. So when the model writes its working out, it's buying itself more computation, and it's building a trail of intermediate results it can read back. Tokens are compute, and the scroll is the scratchpad.
+
+In our picture, before reasoning models existed, there was no chalkboard in the room. The only place to write working out was on the output itself — on the sheet going through the right slot. So chain of thought meant the model's reasoning came out as visible text, mixed in with the answer. You paid for it as output tokens, your user saw it unless you stripped it, and you had to parse the answer out of the end.
+
+A couple of cousins worth naming. Self-consistency: run the same question several times with some randomness, get several chains of reasoning, and take a majority vote on the final answer. It trades cost — five samples costs five times as much — for reliability on problems with one checkable answer. And tree of thoughts: instead of one chain, branch at each step, evaluate the branches, and search, backtracking when a branch looks bad. Powerful on puzzle-shaped problems, expensive, and rarely worth it in production agents today, for reasons we'll get to.
+
+[PAUSE 1s]
+
+## Reasoning models: the chalkboard moves inside the room
+
+Now the big change. Since late twenty twenty-four, every major lab has shipped reasoning models — models trained, largely with reinforcement learning, to think at length before answering. In our picture, this is the chalkboard on the back wall of the sealed room. The model writes its working out privately, on the chalkboard, and only then pushes a sheet through the right slot.
+
+Let's be precise about how this works in current A P Is, because the details are interview gold.
+
+First, the chalkboard is billed. Thinking tokens are charged as output tokens, even when you don't see them. On some providers you get a summarized version of the thinking back; on others the raw reasoning is hidden or returned in encrypted form, so you can pass it back without being able to read it. Either way, the bill reflects the full thinking, not the summary you can see. A hard request can easily spend several thousand thinking tokens before a single word of answer.
+
+Second, you control the size of the chalkboard with an effort setting rather than a hand-tuned token budget. Current Anthropic models take an effort level — low, medium, high, and on some models extra-high and max — and Open A I's reasoning models take a reasoning effort parameter with a similar ladder. The older approach of setting an explicit thinking token budget still works on some models but is being phased out.
+
+Third, and this is the subtle one: thinking is increasingly adaptive. With adaptive thinking on current Claude models, the model decides per request whether to think at all and how much. A trivial question might get no chalkboard use; a gnarly debugging task gets pages. So you can't build logic that assumes every response starts with a thinking block. And in a tool loop, the first call after new user input tends to carry most of the thinking, while follow-up calls that just process tool results often skip it.
+
+Fourth: interleaved thinking. In an agent loop, the model can think between tool calls — read the result of step three, write on the chalkboard "that result is empty, which is suspicious," and only then decide the next slip. That's exactly what was missing in our cold open. And there's a mechanical rule attached: during a tool loop, you must pass the thinking blocks or reasoning items back to the A P I unmodified, so the model can see its own earlier reasoning. Strip them, and the model loses the thread behind its own tool calls. It's the same statelessness lesson from episode one: if it's not on the scroll, it doesn't exist.
+
+Fifth, a caching gotcha. Changing the effort level between requests changes the prompt, which can invalidate your prompt cache. Pick an effort level per conversation and hold it steady; if a particular turn needs more thought, steer with wording in that turn's message instead.
+
+So what does all this do to chain of thought as a technique? For reasoning models, "think step by step" is redundant at best. The vendors now advise giving these models clear goals, constraints, and success criteria, rather than prescribing the steps of reasoning. Manual chain of thought still earns its keep with smaller, non-reasoning models — the cheap, fast ones you use for routing and extraction — and when you genuinely need the reasoning visible, for example to show a user why a decision was made. But even then, keep one caution in mind: a chain of reasoning written by a model is not guaranteed to be a faithful account of how it actually reached the answer. Treat it as useful evidence, not as an audit log.
+
+[PAUSE 1s]
+
+## Plan-and-execute: the room on the left
+
+Now move left, to the planner's room.
+
+The pattern from last episode — Re-Act — has no planner's room at all. The worker decides one step at a time: think, act, observe, repeat. That's maximally adaptive, because every step reacts to the newest evidence. But it has costs. Every step is a full call to your most capable model, re-reading the whole scroll. And it's myopic: the model can wander, repeat itself, or lose track of the overall goal on a long task.
+
+Plan-and-execute adds the drafting table. First, a planning call produces an explicit list of steps. Then execution works through the list — often using cheaper, smaller models for the individual steps, because each step is now a narrow, well-specified job. The most interesting variant here is from a twenty twenty-three paper called Re-woo — reasoning without observation. The planner writes the whole plan up front, with placeholders for results it doesn't have yet: "step one, search for X, call the result E1; step two, look up the population of E1, call it E2." Workers fill in the placeholders, possibly in parallel, and a final solver combines everything. Because the big model isn't re-reading the scroll after every tool call, the paper reported around five times better token efficiency on a multi-hop question-answering benchmark, with a small accuracy gain on top.
+
+Where does plan-and-execute win? Cost: one expensive planning call, many cheap execution calls. Parallelism: independent steps fan out. Auditability: a plan is a thing a human can read and approve before anything runs — which is a natural place to put a human-in-the-loop gate for risky jobs. And long horizons: modern coding agents typically keep an explicit to-do list as part of their state, ticking items off, precisely so the goal survives when the scroll gets long.
+
+Where does it lose? Our cold open. A plan is a prediction made with the least information you'll ever have — at the very start. If step three reveals the world isn't what the planner assumed, a rigid executor marches on. That's why the backward arrow from the center room to the planner's room matters: replanning. Mature designs replan either after every step — which costs more but stays adaptive — or on specific triggers: a tool error, an empty or surprising result, a failed check, or a step count exceeded. The cheapest robust version: after each step, a quick check asks "given what we just learned, is the remaining plan still valid?" If not, back to the drafting table.
+
+Here's how reasoning models change this. A lot of short-horizon planning now happens on the chalkboard, inside a single call. For a task of five or ten steps, a strong reasoning model with interleaved thinking often plans implicitly, adapts as results come in, and beats a hand-built planner-executor graph — with less code. So the planner's room earns its place today mainly when you need one of four things: a plan a human can approve, fan-out across parallel workers, a horizon longer than one context window can comfortably hold, or cost routing — expensive model plans, cheap models execute.
+
+[PAUSE 1s]
+
+## Reflection: the booth on the right
+
+Now the inspector's booth.
+
+The basic pattern is generate, critique, revise. The worker produces a draft; the inspector reviews it against criteria; if it falls short, the critique flows back along that backward arrow and the worker revises. Anthropic's guide to building agents calls this the evaluator-optimizer pattern. A well-known twenty twenty-three paper called Reflexion took it across attempts: after a failed try, the agent writes a short verbal lesson — "I failed because I didn't check the edge case with an empty list" — stores it, and reads it on the next attempt. Learning without changing any weights, just by writing things down.
+
+Here's the most important insight about reflection, and the one that separates strong candidates. Reflection works well when the inspector has something real to check against. Unit tests that pass or fail. A compiler. A schema validator. A query that either returns rows or doesn't. Retrieved source documents that either support a claim or don't. With an external signal like that, the inspector's red pen is grounded, and generate-check-revise loops are one of the most reliable patterns in the field — it's a big part of why coding agents work as well as they do.
+
+But when the inspector is just the same model re-reading its own answer with no new information, the gains are much smaller, and sometimes negative. Research as far back as twenty twenty-three found that models asked to self-correct reasoning without external feedback often changed right answers to wrong ones. The model's blind spots are shared between the worker and the inspector, because they're the same model. It's a person proofreading their own essay immediately after writing it.
+
+So the design rule: give the inspector's booth a window to the outside. Tests, validators, retrieval, a different model family as judge, or a human. And cap the loop. Two or three revision rounds captures most of the benefit.
+
+How do reasoning models change reflection? Some self-checking now happens on the chalkboard — reasoning models routinely notice and fix their own errors mid-thought. So a separate, ungrounded "please review your answer" call adds less than it used to. But grounded verification — actually running the tests, actually validating against the schema — is more valuable than ever, because a reasoning model given a real failure signal through interleaved thinking is very good at using it.
+
+[PAUSE 1s]
+
+## Tradeoffs and a second war story
+
+Let's put numbers on the choices. A plain call to a fast model: under a second, fractions of a cent. The same question to a reasoning model at high effort: could be ten to sixty seconds and several thousand thinking tokens. Self-consistency with five samples: five times the cost. A reflection loop with three rounds: roughly three to four times the tokens of a single pass, plus latency. Plan-and-execute: one expensive call plus many cheap ones, which is usually cheaper than Re-Act with a frontier model at every step, but more code and more moving parts.
+
+The war story for the inspector's booth. A team builds a content-generation pipeline with a writer and a critic, both the same model, and the loop ends only when the critic says "approved." There's no cap. The critic, it turns out, always finds something — a word choice, a sentence to tighten. The writer, eager to please, rewrites. Round after round, the draft drifts. By round eight, the text is blander than round one, has lost a key detail the critic flagged as "unnecessary," and has cost eight times the tokens. The fixes: a hard cap of two or three rounds, a critic rubric with concrete pass criteria instead of open-ended "improve this," a ground-truth check where one exists, and keeping the best-scoring draft rather than the last one.
+
+And for the planner's room, back to our cold open. The fix was three lines of design: tools that return errors instead of silently empty results, a replanning trigger on any empty or surprising result, and a final grounded check — "do the numbers in the summary match the query outputs?" — before anything ships.
+
+A practical routing heuristic ties it together. Match the pattern to the task. Simple lookups and extraction: a fast model, no chalkboard, no planner. Multi-step tasks with tools, under ten or so steps: a reasoning model with interleaved thinking at moderate effort, Re-Act style. Long, parallelizable, or approval-gated jobs: an explicit planner with replanning. Anything with a checkable output: add a grounded inspector. And use effort as a dial you tune on real traffic, measuring quality, latency, and cost together.
+
+[PAUSE 1s]
+
+## The interview angle
+
+When they ask "what's chain of thought, and do you still need it?", a strong answer sounds like: "Chain of thought gives the model more serial computation by writing intermediate steps it can read back. Reasoning models internalize that — they think privately, billed as output tokens, with effort controls and increasingly adaptive thinking. So I don't prompt reasoning models to think step by step; I give them goals and constraints. I still use explicit chain of thought on small non-reasoning models, and I don't treat visible reasoning as a faithful audit trail."
+
+When they ask "Re-Act or plan-and-execute?", the strong answer: "Re-Act is adaptive but myopic and expensive per step. Plan-and-execute is cheaper, parallelizable, and gives humans a plan to approve, but plans go stale — so I always add replanning triggers on errors or surprising results. With modern reasoning models and interleaved thinking, short tasks often don't need an explicit planner at all. I reach for one for long horizons, parallel fan-out, approval gates, or cost routing."
+
+When they ask "does self-reflection actually work?", the strong answer: "It works when the critic has external signal — tests, compilers, validators, retrieved evidence, or a different judge. Same-model critique with no new information gives small gains and can make answers worse. So ground the inspector, use a concrete rubric, cap the rounds at two or three, and keep the best draft, not the last."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Re-walk the row of rooms. On the left, the planner's room with its drafting table: turns a goal into a numbered route. Cheap to execute, parallelizable, human-approvable — but a plan is a guess made with the least information, so there's a backward arrow for replanning, fired by errors and surprises. In the center, the sealed room where the work happens, and on its back wall, the chalkboard. Chain of thought used to mean writing the working-out on the output itself; reasoning models moved it onto a private chalkboard, billed as output, sized by an effort setting, used adaptively, and interleaved between tool calls — pass those thinking blocks back or the model loses its thread. On the right, the inspector's booth with its red pen: generate, critique, revise. Give it a window to the outside — tests, validators, evidence — and cap the rounds, or the red pen just churns. Three rooms, two backward arrows, one dial for effort.
+
+Next episode: memory — what the sealed room remembers, what it forgets, and the filing systems we build so it doesn't have to start from zero. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-what-is-an-agent.html">← What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="btn" href="03-agent-memory.html">Agent Memory: Short-Term, Long-Term, Summarization →</a></div></main></div></body></html>

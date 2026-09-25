@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prompt vs RAG vs Fine-Tune: The Decision Tree — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk" open><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="active" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 8 · LLMOps + Prompting · Episode 2</div>
+<h1 class="lesson">Prompt vs RAG vs Fine-Tune: The Decision Tree</h1>
+<div class="meta">18 min listen · A staircase with a fork: climb from prompting to retrieval to fine-tuning only as far as the problem needs, and diagnose first whether the gap is knowledge or behavior, because each step fixes a different kind of gap.</div>
+<audio controls preload="metadata" src="../../audio/08-llmops/s8e02-prompt-rag-finetune.mp3"></audio>
+<button class="btn complete" data-ep="08-llmops/02-prompt-rag-finetune" onclick="toggleDone('08-llmops/02-prompt-rag-finetune')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Diagnose the gap before picking the tool. <strong>Knowledge</strong> gaps (facts that are large, changing, private, or need citing) go to <strong>retrieval</strong>. <strong>Behavior</strong> gaps (format, tone, narrow-task skill, cost/latency) go to <strong>fine-tuning or distillation</strong>. Both sit on a well-engineered <strong>prompt</strong>, which you exhaust first and never leave.</p>
+<h2 id="the-mental-image-a-staircase-with-a-fork">The mental image: a staircase with a fork</h2>
+<ul>
+<li><strong>Floor (far left):</strong> you, a problem, and an <strong>evaluation set</strong>. Without it you can't tell which step helped.</li>
+<li><strong>Step 1 (low, wide): prompting.</strong> Instructions, few-shot examples, structured output, reasoning room, and context stuffing plus caching for small, stable knowledge.</li>
+<li><strong>Fork at the top of step 1:</strong></li>
+<li><strong>Right corridor → the library (RAG):</strong> labeled <em>knowledge</em>.</li>
+<li><strong>Steep flight up → the workshop (fine-tuning):</strong> labeled <em>behavior</em>.</li>
+</ul>
+<pre class="mermaid">flowchart TD
+    START["Problem + evaluation set"] --> P["Step 1: prompting<br/>instructions, examples, schema, reasoning"]
+    P --> Q1{"Eval scores plateaued<br/>after real iteration?"}
+    Q1 -- no --> P
+    Q1 -- yes --> Q2{"Remaining failures:<br/>knowledge or behavior?"}
+    Q2 -- knowledge --> Q3{"Small and stable?"}
+    Q3 -- yes --> CS["Context stuffing + prompt caching"]
+    Q3 -- "no: large, changing, permissioned, needs citations" --> RAG["Step 2: RAG<br/>index + reranker + citations"]
+    Q2 -- behavior --> Q4{"Fixable with a few examples?"}
+    Q4 -- yes --> P
+    Q4 -- "no: stable, narrow, high volume, 100s+ examples" --> FT["Step 3: fine-tune<br/>SFT / DPO / RFT, usually LoRA"]
+    Q2 -- "cost or latency at scale" --> DI["Distill to a smaller model"]
+    RAG --> COMBO["Often combined: prompt + RAG + retrieval-aware fine-tune"]
+    FT --> COMBO
+</pre>
+
+<h2 id="comparison">Comparison</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompting</th>
+<th>RAG</th>
+<th>Fine-tuning (LoRA)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixes</td>
+<td>Most things, first</td>
+<td>Knowledge gaps</td>
+<td>Behavior gaps, cost/latency (distillation)</td>
+</tr>
+<tr>
+<td>Time to first result</td>
+<td>Hours</td>
+<td>Days–weeks</td>
+<td>Weeks (data curation dominates)</td>
+</tr>
+<tr>
+<td>Freshness</td>
+<td>Immediate</td>
+<td>Immediate on re-index</td>
+<td>Stale until retrained</td>
+</tr>
+<tr>
+<td>Citations / per-user permissions</td>
+<td>n/a</td>
+<td>Yes / yes (filter at retrieval)</td>
+<td>No / no</td>
+</tr>
+<tr>
+<td>New failure mode</td>
+<td>Prompt brittleness</td>
+<td>Retrieval misses (parse, chunk, rank)</td>
+<td>Hallucination on unfamiliar facts; drift from base behavior</td>
+</tr>
+<tr>
+<td>Ongoing cost</td>
+<td>Tokens (cache stable prefix)</td>
+<td>Pipeline + index + ~100s ms latency</td>
+<td>Hosting premium + retrain on every base-model retirement</td>
+</tr>
+</tbody>
+</table>
+<h2 id="facts-worth-quoting-verified-2026-09-25">Facts worth quoting (verified 2026-09-25)</h2>
+<ul>
+<li><strong>OpenAI is winding down self-serve fine-tuning.</strong> Notice on May 7, 2026: orgs that hadn't fine-tuned can't create jobs. Existing customers can't create new jobs from ~January 6, 2027. Existing fine-tuned models stay available for inference until their base models are deprecated. Stated rationale: strong base models + prompt + RAG cover most cases. (Several independent reports; OpenAI's own community announcement thread.)</li>
+<li><strong>Fine-tuning is still widely available elsewhere:</strong> Azure AI Foundry (SFT, DPO, RFT on OpenAI and open models), Amazon Bedrock (SFT, RFT incl. open-weight GPT-OSS/Qwen, managed distillation), plus any open-weight model.</li>
+<li><strong>Bedrock distillation claim:</strong> distilled models "up to 500% faster and up to 75% less expensive", "&lt;2% accuracy loss" for use cases like RAG (AWS marketing figure).</li>
+<li><strong>Fine-tuning and new facts:</strong> Gekhman et al., EMNLP 2024. New-knowledge examples are learned significantly slower, and once learned they linearly increase the tendency to hallucinate.</li>
+<li><strong>Context rot:</strong> Chroma (July 2025) tested 18 LLMs. Performance grows less reliable as input length increases, even on simple tasks. Lost-in-the-middle effects persist.</li>
+<li><strong>Prompt caching:</strong> e.g. Anthropic cache reads at 0.1x base input price.</li>
+<li><strong>QLoRA:</strong> 4-bit (NF4) frozen base + LoRA adapters lets a 70B model fine-tune on a single 80 GB GPU. Adapters are typically &lt;1% of base size. vLLM multi-LoRA serves many adapters on one base model.</li>
+</ul>
+<h2 id="code-lora-config-hugging-face-peft-illustrative">Code: LoRA config (Hugging Face PEFT, illustrative)</h2>
+<pre><code class="language-python">from peft import LoraConfig, get_peft_model
+
+cfg = LoraConfig(
+    r=16, lora_alpha=32, lora_dropout=0.05,
+    target_modules=[&quot;q_proj&quot;, &quot;k_proj&quot;, &quot;v_proj&quot;, &quot;o_proj&quot;],
+    task_type=&quot;CAUSAL_LM&quot;,
+)
+model = get_peft_model(base_model, cfg)   # base frozen; only adapter weights train
+model.print_trainable_parameters()        # typically well under 1% of total
+</code></pre>
+<p>Serving several adapters on one base with vLLM (illustrative):</p>
+<pre><code class="language-bash">vllm serve meta-llama/Llama-3.1-8B-Instruct --enable-lora \
+  --lora-modules tickets=./adapters/tickets extract=./adapters/extract
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Knowledge gap</td>
+<td>Model lacks facts: private, changing, large, or needing citation</td>
+</tr>
+<tr>
+<td>Behavior gap</td>
+<td>Model has the facts but acts wrong: format, tone, consistency, narrow task, cost/latency</td>
+</tr>
+<tr>
+<td>Few-shot prompting</td>
+<td>3–5 worked examples in the prompt</td>
+</tr>
+<tr>
+<td>Structured output</td>
+<td>Provider-enforced output matching a JSON schema</td>
+</tr>
+<tr>
+<td>Context stuffing</td>
+<td>Putting a whole small corpus in the prompt; pair with caching</td>
+</tr>
+<tr>
+<td>Context rot</td>
+<td>Reliability degrades as input length grows</td>
+</tr>
+<tr>
+<td>Reranker</td>
+<td>Model that re-scores retrieved candidates against the query</td>
+</tr>
+<tr>
+<td>SFT / DPO / RFT</td>
+<td>Supervised fine-tuning / direct preference optimization / reinforcement fine-tuning with a grader</td>
+</tr>
+<tr>
+<td>LoRA / QLoRA</td>
+<td>Low-rank adapters on a frozen base / same with 4-bit quantized base</td>
+</tr>
+<tr>
+<td>Distillation</td>
+<td>Train a small "student" on a large "teacher" model's outputs</td>
+</tr>
+<tr>
+<td>Retrieval-aware fine-tuning (e.g. RAFT)</td>
+<td>Fine-tune a model to use retrieved context well: cite, abstain, ignore distractors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. RAG or fine-tuning?</strong>
+Diagnose with an eval set first. Knowledge that's large, changing, private, or needs citations → RAG (fresh, permissioned, citable). Behavior (format, tone, narrow-task consistency, or cost/latency at scale) → fine-tune with LoRA, or distill. Both sit on a prompt you've exhausted first.</p>
+<p><strong>Q2. Why not fine-tune on our documents so the model "knows" them?</strong>
+Fine-tuning injects facts unreliably. They're learned slowly, and training on unfamiliar facts has been shown to increase hallucination (Gekhman et al., 2024). The knowledge also goes stale, can't be cited, and can't be permissioned per user.</p>
+<p><strong>Q3. With 1M-token context windows, do we still need RAG?</strong>
+For small, stable corpora, long context plus caching can replace retrieval. At scale, no: models degrade with length (context rot), cost scales per call, and you lose per-document permissions and clean citations. Retrieve the best ~20K tokens instead of sending a million.</p>
+<p><strong>Q4. When is fine-tuning clearly the right call?</strong>
+Stable, narrow, high-volume tasks with hundreds to thousands of good examples: strict output formats, domain classification or extraction, house tone. Also shrinking a long instruction prompt into weights, or distilling a large model into a small one for latency/cost. Plan for retraining whenever the base model is retired.</p>
+<p><strong>Q5. How do you know you've exhausted prompting?</strong>
+You have an eval set (50 to a few hundred cases with references/rubrics). You've iterated instructions, examples, structured output, and reasoning, and tried the strongest affordable model. Scores have plateaued, and you can categorize the remaining failures as knowledge or behavior.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Gekhman et al., "Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?": https://arxiv.org/abs/2405.05904</li>
+<li>Chroma, "Context Rot": https://www.trychroma.com/research/context-rot</li>
+<li>Anthropic prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching</li>
+<li>Microsoft Foundry fine-tuning: https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/fine-tuning</li>
+<li>Amazon Bedrock model distillation: https://aws.amazon.com/bedrock/model-distillation</li>
+<li>Amazon Bedrock RFT for open-weight models (Feb 2026): https://aws.amazon.com/about-aws/whats-new/2026/02/amazon-bedrock-reinforcement-fine-tuning-openai</li>
+<li>vLLM LoRA adapters: https://docs.vllm.ai/en/latest/features/lora/</li>
+<li>vLLM blog, multi-LoRA on SageMaker/Bedrock (Feb 2026): https://vllm.ai/blog/2026-02-26-multi-lora</li>
+<li>OpenAI fine-tuning wind-down (community thread): https://community.openai.com/t/openai-is-winding-down-the-fine-tuning-api-and-platform-discussion-thread/1380522</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track eight, episode two: prompt versus R A G versus fine-tune, the decision tree.
+
+Last episode we built two workshops. On the right-hand bench sat a padlocked, rented model, surrounded by a prompt card on the wall, a document shelf on the left and a tool pegboard on the right. Today you're standing at that bench with a problem, and the question is where to put your hands: on the prompt card, on the document shelf, or inside the box.
+
+[PAUSE 1s]
+
+## The cold open
+
+Here's a story in a very common shape. A company wants an assistant that answers questions about its product catalogue: thousands of items, specifications, prices, compatibility rules. A team decides the model needs to "learn the catalogue", so they fine-tune. They spend six weeks turning catalogue pages into question-and-answer pairs, run a training job, and the demo is impressive. The model talks about the products fluently, in the company's own voice.
+
+Then two things happen. First, the catalogue changes. Prices update monthly and new products ship every quarter, so the model starts quoting last quarter's prices with complete confidence, and there's no quick way to tell it otherwise short of another training run. Second, somebody asks about a product that was only in the training data a handful of times, and the model invents a plausible specification. Fluent, confident, wrong.
+
+Meanwhile, an engineer on another team builds a prototype in a week. It retrieves the relevant catalogue pages at question time and puts them in front of an off-the-shelf model with a careful prompt. It's always current, because it reads today's catalogue. It can cite the exact page it used. And on the team's evaluation questions, it beats the fine-tuned model on factual accuracy by a wide margin.
+
+The fine-tuning wasn't a stupid idea. It was the right tool aimed at the wrong kind of problem. The team had a knowledge gap and reached for a tool that fixes behavior gaps. That distinction is the core of this episode.
+
+[PAUSE 1s]
+
+## Why it matters
+
+"Should we use R A G or fine-tuning?" might be the single most common generative A I design question in interviews. It's also a real budget decision. Prompting costs hours. Retrieval costs days to weeks of engineering, plus a data pipeline you'll run for as long as the system lives. Fine-tuning costs weeks of data curation, training compute, often more expensive hosting, and a retraining bill every time the base model gets retired. Picking the wrong step wastes a quarter. Picking the right one, and being able to explain why, is a staff-level signal.
+
+There's also a 2026 market signal worth knowing. In May 2026, OpenAI told developers it was winding down its self-serve fine-tuning platform. Organizations that hadn't fine-tuned before could no longer start, and existing customers lose the ability to create new training jobs in early 2027. Models already fine-tuned stay available for inference until their base models are deprecated. The reasoning they gave: newer base models follow instructions and formats so well that prompting plus retrieval covers the vast majority of use cases, more cheaply. Fine-tuning hasn't disappeared. The major clouds still offer supervised fine-tuning, reinforcement fine-tuning and distillation, and open-weight models can be fine-tuned anywhere. But the default has clearly shifted toward "prompt and retrieve first".
+
+[PAUSE 1s]
+
+## The mental image: a staircase with a fork
+
+Let's build the picture.
+
+Picture a staircase rising from left to right, three steps. You start on the floor at the far left, holding a problem: the model isn't doing what you need.
+
+The first step, low and wide, is prompting. It's cheap to climb, a few hours of work. Standing on it you can change the instructions, add examples, specify the output format, and give the model room to reason before it answers. Every system stands on this step, forever. You never climb past it; you climb on top of it.
+
+Now, at the top of that first step, the staircase forks. Look straight ahead to the right: a flat corridor leads to a big room lined with shelves. That's the library, step two, retrieval augmented generation. Climbing there costs more, days or weeks, and you have to maintain the shelves forever.
+
+Now look straight up. A steep flight rises above you to a workshop at the top. That's step three, fine-tuning. Up there, you open the padlocked box and change what's inside. It's the most expensive climb, and the workshop comes with a maintenance bill of its own.
+
+Here's the key. The fork isn't about how badly you want to improve things. It's about what kind of gap you have. Written on the right-hand corridor is the word knowledge: the model doesn't know something. Your policies, your catalogue, last week's incident report, facts that change or are private. Written above the steep flight is the word behavior: the model knows enough but acts wrong. The wrong format, the wrong tone, inconsistent output structure, weak performance on a narrow specialized task, or it's simply too big and slow for the job.
+
+Knowledge gaps go right, to the library. Behavior gaps go up, to the workshop. And both paths start from the first step, which you never leave.
+
+Hold that picture: the wide low step, the fork, the library corridor to the right, the steep flight up to the workshop.
+
+[PAUSE 2s]
+
+## Under the hood: step one, prompting
+
+Start on the first step, because it's where most problems should end.
+
+Prompting is more than wording. On this step you have several distinct levers. Clear instructions: role, task, constraints, what to do when unsure. Examples, sometimes called few-shot prompting: three to five worked input-output pairs showing exactly the behavior you want, which often fixes format and tone problems on its own. Structured output: most major providers now support constrained output that must match a schema you supply, which removes a whole class of parsing failures without any training. And reasoning room: either asking the model to think through the problem before answering, or using a reasoning model that does this internally.
+
+There's one more lever on this step that's easy to miss: context stuffing. Context windows on frontier models now reach hundreds of thousands of tokens, some up to a million. So if your knowledge is small and stable, say a forty-page policy manual, you can put the whole thing in the prompt. With prompt caching, where some providers bill repeated input prefixes at around a tenth of the normal price, that can be surprisingly cheap.
+
+But there's a catch, and it's why the library exists. Long context degrades. A widely cited study tested eighteen frontier models, including models with million-token windows, and every one got less reliable as input length grew, even on simple tasks with difficulty held constant. And the older lost-in-the-middle finding keeps getting reproduced: facts buried in the middle of a long context are recalled worst. The industry name for this is context rot. A million-token window does not mean reliable reasoning over a million tokens. So context stuffing works for small, stable knowledge. It stops working once the knowledge base is large, changing or noisy.
+
+How do you know when you've exhausted step one? That question has only one honest answer: an evaluation set. Fifty to a few hundred representative questions with reference answers or a scoring rubric. Change the prompt, rerun, compare. If scores have plateaued after several rounds of real iteration, and you can explain which failures remain, then it's time to look at the fork. Without an evaluation set, you're not climbing a staircase, you're wandering the building.
+
+[PAUSE 1s]
+
+## Under the hood: the library, step two
+
+Walk right down the corridor into the library. This is where knowledge gaps get fixed.
+
+Here's what happens when a question arrives. Watch it enter the library. It gets turned into an embedding, a vector that captures its meaning. That vector goes to the index, which holds your documents, already chunked into passages of a few hundred tokens each and embedded the same way. The index returns the nearest matches, typically twenty to fifty candidates. A reranker, a smaller model that reads the question and each candidate side by side, reorders them and keeps the best three to ten. Those passages get placed into the prompt from step one, with an instruction like "answer only from the provided sources and cite them". Then the model answers.
+
+Notice what this buys you. Freshness: update a document and the next question sees it, no retraining. Scale: the library can hold millions of documents, while the prompt only ever carries the handful that matter. Citations: every answer can point back to its source, which auditors and users both need. And permissions, which is where data engineers shine: the retrieval step can filter by who is asking, so a user only ever retrieves documents they're entitled to see. Fine-tuning can't do that. Once a fact is baked into weights, every user of that model can potentially extract it.
+
+What does the library cost? A pipeline: ingest documents, parse them (tables and scanned P D Fs are notoriously painful), chunk them, embed them, index them, and keep all of that in sync as sources change. That's a data engineering pipeline, with the same freshness, lineage and quality concerns as any medallion architecture. It adds latency: an embedding call, a vector search and a rerank, typically a few hundred milliseconds combined. And it adds a new failure mode: retrieval misses. If the right passage never reaches the prompt, the best model in the world can't use it. In practice, most R A G quality problems are retrieval problems, not generation problems. That's why you evaluate retrieval on its own, by asking whether the right chunk was in the top results, separately from evaluating the final answer.
+
+Earlier tracks cover retrieval engineering in depth. For this decision tree, the point is simpler: the library fixes what the model doesn't know, and it's the right answer whenever that knowledge is large, changing, private or needs to be cited.
+
+[PAUSE 1s]
+
+## Under the hood: the workshop, step three
+
+Now climb the steep flight to the workshop, where you open the box.
+
+Fine-tuning means continuing to train the model on your own examples so its weights change. Several flavors are worth naming. Supervised fine-tuning: you show it thousands of input and ideal-output pairs and it learns to imitate them. Preference tuning, such as direct preference optimization or D P O: you show it pairs of a better and a worse answer and it learns to lean toward the better one. And reinforcement fine-tuning: you give it tasks plus a grader, often another model or a program that scores answers, and it learns by trial against that grader. That last one is particularly strong for narrow reasoning tasks with checkable answers.
+
+Almost nobody updates all the weights anymore. The standard technique is low-rank adaptation, LoRA. You freeze the base model and train a small add-on, low-rank matrices attached to the attention layers, typically well under one percent of the base model's size. A variant called Q LoRA keeps the frozen base in four-bit precision during training, which is how a seventy-billion-parameter model can be fine-tuned on a single eighty-gigabyte G P U instead of a rack of eight. And because adapters are small, serving engines like v L L M can hold one base model in memory and swap adapters per request, so dozens of customer-specific fine-tunes can share a single G P U.
+
+What does the workshop fix? Behavior. Consistent output format and structure that prompting can't hold reliably at scale. A house tone or domain dialect. Narrow, repetitive tasks, like classifying support tickets into two hundred internal categories or extracting fields from a specific document type, where a small fine-tuned model can match a big general model. Shorter prompts: behavior you'd otherwise explain in two thousand tokens of instructions on every call can be trained in once, which saves tokens and latency on every request. And distillation: using a large model's outputs to train a small one, so the small one does your specific job at a fraction of the cost and latency. One cloud's managed distillation service advertises distilled models running up to five times faster and up to seventy-five percent cheaper, with under two percent accuracy loss on tasks like R A G.
+
+And what does the workshop not fix? Knowledge. This is the cold open again. Research on this is consistent: fine-tuning struggles to reliably add new facts. Models learn new facts slowly through fine-tuning, and a well-known 2024 study found that training on examples containing facts the model didn't already know made it more likely to hallucinate overall. The model learns the pattern "answer confidently in this style" faster than it learns the facts themselves. Fine-tuned knowledge also goes stale the moment the source changes, and you can't cite it or permission it.
+
+What does the workshop cost? First, data: hundreds to thousands of high-quality, consistent examples. Curating them is usually the biggest cost, and the same data-quality discipline you'd apply to a gold table applies here. Second, training compute, which is modest for LoRA. Third, hosting: a custom model often means dedicated capacity or a premium rate, unless your platform supports multi-adapter serving. And fourth, the hidden one: your fine-tune is welded to a specific base model. When that base model is retired, and last episode showed that's a scheduled event, you retrain on the successor and re-evaluate from scratch. Budget for retraining at least once or twice a year.
+
+[PAUSE 2s]
+
+## The decision tree, walked out loud
+
+So let's walk the staircase as an actual decision tree, in the order you'd ask the questions.
+
+Question one: do you have an evaluation set? If not, build one first. Everything else depends on it.
+
+Question two: have you really exhausted the first step? Clear instructions, examples, structured output, reasoning room, the strongest model you can afford. Most teams stop here, and they should.
+
+Question three, at the fork: is the remaining gap knowledge or behavior? Read your failing evaluation cases and sort them. "It didn't know our policy" or "it quoted an outdated number" is knowledge; go right, to the library. "It knew the answer but formatted it wrong", "it's inconsistent", or "it's too slow and expensive for this volume" is behavior; go up, to the workshop.
+
+Question four, in the library: is the knowledge small and stable? Then context stuffing plus caching may be enough, with no index at all. Is it large, changing, permissioned, or does it need citations? Then build real retrieval.
+
+Question five, in the workshop: can the behavior be described by a few examples? Then it probably belongs back on step one. Is it stable, narrow, high-volume, and do you have at least several hundred good examples? Then fine-tune, usually with LoRA. Is the problem cost or latency at scale? Then distill.
+
+And the final point: the paths combine. Production systems often use all three. A prompt as the frame. Retrieval for facts. And sometimes a fine-tune that teaches a smaller model to use retrieved context well: to cite, to say "I don't know" when the sources don't cover the question, and to follow the output schema. Research calls that retrieval-aware fine-tuning. Think of it as the workshop teaching the model to read the library properly.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls
+
+The sharp edges.
+
+Pitfall one: fine-tuning for knowledge. We've covered it; it's the most expensive mistake on this staircase.
+
+Pitfall two: R A G without retrieval evaluation. A team measures only final answer quality, sees it drop, and starts rewriting prompts for weeks, when the real problem is that a document parser silently dropped every table from a new batch of files. Measure retrieval recall on its own: was the right chunk in the top five?
+
+Pitfall three: skipping the first step because fine-tuning feels more serious. A small set of good examples in the prompt fixes a surprising share of "we need to fine-tune" problems, in an afternoon.
+
+Pitfall four: forgetting the retirement treadmill. A fine-tune built on a base model with ten months of life left needs a retraining plan before it ships.
+
+Pitfall five: mistaking long context for a library. Stuffing two hundred thousand tokens of documents into every call is slow, costs real money even with caching, and suffers from context rot. It's a step-one technique for small, stable knowledge, not a replacement for retrieval.
+
+And one war story in a common shape. A regulated enterprise fine-tuned a model on internal procedures so it would "know the rules". An audit asked a simple question: for this specific answer the assistant gave, which version of which procedure was it based on? Nobody could answer, because the knowledge lived in weights, not in retrievable, versioned documents. The system was rebuilt around retrieval with citations and document versions logged in every trace. The fine-tune survived, but only for what it was good at: the output format and the house style.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask "R A G or fine-tuning?", a strong answer sounds like this: "First, I'd diagnose the gap with an evaluation set. If it's knowledge, meaning facts that are large, changing, private or need citations, that's retrieval: it stays fresh without retraining, it can enforce per-user permissions, and it can cite sources. If it's behavior, meaning format, tone, consistency on a narrow task, or cost and latency at scale, that's fine-tuning, usually LoRA, or distillation to a smaller model. And both sit on top of a well-engineered prompt, which I'd exhaust first because it's the cheapest step."
+
+When they ask "why not just fine-tune the model on our documents?", a strong answer sounds like: "Fine-tuning is unreliable for injecting facts. Models learn new facts slowly that way, and training on unfamiliar facts has been shown to increase hallucination. The knowledge also goes stale, can't be cited, and can't be permissioned per user. I'd fine-tune for behavior and retrieve for knowledge."
+
+When they ask "context windows are a million tokens now, do we even need R A G?", a strong answer sounds like: "For small, stable corpora, long context plus prompt caching can replace retrieval. At scale it can't. Every frontier model tested so far degrades as context grows, cost scales with tokens on every call, and you lose per-document permissions and clean citations. Long context and retrieval are complements: retrieve the best twenty thousand tokens, don't send a million."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the staircase.
+
+You start on the floor with a problem, and the first thing you pick up is an evaluation set, because without it you can't tell which step helped.
+
+Step one, low and wide: prompting. Instructions, examples, structured output, reasoning room, and for small stable knowledge, the whole document in context with caching. Every system stands here forever.
+
+At the top of step one, the fork. Knowledge gaps go right, down the corridor to the library: retrieval. Fresh, scalable, citable and permissioned, at the cost of a data pipeline and a new failure mode, retrieval misses.
+
+Behavior gaps go up the steep flight to the workshop: fine-tuning. Format, tone, narrow tasks, shorter prompts, distillation to small fast models, usually with LoRA adapters. It's bad at teaching facts, and it's welded to a base model that will be retired.
+
+Climb only as far as the gap requires. Combine the paths when you need both. And remember the direction of the market in 2026: prompt and retrieve first, fine-tune on purpose.
+
+Next episode, we go down into the machine room under the workshop: how quantization shrinks a model and how serving engines squeeze out throughput, so all of this runs fast enough and cheaply enough to ship. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-llmops-vs-mlops.html">← LLMOps vs MLOps: What Actually Changes</a><a class="btn" href="03-quantization-serving.html">Quantization & Efficient Serving →</a></div></main></div></body></html>

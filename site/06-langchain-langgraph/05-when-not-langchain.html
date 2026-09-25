@@ -1,0 +1,407 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>When NOT LangChain — Tradeoffs & Alternatives — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk" open><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="active" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 6 · LangChain / LangGraph · Episode 5</div>
+<h1 class="lesson">When NOT LangChain — Tradeoffs & Alternatives</h1>
+<div class="meta">16 min listen · A staircase of abstraction from the raw model A P I up to managed agent platforms: what each step gives you for free, what it takes away, where LangChain and LangGraph sit on it, and how to pick the lowest step that holds your problem.</div>
+<audio controls preload="metadata" src="../../audio/06-langchain-langgraph/s6e05-when-not-langchain.mp3"></audio>
+<button class="btn complete" data-ep="06-langchain-langgraph/05-when-not-langchain" onclick="toggleDone('06-langchain-langgraph/05-when-not-langchain')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>"LangChain" is not one thing: it spans a thin provider-neutral toolbox, an agent loop (<code>create_agent</code>), a graph runtime (LangGraph), and a managed platform (LangSmith Deployment). The senior skill is standing on the <strong>lowest level of abstraction that holds your problem</strong>, and keeping business logic in plain functions so you can move later.</p>
+<h2 id="the-mental-image-the-staircase">The mental image: the staircase</h2>
+<p>Five steps rising left → right. <strong>Up = convenience, down = control.</strong> A steel beam (durable execution) runs underneath all of them.</p>
+<pre class="mermaid">flowchart LR
+    S1["1. Raw model API (provider SDK, own loop)"] --> S2["2. Thin helpers (routing, schemas, retries) + langchain-core and integrations"]
+    S2 --> S3["3. Agent loop frameworks (OpenAI Agents SDK, Claude Agent SDK, Pydantic AI, LangChain create_agent)"]
+    S3 --> S4["4. Graph runtimes (LangGraph, Microsoft Agent Framework workflows, Google ADK)"]
+    S4 --> S5["5. Managed platforms (LangSmith Deployment, cloud agent services, Agent Bricks)"]
+    B["Steel beam: durable execution engine (Temporal) under any step"]
+    B -.-> S3
+    B -.-> S4
+</pre>
+
+<h2 id="where-each-langchain-piece-sits">Where each LangChain piece sits</h2>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Step</th>
+<th>What it is (v1, Oct 2025+)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>langchain-core</code> + integration packages</td>
+<td>2</td>
+<td>Messages (standard content blocks), runnables, chat model / tool interfaces, hundreds of provider integrations</td>
+</tr>
+<tr>
+<td><code>langchain.agents.create_agent</code> + middleware</td>
+<td>3</td>
+<td>Agent loop built on LangGraph; hooks before/after model call and around tool calls; prebuilt summarization, human-in-the-loop, PII middleware. Replaces LangGraph's deprecated <code>create_react_agent</code></td>
+</tr>
+<tr>
+<td>LangGraph</td>
+<td>4</td>
+<td>State, nodes, edges, reducers, checkpointers, interrupts, streaming, time travel</td>
+</tr>
+<tr>
+<td>LangSmith Deployment (formerly LangGraph Platform)</td>
+<td>5</td>
+<td>Hosted runtime, task queues, memory, Studio</td>
+</tr>
+<tr>
+<td><code>langchain-classic</code></td>
+<td>legacy</td>
+<td>Old <code>LLMChain</code>, <code>ConversationChain</code>, <code>AgentExecutor</code> etc. moved out in v1</td>
+</tr>
+</tbody>
+</table>
+<p>"We stopped using LangChain" → ask <em>which step</em>. Often it means the legacy chains, not LangGraph.</p>
+<h2 id="the-raw-loop-step-1-what-you-own">The raw loop (step 1) — what you own</h2>
+<pre><code class="language-python">import anthropic
+client = anthropic.Anthropic()
+
+def run_agent(messages, tools, tool_impls, max_turns=10):
+    for _ in range(max_turns):                       # budget guard
+        resp = client.messages.create(
+            model=&quot;claude-sonnet-4-5&quot;, max_tokens=2048,
+            tools=tools, messages=messages,
+        )
+        messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: resp.content})
+        if resp.stop_reason != &quot;tool_use&quot;:
+            return resp
+        results = []
+        for block in resp.content:
+            if block.type == &quot;tool_use&quot;:
+                out = tool_impls[block.name](**block.input)   # plain functions
+                results.append({&quot;type&quot;: &quot;tool_result&quot;,
+                                &quot;tool_use_id&quot;: block.id, &quot;content&quot;: str(out)})
+        messages.append({&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: results})
+    raise RuntimeError(&quot;turn budget exceeded&quot;)
+</code></pre>
+<p>~40 lines. Everything else — streaming, retries/backoff, persistence, tracing, token budgeting, provider portability — is now yours.</p>
+<h2 id="framework-agnostic-architecture-keeps-you-mobile-on-the-staircase">Framework-agnostic architecture (keeps you mobile on the staircase)</h2>
+<pre><code class="language-python"># domain/tools.py — plain functions, plain types; no framework imports
+def lookup_order(order_id: str) -&gt; dict: ...
+def issue_refund(order_id: str, idempotency_key: str) -&gt; dict: ...  # idempotent side effect
+
+# adapters/langchain_agent.py — thin layer
+from langchain.agents import create_agent
+from langchain.tools import tool
+from domain import tools as d
+
+agent = create_agent(
+    model=&quot;anthropic:claude-sonnet-4-5&quot;,
+    tools=[tool(d.lookup_order), tool(d.issue_refund)],
+    system_prompt=&quot;You are a support agent...&quot;,
+)
+</code></pre>
+<p>Swap the adapter (OpenAI Agents SDK, Pydantic AI, raw loop) without touching <code>domain/</code>.</p>
+<h2 id="checkpoints-vs-durable-execution">Checkpoints vs durable execution</h2>
+<pre class="mermaid">flowchart TB
+    subgraph LG["LangGraph checkpointer"]
+        A["Node A done"] --> C1["checkpoint"] --> B["Node B (mid-run crash)"]
+        B -.->|"resume re-runs whole node B"| C1
+    end
+    subgraph T["Durable execution (Temporal)"]
+        E["Event history of every activity"] --> R["Deterministic replay + activity retries/timeouts"]
+    end
+</pre>
+
+<ul>
+<li>LangGraph calls its checkpointing "durable execution" (durability modes; resume after crash) — true at <strong>node granularity</strong>. The checkpointer saves state <strong>between</strong> nodes (super-step boundaries), not inside a node. A node with side effects (charge card, send email) can double-execute on resume.</li>
+<li>Temporal = event history + deterministic replay; built for workflows lasting days. Temporal ships a LangGraph plugin (graph as workflow, nodes as activities).</li>
+<li>Rule of thumb: pauses for hours/days, several external side-effecting calls, or must-never-double-execute → add durable execution underneath and make tools idempotent regardless.</li>
+</ul>
+<h2 id="decision-table">Decision table</h2>
+<table>
+<thead>
+<tr>
+<th>Problem shape</th>
+<th>Lowest step that holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single call + structured output (classify, extract, summarize)</td>
+<td>1–2</td>
+</tr>
+<tr>
+<td>Retrieval pipeline (load, chunk, embed, retrieve, answer)</td>
+<td>2 (LangChain integrations or LlamaIndex)</td>
+</tr>
+<tr>
+<td>Tool-using agent, simple loop, one provider</td>
+<td>3 (provider-native SDK)</td>
+</tr>
+<tr>
+<td>Tool-using agent, need provider neutrality</td>
+<td>3 (<code>create_agent</code>, Pydantic AI)</td>
+</tr>
+<tr>
+<td>Branching flow, long-lived state, HITL approval, resume/replay, multi-agent</td>
+<td>4 (LangGraph; Microsoft Agent Framework in .NET/Azure shops)</td>
+</tr>
+<tr>
+<td>Days-long with irreversible side effects</td>
+<td>+ durable execution beam (Temporal)</td>
+</tr>
+<tr>
+<td>No platform team, ship next week</td>
+<td>5 (accept lock-in consciously)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-with-numbers">Tradeoffs with numbers</h2>
+<ul>
+<li><strong>Latency overhead</strong>: framework Python overhead ≈ single-digit ms vs model calls of hundreds of ms to tens of seconds → a weak argument either way.</li>
+<li><strong>Debuggability</strong>: framework-built prompts ≠ your template (hidden system text, history truncation defaults). Always inspect exact messages sent (tracing).</li>
+<li><strong>Dependency churn</strong>: pre-v1 import-path churn was a real tax; v1 promises no breaking changes until 2.0, but integration surface still means more transitive deps/CVEs.</li>
+<li><strong>Abstraction mismatch</strong>: unusual topologies, custom streaming protocols, long-lived connections → you fight the framework. Middleware is LangChain's escape hatch.</li>
+<li><strong>Counterweight</strong>: fully custom teams often build "a worse LangGraph" — no checkpoints, no replay, no debugger, one owner (bus factor 1).</li>
+</ul>
+<h2 id="ecosystem-facts-sep-2026">Ecosystem facts (Sep 2026)</h2>
+<table>
+<thead>
+<tr>
+<th>Framework</th>
+<th>Status / notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LangChain + LangGraph 1.0</td>
+<td>GA Oct 2025; stability commitment until 2.0</td>
+</tr>
+<tr>
+<td>Microsoft Agent Framework</td>
+<td>1.0 GA Apr 3 2026 (.NET + Python); successor to AutoGen + Semantic Kernel; MCP + A2A support</td>
+</tr>
+<tr>
+<td>AutoGen</td>
+<td>Maintenance mode since Oct 2025 (bug/security fixes only)</td>
+</tr>
+<tr>
+<td>Semantic Kernel</td>
+<td>v1.x supported ≥1 year after MAF GA</td>
+</tr>
+<tr>
+<td>OpenAI Agents SDK</td>
+<td>Agents, tools, handoffs, guardrails, sessions, built-in tracing</td>
+</tr>
+<tr>
+<td>Claude Agent SDK</td>
+<td>Renamed from Claude Code SDK (Sep 2025); Claude Code's harness: file/shell tools, subagents, hooks, MCP</td>
+</tr>
+<tr>
+<td>Pydantic AI</td>
+<td>Type-safe agents, validated inputs/outputs/tool results</td>
+</tr>
+<tr>
+<td>Google ADK</td>
+<td>Code-first multi-agent toolkit; workflow agents</td>
+</tr>
+<tr>
+<td>LlamaIndex</td>
+<td>Strongest at ingestion + retrieval; also has Workflows</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Abstraction staircase</td>
+<td>Up = convenience, down = control; stand on the lowest step that holds</td>
+</tr>
+<tr>
+<td><code>langchain-classic</code></td>
+<td>Where v1 moved legacy chains and <code>AgentExecutor</code></td>
+</tr>
+<tr>
+<td>Middleware (LangChain v1)</td>
+<td>Hooks into the agent loop instead of subclassing/forking</td>
+</tr>
+<tr>
+<td>Provider-native SDK</td>
+<td>Deep, first-day feature access for one vendor; weaker portability</td>
+</tr>
+<tr>
+<td>Durable execution</td>
+<td>Run survives process death; LangGraph does it at node/checkpoint granularity, Temporal via per-activity event-history replay</td>
+</tr>
+<tr>
+<td>Idempotent tool</td>
+<td>Safe to re-run on retry/resume (idempotency keys)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. What do you think of LangChain?</strong>
+Separate the pieces. Core + integrations = useful provider-neutral toolbox. Legacy chains hid prompts and churned APIs; v1 moved them to <code>langchain-classic</code>. LangGraph is the part to defend in production (state, checkpoints, interrupts, replay). Pick the lowest abstraction that fits.</p>
+<p><strong>Q2. When would you not use any framework?</strong>
+Single structured-output calls, simple pipelines, or when you need a brand-new provider feature on day one and full visibility into every token. The raw loop is ~40 lines; you then own streaming, retries, persistence, and tracing.</p>
+<p><strong>Q3. Would you build an in-house agent framework?</strong>
+Only the thin parts. Keep tools/business logic as plain functions so the orchestration layer is swappable; adopt a graph runtime once you need persistence, interrupts, or multi-agent coordination — homemade state machines become a liability when their author leaves.</p>
+<p><strong>Q4. LangGraph vs Temporal?</strong>
+Different layers. LangGraph: agent-shaped state, checkpoints between nodes, interrupts, streaming. Temporal: durable execution via event history, deterministic replay, activity retries, days-long workflows. LangGraph resumes at node granularity; Temporal replays per activity — for irreversible side effects run the graph on a durable engine or at least make tools idempotent.</p>
+<p><strong>Q5. How do you avoid framework lock-in?</strong>
+Architect for it: domain logic, tools, retrieval as plain functions with plain types; the framework is a thin adapter. Use OpenTelemetry-compatible tracing. Keep prompts and eval datasets in your own storage. Then moving up or down the staircase swaps the adapter, not the system.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>LangChain &amp; LangGraph 1.0 announcement: https://blog.langchain.com/langchain-langgraph-1dot0/</li>
+<li>LangChain v1 migration guide (langchain-classic): https://docs.langchain.com/oss/python/migrate/langchain-v1</li>
+<li>LangChain 1.0 GA changelog: https://changelog.langchain.com/announcements/langchain-1-0-now-generally-available</li>
+<li>LangSmith Deployment / Studio naming: https://changelog.langchain.com/announcements/product-naming-changes-langsmith-deployment-and-langsmith-studio</li>
+<li>Microsoft Agent Framework 1.0: https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/</li>
+<li>Claude Agent SDK overview: https://platform.claude.com/docs/en/agent-sdk/overview</li>
+<li>Claude Agent SDK migration (rename): https://platform.claude.com/docs/en/agent-sdk/migration-guide</li>
+<li>OpenAI Agents SDK (handoffs / guardrails / tracing): https://openai.github.io/openai-agents-python/handoffs/ · https://openai.github.io/openai-agents-python/guardrails/ · https://openai.github.io/openai-agents-python/tracing/</li>
+<li>Google ADK: https://github.com/google/adk-python</li>
+<li>Temporal LangGraph plugin: https://temporal.io/blog/temporal-langgraph-plugin-durable-execution</li>
+<li>LangGraph vs Temporal (LangChain's view): https://www.langchain.com/resources/langgraph-vs-temporal</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track six, episode five: when not to use LangChain — the tradeoffs and the alternatives. We have spent four episodes learning this stack properly: the runnable interface, the graph with its state and checkpoints, the patterns for humans in the loop and streaming, and LangSmith for tracing and evaluation. So this episode might feel like a strange turn. But it is the episode that most separates a senior answer from a junior one, because anyone can learn a framework. The skill interviewers are actually probing is judgment: when does a framework earn its keep, and when is it overhead you will spend a year peeling off?
+
+Here is the cold open. A well-known engineering team building an A I testing product wrote publicly, a couple of years ago, about ripping LangChain out of their codebase. Their early agent was a simple sequence of steps, and the framework got them there fast. Then the product grew. They wanted subagents, specialists handing work to each other, dynamic tool sets that changed mid-conversation. And they found themselves translating every product requirement into what they called a framework-appropriate solution, then debugging the framework's internals when it did not behave. They replaced it with a few hundred lines of their own code on top of the provider's software development kit, and reported their code got smaller and their debugging got dramatically easier. That story went around the industry, and it shaped a lot of opinions.
+
+Now here is the twist, and it is why this episode is not a hit piece. LangChain listened. The version one point zero releases of both LangChain and LangGraph, in October twenty twenty-five, slimmed the core package down to agents, models, messages, and tools, moved the old chains and the old agent executor into a separate legacy package called langchain classic, added a middleware system so you can hook into the agent loop instead of fighting it, and committed to no breaking changes until version two. So the honest question in twenty twenty-six is not "is LangChain bad." It is: which level of abstraction does this particular problem need?
+
+[PAUSE 2s]
+
+## The mental image: the staircase
+
+Let's build the picture.
+
+Picture a staircase rising from left to right across your mind's eye. Five steps. At the bottom left, you stand on the floor. At the top right, you are near the ceiling. Every step you climb, the framework does more for you, and you control less. Every step you descend, you write more yourself and you see everything. Hold that trade in your mind: up is convenience, down is control.
+
+The bottom step, on the far left: the raw model A P I. You call the provider's software development kit directly — send messages, get a response, handle tool calls in your own loop. Nothing between you and the model.
+
+Step two: thin helpers. Still your own loop, but with a few sharp tools in your hand — a routing library that gives you one interface over many providers, a schema library that forces the model's output into validated typed objects, a retry helper. These do one thing each, and you can read their source in an afternoon.
+
+Step three, the middle of the staircase: agent loop frameworks. Here the framework owns the loop — call the model, run the tools it asked for, feed the results back, repeat until done. You define an agent as a model, some instructions, and some tools. This step is crowded: the OpenAI Agents S D K, the Claude Agent S D K, Pydantic A I, and LangChain's own create agent function all live here.
+
+Step four: graph runtimes. Now you are not just describing an agent, you are describing the whole control flow as explicit state, nodes, and edges, with checkpoints after every step, so a run can pause for a human, survive a restart, and be replayed. LangGraph lives here. So do the workflow layer of Microsoft Agent Framework, and Google's Agent Development Kit with its workflow agents.
+
+Step five, top right, near the ceiling: managed agent platforms. You bring configuration and data, and someone else runs the infrastructure — hosting, scaling, memory, evaluation, a user interface. LangSmith Deployment, the hosted runtime for LangGraph, is here, alongside the cloud providers' agent services and data-platform offerings like Databricks Agent Bricks.
+
+And one more thing, off to the side of the staircase, running along the floor underneath all five steps: a heavy steel beam. That beam is a durable execution engine, like Temporal. It is not an A I framework at all. It is general-purpose workflow infrastructure that guarantees a long-running process finishes even if machines die. Keep it in the corner of your eye; it matters later.
+
+So: staircase, left to right, five steps. Floor, helpers, agent loop, graph runtime, managed platform. Steel beam underneath. Up is convenience, down is control.
+
+[PAUSE 2s]
+
+## Where LangChain actually sits
+
+Here is the first insight worth saying out loud in an interview. "LangChain" is not one step. It is spread across three.
+
+The langchain core package — messages, the runnable interface, the chat model abstraction, tool definitions — is effectively step two. It is a thin, provider-neutral vocabulary. Plus there are hundreds of integration packages: chat models, embeddings, vector stores, document loaders. Think of those as a toolbox you can carry up and down the staircase. You can use a LangChain document loader and a LangChain text splitter in a pipeline that never touches an agent.
+
+The create agent function in LangChain version one is step three — an agent loop, built on top of LangGraph under the hood, with middleware hooks before and after the model call and around each tool call.
+
+LangGraph is step four. And LangSmith Deployment is step five.
+
+So when someone says "we stopped using LangChain," the useful follow-up is: which step did you step off? Very often the answer is "we stopped using the old chain classes and the old agent executor," which are exactly the things version one moved into the legacy package. That is a very different claim from "we stopped using LangGraph."
+
+[PAUSE 2s]
+
+## Walking the staircase: what each step costs
+
+Now let's walk the staircase from the bottom and ask the four questions for each step: what problem does it solve, how does it work, what breaks without it, what does it cost?
+
+Stand on the bottom step, the raw A P I. The problem it solves: none, beyond talking to the model. How it works: a loop you write. While the model's response contains tool calls, execute them, append the results as messages, call the model again. That core loop is perhaps forty lines. What you gain: total transparency. Every token you send is a token you wrote. Stack traces point at your code. There is no hidden prompt, no hidden retry, no version upgrade that changes behavior under you. And you get new provider features the day they ship, because you are not waiting for a framework to wrap them. What it costs: you now own everything else. Streaming, retries with backoff, parsing tool arguments, token budgeting, conversation persistence, tracing, and, if you ever switch providers, rewriting every message format. None of these are hard individually. Collectively they are a few thousand lines that every team reinvents slightly differently.
+
+Climb to step two, the helpers. This is where a lot of experienced teams settle for straightforward applications: a routing library for provider neutrality, a schema library for structured outputs, an observability S D K for traces. You still own the loop, but the tedious parts are handled by small libraries you fully understand. The cost is integration glue, and the fact that nothing forces a consistent architecture across teams.
+
+Climb to step three, the agent loop frameworks. The problem they solve: the loop itself, plus the conventions around it. The OpenAI Agents S D K gives you agents, tools, handoffs between agents, guardrails that run in parallel with the agent, sessions for memory, and built-in tracing. The Claude Agent S D K, which was renamed from the Claude Code S D K in late twenty twenty-five, gives you the same agent harness that powers Claude Code — file and shell tools, subagents, hooks, and deep support for the Model Context Protocol. Pydantic A I puts type safety first: validated inputs, outputs, and tool results. LangChain's create agent gives you a provider-neutral loop with middleware for things like summarizing long conversations, human approval, and redacting personal data. What breaks without this step: nothing, if your loop is simple. What it costs: the provider-native S D Ks are most comfortable with their own models. They can often call other models, but the developer experience is built around one provider, so you are trading portability for depth. And any framework adds a dependency whose upgrades you now schedule.
+
+Climb to step four, graph runtimes. This is where LangGraph genuinely earns its place, and it is worth being precise about why. The problem it solves is not "calling a model." It is control flow and state over time. Explicit state that every node reads and writes. Conditional edges you can draw and test. A checkpoint written after every super-step, so you can interrupt for human approval and resume hours later, recover from a crash at the last completed node, replay or fork a past run to debug it, and stream intermediate progress to a user. What breaks without it: you end up building a bespoke state machine and a persistence layer, badly, under deadline. What it costs: a learning curve — reducers, super-steps, thread identifiers — and some ceremony that is pure overhead for a two-step pipeline. If your whole application is "retrieve, then answer," a graph is a filing cabinet for a single sheet of paper.
+
+Now glance at the steel beam under the staircase, because this is the most technical point in the episode. LangGraph describes its checkpointing as durable execution, and within its scope that is fair: a run can survive a crash and resume. But notice the granularity. LangGraph's checkpointer saves state between nodes, at super-step boundaries, not inside them. If the process dies in the middle of a node — say, halfway through a ten-minute tool call — that node's work is lost and it re-runs from the last checkpoint. Usually that is fine. But if that node had side effects, like charging a card or sending an email, re-running it can do the thing twice. Durable execution engines like Temporal record an event history of every step and replay deterministically, with activity-level retries and timeouts, and they are designed for workflows that last days. Temporal even ships an integration that runs a LangGraph graph with each node as a Temporal activity. The practical rule many teams use: if a workflow pauses for hours or days, makes several external calls with real side effects, or must never double-execute, put a durable execution engine underneath, and make your side-effecting tools idempotent regardless.
+
+Climb to step five, the managed platforms. What they solve: operations. Hosting, horizontal scaling, task queues, memory stores, deployment revisions, a studio for debugging, built-in evaluation. What breaks without them: nothing, if you have a platform team that runs containers and databases well. What it costs: money, and lock-in to someone else's runtime model, and in regulated environments, questions about where the data and traces live.
+
+[PAUSE 2s]
+
+## The real tradeoffs, with numbers
+
+Let's put some honest numbers on the table.
+
+Framework overhead in latency is almost never the problem. A model call takes hundreds of milliseconds to tens of seconds. The Python overhead of a framework wrapping it is typically single-digit milliseconds. If someone argues against LangChain on raw speed, that argument is weak. The real costs are elsewhere.
+
+Cost one: debuggability. When a framework builds the prompt for you, the prompt you debug is not the prompt you wrote. The classic failure: a team's agent started ignoring an instruction, and after two days they discovered a framework default was injecting its own system text and truncating the conversation history at a message limit they never set. Tracing solves much of this — which is exactly why LangSmith exists — but the lesson is to always inspect the exact messages sent to the model, not your template.
+
+Cost two: dependency weight and churn. Before version one, LangChain's rapid release pace meant breaking changes and deprecated import paths were a regular tax; many teams pinned versions and fell behind. The version one stability promise addresses this, but a large integration surface still means more transitive dependencies and more security patches to track.
+
+Cost three: abstraction mismatch. Frameworks encode opinions about what an agent is. When your product's shape matches the opinion, you fly. When it does not — unusual multi-agent topologies, custom streaming protocols, a tool that must hold a long-lived connection — you spend your time working around the framework instead of with it. That is precisely what our cold-open team hit, and middleware is LangChain's attempt to give you escape hatches without leaving.
+
+Cost four: lock-in to a vocabulary. Once a codebase speaks in one framework's message and tool types, switching is a rewrite of the edges. The mitigation is architectural: keep your business logic — your tools, your retrieval, your domain rules — as plain functions with plain types, and let the framework be a thin layer that calls them. Then moving up or down the staircase is swapping the adapter, not the house.
+
+And the counterweight, so this stays balanced. The cost of not using a framework is real too. Teams that go fully custom often discover, a year in, that they have built a worse LangGraph: a homemade state machine with no checkpointing, no replay, no visual debugger, and one engineer who understands it. When that engineer leaves, the homemade framework becomes the legacy system.
+
+[PAUSE 2s]
+
+## How to decide: the lowest step that holds
+
+So here is the decision rule, back in the picture. Stand on the lowest step of the staircase that holds your problem's weight.
+
+If it is a single model call with structured output — classification, extraction, summarization — stand on the floor or step two. A framework adds nothing.
+
+If it is a retrieval pipeline — load, chunk, embed, retrieve, answer — step two, and feel free to carry LangChain's integration toolbox, or LlamaIndex, which is strongest specifically for document ingestion and retrieval.
+
+If it is a tool-using agent with a simple loop and you are committed to one model provider, step three with that provider's agent S D K is often the most direct path. If you need provider neutrality, LangChain's create agent or Pydantic A I.
+
+If it has branching control flow, long-running state, human approval steps, the need to resume after failure or replay a run, or several agents coordinating — step four. This is LangGraph's home turf, and in the Microsoft ecosystem, Microsoft Agent Framework, which reached version one point zero in April twenty twenty-six as the successor to both AutoGen and Semantic Kernel. AutoGen itself is now in maintenance mode — worth knowing if an interviewer mentions it.
+
+If it runs for days with irreversible side effects — add the steel beam, a durable execution engine, under whatever step you chose.
+
+If you have no platform team and need it running next week — step five, and accept the lock-in consciously.
+
+And one more axis that cuts across the whole staircase: language. If your team is TypeScript-first, check that your chosen framework's TypeScript version is a first-class citizen, not a port that lags behind.
+
+[PAUSE 2s]
+
+## Interview angle
+
+This topic shows up as a trap question. The interviewer asks, "What do you think of LangChain?", and they are listening for whether you have an opinion with reasons, or just enthusiasm or cynicism.
+
+A strong answer sounds like this: "I separate the pieces. The core abstractions and integrations are useful as a provider-neutral toolbox. The old chain classes had a reputation for hiding prompts and churning APIs, and version one moved them out into a legacy package. LangGraph is the part I would actually defend in production, because explicit state, checkpoints, human-in-the-loop interrupts, and replay are hard to build well yourself. But I pick the lowest level of abstraction that fits: a single structured call does not need a framework, and a workflow that runs for days with side effects needs durable execution underneath, not just checkpoints."
+
+A second common question: "Would you build an agent framework in-house?" Strong answer: "Only the thin parts. I would keep tools and business logic as plain functions so the framework is replaceable, write my own loop if the use case is simple, and adopt a graph runtime once I need persistence, interrupts, or multi-agent coordination, because a homemade state machine becomes a liability the moment its author leaves."
+
+A third: "LangGraph versus Temporal?" Strong answer: "Different layers. LangGraph gives agent-shaped state, checkpoints between nodes, interrupts, and streaming. Temporal gives durable execution with event-history replay and activity retries for workflows lasting days. LangGraph resumes at node granularity from its last checkpoint; Temporal replays an event history at the level of each individual activity. For long-running flows with irreversible side effects, I would run the graph on top of a durable engine, or at minimum make every side-effecting tool idempotent."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the staircase, left to right.
+
+On the floor, the raw model A P I: total control, total transparency, and you own everything — streaming, retries, persistence, tracing.
+
+Step two, thin helpers: routing, schemas, retries. Your loop, fewer chores. LangChain's core vocabulary and integration toolbox live here, and you can carry that toolbox to any step.
+
+Step three, agent loop frameworks: OpenAI Agents S D K, Claude Agent S D K, Pydantic A I, LangChain's create agent. The loop is theirs; you bring model, instructions, tools. Provider-native kits trade portability for depth.
+
+Step four, graph runtimes: LangGraph, Microsoft Agent Framework, Google's A D K. Explicit state, checkpoints, interrupts, replay. Worth it when control flow and time matter; overkill for a two-step pipeline.
+
+Step five, managed platforms: someone else runs it, you pay in money and lock-in.
+
+Underneath, the steel beam: durable execution, for days-long workflows with side effects, because node-level checkpoints can re-run a side effect that a finer-grained engine would not.
+
+The rule: stand on the lowest step that holds your problem, and keep your business logic in plain functions so you can change steps later.
+
+Next up is the drill for this whole track. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="04-langsmith.html">← LangSmith: Tracing, Datasets, Evals</a><a class="btn" href="06-langchain-drill.html">DRILL: LangChain/LangGraph Rapid-Fire →</a></div></main></div></body></html>

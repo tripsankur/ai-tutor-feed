@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1 — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="active" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 10</div>
+<h1 class="lesson">Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</h1>
+<div class="meta">16 min listen · The classical ML questions that still show up in agentic AI interviews: how to handle an imbalanced dataset, and the difference between micro, macro and weighted F1. Resampling and SMOTE, class weights, threshold tuning, PR-AUC and recall at fixed precision, and a fraud-flavoured worked example you can say out loud.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/10-imbalanced-data-f1" onclick="toggleDone('09-interview-lab/10-imbalanced-data-f1')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> imbalance is fixed by changing three defaults on purpose — the metric (PR curve / constrained recall, not accuracy), the objective (class weights, resampling inside training folds only), and above all the decision threshold (tuned to business cost); micro F1 = per-decision (≈ accuracy), macro F1 = per-class (exposes the broken rare class).</p>
+<p><strong>Interview questions answered:</strong> "How do you handle an imbalanced dataset?" and "What's the difference between micro and macro F1?"</p>
+<h2 id="the-mental-image">The mental image</h2>
+<p>A horizontal <strong>score line</strong> from 0 (left) to 1 (right). Every transaction is a dot: a huge <strong>grey dune</strong> of legitimate transactions on the left, a scatter of <strong>red fraud dots</strong> mostly on the right. A vertical <strong>gate</strong> = the threshold; right of it = flagged. Above, a <strong>scoreboard</strong>: left dial precision (flagged dots that are red), right dial recall (red dots that are flagged). Training techniques move dots; threshold tuning moves the gate; metric choice picks the dial. For micro/macro, split the line into <strong>three lanes</strong>, one per class.</p>
+<pre class="mermaid">flowchart LR
+    subgraph TRAIN["Training side (moves the dots)"]
+        CW["Class weights /\nscale_pos_weight"]
+        RS["Resampling\n(SMOTE, under/oversampling)\ninside CV folds only"]
+    end
+    subgraph DECIDE["Decision side (moves the gate)"]
+        CAL["Calibrate probabilities\n(if scores feed other decisions)"]
+        TH["Tune threshold on validation\n(cost / precision constraint / alert budget)"]
+    end
+    subgraph MEASURE["Measurement (the scoreboard)"]
+        PR["PR curve, average precision\n(baseline = prevalence)"]
+        OP["Recall @ precision >= X\nPrecision @ top-k alerts"]
+        F1["F1 of positive class;\nmacro F1 + per-class for multi-class"]
+    end
+    TRAIN --> CAL --> TH --> MEASURE
+</pre>
+
+<h2 id="why-accuracy-and-roc-flatter-you">Why accuracy and ROC flatter you</h2>
+<p>At 0.2% fraud (2 per 1,000), predicting "never fraud" = <strong>99.8% accuracy</strong>, 0 recall.</p>
+<p>Decent model: recall 80%, false positive rate 1%. Per 100,000 transactions: 200 fraud → 160 caught; 99,800 legit × 1% ≈ 998 false alarms → <strong>precision ≈ 14%</strong> (≈1 in 7 alerts real). ROC looks great because FPR divides by the huge negative class; precision feels every false alarm.</p>
+<p><strong>PR-AUC baseline = prevalence</strong> (0.002 here), not 0.5 as for ROC-AUC.</p>
+<h2 id="techniques">Techniques</h2>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>How</th>
+<th>Pros</th>
+<th>Cons / pitfalls</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Random undersampling</td>
+<td>drop most majority rows</td>
+<td>fast</td>
+<td>discards info; overfits at extreme ratios; shifts probabilities</td>
+</tr>
+<tr>
+<td>Random oversampling</td>
+<td>duplicate minority rows</td>
+<td>keeps all data</td>
+<td>memorization</td>
+</tr>
+<tr>
+<td>SMOTE (k=5 neighbours default)</td>
+<td>synthetic point on segment between minority neighbours</td>
+<td>smoother than duplication</td>
+<td>paints minority into overlap regions; needs SMOTENC for categoricals; weak in high-dim; <strong>leakage if applied before split</strong></td>
+</tr>
+<tr>
+<td>Class weights (<code>class_weight="balanced"</code>, XGBoost <code>scale_pos_weight ≈ neg/pos</code>)</td>
+<td>reweight the loss</td>
+<td>one line, no fake data</td>
+<td>distorts calibration</td>
+</tr>
+<tr>
+<td><strong>Threshold tuning</strong> (<code>TunedThresholdClassifierCV</code>, sklearn ≥ 1.5; <code>FixedThresholdClassifier</code>)</td>
+<td>choose the gate by cost/constraint via CV</td>
+<td>directly optimizes the business trade-off</td>
+<td>must tune on validation, not test</td>
+</tr>
+<tr>
+<td>Calibration (<code>CalibratedClassifierCV</code>)</td>
+<td>map scores to true probabilities</td>
+<td>needed when scores feed provisions/ensembles</td>
+<td>do before thresholding</td>
+</tr>
+</tbody>
+</table>
+<p>Evidence: van den Goorbergh et al. (JAMIA 2022) — undersampling/oversampling/SMOTE produced strongly miscalibrated models (overestimated minority probability) with no AUROC gain; threshold shifting gave a similar sensitivity/specificity balance. Carriero et al. (Statistics in Medicine 2025) report similar harms for ML models.</p>
+<p>Leak-free resampling:</p>
+<pre><code class="language-python">from imblearn.pipeline import make_pipeline
+from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import HistGradientBoostingClassifier
+from sklearn.model_selection import TimeSeriesSplit, cross_val_score
+
+pipe = make_pipeline(SMOTE(k_neighbors=5, random_state=0),
+                     HistGradientBoostingClassifier())
+# sampler runs only during fit, skipped at predict -&gt; no synthetic points in validation folds
+cross_val_score(pipe, X, y, cv=TimeSeriesSplit(5), scoring=&quot;average_precision&quot;)
+</code></pre>
+<p>Threshold tuned to a business cost:</p>
+<pre><code class="language-python">import numpy as np
+from sklearn.metrics import make_scorer, confusion_matrix
+from sklearn.model_selection import TunedThresholdClassifierCV
+
+def neg_cost(y, y_pred, fn_cost=300, fp_cost=5):
+    tn, fp, fn, tp = confusion_matrix(y, y_pred, labels=[0, 1]).ravel()
+    return -(fn * fn_cost + fp * fp_cost)
+
+clf = TunedThresholdClassifierCV(
+    HistGradientBoostingClassifier(class_weight=&quot;balanced&quot;),
+    scoring=make_scorer(neg_cost), cv=5).fit(X_train, y_train)
+clf.best_threshold_
+</code></pre>
+<p>Recall at a minimum precision:</p>
+<pre><code class="language-python">from sklearn.metrics import precision_recall_curve
+p, r, t = precision_recall_curve(y_val, scores)
+ok = p[:-1] &gt;= 0.33
+best_t = t[ok][np.argmax(r[:-1][ok])]   # max recall s.t. precision &gt;= 1/3
+</code></pre>
+<h2 id="micro-vs-macro-vs-weighted-f1-worked-example">Micro vs macro vs weighted F1 — worked example</h2>
+<p>100 transactions: 90 legit (L), 8 card fraud (C), 2 account takeover (T). Model: all 90 L correct; 4 of 8 C caught, 4 called L; 0 of 2 T caught, both called L; never predicts fraud for a legit.</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Support</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legit</td>
+<td>90</td>
+<td>90/96 = 0.94</td>
+<td>1.00</td>
+<td><strong>0.97</strong></td>
+</tr>
+<tr>
+<td>Card fraud</td>
+<td>8</td>
+<td>1.00</td>
+<td>0.50</td>
+<td><strong>0.67</strong></td>
+</tr>
+<tr>
+<td>Takeover</td>
+<td>2</td>
+<td>0 (no predictions → zero_division)</td>
+<td>0.00</td>
+<td><strong>0.00</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Macro F1</strong> = (0.97 + 0.67 + 0) / 3 ≈ <strong>0.54–0.55</strong> → per class, equal weight; exposes the broken class.</li>
+<li><strong>Micro F1</strong> = pooled TP/FP/FN = 94/100 = <strong>0.94</strong> = accuracy (single-label multi-class).</li>
+<li><strong>Weighted F1</strong> = 0.9·0.97 + 0.08·0.67 + 0.02·0 ≈ <strong>0.92</strong> → leans to the majority class.</li>
+</ul>
+<pre><code class="language-python">from sklearn.metrics import f1_score, classification_report
+f1_score(y, y_pred, average=&quot;macro&quot;, zero_division=0)     # ~0.545
+f1_score(y, y_pred, average=&quot;micro&quot;)                      # 0.94
+f1_score(y, y_pred, average=&quot;weighted&quot;, zero_division=0)  # ~0.924
+f1_score(y_bin, y_bin_pred, average=&quot;binary&quot;, pos_label=1)  # report this for binary fraud
+</code></pre>
+<p>Traps: binary + <code>average="micro"</code> over both classes = accuracy again. "Macro F1" has two definitions — mean of per-class F1 (scikit-learn) vs F1 of mean precision and mean recall — say which. Never-predicted classes hit the <code>zero_division</code> rule.</p>
+<h2 id="fraud-specific-practice">Fraud-specific practice</h2>
+<ul>
+<li><strong>Time-based splits</strong> (train on earlier months, validate later) — fraud drifts.</li>
+<li><strong>Label delay</strong> — chargebacks arrive weeks later; evaluate on matured windows.</li>
+<li><strong>Don't rebalance the test set</strong> — it must match production prevalence.</li>
+<li>Monitor precision, alert volume and prevalence; re-tune the threshold after attack waves.</li>
+<li>Reference dataset scale: the public European credit-card dataset has 492 frauds in 284,807 transactions (≈0.17%).</li>
+</ul>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prevalence</td>
+<td>fraction of positives; PR-AUC baseline</td>
+</tr>
+<tr>
+<td>Precision / recall</td>
+<td>flagged-that-are-real / real-that-are-flagged</td>
+</tr>
+<tr>
+<td>Average precision (PR-AUC)</td>
+<td>area under PR curve (step-wise)</td>
+</tr>
+<tr>
+<td>Recall @ precision</td>
+<td>max recall subject to a precision floor</td>
+</tr>
+<tr>
+<td>SMOTE</td>
+<td>interpolated synthetic minority samples</td>
+</tr>
+<tr>
+<td>Class weight</td>
+<td>loss multiplier per class</td>
+</tr>
+<tr>
+<td>Threshold tuning</td>
+<td>choosing the decision cut-off by cost/constraint</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>scores that behave like true probabilities</td>
+</tr>
+<tr>
+<td>Micro / macro / weighted F1</td>
+<td>pooled / unweighted per-class mean / support-weighted mean</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions (with strong answers)</h2>
+<ol>
+<li>
+<p><strong>Why is accuracy a bad metric here?</strong> At 0.2% prevalence, "never fraud" scores 99.8%. Use the PR curve/average precision with prevalence as the baseline, plus an operating-point metric like recall at a precision floor or precision at the analysts' daily alert budget.</p>
+</li>
+<li>
+<p><strong>SMOTE or class weights?</strong> Start with class weights (or <code>scale_pos_weight</code>) in gradient boosting — no synthetic data, one line. SMOTE only inside training folds via an imblearn pipeline; beware overlap regions, categoricals and calibration damage.</p>
+</li>
+<li>
+<p><strong>What's the single most important lever?</strong> The threshold. Train a good ranker, calibrate if probabilities matter, then pick the gate on validation data by expected cost or the precision/alert constraint. Resampling mostly achieves what moving the threshold would, at the cost of calibration.</p>
+</li>
+<li>
+<p><strong>Micro vs macro F1?</strong> Micro pools all decisions (= accuracy in single-label multi-class) and is dominated by frequent classes; macro averages per-class F1 equally and exposes rare-class failure; weighted averages by support. Example: 0.94 micro / 0.92 weighted / 0.55 macro for the same model.</p>
+</li>
+<li>
+<p><strong>How would you validate a fraud model?</strong> Time-based split, matured labels, test set at production prevalence, report PR-AUC + recall@precision + per-class metrics, calibrate, tune threshold on validation, then monitor precision, alert volume and prevalence drift in production.</p>
+</li>
+</ol>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>scikit-learn <code>f1_score</code> (average options, zero_division): https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html</li>
+<li>scikit-learn threshold tuning guide: https://scikit-learn.org/stable/modules/classification_threshold.html · <code>TunedThresholdClassifierCV</code>: https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.TunedThresholdClassifierCV.html</li>
+<li>imbalanced-learn SMOTE: https://imbalanced-learn.org/stable/references/generated/imblearn.over_sampling.SMOTE.html · Pipeline: https://imbalanced-learn.org/stable/references/generated/imblearn.pipeline.Pipeline.html</li>
+<li>van den Goorbergh et al., "The harm of class imbalance corrections for risk prediction models" (JAMIA 2022): https://academic.oup.com/jamia/article/29/9/1525/6605096</li>
+<li>Carriero et al., "The Harms of Class Imbalance Corrections for Machine Learning Based Prediction Models" (Stat Med 2025): https://pmc.ncbi.nlm.nih.gov/articles/PMC11771573/</li>
+<li>Related: Track 3 ep 4 and Track 9 ep 7 (LLM judges are classifiers too — same metric logic).</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode ten: a classical machine learning refresher — imbalanced datasets, and micro versus macro F one.
+
+In the middle of a technical round about L L M serving, K V caches, and R A G, the interviewer for an Agentic A I Engineer role in financial services switched gears and asked two questions that had nothing to do with language models. First: "How do you handle an imbalanced dataset?" Second: "What's the difference between micro and macro F one?"
+
+[PAUSE 2s]
+
+Don't be surprised by this. Agentic systems in banks sit next to classical models all day: fraud scoring, transaction classification, intent routing, complaint triage. And an L L M judge that labels answers "hallucinated" or "fine" is a classifier too, usually with a rare positive class. These questions check whether you can reason about a metric instead of reciting it. Let's make sure you can.
+
+## Why it matters
+
+Here's the classic trap. A team builds a card-fraud model. Roughly two transactions in every thousand are fraudulent. They train, they evaluate, and they report ninety-nine point eight percent accuracy. Leadership is delighted. Then someone looks at the predictions: the model flags nothing. Ever. It learned that "never fraud" is right ninety-nine point eight percent of the time, which is exactly the base rate. Accuracy rewarded it for learning nothing.
+
+That's the heart of imbalance. The problem isn't that the rare class is rare. The problem is that the default objective, the default metric, and the default decision threshold all quietly assume the classes matter equally and appear equally. Fixing imbalance means fixing those three defaults, deliberately.
+
+[PAUSE 1s]
+
+## The mental image: the line, the gate, and the scoreboard
+
+Picture this. A long horizontal line stretching left to right in front of you. It's the model's score, from zero on the far left to one on the far right. Every transaction becomes a dot placed on that line according to how suspicious the model thinks it is.
+
+Most dots are grey: legitimate transactions. There are hundreds of thousands of them, and they pile up in a huge dune on the left. A few dots are red: fraud. Maybe a couple of hundred. Most of them sit over on the right, but some are buried in the grey dune, and some grey dots have wandered to the right.
+
+Standing on the line is a gate: a vertical post. That's the decision threshold. Everything to the right of the gate gets flagged as fraud. Everything to the left passes.
+
+And above the whole line, a scoreboard with two dials. The left dial is precision: of all the dots to the right of the gate, what fraction are red? That's "when we raise an alert, how often is it real?" The right dial is recall: of all the red dots anywhere on the line, what fraction are to the right of the gate? That's "of all the fraud that happened, how much did we catch?"
+
+Line, dune, red dots, gate, scoreboard. Every technique in this episode either moves dots along the line, which is training, or moves the gate, which is decision-making, or changes which dial you read.
+
+[PAUSE 2s]
+
+## Under the hood: why accuracy lies
+
+Walk the accuracy trap through the picture. Push the gate all the way to the far right, past every dot. Nothing is flagged. Every grey dot is correctly passed, every red dot is missed. Accuracy is the fraction of all dots on the correct side, and because the grey dune is almost everything, accuracy is ninety-nine point eight percent. The recall dial reads zero. The scoreboard tells the truth; accuracy doesn't.
+
+Now a subtler trap. Say the model is actually decent. It catches eighty percent of fraud, and it wrongly flags only one percent of legitimate transactions. That sounds excellent. Now count dots. In every hundred thousand transactions, about two hundred are fraud, and the model catches a hundred and sixty. But one percent of the ninety-nine thousand eight hundred legitimate ones is about a thousand false alarms. So right of the gate there are roughly a hundred and sixty red dots and a thousand grey ones. Precision: about one alert in seven is real. Your fraud analysts spend six out of every seven investigations on innocent customers, and those customers get their cards declined.
+
+That's why the R O C curve and its area can flatter you on imbalanced data. The R O C curve plots recall against the false positive rate, and the false positive rate divides by the size of the grey dune, which is enormous, so a thousand false alarms looks like a tiny one percent. The precision dial divides by what's right of the gate, so it feels every one of them. On heavily imbalanced problems, read the precision-recall curve.
+
+## The right metrics
+
+So what do you report? Sweep the gate from the far right to the far left, and at every position read both dials. Plot precision against recall: that's the precision-recall curve. The area under it, P R A U C, often computed as average precision, summarizes the whole sweep. One thing to know cold: a random model's P R A U C equals the prevalence. At two in a thousand, the random baseline is zero point zero zero two, not zero point five as with R O C. So a P R A U C of zero point four on a fraud problem can be very good. Always quote the baseline alongside it.
+
+But a curve isn't a decision. Operations teams think in constraints, so the most useful single numbers are constrained ones. Recall at a fixed precision: "we catch sixty-five percent of fraud while keeping at least one in three alerts genuine." Or precision at a fixed alert budget: "the analysts can review five hundred cases a day, so of the top five hundred scores, how many are real?" Or recall at a fixed false positive rate, because declined legitimate customers are a cost the business can price. And the F one score, the harmonic mean of precision and recall, is a reasonable single number when you have no better cost information. We'll unpack its averaging variants in a minute.
+
+## Training-side fix one: resampling
+
+Now the techniques. Start with training, which is about where dots land on the line.
+
+Resampling changes the training data's class balance. Random undersampling sends most of the grey dots home: keep all the fraud, keep maybe a tenth of the legitimate transactions. Training is faster and the model pays more attention to the red dots. The cost is that you threw away information, and with extreme ratios the model can overfit the few grey dots it kept.
+
+Random oversampling duplicates red dots. It keeps all the data but invites overfitting: the model memorizes those exact fraud cases.
+
+Then there's SMOTE, the synthetic minority oversampling technique. Picture taking one red dot, finding its nearest red neighbours in feature space, five by default, picking one, and placing a brand-new synthetic red dot at a random point on the straight line between them. Repeat until the classes are as balanced as you want. It generalizes better than duplication, but it has sharp edges. It invents fraud in the gaps between real fraud cases, and if those gaps are full of legitimate transactions, you've painted red dots into the grey dune. It needs a variant for categorical features, because you can't interpolate halfway between two merchant categories. And it struggles in high dimensions, where "nearest neighbour" means less.
+
+The biggest resampling pitfall is leakage, and it's a genuine war story pattern. A team oversampled the full dataset with SMOTE, then split into train and test. Synthetic test points were interpolated from real training points, so the test set was full of near-copies of training data. Cross-validation reported a stellar precision-recall area. In production, it was a fraction of that. The rule: resample only inside the training fold, never the validation or test data. In Python, the imbalanced-learn library's pipeline does this for you: its samplers run during fit and are skipped at predict time, so putting SMOTE inside that pipeline and cross-validating the pipeline keeps you honest.
+
+## Training-side fix two: class weights
+
+The cleaner alternative to changing the data is changing the loss. Class weights tell the training objective that a mistake on a red dot costs more than a mistake on a grey one. In scikit-learn, the "balanced" option weights each class inversely to its frequency, so with two in a thousand, each fraud case counts for roughly five hundred times as much as a legitimate one. In gradient boosting libraries like X G Boost, the equivalent knob is scale pos weight, usually set near the ratio of negatives to positives. Same effect as oversampling in expectation, without inventing data, and it's one line.
+
+And here's the insight that separates a strong answer. Both resampling and class weights mostly do one thing: they shove the whole cloud of dots rightward on the line, so the default gate at zero point five flags more of them. A published study in the Journal of the American Medical Informatics Association found that random undersampling, oversampling, and SMOTE made risk models badly miscalibrated, strongly overestimating the probability of the rare class, without improving their ability to rank cases, and that simply moving the threshold achieved a similar sensitivity-specificity balance. A follow-up study reported similar harms for machine learning models. In a bank, where a fraud score may feed a loss provision or be combined with other scores, calibrated probabilities matter.
+
+## The decision-side fix: move the gate
+
+So the most important technique is the least glamorous: threshold tuning. Train a good model, perhaps with mild class weights, and then choose where the gate stands based on what errors cost.
+
+Walk it on the line. Slide the gate left: more red dots on the flagged side, so recall rises, but more grey dots come with them, so precision falls. Slide it right: fewer false alarms, more missed fraud. There's no free position. The right position comes from the business: if a missed fraud costs a few hundred dollars on average, and a false alarm costs a few dollars of analyst time plus some customer friction, you pick the gate that minimizes total expected cost on a validation set. Or, more often, you pick the gate where recall is maximized subject to the precision or alert-budget constraint the operations team gave you.
+
+Scikit-learn has a tool for exactly this: a tuned-threshold classifier that uses cross-validation to pick the threshold maximizing whatever metric or cost function you pass it, plus a fixed-threshold wrapper for when the threshold comes from policy. Tune on validation data, never on test data. And if you need calibrated probabilities, calibrate first, then set the threshold.
+
+## Fraud realities worth mentioning
+
+Three things that show experience. First, split by time, not randomly. Fraud patterns shift, so train on earlier months and validate on later ones; a random split leaks tomorrow's fraud patterns into training. Second, labels arrive late. A chargeback can take weeks to be filed, so last week's "legitimate" transactions include fraud nobody has reported yet. Evaluate on a window old enough for labels to mature. Third, prevalence in production drifts: a fraud attack can double the rate overnight, which moves precision at your fixed gate even if the model hasn't changed. Monitor precision and alert volume, and revisit the threshold.
+
+[PAUSE 1s]
+
+## Micro versus macro F one: the worked example
+
+Now the second question. F one is defined per class: for a given class, it's the harmonic mean of that class's precision and recall. With more than one class, you have several F one scores, and you have to average them somehow. That's where micro, macro and weighted come in.
+
+Let's switch the picture from one line to three lanes, side by side, one per class. The model now classifies each transaction into one of three classes: legitimate, card fraud, or account takeover. Let's use a batch of exactly one hundred transactions so the arithmetic is easy to hear. Ninety are legitimate. Eight are card fraud. Two are account takeover.
+
+Here's what the model does. It gets all ninety legitimate ones right. Of the eight card-fraud cases, it catches four, and calls the other four legitimate. Of the two account takeovers, it catches neither; it calls both legitimate. It never labels a legitimate transaction as fraud.
+
+Now score each lane. Legitimate: it found all ninety, so recall is perfect, but six fraud cases were wrongly dumped into this lane, so precision is ninety out of ninety-six. Its F one is about ninety-seven percent. Card fraud: every card-fraud prediction was right, so precision is perfect, but it found only half, so recall is fifty percent, and F one is about sixty-seven percent. Account takeover: it found none, so F one is zero.
+
+[PAUSE 1s]
+
+Macro F one is the plain average of the three lane scores, each lane counting equally. Ninety-seven, sixty-seven, and zero, averaged: about fifty-five percent. That number is shouting that one class is completely broken.
+
+Micro F one ignores the lanes. It pools every decision into one big tally, counting true positives, false positives and false negatives across all classes, then computes a single F one. In ordinary single-label classification, where every transaction gets exactly one label, micro precision, micro recall, micro F one and plain accuracy all come out identical. Here the model got ninety-four of one hundred right, so micro F one is ninety-four percent. Looks great. It's dominated by the big legitimate lane.
+
+Weighted F one averages the lane scores weighted by how many true examples each lane has. The legitimate lane has ninety percent of the weight, so weighted F one comes out around ninety-two percent. Also flattering.
+
+Same model, same hundred predictions: ninety-four, ninety-two, or fifty-five, depending on the averaging. The strong one-line summary: micro answers "how good is the model per decision," dominated by frequent classes; macro answers "how good is the model per class," treating the rare class as equally important; weighted sits in between and, on imbalanced data, usually looks like micro. For fraud, where the rare classes are the whole point, report macro F one, or better, per-class precision and recall, and never let a micro score stand alone.
+
+Two traps interviewers like. One: in a binary fraud problem, micro F one over both classes is just accuracy again, so the ninety-nine point eight percent trap reappears. For binary problems, report F one of the positive class. Two: there are two definitions of macro F one floating around, the average of per-class F one scores, which is what scikit-learn computes, and the F one of averaged precision and recall, which gives a different number. Say which one you mean. And watch classes that never get predicted: their precision is undefined, and your library will apply a zero-division rule you should know about.
+
+[PAUSE 1s]
+
+## The strong answer
+
+When they ask, "How do you handle an imbalanced dataset?", a strong ninety-second answer sounds like this.
+
+"First I pick the right metric, because accuracy is meaningless when the positive class is two in a thousand. I look at the precision-recall curve and average precision, quoting the prevalence as the baseline, and I agree an operating point with the business, like recall at a minimum precision or at a daily alert budget. I split by time and make sure labels have matured. On the modelling side, I start with class weights or scale pos weight in a gradient-boosted model rather than resampling. If I resample, SMOTE or undersampling, it's inside the training folds only, via a pipeline, so nothing leaks. Then the real lever is the decision threshold: I tune it on validation data against expected cost or the precision constraint, and if the scores feed other decisions I calibrate first, because resampling and heavy weighting distort probabilities. In production I monitor precision, alert volume and prevalence, and revisit the threshold when fraud patterns shift."
+
+And for "micro versus macro F one": "Macro averages per-class F one equally, so a rare class the model fails on drags it down. Micro pools all decisions, which in single-label classification equals accuracy, so it's dominated by the majority class. Weighted averages by support. On imbalanced data I report macro plus per-class precision and recall, and for binary fraud the F one of the fraud class."
+
+[PAUSE 2s]
+
+Likely follow-ups. "Does SMOTE work with tree models?" It can, but boosted trees with class weights and a tuned threshold are usually as good or better, and simpler. "What if you have almost no fraud labels?" Anomaly detection, semi-supervised methods, or rules plus human review to bootstrap labels. And the trap: "Would you balance the test set?" No. The test set must reflect production prevalence, or every precision number you report is fiction.
+
+## Sixty-second recap
+
+Back to the line. Zero on the left, one on the right, a huge grey dune of legitimate transactions and a scatter of red fraud dots. The gate is the threshold; right of it gets flagged. Above it, the scoreboard: precision, how many flagged dots are red, and recall, how many red dots got flagged. Accuracy is fooled by the dune, so read the precision-recall curve and quote prevalence as the baseline. Resampling and class weights move dots rightward during training, at the cost of calibration, and resampling must stay inside the training folds. Threshold tuning moves the gate to where the business's costs say it should be. Then split the line into three lanes: macro averages the lanes equally and exposes the broken rare class; micro pools every decision and equals accuracy; weighted leans toward the big lane. Ninety-four, ninety-two, fifty-five: same model, three stories. Know which one you're telling.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="09-tables-in-rag.html">← Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="btn" href="11-langgraph-summarizer-live-coding.html">Live Coding: A Working LangGraph Summarizer Agent →</a></div></main></div></body></html>

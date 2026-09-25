@@ -1,0 +1,361 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM-as-a-Judge: Selecting Representative Evaluation Examples — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="active" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 7</div>
+<h1 class="lesson">LLM-as-a-Judge: Selecting Representative Evaluation Examples</h1>
+<div class="meta">16 min listen · A map of production traffic, a small display case, a judge and a human panel: how to pick evaluation examples that actually represent your users, using stratified sampling, embedding clusters, difficulty mixes and adversarial cases, how many you need, how to calibrate the judge against humans with Cohen's kappa, and how to keep the set fresh and leak-free.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/07-llm-judge-sampling" onclick="toggleDone('09-interview-lab/07-llm-judge-sampling')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> A good judge scoring the wrong examples gives you a precise, confident, wrong number. Build the eval set from production traffic: stratify by business dimensions with risk-weighted floors, discover hidden segments by embedding clustering (centroids and outliers), tilt toward hard cases, add a hand-built adversarial slice, size it with confidence intervals, calibrate the judge against humans with Cohen's kappa, then refresh on a cadence and guard against leakage.</p>
+<p><strong>Interview question (as asked):</strong> "When you use an LLM as a judge, how do you select representative examples?"</p>
+<h2 id="mental-image-the-map-and-the-display-case">Mental image: the map and the display case</h2>
+<ul>
+<li><strong>Map (left):</strong> every production request is a glowing pin placed by meaning (embedding space): a dense city (balance enquiries), towns (card disputes), a small high-risk village (hardship), and lonely outlier pins at the edges.</li>
+<li><strong>Display case (right):</strong> a few hundred slots = the eval set; all the judge ever sees.</li>
+<li><strong>Judge (above the case)</strong> grades every slot; <strong>human panel (beside the judge)</strong> grades a subset for calibration.</li>
+<li><strong>Red pins:</strong> hand-planted adversarial / edge cases.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    LOGS[("Production logs<br/>PII-redacted, multi-week window")] --> DEDUP["De-duplicate<br/>near-duplicates"]
+    DEDUP --> EMB["Embed + cluster<br/>(k-means / HDBSCAN)"]
+    EMB --> STRAT["Stratify: intent, product, segment,<br/>channel, language, risk tier"]
+    STRAT --> ALLOC["Allocate: floor per stratum<br/>+ risk-weighted extra"]
+    EMB --> CO["Centroid-nearest prototypes<br/>+ outliers / noise points"]
+    ALLOC --> CASE["Eval set: frozen core<br/>+ rotating fresh slice"]
+    CO --> CASE
+    HARD["Hardness signals: thumbs-down,<br/>rephrase, escalation, low retrieval score"] --> CASE
+    RED["Red pins: injection, out-of-scope,<br/>unanswerable, regulated advice"] --> CASE
+    CASE --> JUDGE["LLM judge"]
+    CASE --> CAL["Stratified calibration subset"]
+    CAL --> HUM["Human experts"]
+    JUDGE --> KAPPA{"Cohen's kappa, false-pass rate,<br/>per-slice agreement"}
+    HUM --> KAPPA
+</pre>
+
+<h2 id="the-eight-steps">The eight steps</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Source</td>
+<td>Production logs or closest proxy (tickets, transcripts)</td>
+<td>Redact PII, check retention/consent, restrict access; window spans month-end/seasonal peaks; dedupe</td>
+</tr>
+<tr>
+<td>2. Stratify</td>
+<td>Intent, product, segment, channel, language, risk tier</td>
+<td>Proportional vs equal vs <strong>risk-weighted</strong> allocation; floor ~30–50/stratum; reweight to traffic share for headline score; report per-slice too</td>
+</tr>
+<tr>
+<td>3. Cluster</td>
+<td>Embed → k-means or HDBSCAN</td>
+<td>Centroid-nearest = prototypes; far-from-centroid + noise = stress tests; unnamed clusters = new strata; store cluster label as metadata</td>
+</tr>
+<tr>
+<td>4. Difficulty mix</td>
+<td>~⅓ easy / ⅓ medium / ⅓ hard</td>
+<td>Hardness signals: thumbs-down, rephrase, escalation, abandonment, low retrieval score, long multi-turn, model-version disagreement</td>
+</tr>
+<tr>
+<td>5. Red pins</td>
+<td>Hand-built adversarial slice</td>
+<td>Prompt injection, out-of-scope, unanswerable (abstention), ambiguous, long inputs, PII, regulated advice; reported separately, can block release</td>
+</tr>
+<tr>
+<td>6. Size</td>
+<td>Confidence intervals</td>
+<td>SE = √(p(1−p)/n); Wilson interval for small slices; paired comparisons; clustered SEs</td>
+</tr>
+<tr>
+<td>7. Calibrate judge</td>
+<td>Stratified human-labeled subset</td>
+<td>Cohen's kappa, confusion matrix (false passes), per-slice agreement, human–human ceiling, dev/test split of calibration set</td>
+</tr>
+<tr>
+<td>8. Refresh + leakage</td>
+<td>Cadence + triggers; separate store</td>
+<td>Frozen core + rotating slice; incidents become permanent cases; embedding-dedupe across train/eval; time-based splits</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sample-size-cheat-sheet-95-ci-half-width-196p1pn">Sample-size cheat sheet (95% CI half-width ≈ 1.96·√(p(1−p)/n))</h2>
+<table>
+<thead>
+<tr>
+<th>n</th>
+<th>p = 0.8</th>
+<th>p = 0.5 (worst case)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>±17.5 pts</td>
+<td>±21.9 pts</td>
+</tr>
+<tr>
+<td>50</td>
+<td>±11.1</td>
+<td>±13.9</td>
+</tr>
+<tr>
+<td>100</td>
+<td>±7.8</td>
+<td>±9.8</td>
+</tr>
+<tr>
+<td>400</td>
+<td>±3.9</td>
+<td>±4.9</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>±2.5</td>
+<td>±3.1</td>
+</tr>
+</tbody>
+</table>
+<p>385 = sample size for ±5 pts at p = 0.5. Use paired differences between versions on the same items (much smaller SE) and clustered SEs when items share a source doc/conversation (can be &gt;3× naive SE per Miller, "Adding Error Bars to Evals").</p>
+<pre><code class="language-python">import numpy as np
+from statsmodels.stats.proportion import proportion_confint
+from sklearn.metrics import cohen_kappa_score, confusion_matrix
+
+# Wilson CI for a small slice
+lo, hi = proportion_confint(count=41, nobs=50, alpha=0.05, method=&quot;wilson&quot;)
+
+# Paired comparison: same items, old vs new (1 = pass)
+d = np.array(new_pass) - np.array(old_pass)
+se = d.std(ddof=1) / np.sqrt(len(d))
+print(f&quot;delta={d.mean():.3f} ± {1.96*se:.3f}&quot;)
+
+# Judge calibration on held-out half of calibration set
+kappa = cohen_kappa_score(human_labels, judge_labels)
+tn, fp, fn, tp = confusion_matrix(human_labels, judge_labels, labels=[0, 1]).ravel()
+false_pass_rate = fp / (fp + tn)   # human said FAIL, judge said PASS
+</code></pre>
+<pre><code class="language-python"># Stratified + cluster-aware selection sketch
+import pandas as pd
+from sklearn.cluster import KMeans
+
+X = embed(df.text)                               # your embedding model
+km = KMeans(n_clusters=40, n_init=&quot;auto&quot;, random_state=0).fit(X)
+df[&quot;cluster&quot;] = km.labels_
+df[&quot;dist&quot;] = np.linalg.norm(X - km.cluster_centers_[km.labels_], axis=1)
+
+protos   = df.sort_values(&quot;dist&quot;).groupby(&quot;cluster&quot;).head(3)           # centroid-nearest
+outliers = df.sort_values(&quot;dist&quot;, ascending=False).groupby(&quot;cluster&quot;).head(1)
+floor    = df.groupby(&quot;stratum&quot;, group_keys=False).apply(
+             lambda g: g.sample(min(len(g), 40 if g.risk.iloc[0] == &quot;high&quot; else 30), random_state=0))
+eval_set = pd.concat([protos, outliers, floor]).drop_duplicates(&quot;id&quot;)
+</code></pre>
+<h2 id="kappa-worked-example">Kappa worked example</h2>
+<p>Humans pass 90%, judge passes 90%, observed agreement 92%.
+Chance agreement p_e = 0.9·0.9 + 0.1·0.1 = 0.82 → κ = (0.92 − 0.82)/(1 − 0.82) ≈ <strong>0.56 (moderate)</strong>.
+A judge that always says PASS: 90% raw agreement, κ = 0.
+Landis &amp; Koch scale: 0.41–0.60 moderate, 0.61–0.80 substantial, 0.81–1.00 almost perfect. Compare against human–human kappa as the ceiling. Reference point: MT-Bench found strong judges reached &gt;80% agreement with humans on non-tie pairwise cases, similar to human–human agreement (~81%).</p>
+<h2 id="tooling-current">Tooling (current)</h2>
+<ul>
+<li><strong>MLflow 3</strong>: judge alignment from human feedback (<code>align()</code>; optimizers incl. MemAlign, SIMBA, GEPA); Databricks docs "Align judges with humans".</li>
+<li><strong>LangSmith</strong>: Align Evaluator / Align Evals workflow — human-graded examples vs judge scores side by side, track agreement over prompt iterations.</li>
+</ul>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stratum</td>
+<td>A segment of traffic (intent, product, segment, risk) sampled separately</td>
+</tr>
+<tr>
+<td>Proportional / equal / risk-weighted allocation</td>
+<td>Slots ∝ traffic / same per stratum / floors + extra for high-risk</td>
+</tr>
+<tr>
+<td>Post-stratification reweighting</td>
+<td>Re-weight slice scores to true traffic shares for the headline number</td>
+</tr>
+<tr>
+<td>Centroid-nearest (medoid)</td>
+<td>Most typical example of a cluster</td>
+</tr>
+<tr>
+<td>HDBSCAN noise</td>
+<td>Points belonging to no cluster — natural outlier candidates</td>
+</tr>
+<tr>
+<td>Wilson interval</td>
+<td>Binomial CI that behaves well for small n and extreme p</td>
+</tr>
+<tr>
+<td>Paired comparison</td>
+<td>Compare versions item-by-item to cancel per-item difficulty variance</td>
+</tr>
+<tr>
+<td>Cohen's kappa</td>
+<td>Agreement corrected for chance: (p_o − p_e)/(1 − p_e)</td>
+</tr>
+<tr>
+<td>False pass</td>
+<td>Human fails, judge passes — the dangerous error direction</td>
+</tr>
+<tr>
+<td>Criteria drift</td>
+<td>Graders' definition of "good" evolves as they see outputs (Shankar et al., UIST 2024)</td>
+</tr>
+<tr>
+<td>Leakage</td>
+<td>Eval items (or paraphrases) appearing in prompts, judge examples or training data</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions with strong answers</h2>
+<p><strong>1. How do you select representative examples for an LLM judge?</strong>
+Start from PII-redacted production traffic over a multi-week window; stratify by intent/product/segment/channel/language/risk with floors and risk-weighted extras; embed and cluster to find unknown segments, taking centroid-nearest prototypes plus outliers; over-sample hard cases via user and retrieval signals; add a hand-built adversarial slice; reweight to traffic for the headline score and report per slice.</p>
+<p><strong>2. How many examples do you need?</strong>
+Think in confidence intervals: 100 items at 80% ≈ ±8 pts, 400 ≈ ±4. A few hundred to ~1,000 overall, 50+ per critical slice, Wilson intervals for small slices, paired comparisons between versions, clustered SEs for correlated items, and a pre-agreed minimum detectable difference.</p>
+<p><strong>3. How do you know the judge is trustworthy?</strong>
+Calibrate on a stratified human-labeled subset including borderline cases; use Cohen's kappa (not raw agreement), inspect false passes and per-slice agreement, compare to human–human kappa, tune on one half and report on the other; re-calibrate on any judge-model or rubric change.</p>
+<p><strong>4. How do you keep the eval set current?</strong>
+Frozen versioned core for trend comparability plus a rotating fresh slice; refresh monthly/quarterly and on triggers (launches, new production clusters without coverage, embedding drift); every incident becomes a permanent case.</p>
+<p><strong>5. How do you prevent leakage?</strong>
+Separate access-controlled store; never reuse eval items as few-shot examples in the app or judge prompt, or in fine-tuning/distillation data; embedding-based near-duplicate removal across train/eval; time-based splits; a held-out slice nobody iterates against.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Zheng et al., Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena: https://arxiv.org/abs/2306.05685</li>
+<li>Miller, Adding Error Bars to Evals: https://arxiv.org/abs/2411.00640</li>
+<li>Shankar et al., Who Validates the Validators? (criteria drift): https://arxiv.org/abs/2404.12272</li>
+<li>Cohen's kappa (definition, Landis &amp; Koch scale): https://en.wikipedia.org/wiki/Cohen's_kappa</li>
+<li>Binomial proportion confidence intervals (Wilson): https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval</li>
+<li>MLflow judge alignment: https://mlflow.org/docs/latest/genai/eval-monitor/scorers/llm-judge/alignment/</li>
+<li>Databricks (Azure) — Align judges with humans: https://learn.microsoft.com/en-us/azure/databricks/mlflow3/genai/eval-monitor/align-judges</li>
+<li>LangSmith — improve LLM-as-judge evaluators with human feedback: https://docs.langchain.com/langsmith/improve-judge-evaluator-feedback</li>
+<li>Related episodes: Track 3 ep 4 (evals workbench, golden-set filing cabinet), Track 4 ep 6 (RAG evaluation), Track 5 ep 8 (agent evals)</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode seven: L L M as a judge, and selecting representative evaluation examples. The question, as asked in the first technical round of an agentic A I engineer interview at a financial services company, was short: "When you use an L L M as a judge, how do you select representative examples?"
+
+That question has a trap inside it. Most candidates hear "L L M as a judge" and start talking about the judge: the rubric, the prompt, position bias. All useful, and we covered it in the system design track. But the interviewer asked about the examples. And the honest truth of evaluation is that a brilliant judge scoring the wrong examples gives you a precise, confident, wrong number. So today is about the thing most teams under-invest in: what goes in front of the judge, and how you know the judge can be trusted on it.
+
+## Why it matters
+
+Here's the scenario, in a shape that repeats across the industry. A team builds an assistant for a bank's customer operations staff. They write an evaluation set of two hundred questions, mostly by brainstorming in a meeting and by pulling examples from the product spec. The L L M judge scores the assistant at ninety-four percent. They ship. Three weeks later, complaints cluster around one area: customers in financial hardship asking about payment arrangements. The assistant was giving generic, sometimes wrong answers about eligibility. Look back at the evaluation set: two questions out of two hundred were about hardship. In production, it was around six percent of traffic, and by far the highest-risk six percent. The judge wasn't wrong about the two hundred. The two hundred just weren't the world.
+
+That's the job: make the small set you evaluate on behave like the big world your system lives in, over-weight the parts where mistakes are expensive, and prove the judge agrees with humans on it.
+
+[PAUSE 1s]
+
+## The mental image: the map and the display case
+
+In your mind's eye, picture a large, dark map spread out on a table in front of you. Scattered across it are thousands of small glowing pins. Each pin is one real request your system received in production. And the pins aren't placed randomly: they're positioned by meaning. Requests that mean similar things sit close together. That map is embedding space, flattened so you can look at it.
+
+Look at the shape of it. In the middle, a dense city of pins: balance enquiries, transaction lookups, the everyday traffic. Up in the top-right, a sizeable town: card disputes. Down in the bottom-left corner, a small, scattered village: hardship and payment arrangement requests. And out at the edges of the map, lonely single pins far from any neighborhood: odd phrasings, requests in another language, things nobody planned for.
+
+Now, to the right of the map, picture a small glass display case with a few hundred slots. That case is your evaluation set. Whatever you put in it is all the judge ever sees.
+
+Above the display case, at a desk, sits the judge, the L L M grader, scoring every slot against a rubric. And beside the judge, a small panel of human experts, grading some of the same slots independently, so you can check whether the judge sees what they see.
+
+Map on the left, case on the right, judge above the case, human panel beside the judge. The whole episode is about moving pins from the map into the case, well.
+
+[PAUSE 2s]
+
+## Step one: where the pins come from
+
+The best source of pins is the map itself: production logs, or for a new system, the closest proxy you have, like historical tickets, call transcripts or emails from the channel you're replacing. The worst source is the engineers' imagination; that's how you get a case full of questions phrased the way engineers phrase things.
+
+In a regulated business, taking pins off the map has rules. Redact or tokenize personal data before anything lands in an evaluation store, check that your data retention and consent rules allow the reuse, and restrict access to the evaluation set the way you'd restrict the logs themselves. Also choose the time window deliberately: at least a few weeks, ideally spanning month-end and any seasonal peaks, because traffic in a bank's first week of a financial year does not look like a quiet Tuesday. And de-duplicate: collapse near-identical pins, so a thousand copies of "what's my balance" don't count as a thousand pieces of evidence.
+
+## Step two: stratified sampling, the neighborhoods
+
+If you just grab pins at random, you get the city. Hundreds of balance questions, maybe one hardship request. Random sampling is representative of volume, not of risk and not of variety.
+
+So you stratify. Define the strata, the neighborhoods, along dimensions that matter to the business: intent or task type, product line, customer segment, channel, language, and a risk tier. Then decide how many slots in the case each neighborhood gets. There are three allocation rules worth naming. Proportional allocation mirrors traffic, so the case looks like the map. Equal allocation gives every neighborhood the same number of slots, so you can measure each one with similar precision. And risk-weighted allocation, which is what you usually want in practice: every neighborhood gets a floor, say at least thirty to fifty examples, so its score means something, and high-risk neighborhoods, the hardship village, anything touching advice or eligibility, get extra.
+
+Then the subtle, very important step: when you report one overall number, reweight each neighborhood's score back to its real share of production traffic. Otherwise your headline number is describing a world where hardship is twenty percent of traffic, which it isn't. Report both: the traffic-weighted overall score, and the per-neighborhood scores, because regressions hide in neighborhoods, not in the average.
+
+## Step three: clusters, centroids and outliers
+
+Stratification needs you to already know the neighborhoods. But some of the most important ones aren't in anyone's taxonomy. That's where embedding clustering comes in.
+
+Embed every request, then cluster them, with something like k-means for a fixed number of groups, or a density-based method like H D B SCAN, which finds clusters of varying shapes and explicitly labels the points that belong to no cluster as noise. Now walk the map with the clusters drawn on it.
+
+From each cluster, take the pins closest to its center. These are the prototypes, the most typical way that request gets asked. A handful of centroid pins per cluster covers the main body of traffic with very few slots.
+
+Then take the outliers: pins far from their cluster's center, and the noise points that belong to no cluster at all. These are the unusual phrasings, the mixed intents, the "I have two questions and also a complaint" messages. They're where systems break.
+
+And read the clusters themselves. Very often you discover a neighborhood nobody had a label for, like a burst of questions about a new regulation, or a product that launched last month. That discovery alone is worth the exercise, and a new cluster becomes a new stratum.
+
+One practical tip: have a model or a person give each cluster a short name, and keep the cluster assignment as metadata on each example in the case. That's what lets you say "we regressed on dispute-escalation questions" instead of "the score went down."
+
+## Step four: the difficulty mix
+
+A case full of easy pins will score ninety-eight percent forever and never catch a regression. So you deliberately shape the difficulty. Production gives you excellent hardness signals: requests where the user gave a thumbs-down, rephrased and asked again, escalated to a human, or abandoned the conversation; requests where retrieval scores were low; long multi-turn conversations; and cases where two different model versions disagreed on the answer. Over-sample from those. A reasonable target is something like a third easy, a third medium, a third hard, with the easy third acting as a smoke test that must never fail.
+
+## Step five: the red pins
+
+Some pins don't exist on the map yet, and you have to plant them by hand. Picture them as red pins you push into the case directly. Adversarial and edge cases: prompt injections hidden in documents; out-of-scope requests the assistant should decline; unanswerable questions where the right behavior is "I can't find that", which is how you measure abstention; ambiguous questions that need a clarifying question; very long inputs; inputs with personal data; and in this sector, requests that edge toward regulated advice. Keep red pins as their own clearly labeled slice, and report them separately, so they don't distort the traffic-weighted score, but a failure among them can still block a release.
+
+[PAUSE 1s]
+
+## Step six: how big should the case be
+
+Now the numbers, because this is where interviewers check whether you think statistically.
+
+Your score is a proportion, so its standard error is the square root of p times one minus p, divided by n. With a hundred examples and a true pass rate around eighty percent, the ninety-five percent confidence interval is roughly plus or minus eight points. With four hundred examples, about plus or minus four. The textbook "three hundred and eighty-five for a five-point margin" comes from the same formula at the worst case of fifty percent. For small slices, use a Wilson interval rather than the simple formula, because the simple one misbehaves with few samples or scores near zero or one hundred percent.
+
+Two consequences. First, a per-neighborhood score from twenty examples is a rumor, not a measurement. That's why each stratum gets a floor. Second, when comparing two versions, don't compare two independent scores; compare them on the same examples, pair by pair. Paired comparison cancels out the "this question is just hard" variance and shrinks the error a lot, for free. And if several questions come from the same source document or conversation, they aren't independent, so use clustered standard errors, which one published analysis found can be more than three times larger than the naive ones. A strong practical rule: a few hundred to about a thousand examples for the main case, fifty-plus per critical slice, and a pre-agreed minimum detectable difference before anyone argues about a two-point change.
+
+## Step seven: calibrating the judge against humans
+
+Now look up at the desk above the case, and at the human panel beside it. The judge is an instrument, and an instrument needs calibration before you trust its readings.
+
+Pick a calibration subset, again stratified, a hundred to a few hundred examples, deliberately including borderline cases near the pass-fail line. Have domain experts label them independently, ideally two experts per item for a sample, following the same rubric the judge uses. Then compare the judge to the humans.
+
+Raw agreement is the obvious metric, and it's misleading. Suppose ninety percent of answers are genuinely good. A judge that blindly says "pass" to everything agrees with humans ninety percent of the time and is worthless. Cohen's kappa fixes this: it measures agreement beyond what you'd expect by chance given each rater's base rates. That lazy judge scores a kappa of zero. Here's a worked example worth having in your pocket. Humans pass ninety percent of answers, the judge also passes ninety percent, and they agree on ninety-two percent of items. Sounds excellent. But two raters who each say "pass" ninety percent of the time would agree by pure chance on eighty-two percent of items: zero point nine times zero point nine, plus zero point one times zero point one. Kappa takes the agreement above chance, ten points, and divides by the most you could have gained above chance, eighteen points. Kappa is about zero point five six. Ninety-two percent agreement turns out to be only moderate, and almost all of the judge's real job, catching the ten percent of bad answers, is where it's struggling. The common interpretation scale calls zero point six one to zero point eight "substantial" agreement and above zero point eight "almost perfect". A useful ceiling: measure the kappa between your two human experts as well. If humans only reach zero point seven with each other, don't expect the judge to beat it; if the judge is at zero point four, the rubric or the judge needs work.
+
+Go beyond one number. Look at the confusion matrix, and care most about false passes, answers the humans failed that the judge passed, because that's the direction that lets bad releases through. Compute agreement per neighborhood: a judge can be excellent on balance questions and poor on hardship eligibility, precisely where it matters. And watch for criteria drift, a finding from research on evaluator alignment: people refine what "good" means once they see real outputs, so expect a few rounds of rubric revision. Current tooling supports this loop: M L flow has judge-alignment features that tune a judge from human feedback, and Lang Smith has an align-evaluator workflow for comparing judge and human scores side by side.
+
+Last calibration rule: split the calibration set. Iterate the judge prompt on one half, and report the judge's agreement on the other half. Otherwise you've overfitted the judge to the very examples you use to prove it's good.
+
+## Step eight: refresh, and leakage
+
+Two ongoing disciplines keep the case honest.
+
+Refresh. The map moves: new products, new regulations, seasonal behavior, and your own system changing what users ask. Re-sample on a cadence, monthly or quarterly depending on traffic change, and also on triggers: a new product launch, a new cluster appearing in production that has no matching slots in the case, or a measurable drift in the embedding distribution of recent traffic. Structure the case in two parts: a frozen core, versioned and unchanged, so trend lines across releases stay comparable; and a rotating fresh slice sampled from recent traffic. Every production incident becomes a new pin in the case, permanently. And any time you change the judge model or the rubric, re-run calibration.
+
+Leakage. This is the quiet killer. If examples from the case end up in the assistant's prompt as few-shot examples, in the judge's prompt as rubric examples, or in fine-tuning or distillation data, your scores inflate and stop meaning anything. Keep the case in a separate, access-controlled store. De-duplicate across training and evaluation data by embedding similarity, not just exact match, since paraphrases leak too. Prefer time-based splits: build prompts and training data from older traffic, evaluate on newer. Here's the shape of the failure. A team, short on time, copied its ten best evaluation examples into the system prompt as few-shot demonstrations. The next evaluation run jumped nine points, and the release notes celebrated it. Production complaint rates didn't move at all. The model hadn't improved; it had been shown the answers to part of the exam. And keep a held-out slice that nobody iterates against, the same "don't look at it while tuning" drawer we built in the system design track's filing cabinet.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask "how do you select representative examples for L L M as a judge," a strong ninety-second answer sounds like:
+
+"I start from production traffic, or the closest proxy, not from brainstormed questions, with personal data redacted and a time window that covers seasonal peaks. Then I stratify by the dimensions that matter: intent, product, segment, channel, language and risk tier, with a minimum per stratum, extra weight on high-risk slices, and results reweighted back to real traffic shares for the headline number. To find strata I don't know about, I embed and cluster the traffic, take centroid-nearest examples as prototypes, and deliberately add outliers and unclustered points. I shape the difficulty mix using signals like thumbs-down, rephrasing, escalations and low retrieval scores, and add a hand-built adversarial slice: injections, out-of-scope, unanswerable questions for abstention, and regulated-advice edge cases.
+
+On size, I think in confidence intervals: a hundred examples at eighty percent is plus or minus eight points, four hundred is about four, so a few hundred to a thousand overall and fifty-plus per critical slice, with paired comparisons between versions. Then I calibrate the judge on a stratified, human-labeled subset, using Cohen's kappa rather than raw agreement, looking at false passes and per-slice agreement, and tuning on one half and reporting on the other. Finally I refresh the set on a cadence and on drift triggers, keep a frozen core for trends, and guard against leakage into prompts and training data."
+
+Likely follow-ups. "What if the judge and the humans disagree?" Look at the disagreements themselves. Sometimes the rubric is ambiguous and the humans were split too; sometimes the judge has a systematic blind spot, which you fix with a sharper rubric, examples, or a stronger judge from a different model family. And in regulated slices, keep humans in the loop permanently on a rotating sample. "How do you avoid overfitting prompts to the eval set?" The held-out slice, time-based splits, and fresh rotating samples. "Why not just use a thousand random production samples?" Because random matches volume, not risk: the hardship village gets two pins, and you ship the exact failure you didn't measure.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Look at the table one last time. On the left, the map: every production request as a pin, placed by meaning, forming a city, towns, a small high-risk village and lonely outliers at the edges. On the right, the small display case: your evaluation set. You fill it by neighborhood, with a floor for each and extra slots where mistakes are expensive, reweighting back to real traffic when you report. You find hidden neighborhoods by clustering, take the pins at the centers as prototypes and the lonely pins at the edges as stress tests. You tilt the mix toward hard cases and push in red pins by hand. You size the case with confidence intervals and compare versions pair by pair. Above the case, the judge; beside it, the human panel, and you trust the judge only once Cohen's kappa says it agrees with them, slice by slice, on examples it wasn't tuned on. Then you keep re-drawing the map, restocking the case, and never letting the case's pins leak into the prompts or the training data.
+
+Next episode: document versioning in R A G, section edits, removals, and keeping the index consistent. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="06-repetition-hallucination.html">← Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="btn" href="08-rag-document-versioning.html">RAG Document Versioning: Section Edits, Removals, Index Consistency →</a></div></main></div></body></html>

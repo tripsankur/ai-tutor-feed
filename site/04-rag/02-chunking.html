@@ -1,0 +1,296 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chunking Strategies — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk" open><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="active" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 4 · RAG · Episode 2</div>
+<h1 class="lesson">Chunking Strategies</h1>
+<div class="meta">17 min listen · Where you cut a document decides where its pins land on the map of meaning. Fixed, recursive, structure-aware, and semantic chunking, overlap, late chunking and contextual retrieval, with the numbers and failure stories that tell you which to reach for.</div>
+<audio controls preload="metadata" src="../../audio/04-rag/s4e02-chunking.mp3"></audio>
+<button class="btn complete" data-ep="04-rag/02-chunking" onclick="toggleDone('04-rag/02-chunking')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Where you cut a document decides how sharp each chunk's embedding is and how much context the LLM gets, so parsing quality, boundaries, and context attached to each chunk matter more than which clever splitting algorithm you pick.</p>
+<h2 id="the-mental-image-the-workbench">The mental image: the workbench</h2>
+<ul>
+<li><strong>Left end</strong>: the bound manual (source document). Parse it well first.</li>
+<li><strong>Middle</strong>: the scissors and ruler (splitting strategy, chunk size, overlap).</li>
+<li><strong>Right end</strong>: the drawer of index cards (chunks). Each card gets its own pin on the map of meaning from episode 1. Retrieval only ever pulls cards, never the whole book.</li>
+<li>Key question: what do you write on each card so it still makes sense away from the manual?</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    DOC["Source doc (PDF / HTML / MD)"] --> PARSE["Parser / layout extraction"]
+    PARSE --> SPLIT["Splitter: fixed / recursive / structure-aware / semantic"]
+    SPLIT --> CTX["Add context: title + section path, or LLM blurb"]
+    CTX --> EMB["Embed chunk"]
+    CTX --> BM["BM25 index"]
+    EMB --> IDX[("Vector index")]
+    BM --> IDX2[("Keyword index")]
+</pre>
+
+<h2 id="strategies-compared">Strategies compared</h2>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>How</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fixed-size</td>
+<td>Cut every N tokens</td>
+<td>Simple, fast</td>
+<td>Cuts mid-sentence / rule-exception splits</td>
+</tr>
+<tr>
+<td>Recursive</td>
+<td>Try <code>\n\n</code>, then <code>\n</code>, then spaces (words), then characters (default); add <code>". "</code> for sentences</td>
+<td>Strong default</td>
+<td>Unaware of headings/tables</td>
+</tr>
+<tr>
+<td>Structure-aware</td>
+<td>Split on headings, keep tables/code whole</td>
+<td>Best ROI for enterprise docs</td>
+<td>Needs a good parser</td>
+</tr>
+<tr>
+<td>Semantic</td>
+<td>Cut where consecutive sentence embeddings diverge</td>
+<td>Helps unformatted text</td>
+<td>Costly, threshold-sensitive, modest gains</td>
+</tr>
+<tr>
+<td>Late chunking</td>
+<td>Embed whole doc with long-context model, pool token vectors per chunk</td>
+<td>Context without extra LLM calls</td>
+<td>Needs token-level outputs, long-context model</td>
+</tr>
+<tr>
+<td>Contextual retrieval</td>
+<td>LLM writes 50-100 token blurb per chunk, prepended before embedding + BM25</td>
+<td>Big recall gains</td>
+<td>One LLM call per chunk at index time</td>
+</tr>
+<tr>
+<td>Small-to-big (parent-doc)</td>
+<td>Match small chunks, return parent section</td>
+<td>Sharp matching + rich context</td>
+<td>Extra storage/lookups (episode 5)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="numbers-to-remember">Numbers to remember</h2>
+<ul>
+<li>Chroma chunking study: <code>RecursiveCharacterTextSplitter</code> at ~200–400 tokens, no overlap, was a consistently strong baseline (~88–89% token-level recall at 400); semantic/LLM chunkers beat it by only a couple of points.</li>
+<li>Typical sizes: ~200–800 tokens; overlap ~10–20% (helps less than assumed when boundaries are good).</li>
+<li>Contextual retrieval (Anthropic): failed retrievals (top-20) down <strong>35%</strong> with contextual embeddings, <strong>49%</strong> adding contextual BM25, <strong>67%</strong> adding reranking. Cost ≈ <strong>$1.02 per 1M document tokens</strong> one-time with prompt caching.</li>
+<li>Anthropic: if the whole knowledge base is &lt; ~200K tokens (~500 pages), consider putting it all in the prompt (with caching) instead of RAG.</li>
+</ul>
+<h2 id="code">Code</h2>
+<pre><code class="language-python">from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+    chunk_size=400,        # tokens
+    chunk_overlap=40,      # ~10%
+    separators=[&quot;\n\n&quot;, &quot;\n&quot;, &quot;. &quot;, &quot; &quot;, &quot;&quot;],
+)
+chunks = splitter.split_text(doc_text)
+
+# Prepend title + section path (cheap contextualisation)
+records = [
+    {&quot;text&quot;: f&quot;{doc_title} &gt; {section_path}\n\n{c}&quot;,
+     &quot;doc_id&quot;: doc_id, &quot;section&quot;: section_path}
+    for c in chunks
+]
+</code></pre>
+<p>Contextual retrieval prompt shape (per chunk, document cached):</p>
+<pre><code class="language-text">&lt;document&gt;{WHOLE_DOCUMENT}&lt;/document&gt;
+Here is the chunk we want to situate within the whole document:
+&lt;chunk&gt;{CHUNK_CONTENT}&lt;/chunk&gt;
+Give a short succinct context to situate this chunk within the overall
+document for the purposes of improving search retrieval of the chunk.
+Answer only with the succinct context and nothing else.
+</code></pre>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>Parser is the real chunker</strong>: two-column PDFs interleaved, repeated headers/footers, flattened tables, scanned pages with no OCR. Eyeball extracted chunks first.</li>
+<li><strong>Q/A pairs split apart</strong>: keep FAQ question+answer, heading+first paragraph, list intro+list together.</li>
+<li><strong>Tables</strong>: never split mid-table; repeat header row in each table chunk.</li>
+<li><strong>Chunking is versioned</strong>: changing it re-chunks and re-embeds everything; label eval sets by source passage text, not chunk ID.</li>
+<li><strong>One size for everything</strong>: route by doc type (FAQ vs contract vs code).</li>
+<li><strong>Chunk &gt; embedding model max input</strong> → silent truncation.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chunk</td>
+<td>Unit of text embedded and retrieved</td>
+</tr>
+<tr>
+<td>Overlap</td>
+<td>Tokens repeated between adjacent chunks</td>
+</tr>
+<tr>
+<td>Recursive splitting</td>
+<td>Hierarchical separator fallback</td>
+</tr>
+<tr>
+<td>Structure-aware chunking</td>
+<td>Splitting along document structure (headings, tables)</td>
+</tr>
+<tr>
+<td>Semantic chunking</td>
+<td>Splitting at embedding-similarity drops between sentences</td>
+</tr>
+<tr>
+<td>Late chunking</td>
+<td>Pooling contextualised token embeddings per chunk after full-doc encoding</td>
+</tr>
+<tr>
+<td>Contextual retrieval</td>
+<td>LLM-generated situating context prepended to each chunk</td>
+</tr>
+<tr>
+<td>Parent-document retrieval</td>
+<td>Retrieve small, return larger parent</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How would you chunk a corpus of policy PDFs?</strong>
+Fix parsing first (layout-aware extraction, tables with headers, OCR where needed). Structure-aware recursive splitting on headings, a few hundred tokens, modest overlap, tables and lists kept whole. Prepend title and section path and store them as metadata. Tune size on a labelled eval set; add contextual retrieval if chunks are ambiguous out of context.</p>
+<p><strong>Q2. What's the tradeoff in chunk size?</strong>
+Small = sharp embeddings, high precision, but context loss and scattered answers. Large = context preserved, but embeddings blur toward an average of topics and each retrieved chunk costs more prompt tokens and latency.</p>
+<p><strong>Q3. Is overlap always good?</strong>
+It patches bad boundaries at the cost of duplication (storage, embedding cost, near-duplicate results). With good structural boundaries its benefit is often small; measure it.</p>
+<p><strong>Q4. Explain contextual retrieval and its cost.</strong>
+Per chunk, an LLM sees the full document and writes a 50-100 token situating blurb, prepended before embedding and BM25 indexing. Anthropic reported 35% / 49% / 67% fewer failed retrievals (embeddings / +BM25 / +rerank). One LLM call per chunk; ~$1 per million doc tokens with prompt caching.</p>
+<p><strong>Q5. What is late chunking and when can't you use it?</strong>
+Encode the whole document with a long-context embedding model, then mean-pool token embeddings within each chunk span, so each chunk vector carries document context. Requires a long-context model and access to token-level embeddings, which many hosted APIs don't expose.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Chroma, Evaluating Chunking Strategies for Retrieval: https://www.trychroma.com/research/evaluating-chunking</li>
+<li>Anthropic, Contextual Retrieval: https://www.anthropic.com/engineering/contextual-retrieval</li>
+<li>Claude Cookbook, contextual embeddings: https://platform.claude.com/cookbook/capabilities-contextual-embeddings-guide</li>
+<li>Late Chunking paper (Jina AI / Weaviate): https://arxiv.org/abs/2409.04701</li>
+<li>Jina, Late Chunking in Long-Context Embedding Models: https://jina.ai/news/late-chunking-in-long-context-embedding-models/</li>
+<li>LangChain RecursiveCharacterTextSplitter reference: https://reference.langchain.com/python/langchain-text-splitters/character/RecursiveCharacterTextSplitter</li>
+<li>LangChain text splitter integrations: https://docs.langchain.com/oss/python/integrations/splitters</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track four, episode two: chunking strategies. Last episode we built the map of meaning: every piece of text becomes an arrow from the center of a huge map, pointing toward its pin, and similar meanings point the same way. Today we answer a question that sounds boring and turns out to decide more of your R A G quality than almost anything else: before a document goes onto that map, how do you cut it up?
+
+Here's the story that makes it concrete. A company builds an assistant over its internal policy documents. A manager asks, "Can I approve travel expenses over five thousand dollars?" The assistant retrieves a passage that says, clearly, "Managers may approve travel expenses of any amount." And it answers: yes, you can. It's wrong. The very next sentence in the original document, the one that begins a new paragraph, says: "The exception is international travel, which requires director sign-off above five thousand dollars." That sentence landed in a different chunk. The retriever never brought it back, because on its own, "the exception is international travel" doesn't look much like a question about approving expenses. The model did exactly what it was told: it answered faithfully from the evidence it was given. The evidence had been cut in the wrong place. Nobody changed the model, nobody changed the prompt. The fix was in the scissors.
+
+## Why it matters
+
+Chunking matters for three reasons, and all three trace back to last episode's map.
+
+One: an embedding squeezes a whole passage into a single arrow. Feed in a passage about one thing, and the arrow points sharply at that thing. Feed in a passage about three things, and the arrow points at the average of them, a pin stranded in the empty space between clusters, close to nothing. So chunk size controls how sharp your pins are.
+
+Two: the chunk is the unit of evidence. Whatever you retrieve is what the language model sees. Too small, and the model sees a sentence with no context: the "exception" sentence without the rule it's an exception to. Too large, and you fill the model's context with irrelevant text, which costs money, adds latency, and gives the model more places to get distracted.
+
+Three: chunking is decided once, at indexing time, and baked into every vector. Change your chunking strategy later and you re-chunk and re-embed the entire corpus. So it's worth getting roughly right early, and worth having an evaluation set that tells you when it's wrong.
+
+[PAUSE 1s]
+
+## The mental image: the workbench
+
+Picture this. A long workbench in front of you, running from left to right. On the far left end of the bench sits a thick, bound manual, a real document: a two hundred page policy handbook, with chapters, headings, tables, and footnotes. In the middle of the bench, a pair of scissors and a ruler. And on the far right end of the bench, an open drawer full of index cards: a card catalog.
+
+The job of chunking is to move the manual from the left end of the bench to the drawer on the right. You take the manual, you cut it into pieces with the scissors in the middle, and each piece gets pasted onto its own index card and dropped into the drawer. Then, and this is the link back to last episode, each card gets its own pin on the map of meaning. Retrieval never pulls a book off the left end of the bench. Retrieval only ever pulls cards out of the drawer on the right.
+
+So everything in this episode is a question about the scissors in the middle. Where do they cut? How big is each card? Do neighboring cards overlap? And what do you write on the card besides the text itself, so that a card still makes sense once it's been separated from the manual it came from?
+
+[PAUSE 2s]
+
+## Under the hood: the scissors, from bluntest to sharpest
+
+Let's walk the manual across the bench, trying different scissors each time.
+
+The bluntest pair: fixed-size chunking. You lay the ruler on the manual and cut every five hundred tokens, no matter what. It's fast, trivially simple, and completely unaware of meaning. The cut might land in the middle of a sentence, the middle of a table row, or, as in our cold open, right between a rule and its exception. Fixed-size chunking is fine for a prototype and for uniform text like chat logs or transcripts, but it's the source of a lot of quiet failures.
+
+The standard pair: recursive splitting. This is what most frameworks give you by default, for example the recursive character text splitter in Lang Chain. The idea is to try to cut at the most natural boundary first and only fall back to cruder boundaries when you have to. First it tries to split at double line breaks, which are usually paragraph boundaries. If a paragraph is still bigger than your target size, it splits that paragraph at single line breaks. Still too big, it splits between words, and only as a last resort between characters. Many teams add sentence endings to that list of boundaries, so a cut lands between sentences before it ever lands mid-sentence. So the scissors follow the grain of the text, like cutting along the fold lines of a map rather than straight through the middle of a city.
+
+Here's a number worth remembering. Chroma, the vector database company, published a careful study evaluating chunking strategies at the token level, measuring how much of the truly relevant text each strategy actually retrieved. Plain recursive splitting with chunks of roughly two hundred to four hundred tokens and no overlap was a consistently strong baseline, with recall in the high eighties percent at four hundred tokens. Fancier semantic methods beat it, but by a couple of percentage points, not by a landslide. The practical lesson: chunk size and boundaries matter more than which clever algorithm you pick, and a well-configured recursive splitter is a perfectly respectable production default.
+
+Sharper scissors: structure-aware chunking. Real documents aren't just paragraphs. They have headings, sections, bullet lists, tables, and code blocks. A structure-aware splitter parses the document first, into markdown, H T M L, or a layout tree from a P D F parser, and cuts along the document's own skeleton: one section per card, or one subsection per card when sections are long. Tables get special treatment: a table should never be cut in half, and ideally each card that contains table rows also repeats the table's header row, because a row of numbers without column names is meaningless. Code blocks stay whole. Lists stay attached to the sentence that introduces them. For most enterprise corpora, which are full of handbooks, specs, and contracts, structure-aware chunking is the single highest-return upgrade from the default.
+
+The sharpest, and most expensive, scissors: semantic chunking. Instead of looking at formatting, you look at meaning. You embed each sentence, then walk down the document sentence by sentence and watch the arrows from last episode. As long as consecutive sentences point in roughly the same direction on the map, they belong on the same card. When the direction swings sharply, the topic has changed, and you cut there. Variants use a language model to propose the cut points directly. It sounds ideal, and on messy, unformatted text it can help. But it costs an embedding call per sentence, or a language model call per document, at indexing time, it's sensitive to its threshold, and on well-structured documents it often does no better than simply respecting the headings. Treat it as something to test against your baseline, not a default.
+
+[PAUSE 1s]
+
+## Size and overlap: the ruler
+
+Now the ruler in the middle of the bench: how big should each card be?
+
+Small cards, say a hundred to two hundred tokens, produce sharp pins. Each card is about one thing, so its arrow points precisely, and retrieval precision is high. But each card carries little context, and answers that span a few paragraphs get scattered across several cards, some of which may not be retrieved.
+
+Large cards, say a thousand tokens or more, carry plenty of context and rarely split an idea. But their arrows point at the average of several ideas, so they match fewer questions sharply, and every card you retrieve costs more of the model's context window. Retrieve ten one-thousand-token chunks and you've spent ten thousand tokens of prompt on every question, which at scale is real money and real latency.
+
+For most text-heavy question answering, somewhere between about two hundred and eight hundred tokens is where people land, with the right answer determined by your evaluation set, not by a blog post. Short factual lookups like frequently asked questions favor the small end. Questions that need reasoning over a whole procedure favor the larger end. Also remember the embedding model's own input limit from last episode: a card longer than the model's maximum input gets silently truncated, so its pin only represents its first part.
+
+Overlap is the other half of the ruler. With overlap, each card repeats the last bit of the previous card, commonly around ten to twenty percent. On the bench, picture the scissors cutting so that each card shares a strip of text with its neighbor. The point is to protect ideas that straddle a boundary: in our cold open, an overlap would have given the rule's card at least the first line of the exception. The cost is duplication: twenty percent overlap means twenty percent more cards, more storage, more embedding cost, and near-duplicate cards crowding each other in the results. And interestingly, several careful evaluations, including the Chroma study, found overlap helped less than people assume once boundaries were chosen well. Overlap is a patch for bad cut points. Good cut points are the cure.
+
+[PAUSE 2s]
+
+## Writing on the card: context that travels with the chunk
+
+Here's the deeper problem, and the most important idea of this episode. Once a card leaves the manual on the left end of the bench and sits in the drawer on the right, it has lost its surroundings. Picture a card that reads: "The company's revenue grew by three percent over the previous quarter." Which company? Which quarter? The manual knew. The card doesn't. Its pin lands somewhere in a generic "revenue growth" region of the map, next to hundreds of other cards saying similar things about other companies and other quarters.
+
+There are three increasingly clever ways to fix that.
+
+The simplest: prepend metadata. Before embedding, write the document title and the section heading path at the top of each card: "Travel Policy, section four, Approvals." It costs a few tokens per card and it's shockingly effective, because it drags each card's pin toward the right neighborhood on the map. Store the same metadata as structured fields too, so you can filter by it later.
+
+The more powerful: contextual retrieval, a technique Anthropic published. For every chunk, you send the whole document plus the chunk to a language model and ask it to write a short blurb, typically fifty to a hundred tokens, situating this chunk within the document: "This chunk is from the company's quarterly filing for the second quarter and describes revenue growth relative to the first quarter." You prepend that blurb to the chunk before embedding it, and before indexing it for keyword search. In their published tests, contextualizing the embeddings alone cut the rate of failed retrievals by about thirty-five percent; adding contextualized keyword search took that to about forty-nine percent; and adding a reranker on top, which is episode three, took it to about sixty-seven percent. That's a big lever. The cost is one language model call per chunk at indexing time. With prompt caching, so the document is only paid for once while you walk its chunks, they estimated about one dollar per million document tokens, as a one-time cost. For most corpora that's a rounding error; for a corpus of billions of tokens, it's a budget line you plan.
+
+The cleverest: late chunking, from researchers at Jina and Weaviate. Normally, you cut first and then embed each card in isolation, so the embedding model never sees the surroundings. Late chunking flips the order. You feed the whole long document, or a long window of it, through a long-context embedding model, so every token's vector is computed while seeing the full text. Only after that do you cut: you average the token vectors within each chunk's span to get that chunk's arrow. The phrase "the city" in chunk five gets a vector that already knows the document was talking about Berlin in chunk one. No extra language model calls, no extra tokens stored. The catch: it needs an embedding model with a long input window and access to token-level outputs, which many hosted A P Is don't expose.
+
+And a pattern that decouples the two jobs of a chunk, which we'll go deep on in episode five: small-to-big retrieval, often called parent-document retrieval. You put small, sharp cards in the drawer for matching, but each card remembers which larger section it came from, and when a small card matches, you hand the model the larger parent section. Sharp pins for finding; generous context for answering.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Let's go back to the bench and look at what goes wrong in practice.
+
+Pitfall one: the parser is the real chunker. Before the scissors ever touch a P D F, something has to turn it into text, and P D F extraction is where a shocking amount of R A G quality dies. Two-column layouts get read straight across both columns, interleaving unrelated sentences. Headers and footers get repeated into every page's text. Tables become a soup of numbers with no column names. Scanned pages come out empty unless you run optical character recognition. A large insurer's claims assistant once gave wrong coverage limits for weeks; the root cause was that the policy tables had been flattened so that each limit ended up next to the wrong coverage type. Chunking strategy was irrelevant; the manual on the left of the bench was garbled before the scissors arrived. Always inspect a sample of your extracted chunks with your own eyes before tuning anything else.
+
+Pitfall two: chunking the question and the answer apart. Frequently asked questions pages, forms, and troubleshooting guides pair a question with its answer. A naive splitter can cut between them, leaving one card with questions and the next with orphaned answers. Keep question-answer pairs, headings and their first paragraph, and list introductions and their lists on the same card.
+
+Pitfall three: forgetting that chunking is versioned. When you change chunk size or strategy, every chunk identifier changes, every vector is regenerated, and any evaluation labels pointing at old chunk identifiers break. Label your evaluation set at the level of source document and passage text, not chunk identifier, so it survives re-chunking.
+
+Pitfall four: one size for everything. A corpus that mixes short frequently asked questions, long legal contracts, and source code doesn't want one chunk size. Route by document type: different scissors for different manuals.
+
+And one question to ask before any of this: do you need chunking at all? Anthropic's guidance on contextual retrieval makes the point that if your whole knowledge base is under roughly two hundred thousand tokens, about five hundred pages, you may be better off putting all of it in the prompt, with prompt caching to control cost. Chunking is a solution to a scale problem; make sure you have the problem.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask, "How would you chunk documents for a R A G system?", a strong answer sounds like this. Start with the documents, not the algorithm: look at their structure and extraction quality first, because parsing errors dominate. Default to structure-aware recursive splitting, following headings, keeping tables and code whole, with target sizes around a few hundred tokens and modest overlap. Prepend the document title and section path to each chunk, and store them as filterable metadata. Then, if the evaluation set shows context-loss failures, add contextual retrieval or late chunking, and consider small-to-big retrieval where answers need more context than a sharp chunk can hold. And tune chunk size against measured recall on a labelled question set, not by intuition.
+
+When they ask, "What's the tradeoff in chunk size?", strong answer: smaller chunks give sharper embeddings and higher precision but lose context and scatter multi-paragraph answers; larger chunks keep context but blur the embedding toward an average of several topics and cost more prompt tokens per retrieved chunk. Overlap patches boundary cuts at the price of duplication, and good boundaries reduce the need for it.
+
+And when they ask, "What is contextual retrieval and when is it worth it?", strong answer: prepend a short, model-generated description situating each chunk within its source document before embedding and keyword indexing; published results showed roughly a third fewer retrieval failures from embeddings alone, around half with keyword search added, and around two thirds with reranking; cost is one model call per chunk at index time, made cheap with prompt caching. Worth it when chunks are ambiguous out of context, like financial filings, contracts, and policies full of "the company" and "this section."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the workbench. On the left end, the manual: parse it carefully, because a garbled manual can't be saved by good scissors. In the middle, the scissors and the ruler. Fixed-size cuts are blunt. Recursive splitting follows the grain: paragraphs, then lines, then sentences, and at a few hundred tokens it's a strong default. Structure-aware cuts follow headings and never split a table. Semantic cuts watch the arrows swing and cost more for modest gains. The ruler trades sharp pins against context, and overlap patches boundaries at a duplication cost. On the right end, the drawer of cards, and what you write on each card is what makes it survive on its own: title and section path at minimum, a model-written context blurb for ambiguous corpora, or late chunking so each card's arrow was computed while seeing the whole document. Small cards for finding, parent sections for answering.
+
+Next episode, we reach into the drawer: retrieval itself, keyword search, hybrid search, reranking, and rewriting the question before you search. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-embeddings.html">← Embeddings & Vector Similarity from First Principles</a><a class="btn" href="03-retrieval.html">Retrieval: BM25, Hybrid, Reranking, Query Rewriting →</a></div></main></div></body></html>

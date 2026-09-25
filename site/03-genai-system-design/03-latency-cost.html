@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk" open><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="active" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 3 · GenAI System Design · Episode 3</div>
+<h1 class="lesson">Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</h1>
+<div class="meta">18 min listen · The pipe-to-the-engine mental model of LLM latency and cost: answer caches that let requests exit early, a router that forks easy traffic to small models, a batch side-channel at half price, prompt caching inside the engine, and a streaming tap at the end, with the numbers and failure modes of each.</div>
+<audio controls preload="metadata" src="../../audio/03-genai-system-design/s3e03-latency-cost.mp3"></audio>
+<button class="btn complete" data-ep="03-genai-system-design/03-latency-cost" onclick="toggleDone('03-genai-system-design/03-latency-cost')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LLM latency is queue + prefill (input length) + output tokens × time-per-token, and cost is metered per input/output/cached token — so the levers are: measure per trace, trim tokens, prompt-cache a stable prefix, batch what nobody waits on, route easy traffic to small models, cache repeated answers carefully, and stream.</p>
+<h2 id="the-mental-image-the-pipe-to-the-engine">The mental image: the pipe to the engine</h2>
+<ul>
+<li><strong>Pipe left → right</strong> into the <strong>big expensive engine</strong> (frontier model) at the far right.</li>
+<li><strong>Two gauges above</strong>: stopwatch (latency) on the left, cash counter (cost) on the right.</li>
+<li><strong>Exit hatch on top (left)</strong>: answer cache — exact, then semantic.</li>
+<li><strong>Fork</strong>: the router — lower branch to a <strong>small engine below the pipe</strong>.</li>
+<li><strong>Side channel down to the canal</strong>: batching (batch APIs ~50% off; continuous batching when self-hosting).</li>
+<li><strong>Shelf inside the engine intake</strong>: prompt caching of the identical prefix.</li>
+<li><strong>Tap on the far right</strong>: streaming — tokens drip out as generated.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    IN["Requests"] --> HATCH{"Answer cache hit?"}
+    HATCH -->|"hit: exit early"| OUT1["Cached answer (ms, ~free)"]
+    HATCH -->|miss| FORK{"Router"}
+    FORK -->|"easy"| SMALL["Small model"]
+    FORK -->|"not urgent"| BATCH["Batch API (~50% off, within 24h)"]
+    FORK -->|"hard"| BIG["Big model"]
+    subgraph Engine["Inside the big engine"]
+        BIG --> PC["Prompt cache: stable prefix reused"]
+        PC --> DEC["Decode token by token"]
+    end
+    DEC --> TAP["Stream tokens to client"]
+    SMALL --> TAP
+</pre>
+
+<h2 id="latency-anatomy">Latency anatomy</h2>
+<pre class="mermaid">flowchart LR
+    Q["Queueing"] --> PF["Prefill: scales with input tokens"]
+    PF --> T1(("First token = TTFT"))
+    T1 --> DC["Decode: output tokens x time per token"]
+    DC --> END(("Last token"))
+</pre>
+
+<ul>
+<li>500 output tokens at 50 tok/s ≈ 10 s regardless of everything else → output length is usually the biggest latency lever.</li>
+<li>Reasoning models bill hidden thinking tokens as output; use effort/thinking-budget settings deliberately.</li>
+<li>Metrics: TTFT, inter-token latency (ITL) / time per output token (TPOT), end-to-end, p50/p95.</li>
+</ul>
+<h2 id="prompt-caching-facts-as-of-2026-09-25">Prompt caching facts (as of 2026-09-25)</h2>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Mechanism</th>
+<th>Pricing / effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Anthropic (Claude API)</td>
+<td>Explicit <code>cache_control</code> breakpoints (up to 4) or top-level automatic caching; exact-prefix match; tools → system → messages hierarchy</td>
+<td>Writes 1.25× base input (5-min TTL) or 2× (1-hour TTL); reads 0.1× base input on most models (lower on some newest models); minimum cacheable length 512–4,096 tokens depending on model</td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td>Automatic for prompts ≥ 1,024 tokens; exact prefix; <code>prompt_cache_key</code> helps routing; extended retention up to 24h on supported models</td>
+<td>Cached input discounted up to 90% on recent models; up to ~80% lower TTFT</td>
+</tr>
+<tr>
+<td>vLLM (self-hosted)</td>
+<td>Automatic prefix caching over PagedAttention KV blocks</td>
+<td>Skips recomputing prefill for shared prefixes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Layout rule — stable first, variable last:</strong></p>
+<pre><code class="language-text">[system instructions]        &lt;- stable
+[tool definitions]           &lt;- stable
+[few-shot examples]          &lt;- stable
+[long reference docs]        &lt;- stable-ish       &lt;== cache breakpoint here
+[conversation history]       &lt;- grows
+[retrieved chunks]           &lt;- per request
+[today's date, user name]    &lt;- per request (NEVER at the top)
+[user question]              &lt;- per request
+</code></pre>
+<pre><code class="language-python"># Anthropic-style explicit breakpoint on the last stable block
+client.messages.create(
+    model=MODEL,
+    max_tokens=400,                                   # cap output: biggest latency lever
+    system=[{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: LONG_STABLE_INSTRUCTIONS,
+             &quot;cache_control&quot;: {&quot;type&quot;: &quot;ephemeral&quot;}}],
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: f&quot;{retrieved}\n\nDate: {today}\n\n{question}&quot;}],
+)
+# Monitor usage.cache_read_input_tokens / input totals -&gt; cache hit rate dashboard + alert
+</code></pre>
+<h2 id="semantic-cache-sketch">Semantic cache sketch</h2>
+<pre><code class="language-python">def answer(q, user):
+    scope = (user.tenant_id, user.acl_fingerprint)          # never share across permission scopes
+    hit = sem_cache.nearest(embed(q), scope=scope)
+    if hit and hit.similarity &gt;= THRESHOLD and not hit.source_changed():   # tune THRESHOLD on labelled pairs
+        return hit.answer
+    ans = llm_pipeline(q, user)
+    sem_cache.put(embed(q), ans, scope=scope, sources=ans.source_ids, ttl=TTL)
+    return ans
+</code></pre>
+<h2 id="levers-ranked-typical-retrieval-heavy-assistant">Levers ranked (typical retrieval-heavy assistant)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Lever</th>
+<th>Latency</th>
+<th>Cost</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Measure per trace (in/out/cached tokens, model, step)</td>
+<td>–</td>
+<td>–</td>
+<td>none</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Trim tokens (max_tokens, concise, rerank to top 5)</td>
+<td>↓↓</td>
+<td>↓↓</td>
+<td>low</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Prompt caching, stable-first layout</td>
+<td>↓ TTFT</td>
+<td>↓↓ input</td>
+<td>silent regressions if prefix changes</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Batch APIs for offline work</td>
+<td>n/a</td>
+<td>−50%</td>
+<td>needs async design</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Model routing / cascades</td>
+<td>↓</td>
+<td>↓↓</td>
+<td>hard-tail quality drop</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Semantic cache</td>
+<td>↓↓↓ on hits</td>
+<td>↓↓ on hits</td>
+<td>wrong answers, cross-tenant leaks, staleness</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Self-host: continuous batching, speculative decoding, prefix caching</td>
+<td>↓ ITL</td>
+<td>↓ at high steady volume</td>
+<td>you own GPUs</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Streaming + cancel on disconnect</td>
+<td>↓ perceived</td>
+<td>↓ wasted tokens</td>
+<td>guards/JSON harder</td>
+</tr>
+</tbody>
+</table>
+<h2 id="routing-facts">Routing facts</h2>
+<ul>
+<li>RouteLLM (LMSYS/Berkeley, 2024): &gt;85% cost reduction on MT Bench while retaining ~95% of GPT-4 quality (benchmark-specific).</li>
+<li>Microsoft Foundry model router: one deployment routing across a model pool; Balanced / Cost / Quality modes.</li>
+<li>Amazon Bedrock Intelligent Prompt Routing: routes within a model family; AWS cites up to ~30% cost savings.</li>
+</ul>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prefill</td>
+<td>Model reads the prompt in parallel; drives TTFT</td>
+</tr>
+<tr>
+<td>Decode</td>
+<td>Sequential token generation; drives total time</td>
+</tr>
+<tr>
+<td>TTFT / ITL / TPOT</td>
+<td>Time to first token / gap between streamed tokens / average time per output token</td>
+</tr>
+<tr>
+<td>Prompt (prefix) caching</td>
+<td>Reusing processed state of an identical prompt prefix</td>
+</tr>
+<tr>
+<td>Semantic cache</td>
+<td>Returning a stored answer for a semantically similar past question</td>
+</tr>
+<tr>
+<td>Continuous batching</td>
+<td>Iteration-level batching in serving engines (vLLM)</td>
+</tr>
+<tr>
+<td>Batch API</td>
+<td>Async bulk submission, ~50% discount, results within 24h</td>
+</tr>
+<tr>
+<td>Cascade</td>
+<td>Small model first, escalate on failed check</td>
+</tr>
+<tr>
+<td>Speculative decoding</td>
+<td>Draft model proposes tokens, big model verifies — lowers ITL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. LLM costs grew 5× while traffic grew 2×. Diagnose.</strong>
+Instrument per-request input/output/cached tokens by model and step. Faster-than-usage growth usually means longer prompts or a collapsed prompt-cache hit rate (e.g. a per-request value like a timestamp added at the top of the prompt). Fix layout stable-first, dashboard + alert on cache hit rate, then trim tokens, batch offline work, and route.</p>
+<p><strong>Q2. p95 latency is 8 seconds. What do you do?</strong>
+Split TTFT from generation. High TTFT → queueing, prompt length, cache misses, serial retrieval/tools. High generation time → output length (cap, concise, reasoning effort), smaller/faster model on that route, speculative decoding if self-hosted. Stream so first words appear in ~1 s.</p>
+<p><strong>Q3. Explain prompt caching and how to get high hit rates.</strong>
+The provider/engine stores processed state for an exact prompt prefix; later requests with the same prefix skip re-reading it — cheaper (reads ~0.1× on one major provider; up to 90% off on another) and faster TTFT. Order prompts stable-first, variable-last; keep tool definitions and system prompt byte-identical; monitor hit rate.</p>
+<p><strong>Q4. Would you add a semantic cache? What are the risks?</strong>
+Only for repetitive traffic. Risks: semantically close but different-intent questions get wrong cached answers (tune threshold on labelled pairs, track wrong-hit rate), cross-tenant/permission leakage (scope keys by tenant + ACL), staleness (invalidate on source change).</p>
+<p><strong>Q5. How does model routing save money, and how can it hurt?</strong>
+Most traffic is easy; small models are several to tens of times cheaper and faster. Rules, learned routers, or cascades send only hard requests to the big model. Risk: averages hide a degraded hard tail — evaluate per segment, especially hard examples; cascades add latency on escalations.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — Prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching</li>
+<li>OpenAI — Prompt caching guide: https://developers.openai.com/api/docs/guides/prompt-caching</li>
+<li>OpenAI — Prompt Caching in the API (launch post): https://openai.com/index/api-prompt-caching/</li>
+<li>Azure OpenAI in Microsoft Foundry — prompt caching: https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching</li>
+<li>vLLM — Automatic prefix caching (design): https://docs.vllm.ai/en/v0.9.0/design/automatic_prefix_caching.html</li>
+<li>vLLM — Speculative decoding: https://docs.vllm.ai/en/latest/features/speculative_decoding/</li>
+<li>RouteLLM (LMSYS blog): https://www.lmsys.org/blog/2024-07-01-routellm/ · paper: https://arxiv.org/abs/2406.18665</li>
+<li>Microsoft Foundry model router: https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-router</li>
+<li>Amazon Bedrock Intelligent Prompt Routing: https://aws.amazon.com/bedrock/intelligent-prompt-routing/</li>
+<li>Redis — semantic cache optimization: https://redis.io/blog/10-techniques-for-semantic-cache-optimization/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track three, episode three: latency and cost engineering. Caching, batching, streaming, and model routing.
+
+In episode one we built the corridor, and we left the basement, the row of model engines with a router at the foot of the stairs, mostly unexplored. In episode two we designed the retrieval shelf. Today we go down into the basement with a stopwatch in one hand and a calculator in the other.
+
+Here's the cold open. A team launches an internal assistant. Month one, the model bill is eight thousand dollars. Month two, usage doubles, which everyone expected, and the bill goes to forty thousand, which nobody expected. At the same time, the ninety-fifth percentile response time creeps from four seconds to eleven. Leadership asks two questions: why did cost grow five times when traffic grew two times, and why is it getting slower? The team's first instinct is to switch to a cheaper model. That would have been the wrong move. When they finally opened the traces, the answer was a single line in the system prompt, and we'll get to exactly what it was. The point for now: latency and cost in L L M systems are engineering problems with specific, measurable levers, and a staff-level engineer reaches for the measurement before the model swap.
+
+## Why it matters
+
+Two facts make this topic unavoidable. First, L L M cost is metered per token, so it scales linearly with usage and with prompt size, and prompt size tends to creep up quietly as people add instructions, examples, and retrieved context. Second, L L M latency is dominated by sequential generation, one token at a time, which you can't simply parallelize away. Every interviewer who has run one of these systems has felt both. When they ask "how would you reduce cost" or "the p ninety-five is too high, what do you do", they want to hear a toolkit, ranked by impact, with numbers. So let's build the picture.
+
+[PAUSE 1s]
+
+## The mental image: the pipe to the engine
+
+In your mind's eye, picture a wide pipe running from left to right. On the far right end of the pipe sits a huge, expensive engine, the big model. Every request enters the pipe on the left and, by default, flows all the way right into the engine. The engine is slow and costs money for every token it reads and every token it writes. Our entire job today is to make fewer requests reach that engine, make the ones that do reach it cheaper to process, and make the wait feel shorter.
+
+Above the pipe, mounted on the wall, are two gauges. On the left, a stopwatch: latency. On the right, a cash counter: cost. Every lever we pull, we'll watch both gauges.
+
+Now, the fittings on the pipe, left to right.
+
+First, near the left end, on top of the pipe: an exit hatch. That's the answer cache. If we've already answered this question, the request leaves through the top hatch with the stored answer and never reaches the engine.
+
+Second, a bit further right: a fork. The pipe splits. The lower branch curves down to a small, cheap, fast engine sitting below the main pipe. The upper branch continues straight to the big engine. The valve at the fork is the router.
+
+Third, just past the fork, on the bottom of the pipe: a side channel sloping down to a slow, wide canal. That's batching. Anything that isn't urgent drains down into the canal, where it's processed later, at half price.
+
+Fourth, inside the big engine itself, just inside its intake: a shelf of pre-processed parts. That's prompt caching. The part of every prompt that's the same every time has already been read and prepared, so the engine doesn't redo that work.
+
+And finally, on the far right, coming out of the engine: not a bucket but a tap. The answer drips out token by token as it's produced. That's streaming.
+
+So: exit hatch on top, fork with a small engine below, side channel down to the canal, a pre-processed shelf inside the big engine, and a tap on the far right. Two gauges above: stopwatch and cash counter.
+
+[PAUSE 2s]
+
+## First, how the engine spends time and money
+
+Before we touch any fitting, understand the engine, because it tells you which levers matter most.
+
+When a request reaches the engine, two phases happen. Phase one is prefill: the model reads the entire prompt. This happens in parallel on the G P U, so it's fast per token, but it grows with prompt length. Prefill is most of the time to first token. Phase two is decode: the model generates the answer one token at a time, each token depending on the last. On a hosted model that's often somewhere between thirty and a hundred and fifty tokens per second, depending on model size and load.
+
+So here's the formula to say out loud in an interview: total latency is roughly queueing time, plus prefill time, which scales with input tokens, plus the number of output tokens times the time per output token. And for most chat-style requests, the output term dominates. A five-hundred-token answer at fifty tokens per second is ten seconds, no matter how fast everything else is. Which means the single biggest latency lever is often simply: generate fewer tokens. Ask for concise answers. Set a max tokens limit. For structured tasks, ask for compact output, not prose.
+
+On the cash counter: providers charge separately for input and output tokens, and output tokens typically cost several times more than input tokens, often somewhere between four and eight times. But input volume is usually much larger, because of system prompts and retrieved context. So a typical retrieval-heavy request might be four thousand tokens in and three hundred out, and input can still be the majority of the bill. You have to look at both.
+
+And one more modern wrinkle: reasoning models generate hidden thinking tokens before the visible answer, and you pay for those as output tokens. A reasoning model that thinks for two thousand tokens before a hundred-token answer costs and waits like a two-thousand-one-hundred-token answer. Most providers now expose an effort or thinking budget setting. Use it deliberately.
+
+[PAUSE 1s]
+
+## Fitting one: the exit hatch, answer caching
+
+Back to the pipe. The first fitting on the left, the exit hatch on top.
+
+The simplest version is an exact-match cache: hash the normalized prompt, and if you've seen it before, return the stored answer. Cost of a hit: effectively zero, and latency of a few milliseconds instead of seconds. But exact matches are rare in free-text chat, because people phrase things differently.
+
+So the more interesting version is a semantic cache. Embed the incoming question, search a small vector store of previous questions, and if the closest match is above a similarity threshold, say around zero point nine on cosine similarity, return that answer. Now "how do I reset my password" and "I forgot my password, how do I change it" share one cached answer.
+
+Here's the catch, and interviewers love it: semantic similarity is not the same as having the same answer. "How do I cancel my subscription" and "how do I keep my subscription from cancelling" can land very close together in embedding space. Set the threshold too loose, and you confidently serve the wrong answer at cache speed. Set it too tight, and the hit rate collapses. There's no universal number; you tune it on labelled pairs from your own traffic.
+
+Two more semantic cache rules. First, scope the cache by tenant and by permission. If user A's question was answered using documents only user A can see, that answer must never be served to user B. A shared cache across permission boundaries is a data leak with good latency. Second, invalidate on source change: if the policy document behind a cached answer is updated, the cached answer must expire. A time-to-live helps, but tying invalidation to source updates is better.
+
+Where does the exit hatch pay off most? High-repetition traffic: F A Q-style support, internal helpdesks, classification of repeated inputs. Where does it pay off least? Long, personal, multi-turn conversations, where almost nothing repeats.
+
+[PAUSE 1s]
+
+## Fitting two: the fork, model routing
+
+Next fitting: the fork, with the small engine hanging below the pipe.
+
+The observation behind routing: most real traffic is easy. Greetings, simple lookups, reformatting, short summaries. A small model handles those just as well as a frontier model, at a fraction of the price, often five to thirty times cheaper per token, and faster. Only a minority of requests genuinely need the big engine.
+
+There are three ways to build the valve. One: rules. Route by task type, which the orchestrator already knows. Classification goes to the small model; multi-step reasoning goes to the big one. Simple, predictable, and often most of the win. Two: a learned router, a small classifier that reads the request and predicts whether the small model's answer will be good enough. An open-source research framework called Route L L M showed this well: on one conversational benchmark, routers cut cost by over eighty-five percent while keeping about ninety-five percent of the strong model's quality. Treat that as "large savings are possible", not as a promise for your traffic. Three: a cascade. Send everything to the small model first, check the answer with a cheap verifier or a confidence signal, and escalate to the big engine only if the check fails. Cascades save the most on easy traffic but add latency on the hard requests, which pay for two calls.
+
+Cloud anchoring, since both clouds now sell this as a managed valve. On Azure, Microsoft Foundry offers a model router: one deployment that routes each prompt across a pool of underlying models, with balanced, cost, and quality modes. On A W S, Amazon Bedrock offers intelligent prompt routing: one endpoint that routes between models within a model family based on predicted quality, with published savings of up to around thirty percent. And any gateway, like the ones from episode one, can implement rule-based routing.
+
+The failure mode: routing silently degrades the hard tail. Average quality looks fine, because most traffic is easy, while the complex ten percent of questions get quietly worse. So evaluate the router per segment, especially on hard examples, not just on the average.
+
+[PAUSE 1s]
+
+## Fitting three: the side channel, batching
+
+Next: the side channel sloping down to the canal.
+
+Not everything is interactive. Nightly document summarization, classifying a backlog of tickets, generating embeddings for a re-index, running an evaluation suite, enriching a table of product descriptions. None of that has a user waiting. The major providers offer batch A P Is for exactly this: you submit a file of requests, the provider processes them within a window of up to twenty-four hours, and you pay about half the normal price. Same model, same output, fifty percent off, in exchange for patience.
+
+For a data engineer, this should feel very familiar: it's the difference between a streaming job and a batch job, and the discount is the provider selling you their idle capacity. The design move in an interview is simply to ask, for every workload: does a human wait on this? If not, it goes down the side channel.
+
+There's a second meaning of batching that lives inside the engine, and it matters if you self-host. A G P U generating tokens for one request at a time is badly underused, because decode is limited by memory bandwidth, not compute. Serving engines like v L L M use continuous batching: at every generation step, the engine packs in whichever requests are active, adding new ones and removing finished ones step by step instead of waiting for a whole batch to finish. That can raise throughput several times over naive serving. The tradeoff: bigger batches mean more throughput and lower cost per token, but each individual request gets slightly slower per token. You tune batch limits against your latency target. Episode six goes deep into the serving engine.
+
+[PAUSE 1s]
+
+## Fitting four: the shelf inside the engine, prompt caching
+
+Now step inside the big engine, to the shelf just inside its intake.
+
+Most prompts in a production system share a long, identical beginning: the system instructions, the tool definitions, a set of examples, sometimes a large reference document. Every request, the engine re-reads that identical prefix during prefill. Prompt caching stores the model's processed internal state for that prefix, so the next request that starts with exactly the same tokens skips re-reading it.
+
+The payoff is on both gauges. On the cash counter: cached input tokens are heavily discounted. On one major provider, reading from the cache costs about a tenth of the normal input price, while writing a cache entry carries a premium, roughly a quarter extra for a five-minute cache, or double for a one-hour cache. Another major provider caches automatically for prompts over about a thousand tokens, with discounts on cached input of up to ninety percent on recent models and up to around eighty percent lower time to first token. If you self-host, v L L M has automatic prefix caching that does the same thing inside your own engine.
+
+The rule that makes or breaks it: the cache matches on an exact prefix. One different token early in the prompt, and everything after it is a miss. So structure every prompt as stable-first, variable-last: instructions and tools at the top, then long shared documents, then conversation history, and the user's new question at the very end. Anything that changes per request, a timestamp, a user name, a request identifier, goes at the bottom, never at the top.
+
+[PAUSE 2s]
+
+## War story: the timestamp at the top
+
+Now back to the cold open. The team whose bill went up five times while traffic went up two times.
+
+The system prompt was long, around six thousand tokens of instructions, tool definitions, and examples, and prompt caching had been working beautifully: well over eighty percent of input tokens were being read from cache. Then, in month two, someone made a small, reasonable change. The model kept getting the date wrong when users asked about deadlines, so they added a line at the very top of the system prompt: "Today's date and time is", followed by the current timestamp, down to the second.
+
+Every request now had a unique first line. The prefix never matched. Cache hit rate fell from over eighty percent to essentially zero, overnight. Every request paid full price for six thousand tokens of prefill, and prefill time went up too, which is part of why the ninety-fifth percentile latency climbed. No error, no alert, nothing broke. The answers were, if anything, slightly better.
+
+The fix took five minutes: move the date to the end of the prompt, next to the user's question, and round it to the day. Cache hit rate recovered within the hour. The lesson took longer to learn: cache hit rate is a production metric. Put it on a dashboard next to cost and latency, alert when it drops, and treat any edit to the top of a prompt as a performance change, not just a wording change.
+
+[PAUSE 1s]
+
+## The tap: streaming
+
+Last fitting, the tap on the far right.
+
+Streaming doesn't make the engine faster and doesn't make anything cheaper. What it does is change what the stopwatch measures from the user's point of view. Without streaming, the user sees nothing until the last token: ten seconds of spinner. With streaming, they see the first words at the time to first token, maybe under a second, and read along. Perceived latency drops dramatically. That's why for interactive systems you should set your targets on time to first token and on tokens per second, not only on total time.
+
+Streaming has real engineering costs, though. Your output guard can't wait for the full answer, so it checks in windows and must be able to cut the stream. Structured output is harder, because you're receiving partial jason. And here's a cost lever hidden inside streaming: when the user closes the tab or hits stop, cancel the generation upstream. Otherwise you keep paying for tokens nobody will ever read.
+
+And a couple of engine-side latency tricks worth naming. Speculative decoding: a small draft model guesses several tokens ahead and the big model verifies them in one step, which can cut time per output token noticeably without changing the output. It helps most at low to moderate load. And parallelism in the orchestrator: if an agent needs three independent tool calls, run them concurrently, not one after another.
+
+[PAUSE 2s]
+
+## Tradeoffs and ranking the levers
+
+Here's how I'd rank the levers for a typical retrieval-heavy assistant, from biggest and cheapest to smallest and hardest.
+
+One: measure. Break down cost and latency per trace: input tokens, output tokens, cached tokens, which model, which step. You can't pull the right lever blind.
+
+Two: trim tokens. Shorter answers, tighter retrieval with a reranker so five good passages replace twenty mediocre ones, and pruned instructions. This helps both gauges and costs nothing.
+
+Three: prompt caching with a stable-first prompt layout. Large, cheap, and mostly a matter of ordering.
+
+Four: batch everything that isn't interactive. An instant fifty percent off those workloads.
+
+Five: routing. Large savings, but it needs evaluation to protect quality on the hard tail.
+
+Six: semantic caching. Large where traffic repeats, risky where it doesn't, and it needs permission scoping.
+
+Seven: self-hosting with continuous batching and speculative decoding. Potentially the cheapest per token at high steady volume, but you now own the G P Us and the serving engine.
+
+And through all of it: stream, so the wait feels short.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask "our L L M costs are growing faster than usage, what do you do?", a strong answer sounds like: "First, instrument: per-request input, output, and cached tokens by model and by step, from the traces. Growth faster than usage usually means prompts are getting longer or cache hit rate dropped. Then I'd work the levers in order: trim tokens and tighten retrieval, restructure prompts stable-first for prompt caching and put cache hit rate on a dashboard, move offline workloads to batch A P Is at roughly half price, and route easy traffic to a smaller model, evaluated per segment so the hard tail doesn't regress."
+
+When they ask "p ninety-five latency is eight seconds, fix it", say: "Split it into time to first token and generation time. If time to first token is high, look at queueing, prompt length, and cache misses, and at slow steps before the model, like retrieval or tools running in series. If generation time is high, it's output length: cap it, ask for concise answers, check reasoning effort settings, consider a smaller or faster model for that route, or speculative decoding if we self-host. And stream, so first words appear in about a second."
+
+When they ask "would you add a semantic cache?", say: "Only if traffic repeats. I'd tune the similarity threshold on labelled pairs from our own traffic, scope the cache per tenant and permission set, and invalidate on source changes. And I'd track the wrong-answer rate on cache hits, not just the hit rate."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Let's re-walk the pipe. Two gauges on the wall: a stopwatch and a cash counter. Inside the big engine on the far right: prefill reads the prompt, decode writes the answer one token at a time, and output length usually dominates the wait. On the left, the exit hatch: exact and semantic answer caches, with thresholds tuned on your own traffic, scoped by tenant, invalidated on source change. Then the fork: a router sending easy traffic down to a small engine, by rules, a learned router, or a cascade, always evaluated on the hard tail. Then the side channel down to the canal: batch A P Is at about half price for anything no human waits on, and continuous batching inside a self-hosted engine. Inside the big engine's intake, the shelf: prompt caching, cheap reads for an identical prefix, so stable content goes first and anything that changes goes last, and never, ever put a timestamp at the top. And on the far right, the tap: streaming, so first words arrive in about a second, with generation cancelled when the user walks away. Next episode, we build the evaluation lab at the end of the return pipe: L L M judges, golden sets, and regression gates. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="02-design-rag-walkthrough.html">← "Design a RAG System" — Interview Walkthrough</a><a class="btn" href="04-evals.html">Evals: LLM-as-Judge, Golden Sets, Regression Gates →</a></div></main></div></body></html>

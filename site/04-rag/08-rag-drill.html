@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DRILL: RAG Rapid-Fire — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk" open><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="active" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 4 · RAG · Episode 8</div>
+<h1 class="lesson">DRILL: RAG Rapid-Fire</h1>
+<div class="meta">10 min listen · Fifteen rapid-fire interview questions across the whole R A G track — embeddings, chunking, hybrid retrieval and reranking, vector index internals, advanced techniques, evaluation, and production failure modes. Answer aloud in the pause, then compare.</div>
+<audio controls preload="metadata" src="../../audio/04-rag/s4e08-rag-drill.mp3"></audio>
+<button class="btn complete" data-ep="04-rag/08-rag-drill" onclick="toggleDone('04-rag/08-rag-drill')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>A strong RAG interview answer always names the stage (ingest → index → retrieve → assemble → generate), the mechanism underneath, the cost, and how you'd measure it.</p>
+<h2 id="track-map">Track map</h2>
+<pre class="mermaid">flowchart LR
+    E1["E1 Embeddings"] --> E2["E2 Chunking"] --> E3["E3 Retrieval: BM25, hybrid, rerank"] --> E4["E4 Vector DB internals"]
+    E4 --> E5["E5 Advanced RAG"] --> E6["E6 Evaluation"] --> E7["E7 Failure modes"]
+</pre>
+
+<h2 id="answer-sheet">Answer sheet</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Strong answer in one line</th>
+<th>Episode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Embedding + cosine similarity</td>
+<td>Contrastively trained fixed-length vector; cosine = angle; normalise → cosine = dot = L2 ranking; scores uncalibrated</td>
+<td>E1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Changing embedding model</td>
+<td>Full re-embed into parallel index, evaluate, atomic cutover; store model ID, refuse mismatch</td>
+<td>E1, E7</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Chunk size tradeoff + default</td>
+<td>Small = sharp/low context, large = context/blurred; structure-aware recursive, few hundred tokens, tables whole, title+path</td>
+<td>E2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Why hybrid</td>
+<td>Dense = paraphrase, BM25 = exact codes; RRF score = Σ 1/(60 + rank)</td>
+<td>E3</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cross-encoder reranker</td>
+<td>Joint query+doc scoring, accurate but per-candidate cost → rerank top 50–100, keep a handful</td>
+<td>E3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HNSW</td>
+<td>Multi-layer proximity graph; greedy descent; M / ef_construction (build) / ef_search (recall vs latency)</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Cut memory 10×</td>
+<td>Quantize (scalar 2–4×, binary 32×, PQ more) + oversample + full-precision rescore; Matryoshka truncation</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Filtered search returns too few</td>
+<td>Post-filtering an ANN shortlist; use filter-aware traversal, exact search on small subsets, or tenant partitions</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>HyDE</td>
+<td>Search with embedding of an LLM-drafted fake answer; hurts exact-match and unfamiliar domains; fuse with original query</td>
+<td>E5</td>
+</tr>
+<tr>
+<td>10</td>
+<td>GraphRAG worth it?</td>
+<td>Global/thematic and multi-hop questions; pays LLM extraction + community reports over whole corpus; LazyGraphRAG defers cost</td>
+<td>E5</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Agentic RAG risk</td>
+<td>Retrieve→grade→rewrite→retry; multiplied latency/cost, unbounded loops → cap retries + honest "not found"</td>
+<td>E5</td>
+</tr>
+<tr>
+<td>12</td>
+<td>RAGAS metrics</td>
+<td>Context precision/recall (retrieval), faithfulness (answer vs context), answer relevancy, factual correctness (vs reference)</td>
+<td>E6</td>
+</tr>
+<tr>
+<td>13</td>
+<td>High faithfulness, unhappy users</td>
+<td>Faithful to bad context; check context recall / recall@k; broken filters, stale index</td>
+<td>E6, E7</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Trust LLM-as-judge?</td>
+<td>Position, verbosity, self-preference bias; human-label sample, measure agreement, cross-family judge, recalibrate</td>
+<td>E6</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Document permissions</td>
+<td>ACL filter inside retrieval from caller identity, fresh ACL metadata; never post-filter or prompt-only</td>
+<td>E7</td>
+</tr>
+</tbody>
+</table>
+<h2 id="numbers-worth-having-ready">Numbers worth having ready</h2>
+<table>
+<thead>
+<tr>
+<th>Fact</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RRF constant</td>
+<td>k = 60</td>
+</tr>
+<tr>
+<td>BM25 defaults</td>
+<td>k1 ≈ 1.2, b ≈ 0.75</td>
+</tr>
+<tr>
+<td>Rerank candidate pool</td>
+<td>top 50–100 → keep 5–20</td>
+</tr>
+<tr>
+<td>Float32 vector memory</td>
+<td>4 bytes per dimension</td>
+</tr>
+<tr>
+<td>Binary quantization</td>
+<td>32× smaller</td>
+</tr>
+<tr>
+<td>Contextual retrieval (Anthropic)</td>
+<td>−35% failures (embeddings), −49% (+BM25), −67% (+rerank)</td>
+</tr>
+<tr>
+<td>LazyGraphRAG indexing</td>
+<td>≈ vector RAG, ≈0.1% of full GraphRAG</td>
+</tr>
+<tr>
+<td>Golden set size to start</td>
+<td>50–200 questions, tagged by slice</td>
+</tr>
+<tr>
+<td>Sampling margin, n=200, p≈0.8</td>
+<td>≈ ±5.5 points (95%)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — Contextual Retrieval: https://www.anthropic.com/engineering/contextual-retrieval</li>
+<li>HyDE paper: https://arxiv.org/abs/2212.10496</li>
+<li>GraphRAG paper: https://arxiv.org/abs/2404.16130 · LazyGraphRAG: https://www.microsoft.com/en-us/research/blog/lazygraphrag-setting-a-new-standard-for-quality-and-cost/</li>
+<li>RAGAS metrics: https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/</li>
+<li>TruLens RAG triad: https://www.trulens.org/getting_started/core_concepts/rag_triad/</li>
+<li>Seven Failure Points (Barnett et al.): https://arxiv.org/abs/2401.05856</li>
+<li>Lost in the Middle (Liu et al.): https://arxiv.org/abs/2307.03172</li>
+<li>OWASP Top 10 for LLM Applications 2025: https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-v2025.pdf</li>
+<li>See also the episode 1–4 companion notes in this folder for embedding, chunking, retrieval and vector-index primary docs.</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">This is the Track Four drill — fifteen questions across the whole R A G track, from embeddings to production failure modes. Same format as always: I ask, you answer out loud in the pause, then I give you a strong answer to compare against. The questions run roughly in track order, so you'll hear where your gaps are. Ready.
+
+[PAUSE 2s]
+
+Question one. What is an embedding, and what does cosine similarity actually measure?
+
+[PAUSE 6s]
+
+Strong answer: an embedding is a fixed-length vector a model produces for a piece of text, trained contrastively so that related texts point in similar directions. Cosine similarity measures the angle between two vectors and ignores their length; normalise to unit length and cosine, dot product, and Euclidean distance give the same ranking. And the scores aren't calibrated probabilities, so any threshold has to be tuned per model on labelled data.
+
+[PAUSE 2s]
+
+Question two. You need to change your embedding model. What has to happen?
+
+[PAUSE 6s]
+
+Strong answer: every vector must be regenerated, because vectors from different models live in different spaces and aren't comparable. Build a parallel index, re-embed the corpus, evaluate it, and cut queries and documents over together. Store the model identifier on the index and check it at startup, so a mismatch is refused rather than silently served as near-random results.
+
+[PAUSE 2s]
+
+Question three. What's the tradeoff in chunk size, and what's a sensible default?
+
+[PAUSE 6s]
+
+Strong answer: small chunks give sharp embeddings and precise matches but lose context; large chunks keep context but blur the embedding across several topics and cost more prompt tokens. A sensible default is structure-aware recursive splitting at a few hundred tokens, following headings, keeping tables and code whole, with modest overlap and the title and section path attached. Then tune against measured recall, not intuition.
+
+[PAUSE 2s]
+
+Question four. Why not just use vector search? Make the case for hybrid.
+
+[PAUSE 6s]
+
+Strong answer: dense retrieval is great at paraphrase but weak on exact identifiers, rare names, and error codes; B M twenty-five is the opposite. Run both and fuse the ranked lists with reciprocal rank fusion, which scores each result by one over sixty plus its rank in each list, so agreement wins. It covers both failure modes for tens of milliseconds of extra latency.
+
+[PAUSE 2s]
+
+Question five. What does a cross-encoder reranker do, and why not use it for everything?
+
+[PAUSE 6s]
+
+Strong answer: a cross-encoder reads the query and a candidate together and scores relevance far more accurately than a bi-encoder, which embeds them separately. But it costs a model pass per candidate and nothing can be precomputed, so you apply it only to the top fifty to a hundred fused candidates and keep the top handful. It's usually the biggest single quality gain available without re-indexing.
+
+[PAUSE 2s]
+
+Question six. Explain H N S W and its tuning dials.
+
+[PAUSE 6s]
+
+Strong answer: a multi-layer proximity graph — every vector in the bottom layer, a shrinking random subset in each layer above, each node linked to its nearest neighbours. Search descends greedily from the sparse top to the dense bottom, then explores locally. M and ef construction trade memory and build time for graph quality; ef search is the query-time dial between recall and latency.
+
+[PAUSE 2s]
+
+Question seven. How would you cut vector index memory by ten times or more?
+
+[PAUSE 6s]
+
+Strong answer: quantize. Scalar quantization gives two to four times, binary gives thirty-two times, product quantization can go further; then win recall back by oversampling and rescoring the shortlist with full-precision vectors kept on disk. Matryoshka truncation of the embeddings helps too. Always validate recall against exact search.
+
+[PAUSE 2s]
+
+Question eight. Filtered vector search returns only two results for a small tenant. Why?
+
+[PAUSE 6s]
+
+Strong answer: post-filtering. The approximate search fetched a top-k shortlist first, and the selective filter then removed almost everything in it. Fix it with filter-aware traversal or iterative scans, exact search over the filtered subset when it's small, or partitioning by tenant — and test recall with real filters.
+
+[PAUSE 2s]
+
+Question nine. What is HyDE, and when does it hurt?
+
+[PAUSE 6s]
+
+Strong answer: hypothetical document embeddings — the model drafts a fake answer, and you search with the embedding of that fake answer, because answer-shaped keys land near answer-shaped chunks. The fake text is only a search key, never shown as evidence. It hurts on exact-match lookups like part numbers, and in domains the model doesn't know, where the fake answer drifts to the wrong topic — so fuse it with the original query rather than replacing it.
+
+[PAUSE 2s]
+
+Question ten. When is Graph R A G worth its cost?
+
+[PAUSE 6s]
+
+Strong answer: when questions are about the whole collection — themes and trends — or need multi-hop relationships, which no single chunk answers. It pays for that with model-based entity and relationship extraction over the entire corpus, community detection, and summaries at every level, then answers global questions by map-reduce over those summaries. For "find the passage about X" questions, plain vector search is enough; lighter variants like LazyGraphRAG defer the cost to query time.
+
+[PAUSE 2s]
+
+Question eleven. What does agentic R A G add, and what's the main production risk?
+
+[PAUSE 6s]
+
+Strong answer: the model decides whether to retrieve, grades what came back, rewrites the query and retries when results are poor, and can route to other tools like sequel. The risk is multiplied latency and cost, and unbounded loops on questions the corpus simply can't answer. Cap retries at two or three and give an honest "not found" answer when the cap is hit.
+
+[PAUSE 2s]
+
+Question twelve. Name the core RAGAS metrics and which part of the system each one tests.
+
+[PAUSE 6s]
+
+Strong answer: context precision and context recall test retrieval — are the retrieved chunks relevant and ranked well, and do they cover what the reference answer needs. Faithfulness tests generation against context — the share of answer claims supported by the retrieved chunks. Answer relevance tests whether the answer addresses the question; factual correctness compares it with a reference. Context recall and correctness need references; faithfulness and relevance don't, so they can run on live traffic.
+
+[PAUSE 2s]
+
+Question thirteen. Faithfulness is at zero point nine five, but users are unhappy. What's going on?
+
+[PAUSE 6s]
+
+Strong answer: faithfulness only checks the answer against the retrieved context. If retrieval returned stale or wrong documents, or nothing useful, the model can be perfectly faithful to bad evidence, or faithfully refuse. Check context recall and recall at k, and look for a retrieval regression like a broken metadata filter or a stale index.
+
+[PAUSE 2s]
+
+Question fourteen. Can you trust an L L M as a judge?
+
+[PAUSE 6s]
+
+Strong answer: only after you've evaluated the judge. Judges show position bias, verbosity bias, and self-preference toward their own model family. Label a hundred to two hundred items by hand, measure agreement, use a different model family from the generator, randomise order in pairwise tests, and re-calibrate whenever the judge model changes.
+
+[PAUSE 2s]
+
+Question fifteen. How do you enforce document permissions in R A G, and what's the classic mistake?
+
+[PAUSE 6s]
+
+Strong answer: enforce them as a filter inside retrieval, based on the caller's identity and group memberships, using access metadata synced fresh from the source system. The classic mistakes are filtering after retrieval in application code, or telling the model in the prompt not to reveal things — neither is access control. And remember that stale access metadata in the index means revoked users keep access until the next sync.
+
+[PAUSE 2s]
+
+That's the drill. If any answer felt shaky, go back to that episode's companion note — the questions map onto the track in order: one and two, embeddings; three, chunking; four and five, retrieval; six to eight, vector internals; nine to eleven, advanced R A G; twelve to fourteen, evaluation; fifteen, failure modes. Run it again in a few days and listen for the pauses where you hesitated. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="07-failure-modes.html">← Production RAG Failure Modes & Fixes</a><span></span></div></main></div></body></html>

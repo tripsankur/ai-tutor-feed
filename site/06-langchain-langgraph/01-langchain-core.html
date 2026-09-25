@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangChain Core: LCEL, Runnables, Chains vs Agents — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk" open><summary>Track 6 · LangChain / LangGraph</summary><a class="active" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 6 · LangChain / LangGraph · Episode 1</div>
+<h1 class="lesson">LangChain Core: LCEL, Runnables, Chains vs Agents</h1>
+<div class="meta">18 min listen · The foundation of the LangChain stack in its version-one shape: one universal Runnable interface, the pipe that composes it into fixed chains, and the create-agent loop with middleware that replaced a decade's worth of legacy agent classes.</div>
+<audio controls preload="metadata" src="../../audio/06-langchain-langgraph/s6e01-langchain-core.mp3"></audio>
+<button class="btn complete" data-ep="06-langchain-langgraph/01-langchain-core" onclick="toggleDone('06-langchain-langgraph/01-langchain-core')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (langchain 1.4.2, langchain-core 1.6.5, langgraph 1.2.12 on PyPI)</p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Modern LangChain (v1.x) is a small agent-building surface — <code>create_agent</code> + middleware — sitting on one universal <strong>Runnable</strong> interface; the chain-vs-agent decision is about <strong>who decides the control flow</strong>: you at design time (chain) or the model at run time (agent).</p>
+<h2 id="track-6-map">Track 6 map</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Episode</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>LangChain Core (this)</td>
+<td>Runnables, LCEL, chains vs agents, <code>create_agent</code>, middleware</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LangGraph State</td>
+<td>StateGraph, nodes, edges, reducers, super-steps, checkpoints</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LangGraph Patterns</td>
+<td>Subgraphs, <code>interrupt()</code> / <code>Command(resume=...)</code>, streaming</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LangSmith</td>
+<td>Tracing, datasets, evals</td>
+</tr>
+<tr>
+<td>5</td>
+<td>When NOT LangChain</td>
+<td>Tradeoffs and alternatives</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Drill</td>
+<td>Rapid-fire Q&amp;A</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-mental-image-the-pipe-wall">The mental image: the pipe wall</h2>
+<ul>
+<li><strong>Standard fitting on every pipe section</strong> = the Runnable interface (<code>invoke</code> / <code>batch</code> / <code>stream</code> + async, shared <code>RunnableConfig</code>).</li>
+<li><strong>Left: straight pipe</strong> = a chain (LCEL <code>RunnableSequence</code>): tee (<code>RunnableParallel</code>: retriever + <code>RunnablePassthrough</code>) → prompt → model → parser.</li>
+<li><strong>Right: roundabout</strong> = an agent: model in the center, tools hanging below as taps, loop until no tool calls.</li>
+<li><strong>Collars clamped on the roundabout</strong> = middleware hooks.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph Chain["Chain: fixed path (you decide)"]
+        Q["question"] --> T{"RunnableParallel"}
+        T --> R["retriever"]
+        T --> P0["passthrough"]
+        R --> PR["prompt template"]
+        P0 --> PR
+        PR --> M1["chat model"]
+        M1 --> OP["output parser"]
+    end
+    subgraph Agent["Agent: loop (model decides)"]
+        IN["user message"] --> MN["model node"]
+        MN -->|"tool calls"| TN["tools node"]
+        TN -->|"tool messages"| MN
+        MN -->|"no tool calls"| OUT["final answer"]
+    end
+</pre>
+
+<pre class="mermaid">flowchart TB
+    BA["before_agent"] --> BM["before_model"]
+    BM --> WM["wrap_model_call (around LLM)"]
+    WM --> AM["after_model"]
+    AM -->|"tool calls"| WT["wrap_tool_call (around each tool)"]
+    WT --> BM
+    AM -->|"done"| AA["after_agent"]
+</pre>
+
+<h2 id="code">Code</h2>
+<p>LCEL chain (still in <code>langchain-core</code> 1.x):</p>
+<pre><code class="language-python">from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableParallel, RunnablePassthrough
+from langchain.chat_models import init_chat_model
+
+prompt = ChatPromptTemplate.from_messages([
+    (&quot;system&quot;, &quot;Answer using only this context:\n{context}&quot;),
+    (&quot;human&quot;, &quot;{question}&quot;),
+])
+model = init_chat_model(&quot;anthropic:claude-sonnet-4-6&quot;)
+
+chain = (
+    RunnableParallel(context=retriever, question=RunnablePassthrough())
+    | prompt
+    | model
+    | StrOutputParser()
+)
+chain.invoke(&quot;What is our refund window?&quot;)
+for chunk in chain.stream(&quot;What is our refund window?&quot;):
+    print(chunk, end=&quot;&quot;)
+chain.batch([&quot;q1&quot;, &quot;q2&quot;], config={&quot;max_concurrency&quot;: 4})
+</code></pre>
+<p>Agent with middleware (LangChain v1):</p>
+<pre><code class="language-python">from langchain.agents import create_agent
+from langchain.agents.middleware import (
+    SummarizationMiddleware, HumanInTheLoopMiddleware,
+    ModelCallLimitMiddleware, ToolCallLimitMiddleware, PIIMiddleware,
+)
+
+agent = create_agent(
+    model=&quot;claude-sonnet-4-6&quot;,
+    tools=[search_kb, send_email],
+    system_prompt=&quot;You are a support assistant.&quot;,
+    middleware=[
+        PIIMiddleware(&quot;email&quot;, strategy=&quot;redact&quot;, apply_to_input=True),
+        SummarizationMiddleware(model=&quot;claude-sonnet-4-6&quot;, trigger=(&quot;tokens&quot;, 4000), keep=(&quot;messages&quot;, 20)),
+        HumanInTheLoopMiddleware(interrupt_on={&quot;send_email&quot;: {&quot;allowed_decisions&quot;: [&quot;approve&quot;, &quot;edit&quot;, &quot;reject&quot;]}}),
+        ModelCallLimitMiddleware(run_limit=10),
+        ToolCallLimitMiddleware(run_limit=15),
+    ],
+)
+agent.invoke({&quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Where is my order?&quot;}]},
+             config={&quot;configurable&quot;: {&quot;thread_id&quot;: &quot;t-123&quot;}})
+</code></pre>
+<p>(Check middleware constructor argument names against the built-in middleware reference for your installed version.)</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Runnable</td>
+<td>Universal interface: <code>invoke</code>, <code>batch</code>, <code>stream</code>, <code>ainvoke</code>/<code>abatch</code>/<code>astream</code> + <code>RunnableConfig</code></td>
+<td>"The standard fitting — everything composes"</td>
+</tr>
+<tr>
+<td>RunnableConfig</td>
+<td>Callbacks, tags, metadata, <code>max_concurrency</code>, <code>recursion_limit</code>, <code>configurable</code></td>
+<td>One tracing callback sees the whole pipeline</td>
+</tr>
+<tr>
+<td>LCEL</td>
+<td>LangChain Expression Language — <code>\|</code> builds a <code>RunnableSequence</code></td>
+<td>Declare once, get stream/batch/async for free</td>
+</tr>
+<tr>
+<td>RunnableParallel / Passthrough</td>
+<td>Fan-out to branches, return dict; pass input unchanged</td>
+<td>The classic RAG "context + question" tee</td>
+</tr>
+<tr>
+<td>Chain</td>
+<td>Fixed, design-time control flow</td>
+<td>One model call, predictable cost/latency</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>"A model calling tools in a loop until the task is complete"</td>
+<td>Model decides the path at run time</td>
+</tr>
+<tr>
+<td><code>create_agent</code></td>
+<td>v1 agent factory; returns a compiled LangGraph graph</td>
+<td>Replaced <code>langgraph.prebuilt.create_react_agent</code></td>
+</tr>
+<tr>
+<td>Middleware</td>
+<td>Hooks: <code>before_agent</code>, <code>before_model</code>, <code>wrap_model_call</code>, <code>wrap_tool_call</code>, <code>after_model</code>, <code>after_agent</code></td>
+<td>One loop, every concern is a composable collar</td>
+</tr>
+<tr>
+<td>Built-in middleware</td>
+<td>Summarization, PII, HITL, model/tool call limits, model retry/fallback, tool retry, context editing, to-do list, LLM tool selector, …</td>
+<td>Don't fork the loop — clamp a collar</td>
+</tr>
+<tr>
+<td>Standard content blocks</td>
+<td><code>message.content_blocks</code> — provider-agnostic reasoning, citations, tool calls</td>
+<td>Less lock-in to one provider's message shape</td>
+</tr>
+<tr>
+<td>langchain-classic</td>
+<td>Legacy chains, <code>AgentExecutor</code>-era code, old memory, retrievers like MultiQuery, indexing API, hub</td>
+<td>"Which era is this codebase from?"</td>
+</tr>
+<tr>
+<td><code>langchain.mcp</code></td>
+<td>MCP adapter built into LangChain (v1.4, beta)</td>
+<td>Replaces <code>langchain-mcp-adapters</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Agent token cost is ~quadratic in loops</strong> — every loop re-sends the whole conversation + tool schemas. E.g. 3k-token prompt+schemas, +2k per tool result: 10th call reads &gt;20k tokens; 10 calls total &gt;100k. Mitigate: summarization middleware, call limits, prompt caching.</li>
+<li><strong>Runaway loops</strong> — empty tool results cause retries; Python LangGraph default <code>recursion_limit</code> is now <strong>10007</strong> steps in 1.2.x (was 25, later 1000), so it's not a practical cost cap. Always set <code>ModelCallLimitMiddleware</code> / <code>ToolCallLimitMiddleware</code> and make tools return explicit "no results, do not retry" messages.</li>
+<li><strong>Don't build an agent for a fixed flow</strong> — if you can draw the flowchart before seeing the input, use a chain/workflow.</li>
+<li><strong>Abstraction weight</strong> — wrappers can lag provider features; content blocks + tool <code>extras</code> help; always inspect the actual request via tracing.</li>
+<li><strong>Legacy code</strong> — pre-v1 tutorials use classes now in <code>langchain-classic</code>.</li>
+</ol>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. What is a Runnable and why does it matter?</strong>
+The shared interface (invoke/batch/stream + async + config) implemented by prompts, models, parsers, retrievers, tools and compiled graphs. Because everything shares it, components compose with <code>|</code>, and the composite automatically supports streaming, batching, async and callbacks/tracing.</p>
+<p><strong>Q2. Chain vs agent — how do you choose?</strong>
+Who decides control flow. Chain: fixed at design time, one model call, predictable cost. Agent: model picks tools in a loop at run time — flexible but variable latency, ~quadratic token growth, runaway-loop risk. Default to a chain/workflow; escalate to an agent only when the path depends on input or tool results, and cap it.</p>
+<p><strong>Q3. What changed in LangChain v1?</strong>
+<code>create_agent</code> became the standard agent (replacing <code>create_react_agent</code> and legacy agent classes), middleware became the customization mechanism, standard content blocks unified message content, the namespace was slimmed and legacy moved to <code>langchain-classic</code>. Stability promise: no breaking changes until 2.0. <code>create_agent</code> runs on LangGraph, so persistence/streaming/HITL/time travel come built in.</p>
+<p><strong>Q4. How would you stop an agent from running up the bill?</strong>
+Call-limit middleware (model and tool), summarization or context editing to bound context size, prompt caching, a cheap-model/expensive-model router in <code>wrap_model_call</code>, tools that return explicit terminal messages, and tracing to spot outlier runs. Don't rely on the recursion limit (default 10007 in Python LangGraph 1.2.x).</p>
+<p><strong>Q5. Where does middleware run, and give three uses?</strong>
+Six hooks around the loop: before/after the whole agent, before/after each model call, and wrapping each model call and each tool call. Uses: summarize long history before the model; route/retry/fallback models in <code>wrap_model_call</code>; approve sensitive tool calls (HITL); redact PII; turn tool exceptions into recoverable messages.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>What's new in LangChain v1: https://docs.langchain.com/oss/python/releases/langchain-v1</li>
+<li>LangChain v1 migration guide: https://docs.langchain.com/oss/python/migrate/langchain-v1</li>
+<li>Agents (<code>create_agent</code>): https://docs.langchain.com/oss/python/langchain/agents</li>
+<li>Built-in middleware: https://docs.langchain.com/oss/python/langchain/middleware/built-in</li>
+<li>Python changelog (v1.1–v1.4, MCP in v1.4): https://docs.langchain.com/oss/python/releases/changelog</li>
+<li>Philosophy / history: https://docs.langchain.com/oss/python/langchain/philosophy</li>
+<li>RunnablePassthrough reference: https://reference.langchain.com/python/langchain-core/runnables/passthrough/RunnablePassthrough</li>
+<li>PyPI langchain: https://pypi.org/project/langchain/ · langchain-core: https://pypi.org/project/langchain-core/</li>
+<li>Docs source (verified from): https://github.com/langchain-ai/docs</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track six, episode one: LangChain core — the expression language, Runnables, and the difference between a chain and an agent. This episode opens a new track, so let me frame it first. Track six is about the most widely used open-source toolkit for building L L M applications: LangChain for the building blocks, LangGraph for the runtime that orchestrates them, and LangSmith for tracing and evaluation. Over six episodes we'll go from the core abstractions today, to LangGraph's state machines and checkpoints, to production patterns like human approval and streaming, to LangSmith, and then — the episode that separates a senior answer from a staff answer — when not to use any of it. We finish with a rapid-fire drill.
+
+## The cold open
+
+Here's a scenario that plays out in a lot of interviews. You're asked to design a support assistant. You sketch it out: take the question, fetch some documents, stuff them into a prompt, call a model, return the answer. The interviewer nods, then asks: "Is that a chain or an agent? And why?" A surprising number of people freeze here, because they've used LangChain for a year but never had to say out loud what the difference actually is. The honest answer is about who decides the path. In a chain, you decide the path when you write the code. In an agent, the model decides the path at run time, one step at a time. Everything in this episode hangs off that one distinction, and by the end you'll be able to draw both on a whiteboard and say exactly what each one costs.
+
+## Why it matters
+
+LangChain has been through a lot of shapes. It launched in late twenty twenty-two, a month before ChatGPT, as a bundle of model wrappers plus "chains" — predetermined sequences of steps. Then came a zoo of agent classes, memory classes, and chain subclasses, each with its own quirks. In October twenty twenty-five, LangChain and LangGraph both reached version one point zero, with a promise of no breaking changes until version two. As of this recording, the LangChain package is on the one point four line, and the core package underneath it is on one point six.
+
+Version one was a deliberate diet. The main package now focuses on building agents: one function called create agent, a standard message format, tools, and model initialization. The older material — the classic chain classes, the old agent executor, the conversation-memory classes, retrievers like the multi-query retriever, the indexing A P I — moved out into a separate package called LangChain Classic, kept for backward compatibility. And the old prebuilt react agent from LangGraph was deprecated in favor of create agent. So if an interviewer asks what LangChain looks like today, the answer is not "a big library of chains." It's a small agent-building surface, sitting on a shared core of Runnables, with LangGraph as the engine underneath.
+
+Why should a data engineer care? Because this is the same pattern you already know from data pipelines. A fixed pipeline where you decide every step, versus a dynamic orchestrator that decides at run time. You've had that argument about batch jobs versus event-driven workflows. This is the same argument, with a model in the loop.
+
+[PAUSE 1s]
+
+## The mental image: the pipe wall
+
+Let's build one picture and keep it for the whole episode.
+
+In your mind's eye, picture a long wall in front of you, and running across it, left to right, a length of pipe. Every section of that pipe has the exact same fitting on each end — same thread, same diameter — so any section can screw into any other. That standard fitting is the most important idea in this episode. It's the Runnable interface.
+
+Now furnish the pipe. On the far left, the first section is a prompt template: text comes in, a formatted prompt comes out. Screwed onto its right end is the second section, a chat model: a prompt goes in, a message comes out. Screwed onto that is the third section on the right, an output parser: a message goes in, clean structured data comes out. Left, middle, right. Prompt, model, parser. Water flows one way, left to right, and every joint is the same standard fitting.
+
+That straight run of pipe is a chain. You laid it on the wall before any water ever flowed. The path is fixed.
+
+Now look to the far right end of the wall. Instead of the pipe ending, it curls upward and back on itself, forming a loop — a roundabout. At the center of that loop sits the model. Hanging below the loop, like taps along the bottom of a circle, are tools: a search tool, a database lookup, an email sender. Water flows into the roundabout, reaches the model, and the model decides: go down one of the tool taps, or exit the loop. If it goes down a tap, the tool's result flows back up into the loop and reaches the model again. Round and round until the model decides it's done. That loop is an agent.
+
+Keep both halves of the wall in view: the straight pipe on the left, the roundabout on the right. We'll walk water through each one.
+
+[PAUSE 1s]
+
+## Under the hood: the standard fitting
+
+Start with the fitting, because it's why any of this composes. A Runnable is any component that exposes the same small set of methods. Invoke, which takes one input and returns one output. Batch, which takes a list of inputs and runs them, in parallel where possible. Stream, which yields output in pieces as it's produced. And async versions of all three. Prompt templates are Runnables. Chat models are Runnables. Output parsers, retrievers, and plain Python functions wrapped in a decorator are all Runnables. So is a compiled LangGraph graph — including the agent that create agent returns. That's the quiet superpower: the roundabout on the right of the wall is itself a section of pipe with the same fitting. You can screw a whole agent into a bigger pipeline.
+
+The standard fitting also carries a config object alongside the water. Think of it as a tag riding along the outside of the pipe: callbacks, tags, metadata, a maximum concurrency setting for batch calls, a recursion limit. Because every section accepts the same config, one tracing callback attached at the left end sees every section it passes through. That's how tools like LangSmith can draw you a trace tree of a whole pipeline without you instrumenting each piece.
+
+Now the expression language — L C E L, the LangChain Expression Language. It's the plumber's shorthand for connecting sections. In Python it's literally the pipe character, the vertical bar: prompt, bar, model, bar, parser. That expression builds what's called a Runnable Sequence — the straight run on the left of the wall. Two more shapes matter. A Runnable Parallel is a tee fitting: the water splits, flows through several sections side by side, and the results come back together as a dictionary. Picture the pipe splitting into two branches just before the prompt section — one branch goes to a retriever that fetches documents, the other passes the original question straight through untouched, which is what a Runnable Passthrough does. Both branches rejoin and flow into the prompt together. That's the classic retrieval-augmented pattern, drawn in pipe. And a branch fitting lets you route water down one of several paths based on a condition you wrote.
+
+Why did L C E L exist at all? Because the original chain classes each had their own A P I, most didn't stream natively, and they didn't compose cleanly. Once everything shares the fitting, you get streaming, batching, and async for free on the whole assembly — declare the pipe once, and it can run in any of those modes.
+
+Let's walk water through the straight pipe. A user question enters on the far left. It hits the tee: one branch goes to the retriever, which calls a vector index and returns, say, four document chunks; the other branch carries the question through untouched. They rejoin as a dictionary with two keys — context and question — and flow into the prompt template, which formats them into a list of messages. That flows into the chat model, which calls a provider's A P I and returns an A I message. And if you called stream instead of invoke, tokens start trickling out of the model section immediately, and a streaming-aware parser passes them along as they arrive. The parser on the right turns the message into a string or a structured object. Exactly one model call. The same number of steps every time. Predictable latency — roughly one retrieval plus one generation — and a predictable bill.
+
+[PAUSE 1s]
+
+## Under the hood: the roundabout
+
+Now move your eyes to the right end of the wall — the roundabout. In version one, you build it with one function call: create agent. You hand it a model, a list of tools, and a system prompt. What comes back is a compiled LangGraph graph — two main stations, a model node and a tools node, with the loop between them.
+
+Walk the water. A user message enters the roundabout and reaches the model at the center. The model sees the conversation plus a description of every tool hanging below the loop — names, descriptions, argument schemas. It responds either with a final answer, or with one or more tool calls: structured requests saying "call the search tool with this query." If there are tool calls, the water drops down those taps. The tools node executes them — possibly several in parallel — and each result comes back up as a tool message appended to the conversation. The water flows back to the model, which now sees its own request plus the result, and decides again. Loop until the model responds with no tool calls. That's the entire agent. The documentation's own definition is exactly that: a model calling tools in a loop until the task is complete.
+
+Here is the contrast with the straight pipe, stated precisely. On the left, you know before running that there will be exactly one model call. On the right, you don't know whether there'll be one model call or fifteen. The model chooses. That's the power — it handles questions you didn't anticipate — and it's the cost, because latency, token spend, and failure modes all become variable.
+
+Two more things version one added to the roundabout. First, structured output is generated inside the main loop rather than needing an extra model call at the end — you pass a response format, and the agent's final answer comes back as a validated object. Second, and this is the headline: middleware.
+
+## Middleware: the collars on the loop
+
+Picture clamping collars onto the roundabout at specific points. One collar sits just before the water enters the loop at all. One sits just before the model at the center. One wraps around the model itself, so water passes through it on the way in and on the way out. One wraps around each tool tap. One sits just after the model responds. And one sits at the exit, after the loop finishes. Those are the six middleware hooks: before agent, before model, wrap model call, wrap tool call, after model, and after agent.
+
+Each collar can inspect the water and change it. A before-model collar can trim or summarize a conversation that's getting too long. A wrap-model collar can swap which model gets called — send easy questions to a small cheap model and hard ones to a large one — or retry on failure, or fall back to a different provider. A wrap-tool collar can catch a tool error and turn it into a message the model can recover from, rather than crashing the run. An after-model collar can enforce a guardrail on what the model said before it goes anywhere.
+
+LangChain ships a set of prebuilt collars. Summarization, which condenses history when it crosses a token threshold. P I I detection, which redacts or blocks things like email addresses before they reach the model. Human in the loop, which pauses before a sensitive tool call — say, send email — and waits for a person to approve, edit, reject, or respond. Model call limits and tool call limits, which cap how many times the loop can go round. Model retry and model fallback. Tool retry. Context editing, a to-do list for planning, and an L L M-based tool selector that narrows a big tool list down to the relevant few before each model call. And in the most recent release, M C P support moved into LangChain itself, so tools from an M C P server can hang below the loop just like native tools.
+
+Why is middleware the defining feature? Because before version one, every variation of agent behavior — summarizing memory, approval gates, dynamic tool selection — tended to become its own agent class or its own fork of the loop. Middleware says: there is one loop, and every concern is a collar you clamp onto it. Collars compose. You can stack five of them, and each one handles one concern.
+
+And because the roundabout is a LangGraph graph underneath, it inherits LangGraph's runtime features without you learning LangGraph: persistence with checkpoints, token streaming, pausing for humans, and time travel. We'll open all of those up in the next two episodes.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Now the sharp edges, with numbers.
+
+First, the cost shape of the roundabout. Every time water goes around the loop, the model re-reads the entire conversation so far — the system prompt, the tool descriptions, every prior tool call and every prior result. So each call gets bigger than the last, and the total input tokens across the run grow roughly with the square of the number of loops. Suppose your system prompt plus tool schemas is three thousand tokens and each tool result adds two thousand. By the tenth trip round, one model call is reading over twenty thousand tokens, and the ten calls together have read well over a hundred thousand. A question that costs a fraction of a cent through the straight pipe can cost ten or twenty times that through the roundabout. That's why the summarization collar and the call-limit collars exist. And prompt caching, where your provider supports it, matters enormously here, because the front of that conversation is identical on every trip.
+
+Second, a war story shape you'll recognize. A team at a large enterprise shipped an internal agent with a search tool that sometimes returned an empty result. The model, seeing nothing, rephrased and searched again. And again. With no call limit set, individual runs looped dozens of times. And the built-in safety net is looser than many people assume: in Python, LangGraph's default recursion limit — the maximum number of steps in one run — used to be twenty-five, and in current versions it's just over ten thousand. Nobody noticed until the monthly model bill arrived at several times the forecast, driven by a small fraction of runaway conversations. The fix was three lines: a tool call limit, a model call limit, and a tool wrapper that returns an explicit "no results found, do not retry" message instead of an empty string. The lesson: never ship a roundabout without a cap on the number of laps.
+
+Third, the classic over-engineering mistake: building a roundabout when you needed a straight pipe. If your task always goes retrieve, then generate, then format, an agent adds latency — each extra model call is often one to several seconds — adds variance, and adds cost, for zero benefit. The model is being asked to decide a path that you already knew. A useful heuristic: if you can draw the flowchart before seeing the input, build a chain or a fixed workflow. If the path genuinely depends on what the input says or what the tools return, build an agent.
+
+Fourth, abstraction weight. LangChain wraps provider A P Is, and a wrapper can lag behind a provider's newest feature or hide what's actually being sent over the wire. Version one addressed a lot of this — standard content blocks give you one representation for reasoning traces, citations, and tool calls across providers, and a tool's extras field lets you pass provider-specific settings through. But the habit to keep is: turn on tracing, and look at the actual request. We'll come back to this in episode five, which is all about when not to use LangChain at all.
+
+Fifth, the migration trap. A lot of tutorials, blog posts, and older code still use the legacy classes — the old agent executor, the old chain subclasses, conversation-buffer memory. In a version-one project those imports come from LangChain Classic, or they fail. If you inherit a codebase, the first question is which era it was written in.
+
+[PAUSE 1s]
+
+## The interview angle
+
+Three ways this shows up.
+
+When they ask, "What is a Runnable, and why does LangChain use it?" — a strong answer sounds like: a Runnable is the universal interface every component implements — invoke, batch, stream, and their async versions, plus a shared config for callbacks and limits. Because prompts, models, parsers, retrievers, and even compiled graphs all share it, they compose with the pipe operator, and the composed pipeline automatically supports streaming, batching, async, and tracing.
+
+When they ask, "Chain or agent — how do you decide?" — a strong answer sounds like: it comes down to who decides the control flow. A chain has a fixed path decided at design time — one model call, predictable latency and cost. An agent lets the model choose tools in a loop at run time — flexible, but variable latency, cost that grows roughly with the square of the number of loops, and new failure modes like runaway loops. I default to the fixed pipeline and escalate to an agent only when the path genuinely depends on the input or on tool results — and when I do, I cap it with call limits.
+
+When they ask, "What changed in LangChain version one?" — a strong answer sounds like: it narrowed to an agent-building core. Create agent replaced the zoo of agent classes and LangGraph's prebuilt react agent; middleware — six hooks around the loop — became the way to customize it, with prebuilt ones for summarization, P I I redaction, human approval, retries, and call limits. Standard content blocks unified message content across providers, and legacy chains and memory moved to LangChain Classic. And create agent runs on LangGraph, so it gets persistence, streaming, and human-in-the-loop for free.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the wall one last time. Across it runs a pipe, and every section has the same standard fitting — that's the Runnable interface: invoke, batch, stream, async, and a config tag riding along. On the left, a straight run: a tee that splits the question to a retriever and a passthrough, then prompt, then model, then parser. That's a chain, written in the expression language with the pipe character — one path, one model call, predictable cost. On the right, the pipe curls into a roundabout: the model at the center, tools hanging below like taps, water circling until the model stops calling tools. That's an agent, built in version one with create agent, running on LangGraph. Clamped around the roundabout, six collars — before agent, before model, wrap model, wrap tool, after model, after agent — that's middleware, where summarization, redaction, approvals, retries, and lap limits live. Straight pipe when you know the path. Roundabout when the input decides. Always a cap on the laps.
+
+Next episode, we take the roundabout off the wall and look at the engine inside it: LangGraph — state, nodes, edges, and checkpoints. See you in the next episode.</div></details>
+<div class="navrow"><span></span><a class="btn" href="02-langgraph-state.html">LangGraph: State Machines, Nodes, Edges, Checkpoints →</a></div></main></div></body></html>

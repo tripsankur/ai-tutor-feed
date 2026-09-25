@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk" open><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="active" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 3 · GenAI System Design · Episode 6</div>
+<h1 class="lesson">Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</h1>
+<div class="meta">17 min listen · What actually limits how many users one GPU can serve: KV-cache memory arithmetic, paged blocks and prefix sharing, continuous batching and chunked prefill, and the queues, token budgets, and fairness rules that keep one noisy tenant from ruining everyone else's latency.</div>
+<audio controls preload="metadata" src="../../audio/03-genai-system-design/s3e06-scaling-serving.mp3"></audio>
+<button class="btn complete" data-ep="03-genai-system-design/06-scaling-serving" onclick="toggleDone('03-genai-system-design/06-scaling-serving')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LLM serving capacity is bounded by KV-cache memory, not compute — so paged KV blocks, prefix sharing, continuous batching and chunked prefill decide how many users a GPU serves, while token-denominated budgets, latency-class lanes, fair queuing and queue-driven autoscaling decide whether a multi-tenant fleet stays fair.</p>
+<h2 id="the-mental-image-the-workshop-floor-left-right">The mental image: the workshop floor (left → right)</h2>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Component</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Far left</td>
+<td>Front door + gateway desk</td>
+<td>AuthN, tenant ID, per-tenant <strong>token</strong> budget</td>
+</tr>
+<tr>
+<td>Left-center</td>
+<td>Parallel waiting lanes</td>
+<td>Queues: interactive vs batch; weighted fair queuing across tenants</td>
+</tr>
+<tr>
+<td>Center</td>
+<td>Dispatcher</td>
+<td>Continuous batching, chunked prefill, cache-aware routing, P/D disaggregation</td>
+</tr>
+<tr>
+<td>Right</td>
+<td>Row of workbenches</td>
+<td>Model replicas; <strong>left third = weights (bolted)</strong>, <strong>right two-thirds = wall of small drawers (paged KV blocks)</strong></td>
+</tr>
+<tr>
+<td>Far right</td>
+<td>Loading dock</td>
+<td>Autoscaler — new replicas arrive slowly (weights to load)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart LR
+    REQ["Requests"] --> GW["Gateway<br/>tenant ID, token bucket,<br/>admission control (429 + retry-after)"]
+    GW --> FAST["Fast lane<br/>interactive"]
+    GW --> SLOW["Slow lane<br/>batch"]
+    FAST --> D{"Dispatcher / router<br/>WFQ across tenants,<br/>KV-cache-aware routing"}
+    SLOW --> D
+    D --> R1["Replica 1<br/>weights | paged KV blocks"]
+    D --> R2["Replica 2<br/>weights | paged KV blocks"]
+    D --> R3["Replica N"]
+    MET["Queue wait, queue depth,<br/>KV cache usage"] --> AS["Autoscaler<br/>warm floor, weights cached near nodes"]
+    AS -.->|"minutes to add"| R3
+</pre>
+
+<h2 id="prefill-vs-decode">Prefill vs decode</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prefill</th>
+<th>Decode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work</td>
+<td>All prompt tokens in parallel</td>
+<td>One token per step</td>
+</tr>
+<tr>
+<td>Bound by</td>
+<td>Compute</td>
+<td>Memory bandwidth (re-read weights each step)</td>
+</tr>
+<tr>
+<td>Drives</td>
+<td>Time to first token (TTFT)</td>
+<td>Time per output token / inter-token latency</td>
+</tr>
+<tr>
+<td>Batching</td>
+<td>Already parallel</td>
+<td>Amortizes weight reads across users → near-free extra users until KV memory runs out</td>
+</tr>
+</tbody>
+</table>
+<p>Rule of thumb: 8B model FP16 ≈ 16 GB weights; at ~3 TB/s HBM, batch-1 decode ceiling ≈ a couple hundred tokens/s.</p>
+<h2 id="kv-cache-arithmetic-memorize">KV cache arithmetic (memorize)</h2>
+<pre><code>bytes_per_token = 2 (K,V) × n_layers × n_kv_heads × head_dim × bytes_per_elem
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Model (GQA, FP16)</th>
+<th>Layers</th>
+<th>KV heads</th>
+<th>head_dim</th>
+<th>Per token</th>
+<th>8k ctx</th>
+<th>128k ctx</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~8B (Llama-3.1-8B shape)</td>
+<td>32</td>
+<td>8</td>
+<td>128</td>
+<td>128 KiB</td>
+<td>1 GiB</td>
+<td>16 GiB</td>
+</tr>
+<tr>
+<td>~70B (Llama-3.1-70B shape)</td>
+<td>80</td>
+<td>8</td>
+<td>128</td>
+<td>320 KiB</td>
+<td>2.5 GiB</td>
+<td>40 GiB</td>
+</tr>
+</tbody>
+</table>
+<p>Capacity example — 80 GB GPU, 8B model: at 0.9: <code>0.9 × 80 = 72 GB</code> usable → −16 GB weights → −few GB activations/CUDA graphs → ~50 GB KV → ~400k tokens → ~200 concurrent 2k-token or ~50 concurrent 8k-token sequences. FP8 KV cache ≈ doubles it.</p>
+<pre><code class="language-python">def kv_bytes_per_token(layers, kv_heads, head_dim, bytes_per=2):
+    return 2 * layers * kv_heads * head_dim * bytes_per
+
+per_tok = kv_bytes_per_token(32, 8, 128)          # 131072 = 128 KiB
+kv_budget = 50 * 1024**3
+print(kv_budget // per_tok)                        # ~409,600 tokens
+</code></pre>
+<h2 id="vllm-style-serving-mechanics">vLLM-style serving mechanics</h2>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What it does</th>
+<th>Number to quote</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paged KV cache (PagedAttention paper)</td>
+<td>Fixed-size blocks (typically 16 tokens), block table maps logical→physical</td>
+<td>Waste 60–80% → <strong>&lt;4%</strong>; <strong>2–4×</strong> throughput vs prior SOTA at same latency</td>
+</tr>
+<tr>
+<td>Automatic prefix caching</td>
+<td>Blocks identified by chain hash (parent hash + tokens + extra keys); identical prefixes share blocks, skip prefill</td>
+<td>Default-on in current vLLM; SGLang equivalent = RadixAttention (prefix tree)</td>
+</tr>
+<tr>
+<td>Continuous batching (Orca, OSDI '22)</td>
+<td>Iteration-level scheduling: join/leave batch every decode step</td>
+<td>Anyscale benchmark: up to <strong>23×</strong> vs static batching</td>
+</tr>
+<tr>
+<td>Chunked prefill</td>
+<td>Split long prompts, interleave with decode</td>
+<td>Protects inter-token latency</td>
+</tr>
+<tr>
+<td>Preemption</td>
+<td>Out of KV blocks → evict + recompute or swap to CPU</td>
+<td>Real overload signal</td>
+</tr>
+<tr>
+<td>P/D disaggregation</td>
+<td>Separate prefill and decode pools; ship KV between them</td>
+<td>llm-d (Kubernetes-native, CNCF Sandbox Mar 2026), NVIDIA Dynamo</td>
+</tr>
+<tr>
+<td>KV-cache-aware routing</td>
+<td>Route to replica already holding the prefix</td>
+<td>llm-d scheduler / Gateway API Inference Extension</td>
+</tr>
+<tr>
+<td><code>gpu_memory_utilization</code></td>
+<td>Pre-reserves memory for weights + activations + KV pool</td>
+<td>Default <strong>0.92</strong> in vLLM v0.30 (0.9 in older releases) → GPU memory looks ~90% full when idle</td>
+</tr>
+<tr>
+<td>Multi-LoRA</td>
+<td>One base model, per-tenant adapters; <code>max_loras</code> on GPU, <code>max_cpu_loras</code> LRU on CPU</td>
+<td>Hundreds of custom tenants, one weight set</td>
+</tr>
+<tr>
+<td><code>cache_salt</code></td>
+<td>Per-request salt folded into first block hash → prefix sharing only within same salt</td>
+<td>Mitigates KV timing side channel (CVE-2025-46570)</td>
+</tr>
+</tbody>
+</table>
+<p>Ecosystem note: Hugging Face TGI entered maintenance mode (Dec 2025) and HF recommends vLLM or SGLang for new deployments.</p>
+<pre><code class="language-bash"># illustrative vLLM launch for a multi-tenant fleet
+vllm serve meta-llama/Llama-3.1-8B-Instruct \
+  --gpu-memory-utilization 0.90 \
+  --max-num-seqs 256 \
+  --enable-chunked-prefill \
+  --enable-lora --max-loras 8 --max-cpu-loras 64
+# pass a per-tenant cache_salt in each request body to scope prefix-cache sharing
+</code></pre>
+<h2 id="serving-metrics">Serving metrics</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Driven by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TTFT</td>
+<td>Queue wait + prefill</td>
+</tr>
+<tr>
+<td>TPOT / ITL</td>
+<td>Decode + batch size</td>
+</tr>
+<tr>
+<td>Throughput (tok/s)</td>
+<td>Batch size, KV capacity</td>
+</tr>
+<tr>
+<td>Goodput</td>
+<td>Throughput of requests meeting SLO — the one to optimize</td>
+</tr>
+</tbody>
+</table>
+<p>Tradeoff: bigger batch → more throughput, slower per-user tokens. Tune batch caps to SLOs.</p>
+<h2 id="multi-tenancy-rules">Multi-tenancy rules</h2>
+<ol>
+<li><strong>Budget in tokens</strong>, not requests (Azure OpenAI and Bedrock quotas are TPM + RPM). Token bucket per tenant; charge estimated input on admit, settle actual output after.</li>
+<li><strong>Latency-class lanes</strong> (interactive vs batch) + <strong>weighted fair queuing</strong> across tenants.</li>
+<li><strong>Admission control / load shedding</strong> — 429 + Retry-After; clients use exponential backoff with jitter.</li>
+<li><strong>Async batch</strong> for anything that can wait (hosted batch APIs ≈ 50% discount, up to ~24h turnaround; self-hosted batch lane off-peak).</li>
+<li><strong>Multi-LoRA</strong> instead of per-tenant model copies.</li>
+<li><strong>Scope prefix cache per tenant</strong> (<code>cache_salt</code>) — cross-tenant sharing is a timing side channel.</li>
+</ol>
+<h2 id="autoscaling">Autoscaling</h2>
+<ul>
+<li>70B FP16 = 140 GB weights → ≥2×80 GB GPUs, usually TP=4/8; cold start = image pull + weight load + warmup = minutes.</li>
+<li>Scale on <strong>queue wait / queue depth / KV-cache usage</strong>; never on GPU memory (pre-reserved), not on GPU util alone.</li>
+<li>Warm minimum replicas; weights cached on local NVMe / shared volume near nodes.</li>
+<li>Managed alternative: Azure OpenAI <strong>PTUs</strong> / Bedrock <strong>Provisioned Throughput</strong> — predictable latency, committed price; pays off at steady high utilization.</li>
+</ul>
+<h2 id="war-story-generic">War story (generic)</h2>
+<p>40-tenant cluster; daily TTFT spike &lt;1s → 8–9s. Cause: one tenant's batch of 50-page documents landing in another region's business morning; FCFS single queue, no chunked prefill, autoscaler on memory (always 90%). Fix: token budgets, batch lane + WFQ, chunked prefill, autoscale on queue wait + KV usage.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KV cache</td>
+<td>Stored keys/values per token per layer so decode doesn't recompute history</td>
+</tr>
+<tr>
+<td>GQA</td>
+<td>Grouped-query attention — fewer KV heads → smaller cache</td>
+</tr>
+<tr>
+<td>PagedAttention / paged KV</td>
+<td>OS-style paging of KV into fixed blocks</td>
+</tr>
+<tr>
+<td>Prefix caching</td>
+<td>Share KV blocks for identical prompt prefixes</td>
+</tr>
+<tr>
+<td>Continuous batching</td>
+<td>Per-step admission/eviction from the running batch</td>
+</tr>
+<tr>
+<td>Chunked prefill</td>
+<td>Interleave long prefills with decode</td>
+</tr>
+<tr>
+<td>Disaggregated serving</td>
+<td>Separate prefill and decode pools</td>
+</tr>
+<tr>
+<td>Goodput</td>
+<td>SLO-meeting throughput</td>
+</tr>
+<tr>
+<td>Multi-LoRA</td>
+<td>Many adapters over one base model</td>
+</tr>
+<tr>
+<td>Weighted fair queuing</td>
+<td>Proportional share across tenants within a lane</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How many concurrent users can one GPU serve for model X?</strong>
+Do the KV arithmetic: 2 × layers × KV heads × head_dim × bytes. 8B GQA FP16 = 128 KiB/token; 80 GB card − 16 GB weights − overhead ≈ 50 GB KV ≈ 400k tokens ≈ 200 × 2k-token sessions. Then check against latency SLOs.</p>
+<p><strong>Q2. Why is vLLM faster than naive HF-Transformers serving?</strong>
+Paged KV (waste 60–80% → &lt;4%) enables bigger batches; continuous batching fills slots every step; prefix caching skips shared prefill; chunked prefill protects streaming latency.</p>
+<p><strong>Q3. Design serving for a multi-tenant LLM platform.</strong>
+Gateway with per-tenant token buckets; interactive vs batch lanes with WFQ; admission control with 429/Retry-After; KV-cache-aware routing; multi-LoRA; per-tenant <code>cache_salt</code>; autoscale on queue wait/KV usage with warm floor; batch APIs for deferrable work; P/D disaggregation at large scale.</p>
+<p><strong>Q4. Users report streams "freezing" mid-answer at peak. Cause?</strong>
+Long prefills monopolizing the GPU between decode steps, or KV exhaustion causing preemption. Fix with chunked prefill, caps on prompt length per lane, batch lane for long-document jobs, more KV capacity (FP8 KV, more replicas), or P/D disaggregation.</p>
+<p><strong>Q5. What should you autoscale an LLM fleet on?</strong>
+Queue wait time / depth and KV-cache block usage. GPU memory is pre-reserved (~90%) and GPU utilization is ambiguous. Keep a warm floor because cold starts take minutes.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>vLLM docs: https://docs.vllm.ai/</li>
+<li>vLLM automatic prefix caching design: https://docs.vllm.ai/en/stable/design/prefix_caching/</li>
+<li>vLLM LoRA adapters: https://docs.vllm.ai/en/latest/features/lora/</li>
+<li>vLLM security (cache salting / side channels): https://docs.vllm.ai/en/stable/usage/security/</li>
+<li>vLLM cache-salt PR: https://github.com/vllm-project/vllm/pull/17045</li>
+<li>Kwon et al., "Efficient Memory Management for LLM Serving with PagedAttention" (SOSP '23): https://arxiv.org/abs/2309.06180</li>
+<li>vLLM launch blog: https://vllm.ai/blog/2023-06-20-vllm</li>
+<li>Orca (OSDI '22): https://www.usenix.org/conference/osdi22/presentation/yu</li>
+<li>Anyscale continuous batching benchmark: https://www.anyscale.com/blog/continuous-batching-llm-inference</li>
+<li>llm-d disaggregated serving: https://llm-d.ai/docs/architecture/advanced/disaggregation</li>
+<li>NVIDIA — disaggregated inference on Kubernetes: https://developer.nvidia.com/blog/deploying-disaggregated-llm-inference-workloads-on-kubernetes/</li>
+<li>Hugging Face TGI (maintenance mode notice): https://github.com/huggingface/text-generation-inference</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track three, episode six: scaling and multi-tenancy — the K V cache, v L L M style serving, and queues. We've built the system, made it cheaper, tested it, and secured it. Now the traffic arrives. Thousands of users, dozens of customer tenants, one fleet of expensive graphics processors. This episode is about what really limits how many of those users one G P U can serve, and how you keep one customer from ruining everyone else's day.
+
+Here's the scenario. A platform team self-hosts an open-weight model for a business-to-business product. It serves forty customer tenants from one shared cluster. Most days it's fine. Then, every weekday at the same hour, time-to-first-token for everyone jumps from under a second to eight or nine seconds. Graphics processor utilization is pinned high, but it's pinned high all day, so that tells them nothing. The autoscaler is scaling on memory usage, which also reads ninety percent all day, so it never scales down and never usefully scales up. It takes a week to find the cause: one tenant runs a nightly batch job in its own time zone that submits thousands of fifty-page documents for summarization, and it lands right in the middle of another region's business morning. Long prompts, tiny outputs, and a scheduler that treated every request the same.
+
+Everything in that story — why memory looks full, why long prompts hurt everyone, why the autoscaler was blind — falls out of the mechanics we're about to walk through.
+
+## Two phases, two bottlenecks
+
+First, one idea you need before the picture: generating text has two phases with completely different physics.
+
+Prefill is reading the prompt. The model processes all the input tokens at once, in parallel, building up its internal state for each one. That's compute-bound — lots of matrix multiplication, keeps the chip busy — and it determines time to first token. A long prompt means a long prefill.
+
+Decode is writing the answer, one token at a time. Each new token requires reading all the model's weights from memory again, but only does a small amount of arithmetic. That's memory-bandwidth-bound. For a single user, an eight-billion-parameter model in sixteen-bit precision is about sixteen gigabytes of weights, and a top-end data-center G P U reads memory at roughly three terabytes a second — so the ceiling is a couple of hundred tokens per second, and most of the chip's arithmetic sits idle. Here's the key insight: if you decode for fifty users at once, you read the weights once per step and do fifty users' worth of arithmetic with them. Batching makes decode almost free per extra user — right up until you run out of memory. And what you run out of memory for is the K V cache.
+
+[PAUSE 1s]
+
+## The mental image: the workshop floor
+
+Let's build the picture. In your mind's eye, picture a long workshop, and you're looking down at its floor plan.
+
+On the far left is the front door. Every request walks in through it, and just inside is the gateway desk: it checks who you are, which tenant you belong to, and whether your tenant has budget left this minute.
+
+Just to the right of the gateway, a set of parallel waiting lanes, like lanes at a bank — the queues. There's a fast lane for interactive chat and a slow lane for batch work, and each tenant's requests are tagged with its name.
+
+To the right of the lanes stands a dispatcher, deciding which request goes to which workbench, and when.
+
+And to the right of the dispatcher, filling most of the workshop, a row of workbenches. Each workbench is one model replica — one G P U, or a small group of them working together. Look closely at one bench. On the left third of the bench, bolted down, is a huge fixed block: the model weights. They never move. On the right two-thirds of the bench is a wall of small identical drawers. Those drawers are the K V cache — the working memory for every conversation currently on that bench.
+
+Finally, at the far right wall of the workshop, a loading dock, where the autoscaler wheels in new workbenches — slowly, because each one arrives needing its weights bolted on.
+
+Door and gateway on the left, lanes, dispatcher, the row of benches with weights on the left of each bench and drawers on the right, loading dock at the far right. Hold that.
+
+[PAUSE 2s]
+
+## The drawers: what the K V cache is and why it's huge
+
+Zoom into one workbench, to the wall of drawers on its right side.
+
+When the model processes a token, each attention layer computes a key and a value for it — a compressed summary that later tokens will look back at. Without caching, every new output token would recompute keys and values for the entire conversation so far, which would make generation quadratically slow. So you compute them once and store them. That store is the K V cache, and it grows by one entry per token per layer, for every active conversation.
+
+The arithmetic is worth memorizing, because it's the single most useful number in this whole topic. Size per token equals two, for keys and values, times the number of layers, times the number of key-value heads, times the head dimension, times bytes per number. Take a typical eight-billion-parameter model: thirty-two layers, eight key-value heads, a head dimension of one hundred twenty-eight, and two bytes per number. That's about a hundred and twenty-eight kilobytes per token. An eight-thousand-token conversation holds one gigabyte of cache. Take a seventy-billion-parameter model of the same family: eighty layers, so about three hundred twenty kilobytes per token — two and a half gigabytes for eight thousand tokens, and around forty gigabytes for a single conversation at a hundred-and-twenty-eight-thousand-token context. One user, half a G P U.
+
+Now put it on the bench. An eighty-gigabyte G P U running the eight-billion model: the weights take sixteen gigabytes on the left of the bench, some working space for activations, and roughly fifty gigabytes of drawers on the right. At a hundred and twenty-eight kilobytes per token, that's around four hundred thousand tokens of cache. Four hundred thousand tokens is fifty users with eight-thousand-token contexts, or two hundred users with two-thousand-token contexts. That's your concurrency ceiling, and it's set by memory, not by compute.
+
+Which explains the first mystery in our war story. Serving engines like v L L M reserve most of the G P U's memory up front — the default is roughly ninety percent — and carve it into drawers. So memory utilization reads ninety percent when the system is idle and ninety percent when it's melting. It is useless as an autoscaling signal.
+
+[PAUSE 1s]
+
+## Paging: small drawers instead of one big cupboard
+
+Now, how those drawers are organized is the story of v L L M.
+
+The naive approach, which early serving systems used, gave every request one big contiguous cupboard sized for the maximum possible output length. If the maximum is four thousand tokens and the answer turns out to be two hundred, ninety-five percent of that cupboard sits empty but reserved. The v L L M paper measured this: existing systems wasted sixty to eighty percent of K V cache memory to fragmentation and over-reservation.
+
+The fix was borrowed straight from operating systems — virtual memory paging. Instead of one big cupboard, the cache is split into small fixed-size blocks, typically sixteen tokens each — the small drawers on our wall. A conversation grabs a new drawer only when it fills the last one, and its drawers don't need to sit next to each other; a block table maps the conversation's logical positions to whichever physical drawers it got. Waste drops to under four percent — at most one partly-filled drawer per conversation. More conversations fit on the bench, bigger batches, and the paper reported two to four times the throughput of the previous state of the art at the same latency. The attention technique that reads from these scattered blocks was named PagedAttention, and the paged block design is now standard across serving engines.
+
+Paging unlocks a second trick: sharing. If a hundred conversations all start with the same two-thousand-token system prompt, why store a hundred copies? With paged blocks, identical prefixes can point to the same physical drawers. The engine identifies blocks by a hash of their tokens and everything before them, so when a new request arrives whose first blocks match cached ones, it skips that part of prefill entirely. This is automatic prefix caching, on by default in current v L L M; another popular engine, S G Lang, organizes the same idea as a tree of shared prefixes. For agent and retrieval workloads with long, stable system prompts and tool definitions, it can cut time to first token dramatically. It's the self-hosted version of the prompt caching discount you get from hosted providers — which we covered back in the latency and cost episode.
+
+And when the drawers run out? The engine preempts: it evicts some conversation's drawers and either recomputes them later or swaps them to C P U memory. Either way, somebody's latency spikes. Running out of drawers is the real overload condition.
+
+[PAUSE 1s]
+
+## The dispatcher: continuous batching and chunked prefill
+
+Step back left, to the dispatcher between the lanes and the benches.
+
+Old-style static batching worked like a bus: gather eight requests, run them together until the longest one finishes, then load the next eight. If one answer is two thousand tokens and seven are fifty, seven seats ride empty for most of the trip. Continuous batching, introduced in a research system called Orca, schedules at the level of each decode step instead. Every step, finished conversations leave the bench and waiting ones join. Seats never ride empty. Benchmarks on the combination of continuous batching and paged memory have shown throughput improvements over static batching of more than ten times, and one well-known benchmark reported up to twenty-three times.
+
+But there's a catch, and it's the second mystery in our war story. When a fifty-page document arrives, its prefill is a huge chunk of compute. If the dispatcher runs it all at once, every other conversation on that bench stalls mid-sentence while it finishes. Users see the streamed text freeze. The fix is chunked prefill: break long prompts into slices of a few hundred or a few thousand tokens and interleave them with the ongoing decode steps, so nobody's stream stalls for long. The more radical fix, now common at scale, is disaggregation: send prefill and decode to different workbenches entirely — compute-heavy benches for reading prompts, memory-heavy benches for writing answers — and ship the K V cache between them over a fast interconnect. The open-source project L L M D, which runs on Kubernetes and was accepted into the Cloud Native Computing Foundation's sandbox in twenty twenty-six, and NVIDIA's Dynamo both take this approach.
+
+The dispatcher's other modern job is cache-aware routing. If a request's prefix is already sitting in the drawers of bench three, send it to bench three rather than round-robin, and prefill is nearly free. Simple load balancers throw that away.
+
+[PAUSE 1s]
+
+## Metrics that actually mean something
+
+Before we get to queues, the vocabulary for measuring all this, because interviewers listen for it. Time to first token — dominated by queueing and prefill. Time per output token, or inter-token latency — dominated by decode and batch size. Throughput — total tokens per second across the bench. And goodput — the throughput of requests that actually met their latency targets. The core tradeoff: bigger batches raise throughput and cost efficiency, but each user's tokens come slightly slower. You tune batch limits against your latency targets, not for maximum throughput.
+
+[PAUSE 1s]
+
+## The lanes and the gateway: multi-tenancy
+
+Now walk back to the left side of the workshop, to the gateway desk and the waiting lanes. This is where multi-tenancy lives.
+
+Rule one: budget in tokens, not requests. A request can be ten tokens or a hundred thousand. Rate limiting by request count lets a tenant with enormous prompts consume a hundred times their fair share. Managed services figured this out — Azure Open A I quotas and Amazon Bedrock quotas are expressed in tokens per minute alongside requests per minute. Do the same at your gateway desk: a token bucket per tenant, charged with estimated input tokens on arrival and settled with actual output tokens on completion.
+
+Rule two: separate lanes by latency class. Interactive chat goes in the fast lane with tight time-to-first-token targets. Batch summarization, backfills, and evaluation runs go in the slow lane, which the dispatcher only draws from when the fast lane has spare capacity. Within a lane, use weighted fair queuing across tenants, so a tenant with ten thousand queued requests doesn't starve a tenant with ten. This is exactly what our war-story team was missing: one tenant's batch job and another's morning chat were sharing a single first-come, first-served line.
+
+Rule three: admission control and load shedding. When queue wait exceeds your target, stop admitting low-priority work and return a clear "too many requests" response with a retry-after hint, rather than letting the queue grow without bound until everything times out. A fast, honest rejection is better than a slow failure, and clients with exponential backoff and jitter will smooth the retry storm.
+
+Rule four: push what can wait into asynchronous batch. Hosted providers offer batch interfaces at roughly half price with a turnaround of up to a day, and self-hosted clusters can run batch lanes overnight on idle capacity. A surprising amount of enterprise L L M work — classification, enrichment, summarization of backlogs — doesn't need an answer in two seconds.
+
+Rule five, for fine-tuned customers: don't give every tenant its own model copy. Serve one base model and load small low-rank adapters per tenant — often called multi-LoRA serving. v L L M can keep a handful of adapters active on the G P U, with more cached in C P U memory and swapped in as needed. Hundreds of customized tenants, one set of weights on the bench.
+
+And one security note that ties back to the last episode. Shared prefix caching across tenants is a timing side channel: if an attacker can measure that their guessed prompt prefix got a suspiciously fast first token, they learn that someone else recently sent that prefix. Researchers demonstrated this, and v L L M added a per-request cache salt so you can scope prefix sharing to within a tenant. In a multi-tenant deployment, turn it on.
+
+[PAUSE 1s]
+
+## The loading dock: autoscaling
+
+Last stop, the loading dock on the far right. Adding a workbench is slow. A seventy-billion-parameter model in sixteen-bit precision is a hundred and forty gigabytes of weights, which needs at least two eighty-gigabyte G P Us and in practice four or eight working together with tensor parallelism. Pulling the container image and those weights from storage, loading them, and warming up can take several minutes. Traffic spikes in seconds.
+
+So: scale on the right signals — queue depth, queue wait time, and the fraction of K V cache drawers in use — never on G P U memory, and not on raw G P U utilization alone. Keep a warm minimum of replicas so you aren't scaling from zero at the worst moment. Cache model weights on local disk or a fast shared volume near the nodes. And use the lanes as your shock absorber: the slow lane can wait five minutes for new benches to arrive; the fast lane shouldn't have to.
+
+If you're on managed endpoints instead of self-hosting, the same tradeoff appears as a purchasing choice: pay-per-token shared capacity with rate limits, versus reserved capacity — provisioned throughput units on Azure Open A I, provisioned throughput on Amazon Bedrock — which buys predictable latency at a committed price. The break-even is usually steady, high utilization; spiky traffic stays on pay-per-token.
+
+[PAUSE 1s]
+
+## War story, resolved
+
+Back to the team with forty tenants. Their fixes map one-to-one onto the workshop. At the gateway: per-tenant token budgets, not request counts. In the lanes: a batch lane for the document job, weighted fair queuing between tenants. At the dispatcher: chunked prefill turned on and tuned, so fifty-page prompts stopped freezing everyone else's streams. At the loading dock: autoscaling on queue wait and cache usage instead of memory. Morning time-to-first-token went back under a second, and the batch job finished overnight at a fraction of the cost.
+
+[PAUSE 1s]
+
+## Interview angle
+
+Three ways this comes up. First: "How many concurrent users can one G P U serve?" A strong answer does the arithmetic out loud. "It's bounded by K V cache memory. Per-token cache is two times layers times K V heads times head dimension times bytes — about a hundred and twenty-eight kilobytes for an eight-billion model with grouped-query attention. On an eighty-gigabyte card with sixteen gigabytes of weights, I have roughly fifty gigabytes for cache, so about four hundred thousand tokens — two hundred concurrent two-thousand-token conversations, fewer with long contexts. Then I'd check latency targets, because batch size trades throughput against per-user speed."
+
+Second: "Why is v L L M faster than a naive server?" Strong answer: paged K V cache cuts memory waste from sixty-to-eighty percent to under four, which allows bigger batches; continuous batching fills seats every decode step; prefix caching shares common prompt blocks; chunked prefill protects streaming latency.
+
+Third: "Design serving for a multi-tenant L L M platform." Strong answer: gateway with per-tenant token budgets; separate interactive and batch lanes with weighted fair queuing; admission control with clear rejections; cache-aware routing; multi-LoRA for per-tenant customization; prefix cache scoped per tenant; autoscale on queue wait and cache usage with a warm floor; and batch interfaces for anything that can wait.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Walk the workshop once more, left to right. Through the front door, the gateway desk: identity, tenant, and a budget counted in tokens, not requests. Then the lanes: fast for interactive, slow for batch, fair between tenants, and an honest rejection when the wait gets too long. Then the dispatcher: continuous batching so seats never ride empty, chunked prefill so long prompts don't freeze everyone's stream, cache-aware routing, and at scale, prefill and decode on separate benches. Then the workbenches: weights bolted on the left, and on the right the wall of small drawers — the paged K V cache, about a hundred and twenty-eight kilobytes per token for an eight-billion model, shared across identical prefixes, scoped per tenant — and the number of drawers is your real concurrency limit. And at the far right, the loading dock, slow to deliver, so you scale on queue wait and cache usage, never on memory, and keep a warm floor.
+
+Next up, the track drill: rapid-fire questions across everything we've built in this track. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="05-guardrails-security.html">← Guardrails, PII, Prompt-Injection Defense</a><a class="btn" href="07-system-design-drill.html">DRILL: GenAI System Design Rapid-Fire →</a></div></main></div></body></html>

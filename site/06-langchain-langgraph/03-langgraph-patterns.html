@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk" open><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="active" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 6 · LangChain / LangGraph · Episode 3</div>
+<h1 class="lesson">LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</h1>
+<div class="meta">16 min listen · Three production patterns built on the LangGraph board: boards hidden inside squares (subgraphs and their persistence modes), a red square that freezes the game for a human (interrupt and Command resume), and a broadcast booth that streams every move live (stream modes and the newer event-streaming projections).</div>
+<audio controls preload="metadata" src="../../audio/06-langchain-langgraph/s6e03-langgraph-patterns.mp3"></audio>
+<button class="btn complete" data-ep="06-langchain-langgraph/03-langgraph-patterns" onclick="toggleDone('06-langchain-langgraph/03-langgraph-patterns')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (langgraph 1.2.12; event streaming <code>version="v3"</code> introduced in 1.2, unified <code>version="v2"</code> stream/invoke format in 1.1)</p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Subgraphs, interrupts and streaming all ride on the checkpoint layer: a subgraph is a graph used as a node (with its own checkpoint namespace), <code>interrupt()</code> is a checkpoint-and-stop that resumes via <code>Command(resume=...)</code> by <strong>re-running the node from the top</strong>, and streaming exposes the super-step machinery live — with private state leaking unless you restrict it.</p>
+<h2 id="the-mental-image-the-board-extended">The mental image: the board, extended</h2>
+<table>
+<thead>
+<tr>
+<th>Board element</th>
+<th>Concept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lidded square along the bottom, a small board inside</td>
+<td>Subgraph</td>
+</tr>
+<tr>
+<td>Inner scoreboard as a window into the big one</td>
+<td>Subgraph added directly as a node (shared state keys)</td>
+</tr>
+<tr>
+<td>Translator at the lid</td>
+<td>Subgraph invoked inside a wrapper node (different schemas)</td>
+</tr>
+<tr>
+<td>Labeled folder inside the thread's drawer</td>
+<td><code>checkpoint_ns</code> (e.g. <code>"node:uuid"</code>, nested joined with <code>\|</code>)</td>
+</tr>
+<tr>
+<td>Inner square moving the outer token</td>
+<td><code>Command(graph=Command.PARENT, goto=...)</code></td>
+</tr>
+<tr>
+<td>Red square on the left that freezes the game</td>
+<td><code>interrupt(payload)</code></td>
+</tr>
+<tr>
+<td>Human's answer slid back in</td>
+<td><code>Command(resume=value)</code> on the same <code>thread_id</code></td>
+</tr>
+<tr>
+<td>Broadcast booth above the board</td>
+<td>Streaming (<code>stream_mode</code> / <code>stream_events(version="v3")</code>)</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart TB
+    subgraph Parent["Parent graph"]
+        S(["START"]) --> SUP["supervisor"]
+        SUP --> RS["research subgraph (lidded square)"]
+        SUP --> APPROVE["approval node: interrupt()"]
+        APPROVE --> ACT["refund tool"]
+        ACT --> E(["END"])
+    end
+    subgraph Inner["research subgraph"]
+        IM["model"] --> IT["tools"]
+        IT --> IM
+    end
+    RS -.-> Inner
+    APPROVE -.->|"payload to caller"| H["human reviewer"]
+    H -.->|"Command(resume=decision)"| APPROVE
+</pre>
+
+<pre class="mermaid">sequenceDiagram
+    participant App
+    participant Graph
+    participant CP as Checkpointer
+    App->>Graph: stream_events(input, thread_id=t1)
+    Graph->>Graph: approval node runs, calls interrupt(payload)
+    Graph->>CP: save checkpoint
+    Graph-->>App: stream.interrupted = True, stream.interrupts = [payload]
+    Note over App: human decides (seconds or days)
+    App->>Graph: stream_events(Command(resume="approve"), thread_id=t1)
+    Graph->>CP: load checkpoint
+    Graph->>Graph: approval node RE-RUNS FROM TOP, interrupt() returns "approve"
+    Graph-->>App: tokens, then final output
+</pre>
+
+<h2 id="code">Code</h2>
+<p>Interrupt + resume (raw LangGraph):</p>
+<pre><code class="language-python">from langgraph.types import interrupt, Command
+from langgraph.graph import END
+
+def approve_refund(state):
+    # DON'T send emails / create tickets here — this code runs again on resume
+    decision = interrupt({&quot;action&quot;: &quot;refund&quot;, &quot;amount&quot;: state[&quot;amount&quot;],
+                          &quot;customer&quot;: state[&quot;customer_id&quot;]})
+    if decision[&quot;type&quot;] == &quot;approve&quot;:
+        return Command(goto=&quot;issue_refund&quot;)
+    return Command(update={&quot;note&quot;: decision.get(&quot;reason&quot;, &quot;&quot;)}, goto=END)
+
+graph = builder.compile(checkpointer=postgres_saver)   # persistent checkpointer required
+cfg = {&quot;configurable&quot;: {&quot;thread_id&quot;: &quot;cust-77:refund-3&quot;}}
+
+stream = graph.stream_events({&quot;amount&quot;: 400, &quot;customer_id&quot;: &quot;c77&quot;}, config=cfg, version=&quot;v3&quot;)
+for msg in stream.messages:
+    print(msg.text, end=&quot;&quot;)
+if stream.interrupted:
+    payload = stream.interrupts            # show to a human
+    stream = graph.stream_events(Command(resume={&quot;type&quot;: &quot;approve&quot;}), config=cfg, version=&quot;v3&quot;)
+</code></pre>
+<p>Anti-patterns (from the "rules of interrupts"):</p>
+<pre><code class="language-python">try:                          # BAD: bare except swallows the pause exception
+    ok = interrupt(&quot;approve?&quot;)
+except Exception:
+    ok = True                 # -&gt; action runs unapproved
+
+while True:                   # BAD: every resume replays all previous iterations
+    age = interrupt(&quot;age?&quot;)
+    if valid(age): break
+</code></pre>
+<p>HITL middleware on <code>create_agent</code>:</p>
+<pre><code class="language-python">from langchain.agents.middleware import HumanInTheLoopMiddleware
+HumanInTheLoopMiddleware(interrupt_on={
+    &quot;issue_refund&quot;: {&quot;allowed_decisions&quot;: [&quot;approve&quot;, &quot;edit&quot;, &quot;reject&quot;]},
+    &quot;ask_user&quot;: {&quot;allowed_decisions&quot;: [&quot;respond&quot;]},
+    &quot;read_file&quot;: False,
+})
+</code></pre>
+<p>Subgraph persistence modes:</p>
+<pre><code class="language-python">specialist = sub_builder.compile()                    # per-invocation (default): fresh each call, can interrupt
+researcher = sub_builder.compile(checkpointer=True)   # per-thread: memory across calls, NO parallel calls
+helper     = sub_builder.compile(checkpointer=False)  # stateless: no interrupts, no durability
+</code></pre>
+<p>Streaming:</p>
+<pre><code class="language-python">from langgraph.config import get_stream_writer
+
+def crawl(state):
+    w = get_stream_writer()
+    for i, url in enumerate(state[&quot;urls&quot;]):
+        w({&quot;progress&quot;: f&quot;page {i+1}/{len(state['urls'])}&quot;})   # custom mode
+
+# classic stream modes, unified v2 chunk format (type / ns / data)
+for part in graph.stream(inp, cfg, stream_mode=[&quot;messages&quot;, &quot;updates&quot;, &quot;custom&quot;],
+                         subgraphs=True, version=&quot;v2&quot;):
+    ...
+
+# restrict values streaming so private channels don't leak
+stream = graph.stream_events(inp, version=&quot;v3&quot;, output_keys=[&quot;answer&quot;])
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subgraph</td>
+<td>Compiled graph used as a node</td>
+<td>Reuse, multi-agent, team boundaries</td>
+</tr>
+<tr>
+<td>Add-as-node vs call-in-node</td>
+<td>Shared keys → pass compiled graph to <code>add_node</code>; different schemas → wrapper maps in/out</td>
+<td>Window vs translator</td>
+</tr>
+<tr>
+<td>Per-invocation / per-thread / stateless</td>
+<td><code>checkpointer=None</code> / <code>True</code> / <code>False</code> on subgraph compile</td>
+<td>Default suits most specialists</td>
+</tr>
+<tr>
+<td><code>checkpoint_ns</code></td>
+<td>Namespace for subgraph checkpoints</td>
+<td>Folder in the thread's drawer</td>
+</tr>
+<tr>
+<td><code>Command.PARENT</code></td>
+<td>Route from a subgraph node into the parent graph</td>
+<td>Needs a reducer on shared keys</td>
+</tr>
+<tr>
+<td><code>interrupt()</code></td>
+<td>Raises a special exception → checkpoint → payload to caller</td>
+<td>Dynamic, anywhere in code</td>
+</tr>
+<tr>
+<td><code>Command(resume=...)</code></td>
+<td>Resume value becomes <code>interrupt()</code>'s return</td>
+<td>Same <code>thread_id</code>; node re-runs from top</td>
+</tr>
+<tr>
+<td>Multiple interrupts</td>
+<td>Parallel branches → map interrupt IDs to resume values</td>
+<td>One call resumes all</td>
+</tr>
+<tr>
+<td><code>interrupt_before</code> / <code>interrupt_after</code></td>
+<td>Static breakpoints at compile or run time</td>
+<td>For debugging, not app logic</td>
+</tr>
+<tr>
+<td>HumanInTheLoopMiddleware</td>
+<td>Per-tool approve / edit / reject / respond</td>
+<td>Same interrupt underneath</td>
+</tr>
+<tr>
+<td>Stream modes</td>
+<td>values, updates, messages, custom, checkpoints, tasks, debug</td>
+<td>Pick per consumer</td>
+</tr>
+<tr>
+<td>v2 stream format (1.1)</td>
+<td>Every chunk = <code>{type, ns, data}</code></td>
+<td>Type-safe, uniform</td>
+</tr>
+<tr>
+<td>Event streaming v3 (1.2)</td>
+<td><code>stream.messages / values / subgraphs / output / interrupts / interrupted</code></td>
+<td>Recommended for new apps</td>
+</tr>
+<tr>
+<td><code>nostream</code> tag</td>
+<td>Exclude a model call's tokens from messages stream</td>
+<td>Internal classification calls</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tradeoffs-to-volunteer">Tradeoffs to volunteer</h2>
+<ol>
+<li><strong>Re-execution on resume</strong> — code before <code>interrupt()</code> runs twice → duplicate emails/tickets unless idempotent or moved after/into a separate node. Applies at both levels with subgraphs.</li>
+<li><strong>Swallowed pause</strong> — bare try/except around <code>interrupt()</code> lets the action run without approval.</li>
+<li><strong>Order-indexed resume values</strong> — never conditionally skip or non-deterministically loop interrupts; validate with one interrupt per visit + conditional edge back.</li>
+<li><strong>Private state leaks in values streaming</strong> — restrict with <code>output_keys</code>, prefer updates/messages to clients, filter server-side.</li>
+<li><strong>Per-thread subgraphs + parallel tool calls</strong> — checkpoint collisions; disable parallel calls or use <code>ToolCallLimitMiddleware</code>.</li>
+<li><strong>Pending approvals are an ops queue</strong> — notify, alert on age, define expiry behavior; requires a persistent checkpointer.</li>
+</ol>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How does LangGraph human-in-the-loop work mechanically?</strong>
+<code>interrupt(payload)</code> raises a special exception caught by the runtime, which checkpoints state and returns the payload to the caller; the graph is frozen in the checkpointer, no process held. Resume with <code>Command(resume=value)</code> on the same <code>thread_id</code>; the node re-runs from its start and <code>interrupt()</code> returns the value.</p>
+<p><strong>Q2. Two production bugs with interrupts and their fixes?</strong>
+Duplicate side effects (non-idempotent code before <code>interrupt()</code> re-runs) → make idempotent, move after, or split nodes. Unapproved actions (bare try/except swallowing the pause) → catch specific exceptions only, keep interrupt outside error handling.</p>
+<p><strong>Q3. When and how do you use subgraphs?</strong>
+For reuse, multi-agent specialists with private histories, and team boundaries. Shared keys → add compiled subgraph as node; different schemas → call it in a wrapper node. Persistence: per-invocation default; per-thread for memory across calls (no parallel calls); stateless when no pause/durability needed.</p>
+<p><strong>Q4. Which stream mode would you use for a chat UI, and what's new?</strong>
+<code>messages</code> for token-by-token output (with node/model metadata), plus <code>updates</code> or <code>custom</code> for step/tool progress. LangGraph 1.1 unified chunks as <code>{type, ns, data}</code>; 1.2's event streaming (<code>version="v3"</code>) offers typed projections including <code>stream.interrupts</code> and <code>stream.interrupted</code>, recommended for new apps.</p>
+<p><strong>Q5. What security issue can streaming introduce?</strong>
+<code>values</code> streaming emits all state channels including private ones not in the output schema — internal reasoning or sensitive records can reach the client. Restrict with <code>output_keys</code>, stream only <code>messages</code>/<code>updates</code>, and tag internal model calls <code>nostream</code>.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Interrupts: https://docs.langchain.com/oss/python/langgraph/interrupts</li>
+<li>Subgraphs: https://docs.langchain.com/oss/python/langgraph/use-subgraphs</li>
+<li>Streaming (stream modes, v2 format): https://docs.langchain.com/oss/python/langgraph/streaming</li>
+<li>Event streaming (v3 projections): https://docs.langchain.com/oss/python/langgraph/event-streaming</li>
+<li>Graph API — Command / private channels warning: https://docs.langchain.com/oss/python/langgraph/graph-api</li>
+<li>LangChain human-in-the-loop middleware: https://docs.langchain.com/oss/python/langchain/human-in-the-loop</li>
+<li>Changelog (1.1, 1.2): https://docs.langchain.com/oss/python/releases/changelog</li>
+<li>interrupt API reference: https://reference.langchain.com/python/langgraph/types/interrupt</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track six, episode three: LangGraph patterns — subgraphs, human in the loop, and streaming. Last episode we built the board: squares for nodes, painted arrows for edges, a signpost for routing, a scoreboard of state in the center with a rule on every column, a clock ticking in super-steps, and a camera on the ceiling photographing the board after every tick into a filing cabinet, one drawer per thread. Today we use that board for the three patterns that show up in almost every serious production agent.
+
+## The cold open
+
+Here's a scenario. An operations agent can issue refunds. Leadership says: fine, but any refund over a threshold needs a human to approve it. An engineer adds an approval step. In testing, it works — the agent pauses, a manager clicks approve, the refund goes through. In production, two things go wrong in the first week. First, some customers receive two confirmation emails for a single refund. Second, and much worse, a handful of refunds go through with no approval at all.
+
+Both bugs came from the same misunderstanding: how a LangGraph pause actually works under the hood. By the end of this episode, you'll know exactly why both happened, and you'll be able to explain it in an interview in two sentences.
+
+## Why it matters
+
+Real agents are rarely one flat loop. They're compositions: a supervisor that delegates to a research specialist and a billing specialist, each of which is its own graph. They need humans at the right moments: before money moves, before an email goes out, before a database is changed. And they need to feel responsive: a user staring at a blank screen for fifteen seconds while an agent thinks will assume it's broken, even if the answer is perfect. Subgraphs, interrupts, and streaming are the three patterns that address those three needs. All three sit on the same foundation we built last time: the checkpoint cabinet.
+
+[PAUSE 1s]
+
+## The mental image: the board, extended
+
+Bring the board back into your mind's eye. Squares around the edge, the signpost on the right, the scoreboard in the center, the clock and camera above, the filing cabinet standing to the right of the table.
+
+Now add three things. First, along the bottom edge of the board, one of the squares has a hinged lid. Lift it, and inside is a smaller, complete board: its own squares, its own arrows, and its own little scoreboard. That's a subgraph.
+
+Second, on the left side of the board, paint one square bright red. When a token lands on it, the whole game freezes. That's an interrupt.
+
+Third, above the board, on the far wall, a broadcast booth with a window looking down at the table. Inside, a commentator narrates every move to an audience outside — who moved, what changed on the scoreboard, and even what the model is saying, word by word, as it says it. That's streaming.
+
+Lidded square along the bottom. Red square on the left. Broadcast booth above. Let's open each one.
+
+[PAUSE 1s]
+
+## Pattern one: boards inside squares
+
+Lift the lid on the square along the bottom. A subgraph is simply a compiled graph used as a node in another graph. Why would you want that? Three reasons. Reuse: the same retrieval sub-board can sit inside five different parent boards. Multi-agent systems: each specialist agent is its own board with its own loop and its own private conversation. And team boundaries: one team owns the billing sub-board, another owns the parent, and as long as the inputs and outputs are agreed, neither needs to know how the other's squares are wired.
+
+There are two ways to connect the inner board to the outer one, and the choice depends on the scoreboards. If the inner board's scoreboard shares column names with the outer one — say both have a messages column — you drop the compiled subgraph straight in as a node. The inner squares read and write those shared columns directly. Picture the inner scoreboard as a window cut into the big central scoreboard. But if the inner board has a completely different scoreboard — which is common when each specialist keeps its own private message history — then you call the subgraph from inside an ordinary node. That node acts as a translator at the lid: it copies what the inner board needs from the outer scoreboard, runs the inner game, and copies the result back out. The inner board's private chatter never touches the outer scoreboard.
+
+What about the camera? The inner board gets photographed too. Its photos go into the same drawer, but in a labeled folder — a checkpoint namespace — named after the square it lives in, and for nested boards the folder names chain together. And you choose how much the inner board remembers, with one setting when you compile it. The default is per-invocation: each time a token lands on the lidded square, the inner board starts fresh, but during that one visit the camera is running, so the inner board can pause for a human and survive a crash. This is the right choice for most specialists that handle one-off requests like "look up this order." The second option is per-thread: the inner board keeps its scoreboard between visits on the same thread, so a research specialist can build up context across several exchanges. The catch, stated plainly in the docs: per-thread subgraphs don't support parallel calls to the same subgraph, because two simultaneous visits would write photos into the same folder and collide. If a model might call that specialist twice at once, you have to prevent parallel calls — LangChain's tool call limit middleware is one documented way. The third option is stateless: no camera at all, like calling a plain function — cheapest, but it can't pause and can't recover.
+
+One more trick. A square on the inner board can reach up through the lid and move the token on the outer board directly, by returning a Command aimed at the parent graph. That's how a specialist says "I'm done — hand control to the billing agent" without going back through the translator. The rule that comes with it: if the inner square updates a column shared with the parent, that column on the parent's scoreboard needs a reducer, so the update is merged rather than fought over.
+
+[PAUSE 1s]
+
+## Pattern two: the red square
+
+Now the red square on the left. This is human in the loop, and it's where the camera earns its keep.
+
+Inside any node, you can call a function named interrupt, handing it a payload — say, "approve a refund of four hundred dollars to this customer?" Here's what happens mechanically. Interrupt raises a special exception. It travels up out of the node and is caught by the runtime. The runtime tells the camera to photograph the board exactly as it stands, files it in the drawer, and hands the payload out to whoever called the graph. The game is now frozen. Not sleeping in memory — frozen in the cabinet. No process needs to stay alive. The human can take thirty seconds or three days.
+
+When the human decides, your application calls the graph again with the same thread I D, and instead of a new message it passes a Command carrying a resume value — approve, reject, or an edited amount. The runtime opens the drawer, sets up the board from the photo, and runs the red square again. And this is the part that matters: it runs the square again from the top. When execution reaches the interrupt call a second time, interrupt doesn't pause; it returns the resume value the human sent, and the node carries on from there.
+
+Now go back to the cold open. The duplicate emails: the approval node sent a "your refund is being reviewed" email before calling interrupt. When the node re-ran on resume, the email went out again. Everything before an interrupt call runs twice — once on the way in, once on the way back. The rule: side effects before an interrupt must be idempotent, or better, moved after it, or into their own node.
+
+The unapproved refunds: someone had wrapped the node body, including the interrupt call, in a broad try-except block to "handle errors gracefully." The special pause exception was caught and swallowed, the node carried on as though nothing happened, and the refund tool ran. The rule: never wrap interrupt in a bare try-except. Catch only specific exception types, and keep interrupt outside error-handling blocks.
+
+Three more rules that follow from the same mechanism. First, if a node calls interrupt more than once, resume values are matched to calls strictly by position. So never skip an interrupt conditionally, and don't put interrupt inside a while-true validation loop, because every resume replays every earlier pass, and the work compounds. The documented pattern for re-asking is: one interrupt per node visit, store any validation error in state, and use a conditional edge to loop back to the red square. Second, payloads and resume values should be plain J S O N-serializable data, because they live in the cabinet. Third, if parallel branches both land on red squares in the same tick, you get multiple pending interrupts, each with its own I D, and you resume them together by mapping each interrupt I D to its answer.
+
+There's also a simpler, static version for debugging: you can set interrupt-before and interrupt-after on named nodes when you compile, which behaves like breakpoints — pause before this square, every time. Dynamic interrupt calls are for real application logic; static breakpoints are for stepping through a graph.
+
+And if you're using create agent rather than raw LangGraph, you rarely write this by hand. The human-in-the-loop middleware from episode one does it for you: you list which tools need approval, and for each one, which decisions are allowed — approve as-is, edit the arguments, reject with feedback, or respond directly for ask-the-user style tools. Under the hood, it's the same red square.
+
+Finally, a subgraph subtlety that combines patterns one and two. If a red square sits inside an inner board, then on resume the outer board re-runs the lidded square from its beginning, and the inner board re-runs its red square from its beginning. So the idempotency rule applies at both levels.
+
+[PAUSE 1s]
+
+## Pattern three: the broadcast booth
+
+Now look up at the booth. Without streaming, the audience outside sees nothing until the game ends. With streaming, the commentator narrates as it happens. And the audience can choose what kind of commentary it wants. These are the stream modes.
+
+Values mode: after every tick, the commentator holds up a photo of the entire scoreboard. Updates mode: after every tick, just the slips — which square changed which columns. Messages mode: the commentator reads the model's words aloud token by token, as the model produces them, tagged with which square and which model call they came from — that's what drives the typing effect in a chat interface. Custom mode: any square can shout its own progress notes up to the booth using a stream writer — "fetched page three of ten" — which is gold for long-running tools. And there are lower-level modes for checkpoints, task start and finish events, and a debug mode that combines everything. You can request several modes at once. And to hear commentary from inside the lidded squares, you ask the booth to include subgraphs.
+
+The booth's broadcasting format has evolved, and it's worth knowing where it stands. Version one point one added a unified output format, where every streamed chunk has the same shape — a type, a namespace saying which board it came from, and the data — so your code doesn't have to guess what it's holding. Version one point two added a newer event-streaming A P I, and the documentation now recommends it for new applications. Instead of one feed you branch on, the booth gives you separate channels: one for messages, one for state values, one for subgraphs, one for the final output — and two for the red square: a list of pending interrupt payloads, and a simple flag saying whether the run paused for a human. Multiple consumers can read those channels at the same time without stealing events from each other.
+
+Why does this matter beyond polish? Latency perception. A model might take ten or twenty seconds to produce a long answer, but the first token often arrives in well under a second. Streamed, the user starts reading almost immediately. Unstreamed, they stare at a spinner. And for agents, streaming tool progress and step updates is how a user — or an operator — sees what the agent is actually doing, rather than trusting a black box.
+
+Streaming and interrupts fit together naturally. The documented loop for an interactive agent is: stream the run; print tokens as they arrive; when the stream ends, check the paused flag; if it paused, show the interrupt payload to the human, collect their decision, and stream again with a resume Command on the same thread. Repeat until the run ends without pausing.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Let's gather the sharp edges.
+
+First, a streaming leak that catches careful teams. You can give a graph private state columns and a narrow output schema, so that invoke returns only the final answer. But the docs are explicit: private columns are not redacted when streaming. Values mode emits the full scoreboard by default, private columns included. If a private column holds internal reasoning, raw retrieved documents, or a customer's full record, and you pipe values mode straight to a browser, you've just shipped it to the client. Restrict the streamed keys explicitly, use updates or messages mode, or filter server-side. And if a model call is purely internal — say, a structured-output classification — tag it so it's excluded from the message stream.
+
+Second, the interrupt rules, one more time because they're the most common production bugs: nodes re-run from the top on resume; don't swallow the pause exception; keep interrupt calls in a fixed order; keep payloads serializable. And none of it works without a persistent checkpointer. Pausing on an in-memory saver means the approval lives in one container's memory, and it vanishes on the next deploy.
+
+Third, subgraph persistence mismatches. Per-thread specialists plus parallel tool calling equals checkpoint collisions. And several different per-thread subgraphs called from the same node need their own isolated namespaces, or they can overwrite each other.
+
+Fourth, human-in-the-loop design. A pause that waits days is only useful if someone knows it's waiting. Build the notification and the approval interface; track pending interrupts per thread as an operational queue, with an age alert; and decide what happens to a thread nobody ever answers.
+
+[PAUSE 1s]
+
+## The interview angle
+
+Three ways this shows up.
+
+When they ask, "How would you add human approval before an agent takes a sensitive action?" — a strong answer sounds like: with a persistent checkpointer, I'd call interrupt in the node, or use the human-in-the-loop middleware on specific tools. Interrupt saves the state and returns the payload to the caller; the human's decision comes back as Command resume on the same thread I D, and the node re-runs from its start with interrupt returning that decision. So anything before the interrupt must be idempotent, and I never wrap the interrupt in a broad try-except, because that swallows the pause and the action runs unapproved.
+
+When they ask, "When would you use a subgraph?" — a strong answer sounds like: for reuse, for multi-agent systems where each specialist has its own loop and private history, and for team ownership boundaries. If state keys are shared, I add the compiled subgraph as a node; if not, I call it inside a wrapper node that maps state in and out. Default per-invocation persistence suits most specialists; per-thread when it needs memory across calls, with parallel calls to it prevented.
+
+When they ask, "How do you stream an agent's output?" — a strong answer sounds like: pick stream modes by consumer — messages for token-by-token chat, updates for step progress, custom for tool progress, values for full state. In current LangGraph, the event-streaming A P I gives typed projections for messages, values, subgraphs, output, and interrupts. And I'd call out that values streaming exposes private state by default, so restrict what reaches the client.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the board. Along the bottom, a lidded square — lift it and there's a whole inner board, a subgraph — either sharing columns with the central scoreboard or behind a translator at the lid, photographed into its own folder in the same drawer, remembering per visit, per thread, or not at all, and able to reach up and move the outer token with a Command to the parent. On the left, the red square — interrupt — where the game freezes, the camera files the photo, and a question goes out to a human; it comes back as a Command with a resume value on the same thread, the square re-runs from the top, and interrupt hands back the answer. So: idempotent side effects, no swallowed exceptions, fixed order. And above, the broadcast booth — streaming — narrating full scoreboards, slips, tokens, and custom progress, now with typed channels for messages, values, subgraphs, and interrupts, but never broadcasting private columns you didn't mean to share.
+
+Next episode: LangSmith — the observability layer for all of this, with tracing, datasets, and evaluations. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="02-langgraph-state.html">← LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="btn" href="04-langsmith.html">LangSmith: Tracing, Datasets, Evals →</a></div></main></div></body></html>

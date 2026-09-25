@@ -1,0 +1,441 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Evals: LLM-as-Judge, Golden Sets, Regression Gates — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk" open><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="active" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 3 · GenAI System Design · Episode 4</div>
+<h1 class="lesson">Evals: LLM-as-Judge, Golden Sets, Regression Gates</h1>
+<div class="meta">19 min listen · How production teams know an LLM change is actually better: golden sets built from real traffic, three kinds of graders including a calibrated LLM judge, honest statistics, and a regression gate that blocks a release before users ever see it.</div>
+<audio controls preload="metadata" src="../../audio/03-genai-system-design/s3e04-evals.mp3"></audio>
+<button class="btn complete" data-ep="03-genai-system-design/04-evals" onclick="toggleDone('03-genai-system-design/04-evals')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>An LLM change is only "better" if a versioned, sliced golden set, graded by layered graders (code → calibrated LLM judge → humans), says so beyond statistical noise — and a CI regression gate enforces that automatically, with production failures fed back into the set.</p>
+<h2 id="the-mental-image-the-test-bench">The mental image: the test bench</h2>
+<table>
+<thead>
+<tr>
+<th>Position</th>
+<th>Component</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Far left</td>
+<td>Locked filing cabinet, drawers</td>
+<td>Golden set, organized by slice; one held-out drawer</td>
+</tr>
+<tr>
+<td>Middle</td>
+<td>Machine with a version tag</td>
+<td>The whole app (prompt + retrieval + tools + pinned model) as one unit</td>
+</tr>
+<tr>
+<td>Right, nearest</td>
+<td>Inspector with a ruler</td>
+<td>Code-based / deterministic graders</td>
+</tr>
+<tr>
+<td>Right, middle</td>
+<td>Reading inspector</td>
+<td>LLM-as-judge</td>
+</tr>
+<tr>
+<td>Right, far end</td>
+<td>Human expert</td>
+<td>Labelling + judge calibration</td>
+</tr>
+<tr>
+<td>Above</td>
+<td>Scoreboard</td>
+<td>Production vs candidate, per drawer, with confidence intervals</td>
+</tr>
+<tr>
+<td>Below</td>
+<td>Trapdoor</td>
+<td>Regression gate in CI</td>
+</tr>
+<tr>
+<td>Along the floor</td>
+<td>Return pipe</td>
+<td>Online eval + production failures → new golden cases</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid">flowchart LR
+    GS[("Golden set<br/>sliced drawers + held-out")] --> APP["App under test<br/>(prompt, retrieval, tools, pinned model)"]
+    APP --> G1["Code graders<br/>schema, tool call, SQL exec, required facts"]
+    APP --> G2["LLM judge<br/>one criterion each, binary rubric"]
+    APP --> G3["Human expert<br/>labels + calibration sample"]
+    G1 --> SB["Scoreboard<br/>per-slice scores, CI width, latency, cost"]
+    G2 --> SB
+    G3 -.->|"judge-human agreement"| G2
+    SB --> GATE{"Regression gate"}
+    GATE -->|pass| PROD["Production"]
+    GATE -->|fail| BLOCK["Merge blocked<br/>report: failed slice + flipped cases"]
+    PROD -->|"1-5% sampled online judging,<br/>thumbs, regenerates, escalations"| GS
+</pre>
+
+<h2 id="golden-set-rules">Golden set rules</h2>
+<ul>
+<li>Start with <strong>50–100</strong> expert-labelled cases; grow to <strong>hundreds–thousands</strong>.</li>
+<li>Source from <strong>production traffic</strong> (thumbs-down, regenerations, escalations), not engineer imagination.</li>
+<li><strong>Slice</strong> by intent, difficulty, segment, language, answer-vs-refuse; gate per slice.</li>
+<li>Keep a <strong>held-out</strong> subset you never tune against (prompt overfitting is real).</li>
+<li><strong>Version</strong> the golden set; scores are only comparable on the same version.</li>
+<li>References can be: ideal answer, required facts, expected tool call, or a rubric.</li>
+</ul>
+<h2 id="grader-layers">Grader layers</h2>
+<table>
+<thead>
+<tr>
+<th>Grader</th>
+<th>Good for</th>
+<th>Cost</th>
+<th>Watch-outs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code / deterministic</td>
+<td>JSON schema, tool name+args, SQL result equivalence, must/must-not contain, latency/tokens</td>
+<td>~free, instant, repeatable</td>
+<td>Brittle to valid paraphrase</td>
+</tr>
+<tr>
+<td>LLM judge</td>
+<td>Faithfulness, relevance, tone, helpfulness</td>
+<td>cents per run of hundreds</td>
+<td>Position, verbosity, self-preference bias; rubric vagueness; drift</td>
+</tr>
+<tr>
+<td>Human</td>
+<td>Labelling, calibration, ambiguous cases</td>
+<td>expensive, slow</td>
+<td>Inter-rater disagreement — measure it</td>
+</tr>
+</tbody>
+</table>
+<h3 id="llm-as-judge-biases-and-fixes">LLM-as-judge: biases and fixes</h3>
+<table>
+<thead>
+<tr>
+<th>Bias</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Position (favors first shown)</td>
+<td>Run pairwise both orders; count only consistent wins</td>
+</tr>
+<tr>
+<td>Verbosity (favors longer)</td>
+<td>Conciseness criterion in rubric; track answer length as a metric</td>
+</tr>
+<tr>
+<td>Self-preference (favors own family)</td>
+<td>Judge from a different model family</td>
+</tr>
+<tr>
+<td>Vague 1–10 scales</td>
+<td>Binary / 3-point scales with each level defined; reasoning before verdict; one judge per criterion</td>
+</tr>
+<tr>
+<td>Uncalibrated</td>
+<td>Label 100–200 cases by a domain expert; measure agreement (and Cohen's kappa); recheck after any judge/app change</td>
+</tr>
+</tbody>
+</table>
+<p>Reference point: in the MT-Bench / Chatbot Arena study, strong judges reached <strong>&gt;80% agreement</strong> with humans — about the human-human agreement rate — while exhibiting position, verbosity and self-enhancement biases.</p>
+<h3 id="example-judge-binary-faithfulness">Example judge (binary faithfulness)</h3>
+<pre><code class="language-python">JUDGE_PROMPT = &quot;&quot;&quot;You are grading an answer for FAITHFULNESS only.
+Context:
+{context}
+Question: {question}
+Answer: {answer}
+
+List each factual claim in the answer. For each, say whether the context supports it.
+Then output exactly one line: VERDICT: PASS if every claim is supported, else VERDICT: FAIL.&quot;&quot;&quot;
+
+def judge_faithfulness(llm, case, answer):
+    out = llm(JUDGE_PROMPT.format(context=case[&quot;context&quot;], question=case[&quot;question&quot;], answer=answer))
+    return out.strip().splitlines()[-1] == &quot;VERDICT: PASS&quot;
+
+def pairwise(llm_pair_judge, q, a, b):
+    &quot;&quot;&quot;Swap order to cancel position bias; only a consistent win counts.&quot;&quot;&quot;
+    first = llm_pair_judge(q, a, b)    # returns &quot;A&quot; or &quot;B&quot;
+    second = llm_pair_judge(q, b, a)
+    if first == &quot;A&quot; and second == &quot;B&quot;: return &quot;a&quot;
+    if first == &quot;B&quot; and second == &quot;A&quot;: return &quot;b&quot;
+    return &quot;tie&quot;
+</code></pre>
+<h3 id="rag-metric-vocabulary-ragas">RAG metric vocabulary (RAGAS)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Question</th>
+<th>Low score means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Faithfulness</td>
+<td>Are answer claims supported by retrieved context?</td>
+<td>Generation problem (hallucination / embellishment)</td>
+</tr>
+<tr>
+<td>Response (answer) relevancy</td>
+<td>Does the answer address the question?</td>
+<td>Generation / prompt problem</td>
+</tr>
+<tr>
+<td>Context precision</td>
+<td>Are relevant chunks ranked near the top?</td>
+<td>Ranking / reranker problem</td>
+</tr>
+<tr>
+<td>Context recall</td>
+<td>Was everything needed retrieved?</td>
+<td>Retrieval / chunking / index problem</td>
+</tr>
+</tbody>
+</table>
+<h2 id="agents">Agents</h2>
+<ul>
+<li><strong>Outcome</strong> grading (final state correct — checked in code) preferred; <strong>trajectory</strong> grading for cost and safety.</li>
+<li><strong>pass@k</strong> = at least one success in k tries (capability). <strong>pass^k</strong> = all k succeed (consistency).</li>
+<li>90% single-try success → pass^10 = 0.9^10 ≈ <strong>35%</strong>.</li>
+</ul>
+<h2 id="the-statistics-scoreboard">The statistics (scoreboard)</h2>
+<ul>
+<li>Standard error of a pass rate p on n cases: <code>sqrt(p(1-p)/n)</code>.</li>
+<li>n=200, p=0.8 → SE ≈ 2.8 pts → 95% CI ≈ <strong>±5.6 pts</strong>. A 2-point gain is noise.</li>
+<li>n=30 slice → CI ≈ ±14–15 pts.</li>
+<li>4× cases → ½ interval width.</li>
+<li>Use <strong>paired comparison</strong> on identical cases (count flips pass→fail vs fail→pass; McNemar-style) instead of comparing two independent means.</li>
+<li>Cost: 500 cases × 3 judges × ~2k tokens ≈ 3M tokens → single-digit dollars on a mid-tier judge.</li>
+</ul>
+<h2 id="regression-gate-ci">Regression gate (CI)</h2>
+<pre><code class="language-yaml"># illustrative gate config
+triggers: [prompt, model_version, retrieval_config, tools, dependencies]
+pr_suite: {code_checks: all, judged_sample: 100}      # minutes
+nightly_suite: {code_checks: all, judged: all}        # full
+rules:
+  floors:      {faithfulness: 0.90, refuse_when_should: 1.00}
+  no_regress:  {per_slice_max_drop: &quot;outside CI band for slice size&quot;}
+  ops_budget:  {p50_latency_ms: &quot;+10%&quot;, cost_per_request: &quot;+5%&quot;, error_rate: &quot;+0.5pt&quot;}
+model: pinned-version   # never a floating alias
+</code></pre>
+<h2 id="online-evaluation">Online evaluation</h2>
+<p>Judge 1–5% of live traffic asynchronously; track implicit signals (thumbs, regenerate, copy, escalation, abandonment); every confirmed failure → new golden case. Use A/B experiments for large changes — offline says "safe to try," online says "users better off."</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ol>
+<li><strong>Average hides slices</strong> — cheaper-model swap: overall 81→80 (pass), non-English slice (25 cases) −20 pts. Fix: per-slice gates + enough cases per high-stakes slice.</li>
+<li><strong>Goodhart</strong> — optimizing against a length-loving judge produced ever-longer answers. Fix: length metric + conciseness criterion.</li>
+<li><strong>Reference leakage</strong> in judge prompts; <strong>stale</strong> golden sets; evaluating against a <strong>different retrieval config</strong> than production.</li>
+<li><strong>Floating model aliases</strong> make scores irreproducible.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden set</td>
+<td>Versioned, sliced, labelled test cases — the product's real spec</td>
+</tr>
+<tr>
+<td>Slice</td>
+<td>Subset by intent/segment; gate per slice</td>
+</tr>
+<tr>
+<td>LLM-as-judge</td>
+<td>A model grading outputs against a rubric; needs calibration</td>
+</tr>
+<tr>
+<td>Pointwise vs pairwise</td>
+<td>Score one answer vs pick the better of two</td>
+</tr>
+<tr>
+<td>Calibration</td>
+<td>Measured judge–human agreement on a labelled sample</td>
+</tr>
+<tr>
+<td>Regression gate</td>
+<td>CI step that blocks a change on floors / per-slice drops / ops budgets</td>
+</tr>
+<tr>
+<td>Online eval</td>
+<td>Judges + implicit feedback on sampled live traffic</td>
+</tr>
+<tr>
+<td>pass@k / pass^k</td>
+<td>Capability vs consistency</td>
+</tr>
+<tr>
+<td>Paired comparison</td>
+<td>Same cases, count flips — lower variance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How would you evaluate an LLM application end to end?</strong>
+Golden set from real traffic, sliced, with a held-out portion and versioning. Layered graders: deterministic code checks first; one LLM judge per criterion with binary rubrics, calibrated on ~100–200 human labels; humans for labelling and recalibration. Wire into CI as a regression gate with per-slice thresholds plus latency/cost budgets; judge a sample of production traffic and feed failures back.</p>
+<p><strong>Q2. What are the failure modes of LLM-as-judge and how do you mitigate them?</strong>
+Position bias (swap order, count consistent wins), verbosity bias (conciseness criterion, track length), self-preference (different model family), vague scales (binary/3-point, reasoning first, one criterion per judge). Above all, measure judge–human agreement before trusting it and recheck after changes.</p>
+<p><strong>Q3. Your candidate prompt scores 82% vs 80% on 200 cases. Ship?</strong>
+The 95% CI is ~±5.6 points, so that difference is noise. Do a paired comparison of flipped cases, verify no critical slice regressed, check latency/cost. Ship if it's quality-neutral and cheaper or better on a slice that matters — not because of the 2 points.</p>
+<p><strong>Q4. How do you evaluate an agent differently from a single LLM call?</strong>
+Grade the outcome (final state, checked in code) first, trajectory second (redundant calls, unsafe tools, cost). Measure consistency with pass^k, not just pass@k: 90% single-try success is only ~35% for 10/10.</p>
+<p><strong>Q5. How do RAG metrics help you diagnose a bad answer?</strong>
+Split into retrieval and generation: low context recall/precision → retrieval, chunking or ranking problem; good context but low faithfulness → the model is embellishing or ignoring evidence; low answer relevancy → prompt/generation problem. Different fixes, often different owners.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Zheng et al., "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena": https://arxiv.org/abs/2306.05685</li>
+<li>Anthropic, "Demystifying evals for AI agents" (Jan 2026) — graders, pass@k vs pass^k: https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents</li>
+<li>RAGAS available metrics: https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/</li>
+<li>RAGAS faithfulness: https://docs.ragas.io/en/stable/concepts/metrics/available_metrics/faithfulness/</li>
+<li>MLflow GenAI evaluation: https://mlflow.org/docs/latest/genai/eval-monitor/</li>
+<li>Promptfoo (open-source eval/red-team CLI; OpenAI announced acquisition Mar 2026, OSS maintained): https://www.promptfoo.dev/blog/promptfoo-joining-openai/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track three, episode four: evals — L L M as a judge, golden sets, and regression gates. If the first three episodes of this track were about building the machine and making it fast and cheap, this one is about the question that sits under every single change you will ever make to it: is the new version actually better, or does it just feel better?
+
+Here's the scenario. A team runs a customer support assistant that's been live for six months. Someone tweaks the system prompt — two sentences, tightening the tone, nothing dramatic. The engineer tries ten questions by hand, the answers read nicely, the change ships on a Thursday afternoon. By Monday, refund-related tickets have doubled. It turns out the new wording made the model noticeably more reluctant to quote the refund policy, and instead it told people to "contact support" — which is to say, it told people who were already talking to support to go contact support. Nobody caught it, because nobody had a way to catch it. Ten hand-picked questions, read by the person who wrote the change, is not a test. It's a vibe check.
+
+That's what this episode fixes. By the end you'll be able to describe, in an interview or in a design review, a complete evaluation system: where the test data comes from, who or what does the grading, how to tell a real improvement from noise, and how the whole thing becomes a gate that blocks a bad release automatically.
+
+## Why evals are the hard part
+
+Quick word on why this is harder than ordinary software testing. In normal code, a unit test asserts that two plus two equals four, and it either does or it doesn't. An L L M application gives you non-deterministic output in open-ended natural language. The same question can produce two differently worded answers that are both correct, or one that sounds perfect and is quietly wrong.
+
+And the surface that can break is enormous. A change to the prompt, a change to the chunking in your retrieval pipeline, a new embedding model, a provider quietly updating the model behind an alias, a switch to a cheaper model to save money — every one of those can shift behavior on some slice of questions while leaving the average looking fine. Teams that ship L L M products well tend to say the same thing: the eval suite is the product's real specification. The prompt is just the current attempt to satisfy it.
+
+[PAUSE 1s]
+
+## The mental image: the test bench
+
+So let's build one picture and hang everything off it. In your mind's eye, picture a long workbench running left to right in front of you.
+
+On the far left end of the bench sits a locked filing cabinet. That's the golden set — your curated collection of test cases. Each drawer is a slice: one drawer for refund questions, one for billing, one for questions the assistant should refuse, one for adversarial attempts to trick it.
+
+In the middle of the bench sits the machine under test — your whole application, prompt, retrieval, tools, model, all of it, bolted down as one unit with a version tag hanging off it.
+
+On the right end of the bench, three graders sit in a row. Nearest the machine, a fast mechanical inspector with a ruler and a checklist — that's code-based grading. Next to it, a second inspector who can read and reason — that's the L L M judge. And at the far right, the most expensive seat at the bench, a human expert who only looks at some of the work.
+
+Above the bench, mounted on the wall, a scoreboard showing two rows of numbers: the score of the version currently in production, and the score of the candidate you're testing today, broken down drawer by drawer.
+
+And directly beneath the machine, set into the floor, a trapdoor. That's the regression gate. If the candidate's scores fall below the line on the scoreboard, the trapdoor opens and the release drops through. It never reaches users.
+
+One last piece. Running along the floor from the far right, all the way back to the filing cabinet on the left, there's a return pipe. Real production traffic, especially the failures, flows back through that pipe and becomes new test cases in the cabinet. Hold that picture. Cabinet on the left, machine in the middle, three graders on the right, scoreboard above, trapdoor below, return pipe along the floor.
+
+[PAUSE 2s]
+
+## The filing cabinet: building a golden set
+
+Start on the left, at the filing cabinet, because this is where most teams go wrong first.
+
+A golden set is a collection of inputs, and for many of them, a reference — either an ideal answer, or the facts the answer must contain, or the tool call the agent should make, or simply a rubric describing what good looks like. How big should it be? Smaller than people think to start, bigger than people think to finish. Fifty to a hundred carefully chosen cases, labelled by someone who actually knows the domain, will catch most gross regressions on day one. Over months it should grow to several hundred or a few thousand, because — and we'll do the arithmetic in a minute — small sets can't detect small changes.
+
+Where do the cases come from? The worst source is the engineer's imagination. The best source is production itself — the return pipe along the floor. Sample real user questions, especially the ones that got a thumbs-down, a regenerate click, an escalation to a human, or a follow-up like "no, that's not what I asked." Those are gold, because they represent the failures your users actually experience rather than the failures you guessed at.
+
+Then organize the cabinet into drawers, which is to say, slices. Tag every case by intent, by difficulty, by customer segment, by language, by whether it should be answered or refused. This matters enormously, and here's why. An overall average can hold perfectly steady while one drawer collapses. Remember the refund story from the top: overall helpfulness scores might have dipped by one point, well within noise, while the refund drawer dropped by twenty. If you only watch the average, you never see it.
+
+Two more rules for the cabinet. First, keep a held-out drawer that you never look at while tuning. If you iterate on a prompt fifty times against the same hundred questions, you will overfit to those questions exactly the way a model overfits to training data, and your scores will lie to you. Second, version the cabinet itself. When the golden set changes, the scores change, and you need to know whether the score moved because the system got better or because the test got easier.
+
+[PAUSE 1s]
+
+## The three graders
+
+Now walk to the right end of the bench, to the three graders, and take them in order from nearest to farthest.
+
+The first grader, the mechanical inspector with the ruler, is code. Deterministic checks. Did the output parse as valid jason matching the schema? Did the agent call the right tool with the right arguments? Did the generated sequel query actually execute, and did it return the same rows as the reference query? Does the answer contain the policy number it must contain, and not contain the competitor's name it must never contain? These checks are fast, free, perfectly repeatable, and you should use them for everything they can cover. A surprising fraction of real quality problems — broken formats, wrong tool calls, missing required facts — are catchable without any model at all. Always reach for the ruler first.
+
+The second grader is the L L M judge, and this is where the interesting engineering lives. The idea is simple: give a capable model the question, the system's answer, optionally a reference answer or the retrieved context, and a rubric, and ask it to grade. It scales to thousands of cases in minutes and handles open-ended qualities the ruler can't — is this answer faithful to the retrieved documents, does it actually address what was asked, is the tone appropriate.
+
+The research that put this approach on the map found that a strong judge model agreed with human raters over eighty percent of the time, which is roughly the same rate at which human raters agree with each other. That's the good news. The same research, and plenty since, documented the judge's systematic biases, and a strong candidate names them without being asked.
+
+Position bias: when comparing two answers side by side, judges tend to favor whichever one is shown first. The fix is to run every pairwise comparison twice with the order swapped, and only count a win if it survives the swap.
+
+Verbosity bias: judges tend to prefer longer answers, even when the extra length adds nothing. Studies have found this length preference is stronger in models than in humans. The fix is to put conciseness in the rubric explicitly, and watch average answer length as its own metric so you notice if you're drifting toward padding.
+
+Self-preference bias: a judge tends to rate outputs from its own model family more generously. The fix is to use a judge from a different family than the model you're grading, or at least check for the effect.
+
+Then there's rubric design, which matters more than which model you pick. Vague prompts like "rate this answer from one to ten" produce mushy, unstable scores — the judge can't tell a six from a seven any better than you can. Much better: binary or three-point scales with each level spelled out in plain words. "Pass if every factual claim in the answer is supported by the provided context; fail if any claim is not." Ask the judge to write its reasoning before it gives the verdict, so the score is conditioned on an argument. And prefer one narrow judge per criterion — one for faithfulness, one for relevance, one for tone — over a single judge scoring everything at once.
+
+For retrieval-augmented systems specifically, there's a standard vocabulary worth knowing, popularized by the open-source library raa gass. Faithfulness: are the answer's claims supported by the retrieved context? Answer relevance: does the answer address the question? Context precision: are the useful chunks ranked near the top of what was retrieved? Context recall: did retrieval find everything needed? The power of splitting it this way is diagnosis. Low faithfulness with good context recall means the model is ignoring or embellishing good evidence — a generation problem. Good faithfulness with poor context recall means the model is faithfully summarizing incomplete evidence — a retrieval problem. Two different fixes, two different teams.
+
+The third grader, at the far right of the bench, is the human expert. Humans are slow and expensive, so you don't use them on every case. You use them for two jobs. One, labelling the golden set in the first place. Two — and this is the one teams skip — calibrating the judge. Before you trust an L L M judge to gate releases, have a domain expert label a hundred to two hundred cases, run the judge on the same cases, and measure agreement. If the judge agrees with the human eighty-five percent of the time, you know what you're working with. If it agrees sixty percent of the time, your rubric is broken, and every score the judge has produced is unreliable. And recheck that agreement periodically, because when you change the judge's model or the application's behavior shifts, calibration drifts.
+
+[PAUSE 1s]
+
+## Agents: grading the path, not just the destination
+
+A quick detour, because agents change the picture. When the machine in the middle of the bench is an agent taking ten steps — searching, calling tools, reading results, deciding again — you can grade the outcome, the trajectory, or both. Outcome grading asks: did the final state end up correct? Was the ticket actually refunded, was the right row actually updated? Prefer that wherever you can check it with code, because it doesn't care how the agent got there. Trajectory grading asks whether the path was sensible — no redundant calls, no dangerous tools touched, no loop of twelve identical searches. Use it for cost and safety, but be careful not to punish creative paths that reach the right answer.
+
+And agents make reliability visible in a way single calls don't. There's a useful distinction between two metrics. Pass at k asks: in k attempts, did the agent succeed at least once? That measures capability. Its stricter sibling, sometimes written pass-hat-k, asks: did it succeed on all k attempts? That measures consistency, which is what a customer actually experiences. The gap between them is brutal. An agent that succeeds ninety percent of the time on a single try succeeds on ten out of ten tries only about thirty-five percent of the time — zero point nine to the tenth power. So when someone shows you a demo that worked, ask how often it works.
+
+[PAUSE 1s]
+
+## The scoreboard: statistics that keep you honest
+
+Now look up at the scoreboard above the bench, because this is where the arithmetic lives and where interviewers separate practitioners from tourists.
+
+Suppose your golden set has two hundred cases and the current version passes eighty percent of them. The standard error on that eighty percent is the square root of zero point eight times zero point two, divided by two hundred — about two point eight percentage points. A rough ninety-five percent confidence interval is plus or minus twice that: roughly five and a half points either way. So if the candidate scores eighty-two percent, you have learned almost nothing. That two-point gain is noise. And at the slice level, a drawer with thirty cases has an interval of plus or minus fifteen points. You can't read small movements in small drawers.
+
+Three things help. First, grow the set where it matters. Precision improves with the square root of the size, so quadrupling the cases halves the interval. Second, use paired comparisons. Run both versions on exactly the same cases and look at the cases where they disagree — the flips — rather than comparing two independent averages. That removes most of the case-to-case variance and makes small real differences much more visible. Third, account for the model's own randomness. Run each case more than once, or evaluate at the same temperature you use in production and accept that you need more cases.
+
+There's also cost on the scoreboard, and it's usually smaller than people fear. A run of five hundred cases, with three judge calls each at a couple of thousand tokens per call, is about three million tokens — single-digit dollars on a mid-tier judge model, and a few minutes of wall-clock time if you run the calls in parallel. That's cheap enough to run on every pull request. What's expensive is the human labelling, which is exactly why you spend it on calibration rather than on routine grading.
+
+[PAUSE 1s]
+
+## The trapdoor: regression gates in C I
+
+Now the trapdoor beneath the machine — the regression gate. This is where evaluation stops being a report someone reads and becomes a control that actually prevents incidents.
+
+Mechanically, it's a step in your continuous integration pipeline. Any change that can alter behavior — a prompt edit, a model swap, a retrieval parameter, a new tool, a dependency bump — triggers an eval run against the golden set. The candidate's scores go up on the scoreboard next to production's, and the gate applies rules. A good rule set has three layers. An absolute floor per critical metric: faithfulness must stay above, say, ninety percent, and the refuse-when-you-should drawer must stay at one hundred percent. A no-regression rule per slice: no drawer may drop by more than a threshold you've chosen to sit outside the noise band for that drawer's size. And operational limits alongside quality: median latency, token cost per request, and error rate may not regress beyond budget either. Fail any rule, the trapdoor opens, the merge is blocked, and the report shows exactly which drawer failed and which cases flipped.
+
+Two practical notes. Make the fast, cheap subset — the ruler checks plus a small judged sample — run on every pull request in a few minutes, and the full suite run nightly and before any release. And treat model upgrades exactly like code changes. If your provider retires a model version or you pin to a new one, that goes through the trapdoor too. A pinned model version, not a floating alias, is what makes your scores reproducible.
+
+[PAUSE 1s]
+
+## The return pipe: online evaluation
+
+Finally, walk back along the floor, following the return pipe from the far right to the cabinet on the left. Offline evals test what you thought to test. Production tells you what you missed.
+
+Online evaluation means running the same judges asynchronously on a sample of live traffic — one to five percent is common — and putting the scores on a dashboard next to latency and cost. Add implicit signals: thumbs up and down, regenerate clicks, copy-to-clipboard, escalations to a human, conversation abandonment. When any of those degrade, you pull the traces, find the pattern, and add those cases to the golden set. That's the loop closing. Every production failure becomes a permanent regression test, and the same failure can never ship twice.
+
+[PAUSE 1s]
+
+## Pitfalls and a war story
+
+The sharp edges, briefly. Goodhart's law: once a metric becomes the target, it stops measuring what you wanted. One team noticed their judge rewarded thoroughness, tuned their prompt against it for weeks, and watched scores climb steadily while answers got longer and longer. Users hated it. Answer length had quietly become the thing being optimized. A length metric on the scoreboard and a conciseness criterion in the rubric would have caught it in the first week.
+
+Here's a longer war story, the kind worth telling in an interview. A large retail platform switched its assistant to a newer, cheaper model to cut serving cost by about forty percent. The overall eval score moved from eighty-one to eighty — inside the noise band, gate passed, change shipped. Two weeks later, complaints spiked from customers writing in a second language. When the team finally sliced the golden set, the non-English drawer had dropped nearly twenty points. It had only twenty-five cases, so it barely moved the average. The fixes were exactly the pieces of the bench we've been walking: per-slice gates, not just an average; enough cases in each high-stakes drawer to see a real drop; and a return pipe that fed the complaint conversations straight back into the cabinet.
+
+[PAUSE 1s]
+
+## Interview angle
+
+Three ways this comes up. First: "How would you evaluate an L L M application?" A strong answer sounds like this. "I'd build a golden set from real production traffic, sliced by intent and difficulty, with a held-out portion. I'd grade in layers: deterministic code checks first for format, tool calls, and required facts; then an L L M judge per criterion with a binary or three-point rubric, calibrated against a hundred or so human labels before I trust it; and humans for labelling and periodic recalibration. Then I'd wire it into C I as a regression gate with per-slice thresholds, plus online judging on a sample of live traffic feeding failures back into the set."
+
+Second: "What are the problems with L L M as a judge?" Strong answer: position bias, fix it by swapping order; verbosity bias, fix it with a conciseness criterion and a length metric; self-preference, fix it with a judge from a different model family; and vague rubrics, fix them with narrow, binary criteria and reasoning before the verdict. Then add the one that shows maturity: none of that matters unless you've measured judge-human agreement, because an uncalibrated judge is just a confident random number generator.
+
+Third: "Your new prompt scores two points higher. Do you ship it?" Strong answer: "Depends on the noise. On two hundred cases at eighty percent, the confidence interval is about plus or minus five points, so two points is noise. I'd look at a paired comparison on the same cases — which ones flipped from fail to pass and which flipped the other way — check that no critical slice regressed, and check latency and cost. If it's genuinely neutral on quality but cheaper, that can still be a reason to ship."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Let's walk the bench one last time. On the left, the filing cabinet — the golden set — built from real production traffic, organized into drawers by slice, with a held-out drawer you never tune against, and versioned. In the middle, the machine under test, versioned as one unit with a pinned model. On the right, three graders: the ruler first, deterministic code checks, fast and free; then the L L M judge, one narrow criterion at a time, order swapped for pairwise comparisons, a different model family, calibrated against human labels; then the human expert, spent on labelling and calibration. Above, the scoreboard, where you remember that two hundred cases gives you roughly plus or minus five points, so you use paired comparisons and watch every drawer, not just the average. Below, the trapdoor — the regression gate in C I, with absolute floors, per-slice no-regression rules, and latency and cost budgets. And along the floor, the return pipe, carrying production failures back into the cabinet, so no failure ships twice.
+
+Next episode, we put guards on the doors of this same system: guardrails, personal data, and prompt-injection defense. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="03-latency-cost.html">← Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="btn" href="05-guardrails-security.html">Guardrails, PII, Prompt-Injection Defense →</a></div></main></div></body></html>

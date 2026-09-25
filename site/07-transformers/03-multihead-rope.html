@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-Head Attention, RoPE, Residuals, LayerNorm — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="active" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 3</div>
+<h1 class="lesson">Multi-Head Attention, RoPE, Residuals, LayerNorm</h1>
+<div class="meta">17 min listen · The full transformer block as a building: a conveyor belt of tiles rising through identical floors, an attention room with many desks on the left, a feed-forward room on the right, leveling gates at every door, and clock dials that tell each tile where it sits — plus the modern variants every current open model uses: grouped-query attention, RMSNorm, pre-norm, and rotary positions.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e03-multihead-rope.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/03-multihead-rope" onclick="toggleDone('07-transformers/03-multihead-rope')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>A modern transformer layer is attention plus plumbing — a <strong>residual stream</strong> that every sublayer reads from and adds to, <strong>pre-norm RMSNorm</strong> at each sublayer's input, <strong>multi-head attention with grouped K/V heads</strong> to shrink the KV cache, a <strong>gated (SwiGLU) feed-forward</strong> holding most parameters, and <strong>rotary position encoding</strong> applied to Q and K — and it's the plumbing, not attention alone, that makes 100+ layer models trainable and servable.</p>
+<h2 id="the-mental-image-the-building">The mental image: the building</h2>
+<ul>
+<li><strong>Shelf</strong> of tiles at ground level; a <strong>conveyor belt</strong> (residual stream) carries them up through identical <strong>floors</strong> (layers).</li>
+<li><strong>Left room</strong> on each floor = attention. Inside: many <strong>desks</strong> (heads), each with its own flag/label/bucket lenses.</li>
+<li><strong>Filing cabinets</strong> shared by groups of desks = GQA (one cabinet for all = MQA).</li>
+<li><strong>Right room</strong> = feed-forward (SwiGLU): each tile thinks alone; most of the parameters.</li>
+<li><strong>Leveling gate</strong> at each room's doorway = pre-norm RMSNorm; one final gate on the <strong>roof</strong>.</li>
+<li>Rooms read a copy and <strong>add</strong> back to the belt → residual connection; the belt is a clean gradient highway.</li>
+<li><strong>Clock dials</strong> on flags and labels, rotated by position, many hands at different speeds = RoPE.</li>
+</ul>
+<pre class="mermaid">flowchart TB
+    IN["Residual stream x (from floor below)"] --> N1["RMSNorm (door gate)"]
+    N1 --> ATT["Multi-head attention: 32 Q heads, 8 KV heads (GQA), RoPE on Q and K"]
+    ATT --> ADD1(("+"))
+    IN --> ADD1
+    ADD1 --> N2["RMSNorm (door gate)"]
+    N2 --> FFN["SwiGLU feed-forward (expand ~3.5x, gate, project back)"]
+    FFN --> ADD2(("+"))
+    ADD1 --> ADD2
+    ADD2 --> OUT["Residual stream to next floor"]
+</pre>
+
+<pre class="mermaid">flowchart LR
+    subgraph MHA["MHA: 1 KV per Q head"]
+        q1["Q1"] --> kv1["KV1"]
+        q2["Q2"] --> kv2["KV2"]
+        q3["Q3"] --> kv3["KV3"]
+        q4["Q4"] --> kv4["KV4"]
+    end
+    subgraph GQA["GQA: groups share KV"]
+        g1["Q1"] --> gkv1["KV-A"]
+        g2["Q2"] --> gkv1
+        g3["Q3"] --> gkv2["KV-B"]
+        g4["Q4"] --> gkv2
+    end
+    subgraph MQA["MQA: one shared KV"]
+        m1["Q1"] --> mkv["KV"]
+        m2["Q2"] --> mkv
+        m3["Q3"] --> mkv
+        m4["Q4"] --> mkv
+    end
+</pre>
+
+<h2 id="the-block-in-code-llama-style-simplified">The block in code (Llama-style, simplified)</h2>
+<pre><code class="language-python">def block(x, pos):
+    # pre-norm: normalize the input to each sublayer, never the residual stream itself
+    h = x + attention(rms_norm(x), pos)     # residual add
+    return h + swiglu_ffn(rms_norm(h))      # residual add
+
+def rms_norm(x, g, eps=1e-6):
+    return g * x / sqrt(mean(x**2, dim=-1) + eps)       # no mean subtraction (vs LayerNorm)
+
+def swiglu_ffn(x):
+    return W_down @ (silu(W_gate @ x) * (W_up @ x))     # gate acts as a per-element dimmer
+
+# Original (post-norm, 2017):  x = LayerNorm(x + Sublayer(x))
+# Modern (pre-norm):           x = x + Sublayer(Norm(x));  final Norm before the output head
+</code></pre>
+<h2 id="rope-in-one-picture">RoPE in one picture</h2>
+<p>Split each Q/K head vector into pairs of dimensions; rotate pair <em>i</em> at position <em>m</em> by angle <code>m · θ_i</code>, with <code>θ_i = base^(−2i/d)</code>. Then <code>⟨R(m)q, R(n)k⟩</code> depends only on <code>(m − n)</code> → relative position, applied in every layer and head, nothing added to the residual stream.</p>
+<ul>
+<li>Many frequencies = many clock hands: fast hands resolve neighbors, slow hands track long range.</li>
+<li><code>rope_theta</code> (base): 10,000 originally; <strong>500,000 in Llama 3</strong> (supports 128K context).</li>
+<li>Beyond trained length → unseen angle combinations → degradation. Extension: <strong>Position Interpolation</strong> (scale positions down, ~1K fine-tune steps), <strong>YaRN</strong> (frequency-aware scaling, far fewer tokens than earlier methods).</li>
+</ul>
+<h2 id="reference-configs-llama-3-family">Reference configs (Llama 3 family)</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Layers</th>
+<th>d_model</th>
+<th>Q heads</th>
+<th>KV heads</th>
+<th>FFN</th>
+<th>Norm</th>
+<th>Position</th>
+<th>Vocab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Llama 3 8B</td>
+<td>32</td>
+<td>4,096</td>
+<td>32</td>
+<td>8</td>
+<td>SwiGLU, 14,336</td>
+<td>pre-norm RMSNorm</td>
+<td>RoPE θ=500K</td>
+<td>128,256</td>
+</tr>
+<tr>
+<td>Llama 3 405B</td>
+<td>126</td>
+<td>16,384</td>
+<td>128</td>
+<td>8</td>
+<td>SwiGLU</td>
+<td>pre-norm RMSNorm</td>
+<td>RoPE θ=500K</td>
+<td>128,256</td>
+</tr>
+</tbody>
+</table>
+<p>KV-cache per token per layer ∝ 2 × (KV heads) × head_dim. 405B: 128 → 8 KV heads = <strong>16× smaller</strong> cache than full MHA. DeepSeek-V3's <strong>MLA</strong> instead caches a compressed latent per token (reported ~64× smaller than MHA at its dimensions).</p>
+<h2 id="pitfall-war-story">Pitfall / war story</h2>
+<p>Textbook post-norm implementation scaled 12 → 48 layers: loss spikes then NaN after a few thousand steps; lower LR + longer warm-up only delayed it. Fix: pre-norm (norm inside the residual branch), RMSNorm, final norm before the head. Diagnostic habit: "where are the norms?"</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Residual stream</td>
+<td>x + Sublayer(...) at every sublayer</td>
+<td>Identity path = gradient highway; layers write small updates</td>
+</tr>
+<tr>
+<td>Multi-head attention</td>
+<td>h parallel low-dim attentions, concatenated + output projection</td>
+<td>Many relation types at ~cost of one wide head</td>
+</tr>
+<tr>
+<td>MQA</td>
+<td>All query heads share one K/V head (Shazeer 2019)</td>
+<td>Max KV savings, some quality loss</td>
+</tr>
+<tr>
+<td>GQA</td>
+<td>Query heads share K/V in groups (Ainslie et al. 2023)</td>
+<td>Standard compromise; cache ÷ group size</td>
+</tr>
+<tr>
+<td>MLA</td>
+<td>Cache a low-rank latent, expand at use (DeepSeek)</td>
+<td>Compress rather than share</td>
+</tr>
+<tr>
+<td>LayerNorm</td>
+<td>Re-center + re-scale + learned affine</td>
+<td>Original</td>
+</tr>
+<tr>
+<td>RMSNorm</td>
+<td>Re-scale by RMS only (Zhang &amp; Sennrich 2019)</td>
+<td>Cheaper, equally stable</td>
+</tr>
+<tr>
+<td>Pre-norm vs post-norm</td>
+<td>Norm inside residual branch vs after the add</td>
+<td>Pre-norm trains stably at depth, less warm-up (Xiong et al. 2020)</td>
+</tr>
+<tr>
+<td>SwiGLU</td>
+<td>Gated FFN with SiLU/Swish gate (Shazeer 2020)</td>
+<td>Better quality per FLOP; FFN width ~8/3–3.5× d</td>
+</tr>
+<tr>
+<td>RoPE</td>
+<td>Rotate Q/K by position-dependent angles (Su et al. 2021)</td>
+<td>Relative position via dot-product geometry</td>
+</tr>
+<tr>
+<td>rope_theta</td>
+<td>Base of RoPE frequencies</td>
+<td>Larger → slower hands → longer usable range</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Why multi-head attention?</strong>
+Several independent lower-dimensional attentions, each with its own projections, capture different relations (coreference, syntax, adjacency) simultaneously, at roughly the FLOPs of one full-width head; outputs are concatenated and mixed by an output projection.</p>
+<p><strong>Q2. What's GQA and why does every modern model use it?</strong>
+Query heads share key/value heads in groups. It divides KV-cache memory (the main serving-memory cost) by the group size — e.g. 32 Q / 8 KV = 4× — with small quality loss vs MHA and much better quality than MQA. It can even be retrofitted to MHA checkpoints by uptraining with ~5% of original compute.</p>
+<p><strong>Q3. Pre-norm vs post-norm?</strong>
+Post-norm (original) normalizes after the residual add, so gradients pass through a norm at every layer and deep models need careful warm-up and can diverge. Pre-norm normalizes the sublayer input and leaves a clean identity path; well-behaved gradients at init, stable at 100+ layers. Needs a final norm before the output head.</p>
+<p><strong>Q4. How does RoPE work and how do you extend context?</strong>
+Rotate Q and K pairwise by position × frequency; their dot product then depends only on relative offset. Extension rescales the frequencies/positions (Position Interpolation, YaRN, larger base) so long distances map into trained angle ranges, usually plus a short long-document fine-tune.</p>
+<p><strong>Q5. Where do most parameters live, and why does it matter?</strong>
+In the feed-forward (SwiGLU) sublayers — roughly two-thirds in a dense model. That's why mixture-of-experts replaces exactly this sublayer with many experts plus a router: more parameters, same per-token compute.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Vaswani et al., 2017 — Attention Is All You Need: https://arxiv.org/abs/1706.03762</li>
+<li>Shazeer, 2019 — Fast Transformer Decoding: One Write-Head is All You Need (MQA): https://arxiv.org/abs/1911.02150</li>
+<li>Ainslie et al., 2023 — GQA: https://arxiv.org/abs/2305.13245</li>
+<li>Su et al., 2021 — RoFormer (RoPE): https://arxiv.org/abs/2104.09864</li>
+<li>EleutherAI — Rotary Embeddings: A Relative Revolution: https://blog.eleuther.ai/rotary-embeddings/</li>
+<li>Zhang &amp; Sennrich, 2019 — RMSNorm: https://arxiv.org/abs/1910.07467</li>
+<li>Xiong et al., 2020 — On Layer Normalization in the Transformer Architecture: https://arxiv.org/abs/2002.04745</li>
+<li>Shazeer, 2020 — GLU Variants Improve Transformer (SwiGLU): https://arxiv.org/abs/2002.05202</li>
+<li>Llama Team, 2024 — The Llama 3 Herd of Models: https://arxiv.org/abs/2407.21783</li>
+<li>Chen et al., 2023 — Position Interpolation: https://arxiv.org/abs/2306.15595</li>
+<li>Peng et al., 2023 — YaRN: https://arxiv.org/abs/2309.00071</li>
+<li>Sebastian Raschka — GQA (LLM architecture gallery): https://sebastianraschka.com/llm-architecture-gallery/gqa/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode three: multi-head attention, rotary position encoding, residual connections, and normalization — plus the modern variants every current open-weight model actually ships with.
+
+Quick recap of where we are. Episode one: a shelf of word tiles, the walking messenger deleted, a web of direct strings strung above. Episode two: how a tile pulls those strings — a flag above each tile for its query, a label on its front for its key, a bucket below for its value; flags matched against labels, scores become a pie, the pie pours buckets. Today we take that one mechanism and build the full block around it, then stack the block into a tower. By the end you'll be able to draw a modern transformer layer from memory and justify every piece of it.
+
+## The cold open
+
+Here's something that surprises people. If you took the transformer exactly as described in the twenty seventeen paper and tried to scale it to a hundred layers, it would very likely fail to train. Loss would spike, then collapse to "not a number," and the run would die. The attention mechanism you learned last episode is not the reason modern models work at depth. The reason is a handful of unglamorous plumbing decisions — where a normalization step sits, a straight path that bypasses every layer, a rotation applied to positions. Senior interviewers know this, and they ask about the plumbing precisely because people who only memorized attention don't know it.
+
+[PAUSE 2s]
+
+## Why it matters
+
+These details aren't academic. Grouped-query attention decides how much memory your inference server burns per user. Rotary position encoding decides whether a model can be stretched to longer contexts than it was trained on, and how badly it degrades when you do. Pre-norm versus post-norm decides whether a deep training run is stable or a week of burned compute. When you read a model card and see "thirty-two query heads, eight key-value heads, rope base five hundred thousand," you should know what each of those numbers costs and buys.
+
+## The mental image
+
+Let's build the building. One image, reused for the whole episode.
+
+Picture our familiar shelf of word tiles at ground level, running left to right. Now, rising straight up above the shelf, picture a tall building with many identical floors. Through the center of the building runs a wide vertical conveyor belt, and the entire row of tiles rides it upward, floor by floor, keeping their left-to-right order. That conveyor belt is the residual stream. Hold onto it; it's the backbone of everything today.
+
+On every floor, the belt passes between two rooms. On the left of the belt, the attention room. On the right of the belt, the feed-forward room. Every floor is the same layout: belt in the middle, attention on the left, feed-forward on the right.
+
+At the doorway of each room, there's a leveling gate. We'll come back to what it does.
+
+And on the roof, one last gate, and then the tiles are read off at the top.
+
+So: shelf at the bottom, belt up the middle, attention room left, feed-forward room right, gates at every door, roof on top. Let's walk the tiles up one floor.
+
+## The residual stream: the belt that never stops
+
+Here's the most important rule of the building, and the one people miss. The rooms never take the tiles off the belt. Each room reads a copy of the tiles as they pass, does its work, and then adds its result back onto the tiles on the belt. The tiles keep moving up, now carrying what they had before plus whatever that room contributed. That "plus" is the residual connection. The output of every sublayer is its input plus its contribution.
+
+Why does that matter so much? Two reasons, both visible in the picture.
+
+First, nothing is ever lost. If a room on floor forty does something useless — or even slightly harmful early in training — the tiles still carry everything they had. In a design where each room replaced the tiles with its output, one bad room would wreck everything above it.
+
+Second, and more important for training: the belt is a straight, unobstructed path from the roof all the way down to the ground. When the learning signal flows back down during training, it can ride the belt straight down, bypassing every room, without getting multiplied by a hundred layers' worth of transformations. Remember the vanishing lesson from episode one — the error signal fading on the messenger's long walk back? The belt is the cure for depth what the direct strings were for sequence length. Every room gets a clean learning signal no matter how high up it sits.
+
+A useful way to say it in an interview: the model is a stream of information flowing up, and each layer reads from the stream and writes a small update back into it. Researchers who study model internals use exactly that framing, and it's why you'll hear "residual stream" in interpretability papers.
+
+## The attention room: many desks, not one
+
+Step into the attention room on the left of the belt. Last episode, we gave every tile one flag, one label, one bucket. But look at our sentence: "The animal didn't cross the street because it was too tired." The tile "it" needs to know what it refers to — that's one kind of relationship. But it also benefits from knowing its grammatical role, which verb it belongs to, which nearby words modify it, what the tense is. One flag can only ask one question at a time. One pie can only mix one blend.
+
+So the attention room has many desks. Picture a row of desks along the far wall, say thirty-two of them. At each desk sits a worker with their own three lenses — their own way of making flags, labels, and buckets. Each desk runs the entire attention procedure from last episode independently: its own flags against its own labels, its own pies, its own blend of buckets. Desk three might learn to track which noun a pronoun refers to. Desk eleven might learn to look at the previous tile. Desk twenty might track matching quote marks or brackets. Nobody assigns these jobs; they emerge from training. Each desk is an attention head. That's multi-head attention.
+
+The cost trick: the desks don't make the model more expensive than one big desk would. If a tile's meaning is four thousand ninety-six numbers wide, you don't give each of thirty-two desks the full width. Each desk works with a slice of a hundred and twenty-eight — thirty-two times a hundred and twenty-eight is four thousand ninety-six. So you trade one wide attention for many narrow ones at the same cost, and you get many different kinds of relationship tracked in parallel.
+
+Finally, at the exit of the attention room, all thirty-two desks' blends are laid side by side, passed through one more learned lens that mixes them together, and the result is added back onto the belt.
+
+## The problem with many desks, and the fix
+
+Now a modern variant, and it's one of the most practical things in this episode. Remember from last episode: when generating text, a model stores every past tile's label and bucket so it doesn't have to recompute them — the K V cache. With thirty-two desks, every desk has its own labels and buckets for every tile, on every floor. For a large model with a long conversation, that pile gets enormous. It's often the single biggest consumer of memory on an inference server, and it's what limits how many users a server can handle at once.
+
+The fix, in our picture: let the desks share filing cabinets. Keep thirty-two desks, each still raising its own flags — its own queries. But instead of thirty-two sets of labels and buckets, put just eight filing cabinets along the wall. Each cabinet holds one set of labels and buckets, and four desks share each cabinet. That's grouped-query attention, G Q A. The K V cache shrinks by four times, because you only store eight sets instead of thirty-two.
+
+Push it all the way to one single cabinet shared by every desk, and you have multi-query attention, M Q A, proposed back in twenty nineteen. Maximum savings, but quality drops measurably, because every desk is forced to look at the same labels and pull from the same buckets. Grouped-query attention, published in twenty twenty-three, is the compromise, and it won. The Llama three family, for example, uses it across all its sizes. The eight-billion-parameter model has thirty-two query heads and eight key-value heads. The four-hundred-and-five-billion model has a hundred and twenty-eight query heads and still just eight key-value heads — a sixteen-fold reduction in cache compared to giving every desk its own cabinet.
+
+There's one more step some model families have taken. DeepSeek's models use multi-head latent attention: instead of fewer cabinets, they compress the whole cabinet into a small summary card per tile, store only that, and expand it back when needed. Reported savings are dramatic — for DeepSeek version three, the stored cache is a small fraction of what full multi-head attention would need. You don't need the internals; you need to know it exists and that it attacks the same problem: the K V cache.
+
+## The leveling gates: normalization
+
+Now the gates at each doorway.
+
+As tiles ride up the belt, each room keeps adding to them. Over dozens of floors, some tiles' numbers can drift very large, others very small. If a room receives wildly scaled inputs, its lenses behave unpredictably, and training becomes unstable. So at the door of each room, a leveling gate rescales each tile to a standard size before the room reads it. That's normalization.
+
+The original was called layer normalization. For each tile, it measures the average of the tile's numbers and how spread out they are, subtracts the average, and divides by the spread — re-centering and rescaling — then applies a learned adjustment. Modern models mostly use a simpler gate called R M S norm, from a twenty nineteen paper. It skips the re-centering entirely and only rescales by the overall magnitude. It turns out the rescaling is what does the stabilizing work; the re-centering barely helped. Skipping it saves a bit of computation on every gate, on every floor, for every token, and at trillion-token training scale that adds up. Llama, Mistral, Gemma, DeepSeek families — essentially all current open-weight models use R M S norm.
+
+## Where the gate sits: pre-norm versus post-norm
+
+And here's the plumbing detail from the cold open. In the original twenty seventeen design, the gate sat on the belt itself, after each room added its result — the room adds to the tiles, then the whole belt passes through a gate. That's post-norm. It means the belt itself gets renormalized over and over, and there's no longer a clean, untouched path from roof to ground. The learning signal has to pass through a gate on every floor. For six floors, fine, with a careful warm-up of the learning rate. For a hundred floors, unstable.
+
+The modern arrangement, pre-norm, moves the gate into the doorway of each room. The room reads a leveled copy, but the belt itself is never touched by a gate — only added to. The straight path from roof to ground stays perfectly clean. A twenty twenty paper showed that with pre-norm, gradients are well behaved from the start, and you can drop most of the delicate warm-up. Because tiles on the belt are never leveled along the way, pre-norm models add one final gate on the roof, before the tiles are read off.
+
+Here's the war-story shape. A team scaling a model they'd built from a textbook implementation went from twelve layers to forty-eight. The twelve-layer run trained cleanly. The forty-eight-layer run looked fine for a few thousand steps, then the loss started spiking, and within a day it went to "not a number." They lowered the learning rate, lengthened the warm-up, and bought themselves a few more thousand steps before the same collapse — days of cluster time burned. The textbook implementation was post-norm. Moving the gates into the doorways, switching to R M S norm, and adding a final gate on the roof, with no other changes, gave a stable run. If you ever see a deep run diverging, "where are the norms?" is one of the first questions to ask.
+
+## The feed-forward room
+
+Now cross the belt to the right-hand room: the feed-forward network. Attention is where tiles talk to each other. The feed-forward room is where each tile thinks alone. Every tile goes through the same small machine independently: it's expanded to a much wider size — typically around three to four times wider — passed through a nonlinearity, then squeezed back to the original width and added to the belt.
+
+Two things to know. First, this room holds most of the model's parameters — roughly two-thirds of the weights in a typical dense model. Researchers who probe model internals find that much of a model's stored factual knowledge seems to live in these feed-forward rooms, which act a bit like a giant key-value lookup memory. Second, modern models use a gated version: the expanded tile is split into two paths, one of which acts as a dimmer switch on the other, element by element. The popular variant is called swish-gated linear unit. It trains better for the same compute, and it's why model configs show a feed-forward width of around two-and-two-thirds to three-and-a-half times the model width rather than exactly four. In episode six, this is also the room that mixture-of-experts replaces with many parallel rooms and a router at the door.
+
+## Rotary position: clock dials on the flags
+
+Last piece, and it solves the problem we flagged in episode one: the web of strings has no idea of order. Shuffle the tiles, and every flag still matches every label the same way.
+
+The original fix stamped a pattern of waves onto each tile's meaning at the ground floor, before it rode the belt. That works, but the position information has to survive the whole ride up, mixed in with meaning, and it encodes absolute position — "I'm tile number five hundred" — when what language usually cares about is relative distance: "that word was three back."
+
+Rotary position encoding, from a twenty twenty-one paper and now used by nearly every open model, does something more elegant. Picture every flag and every label carrying a little clock dial. Before a flag is held up against a label, both get rotated according to their position on the shelf: the first tile turns its dial a small amount, the second tile turns it twice as much, the hundredth tile a hundred times as much. The content of the flag and label doesn't change — only its angle.
+
+Now here's the magic, by picture. When a flag is compared to a label, the match depends on the angle between them. If both were rotated, what matters is only the difference in their rotations — which is exactly the distance between the two tiles on the shelf. Tile ten looking at tile seven sees a three-step difference; tile five hundred looking at tile four ninety-seven sees the same three-step difference. So attention sees relative position, automatically, at every floor, in every desk, without anything stamped onto the belt.
+
+And there isn't one clock hand — there are many, spinning at different speeds, like the second hand, minute hand, and hour hand on a watch. The fast hands distinguish neighbors precisely; the slow hands track long distances without wrapping around. The slowest speed is set by a number called the rope base. Llama three set it to five hundred thousand — much larger than the original ten thousand — so that the slowest hands turn very slowly and still give distinct readings across a hundred-and-twenty-eight-thousand-token context.
+
+The pitfall: a model has only ever seen dial readings up to its trained length. Ask it about distances beyond that, and it meets angle combinations it never learned — quality falls off a cliff, often into repetitive or incoherent output. Context-extension methods, with names like position interpolation and YaRN, work by slowing the clock hands so longer distances map back into familiar angles, usually followed by a short fine-tune on longer documents. When someone claims a model "supports" a context length, the question to ask is whether it was trained or tuned at that length, or just stretched.
+
+[PAUSE 2s]
+
+## The interview angle
+
+"Why multi-head attention instead of one head?" Strong answer: "Each head is a separate, lower-dimensional attention with its own projections, so the layer can track several different relationships at once — coreference, syntax, adjacency — at roughly the cost of one full-width head."
+
+"What's grouped-query attention and why does it matter?" Strong answer: "Query heads share key-value heads in groups. It cuts the K V cache — the dominant inference memory cost — by the group factor, for example thirty-two query heads over eight key-value heads is four times smaller, with a small quality cost versus full multi-head, and much better quality than multi-query attention, which shares a single key-value head."
+
+"Pre-norm or post-norm, and why?" Strong answer: "Pre-norm. Normalizing inside the residual branch leaves an identity path from output to input, so gradients are well behaved at depth and you need less warm-up. Post-norm was the original design and gets unstable at large depth. Most modern models also use R M S norm, which drops the mean-centering for cheaper, equally stable normalization, plus a final norm before the output."
+
+"How does RoPE encode position?" Strong answer: "It rotates query and key vectors by an angle proportional to position, at multiple frequencies. Their dot product then depends only on relative distance. It's applied inside attention at every layer, and context extension works by rescaling those frequencies."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Picture the building one more time. The shelf of tiles at the ground floor. A conveyor belt rising up the center — the residual stream — carrying the tiles to the roof. Rooms read from the belt and add back to it, never replacing, which keeps a clean path for learning all the way down.
+
+On the left of every floor, the attention room: many desks, each with its own flags, labels, and buckets — multiple heads, each tracking a different relationship. Desks share filing cabinets of labels and buckets — grouped-query attention — to shrink the cache. Every flag and label wears clock dials rotated by position, so matches depend only on distance — rotary position encoding.
+
+On the right, the feed-forward room, where each tile thinks alone, holding most of the parameters, with a gated dimmer.
+
+At every door, a leveling gate — R M S norm, placed in the doorway, pre-norm — and one last gate on the roof.
+
+Next episode, we go to the ends of the building: how text becomes tiles at the bottom, how tiles become the next word at the top, and how the whole thing is trained. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="02-self-attention.html">← Self-Attention Mechanics: Q, K, V by Analogy</a><a class="btn" href="04-decoder-only-llms.html">Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings →</a></div></main></div></body></html>

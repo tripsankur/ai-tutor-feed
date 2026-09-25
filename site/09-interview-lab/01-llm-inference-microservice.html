@@ -1,0 +1,430 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Building an LLM Inference Microservice — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="active" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 1</div>
+<h1 class="lesson">Building an LLM Inference Microservice</h1>
+<div class="meta">19 min listen · The interview question 'walk me through the LLM inference microservice you built', answered floor by floor: API layer, validation, per-tenant token rate limits, deadlines and cancellation, SSE streaming, a vLLM engine underneath, health probes, cold start, observability, and a tour of the optimization techniques that live on each floor.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/01-llm-inference-microservice" onclick="toggleDone('09-interview-lab/01-llm-inference-microservice')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (vLLM v0.30.0 source + docs, Kubernetes probe docs, Gateway API Inference Extension docs)</p>
+<p><strong>Thesis:</strong> an LLM inference microservice is two layers — a thin, async, policy-owning gateway (auth, validation, token-based tenant limits, deadlines, streaming) over a batching engine (vLLM) — and the interview is won by explaining the seams between them: cancellation, backpressure, probes, cold start and the right metrics.</p>
+<p><strong>Interview questions this answers (Round 1 opener):</strong> "Tell me how you built an LLM inference microservice." · "What inference optimization techniques did you use?"</p>
+<h2 id="the-mental-image-the-building-dollhouse-cross-section">The mental image: the building (dollhouse cross-section)</h2>
+<ul>
+<li><strong>Ground floor = API layer</strong>, left → right: front door → <strong>security desk</strong> (authN, tenant, request ID) → <strong>forms desk</strong> (schema + real token counting + PII masking) → <strong>turnstile</strong> (per-tenant token-bucket limits, 429 + Retry-After) — with a <strong>clock</strong> on the wall (deadlines: TTFT, inter-token idle, total).</li>
+<li><strong>Basement = engine room</strong>: the <strong>foreman with a clipboard</strong> (vLLM scheduler: continuous batching, paged KV, prefix cache, chunked prefill) in front of the <strong>machine</strong> (GPU).</li>
+<li><strong>Speaking tube</strong> from basement to street = <strong>SSE streaming</strong>.</li>
+<li><strong>Loading dock at the back</strong> = weights delivery / <strong>cold start</strong>.</li>
+<li><strong>Two lamps on the roof</strong> = <strong>liveness / readiness</strong> (+ startup probe).</li>
+<li><strong>Gauges on the outside wall</strong> = <strong>observability</strong> (TTFT, ITL, queue, KV usage, preemptions).</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    C["Client"] -->|"HTTPS + bearer token"| SEC["Security desk: authN, tenant, request ID"]
+    subgraph GF["Ground floor: async gateway"]
+        SEC --> FORM["Forms desk: schema, token count, max_tokens cap, PII mask"]
+        FORM --> TURN["Turnstile: per-tenant TPM/ITPM token bucket + concurrency cap"]
+        TURN --> CLK["Clock: deadlines + cancellation"]
+    end
+    CLK -->|"OpenAI-compatible HTTP (private network)"| ENG
+    subgraph BS["Basement: vLLM engine"]
+        ENG["Scheduler: continuous batching, paged KV, prefix cache, chunked prefill"] --> GPU["GPU(s)"]
+    end
+    GPU -.->|"SSE tokens"| C
+    TURN -.->|"429 + Retry-After"| C
+    ENG -.->|"/metrics Prometheus"| OBS["Gauges: TTFT, ITL, waiting, kv_cache_usage_perc"]
+    ENG -.->|"/health 200 or 503"| K8S["Kubelet probes"]
+</pre>
+
+<pre class="mermaid">sequenceDiagram
+    participant U as Client
+    participant G as Gateway
+    participant V as vLLM
+    U->>G: POST /v1/chat/completions stream=true
+    G->>G: auth, validate, count tokens, rate-limit, set deadline
+    G->>V: forward (stream=true, stream_options.include_usage=true)
+    V-->>G: data chunk (first token)  [TTFT]
+    G-->>U: data chunk
+    Note over G,U: heartbeat comment every ~15s if idle
+    U--xG: client disconnects / deadline fires
+    G--xV: close upstream connection
+    V->>V: abort request, free KV blocks
+</pre>
+
+<h2 id="code-config-snippets">Code / config snippets</h2>
+<p><strong>vLLM OpenAI-compatible server (private network; real auth lives in the gateway):</strong></p>
+<pre><code class="language-bash">vllm serve meta-llama/Llama-3.1-8B-Instruct \
+  --max-model-len 16384 \
+  --gpu-memory-utilization 0.92 \
+  --scheduling-policy priority \
+  --max-num-queued-reqs 1024 \
+  --load-format runai_streamer        # optional: stream safetensors from S3/object storage
+# --api-key is a shared secret, NOT a security boundary (per vLLM docs)
+</code></pre>
+<p>Verify flag spellings against <code>vllm serve --help</code> for your version (<code>--max-num-queued-reqs</code> and <code>--scheduling-policy</code> exist as scheduler config fields <code>max_num_queued_reqs</code> / <code>policy</code> in v0.30.0; <code>max_num_queued_reqs</code> rejects with HTTP 503 when full).</p>
+<p><strong>Kubernetes probes (vLLM <code>/health</code> → 200 healthy, 503 engine dead):</strong></p>
+<pre><code class="language-yaml">startupProbe:            # covers weight download + load + compile + CUDA graph capture
+  httpGet: { path: /health, port: 8000 }
+  periodSeconds: 10
+  failureThreshold: 90   # up to 15 min before kubelet gives up
+livenessProbe:           # &quot;is the process wedged?&quot; — never depend on downstreams
+  httpGet: { path: /health, port: 8000 }
+  periodSeconds: 10
+  failureThreshold: 3
+readinessProbe:          # &quot;send me traffic now?&quot; — gateway can add warm-up check
+  httpGet: { path: /health, port: 8000 }
+  periodSeconds: 5
+</code></pre>
+<p><strong>Gateway: stream with deadline + cancellation propagation (FastAPI + httpx sketch):</strong></p>
+<pre><code class="language-python">@app.post(&quot;/v1/chat/completions&quot;)
+async def chat(req: ChatRequest, request: Request, tenant=Depends(auth)):
+    n_in = count_tokens(req.messages)                     # model's own tokenizer
+    if n_in + req.max_tokens &gt; MAX_MODEL_LEN: raise HTTPException(400, &quot;context too long&quot;)
+    if not await bucket.take(tenant, n_in + req.max_tokens):  # Redis token bucket
+        raise HTTPException(429, headers={&quot;Retry-After&quot;: &quot;2&quot;})
+    async def gen():
+        async with httpx.AsyncClient(timeout=httpx.Timeout(connect=2, read=10, write=5, pool=2)) as c:
+            async with c.stream(&quot;POST&quot;, VLLM_URL, json={**req.model_dump(), &quot;stream&quot;: True,
+                                 &quot;stream_options&quot;: {&quot;include_usage&quot;: True}}) as r:
+                async for line in r.aiter_lines():
+                    if await request.is_disconnected():
+                        break                      # exiting closes upstream → vLLM aborts
+                    yield line + &quot;\n&quot;
+    return StreamingResponse(gen(), media_type=&quot;text/event-stream&quot;,
+                             headers={&quot;X-Accel-Buffering&quot;: &quot;no&quot;, &quot;Cache-Control&quot;: &quot;no-cache&quot;})
+</code></pre>
+<p>(<code>read=10</code> doubles as the inter-token idle timer; add a total-deadline wrapper with <code>asyncio.timeout</code>. Reconcile the token bucket with the real <code>usage</code> from the final chunk.)</p>
+<p><strong>SSE wire format (OpenAI-style):</strong></p>
+<pre><code class="language-text">data: {&quot;choices&quot;:[{&quot;delta&quot;:{&quot;content&quot;:&quot;Hel&quot;}}]}
+
+data: {&quot;choices&quot;:[{&quot;delta&quot;:{&quot;content&quot;:&quot;lo&quot;}}]}
+
+: heartbeat
+
+data: {&quot;choices&quot;:[],&quot;usage&quot;:{&quot;prompt_tokens&quot;:812,&quot;completion_tokens&quot;:2}}
+
+data: [DONE]
+</code></pre>
+<h2 id="vllm-prometheus-metrics-to-chart-v0300-names">vLLM Prometheus metrics to chart (v0.30.0 names)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vllm:num_requests_waiting</code></td>
+<td>queue depth — best early-warning + scaling signal</td>
+</tr>
+<tr>
+<td><code>vllm:num_requests_running</code></td>
+<td>current batch size</td>
+</tr>
+<tr>
+<td><code>vllm:kv_cache_usage_perc</code></td>
+<td>KV block pool pressure (renamed from older <code>gpu_cache_usage_perc</code>)</td>
+</tr>
+<tr>
+<td><code>vllm:num_preemptions</code></td>
+<td>KV exhaustion → recompute</td>
+</tr>
+<tr>
+<td><code>vllm:time_to_first_token_seconds</code></td>
+<td>TTFT histogram</td>
+</tr>
+<tr>
+<td><code>vllm:inter_token_latency_seconds</code></td>
+<td>ITL histogram</td>
+</tr>
+<tr>
+<td><code>vllm:request_queue_time_seconds</code></td>
+<td>time waiting before scheduling</td>
+</tr>
+<tr>
+<td><code>vllm:prefix_cache_queries</code> / <code>vllm:prefix_cache_hits</code></td>
+<td>prefix-cache hit rate</td>
+</tr>
+<tr>
+<td><code>vllm:prompt_tokens</code> / <code>vllm:generation_tokens</code></td>
+<td>token throughput / cost</td>
+</tr>
+</tbody>
+</table>
+<h2 id="optimization-tour-by-floor">Optimization tour, by floor</h2>
+<table>
+<thead>
+<tr>
+<th>Floor</th>
+<th>Technique</th>
+<th>Moves which number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ground</td>
+<td>cap max_tokens, trim context, route to smaller model, exact cache</td>
+<td>tokens → cost, TTFT</td>
+</tr>
+<tr>
+<td>Basement</td>
+<td>continuous batching, PagedAttention (default)</td>
+<td>throughput</td>
+</tr>
+<tr>
+<td>Basement</td>
+<td>prefix caching (default on; stable prefix first)</td>
+<td>TTFT, prefill compute</td>
+</tr>
+<tr>
+<td>Basement</td>
+<td>chunked prefill (default on in V1)</td>
+<td>ITL under long prompts</td>
+</tr>
+<tr>
+<td>Basement</td>
+<td>speculative decoding (draft model / EAGLE-style heads)</td>
+<td>ITL at low batch</td>
+</tr>
+<tr>
+<td>Machine</td>
+<td>FP8 weights, INT4/AWQ when evals pass, FP8 KV cache</td>
+<td>memory → concurrency, decode speed</td>
+</tr>
+<tr>
+<td>Machine</td>
+<td>tensor parallelism, CUDA graphs, fused attention</td>
+<td>fit + per-token latency</td>
+</tr>
+<tr>
+<td>Across</td>
+<td>KV/prefix-aware routing (Gateway API Inference Extension v1 InferencePool + endpoint picker; llm-d)</td>
+<td>cache hit rate, TTFT</td>
+</tr>
+<tr>
+<td>Across</td>
+<td>disaggregated prefill/decode</td>
+<td>TTFT + ITL at scale</td>
+</tr>
+<tr>
+<td>Across</td>
+<td>autoscaling on queue/KV signals (see ep 3)</td>
+<td>cost vs SLO</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SSE</td>
+<td>Server-sent events, <code>text/event-stream</code>, one-way over HTTP</td>
+<td>"Stream tokens so the connection is never idle"</td>
+</tr>
+<tr>
+<td>Cancellation propagation</td>
+<td>Client disconnect/deadline closes upstream; vLLM aborts &amp; frees KV</td>
+<td>"No ghost generations"</td>
+</tr>
+<tr>
+<td>Token-based rate limit</td>
+<td>Per-tenant input/output tokens per minute + concurrency cap</td>
+<td>"Cost follows tokens, not requests"</td>
+</tr>
+<tr>
+<td>Startup probe</td>
+<td>Separate probe covering slow model load</td>
+<td>"Don't let kubelet kill a loading pod"</td>
+</tr>
+<tr>
+<td>Cold start</td>
+<td>Node provision + image pull + weight load + compile/graph capture</td>
+<td>"1 to 15+ minutes; keep warm floor"</td>
+</tr>
+<tr>
+<td>Priority scheduling</td>
+<td>vLLM <code>policy=priority</code>; lower value served first</td>
+<td>"Interactive lane ahead of batch"</td>
+</tr>
+<tr>
+<td>Cache salt</td>
+<td>Per-request <code>cache_salt</code> isolates prefix-cache reuse by trust group</td>
+<td>"Multi-tenant timing-attack defence"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions with strong answers</h2>
+<ol>
+<li><strong>"Walk me through the inference microservice you built."</strong> — Two layers: vLLM's OpenAI-compatible server on GPU nodes for continuous batching, paged KV and prefix caching; a thin async gateway on top for auth/tenant, token-counted validation, PII masking, per-tenant token-bucket limits returning 429 + Retry-After, deadlines with cancellation all the way down, SSE streaming with buffering off. Ops: startup/liveness/readiness probes, cached weights and warm minimum replicas, TTFT/ITL/queue/KV metrics, OTel traces, audit logs without raw prompts.</li>
+<li><strong>"Why rate-limit on tokens rather than requests?"</strong> — GPU cost and KV occupancy scale with tokens; request sizes vary 1000×. Limit input and output tokens per minute plus concurrent requests per tenant; reconcile with actual usage from the stream's final chunk.</li>
+<li><strong>"What happens when a client disconnects mid-generation?"</strong> — Gateway must close its upstream stream; vLLM detects the disconnect and aborts the request, freeing its KV blocks. If the gateway doesn't propagate it, the GPU keeps generating ghost tokens — and with naive retries, load multiplies.</li>
+<li><strong>"How do you handle cold start?"</strong> — Break it down (node, image, weights, compile/graphs), then attack each: node-local NVMe or pre-populated volumes, streaming loader from ADLS/S3, baked compile cache, sleep mode for rarely used models, long startup probe, and a warm replica floor sized to the latency SLO.</li>
+<li><strong>"Which optimizations did you apply and what did they buy?"</strong> — Name floor + metric: stable-prefix-first prompts for prefix-cache hits (TTFT), FP8 weights (memory → concurrency), tuned max_num_batched_tokens for ITL vs TTFT, priority scheduling for interactive traffic, speculative decoding where batch sizes are small; always quote vs baseline, hardware and latency target.</li>
+</ol>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>vLLM OpenAI-compatible server (v0.30.0 source doc): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/serving/online_serving/openai_compatible_server.md</li>
+<li>vLLM optimization &amp; tuning (preemption, chunked prefill, faster startup): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/configuration/optimization.md · rendered: https://docs.vllm.ai/en/latest/configuration/optimization/</li>
+<li>vLLM Kubernetes deployment (probes on <code>/health</code>): https://github.com/vllm-project/vllm/blob/v0.30.0/docs/deployment/k8s.md</li>
+<li>vLLM health endpoint source: https://github.com/vllm-project/vllm/blob/v0.30.0/vllm/entrypoints/serve/instrumentator/health.py</li>
+<li>vLLM Prometheus metric definitions: https://github.com/vllm-project/vllm/blob/v0.30.0/vllm/v1/metrics/loggers.py</li>
+<li>vLLM sleep mode: https://github.com/vllm-project/vllm/blob/v0.30.0/docs/features/sleep_mode.md</li>
+<li>Run:ai Model Streamer in vLLM: https://github.com/vllm-project/vllm/blob/v0.30.0/docs/models/extensions/runai_model_streamer.md</li>
+<li>Kubernetes liveness/readiness/startup probes: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/</li>
+<li>Gateway API Inference Extension (InferencePool v1): https://gateway-api-inference-extension.sigs.k8s.io/</li>
+<li>MDN — Using server-sent events: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events</li>
+</ul>
+<p>Related episodes: t8e3 (GPU warehouse, quantization &amp; serving), t3e6 (scaling &amp; serving), t7e5 (inference internals), t9e2 (KV cache &amp; serving params), t9e3 (autoscaling), t9e4 (latency metrics).</p></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode one: building an L L M inference microservice.
+
+This track is different from the ones before it. Every episode in track nine starts from a real interview loop. It comes from a public write-up of a two-round interview for an agentic A I engineer role at a financial services company. Round one was technical. It covered inference services, K V cache, serving parameters, autoscaling, evaluation, distillation and quantization, hallucinations, and document versioning in retrieval. Round two was a project deep dive. So each episode states the exact question, teaches the mechanics underneath it, and then models how to answer it out loud in about ninety seconds, with the follow-ups and traps that come next.
+
+Today's questions are the ones that opened round one. First: "Tell me how you built an L L M inference microservice." Second: "What inference optimization techniques did you use?"
+
+[PAUSE 1s]
+
+## The cold open
+
+Here's a story in a shape that repeats. A team puts an open-weights model behind a simple web endpoint. The request comes in, the handler calls the model, waits for the full answer, and returns it as one response. In testing, answers take eight seconds and everyone is happy.
+
+Then real traffic arrives. Some answers take thirty seconds, and the load balancer's idle timeout is thirty seconds, so the longest requests get cut off. The client retries three times, with no backoff. And nobody noticed that when the connection dropped, the model server kept generating for a client that had already gone. Every timed-out request became four generations: the ghost of the original plus three retries. The queue doubled, more requests timed out, more retries piled in. By the afternoon, more than half the G P U time went to answers nobody would ever read.
+
+The fix wasn't a bigger G P U. It was four boring things. Stream tokens so the connection is never idle. Propagate cancellation, so a disconnected client aborts the generation. Give retries a budget with backoff. And put deadlines on every hop. That's what this question is really testing. Anyone can call a model. Can you build the service around it?
+
+[PAUSE 1s]
+
+## Why it matters
+
+When an interviewer says "tell me how you built the inference service", they're checking three things. Do you know the engine mechanics, like batching and caching? Do you know backend engineering, like validation, timeouts and rate limits, and where L L M traffic breaks those habits? And can you run it in production? In financial services, add audit logs, personal data handling and hard latency targets. Talk only about the model and you sound like a researcher. Talk only about the endpoint and you sound like you wrapped someone else's A P I. The strong answer covers both.
+
+[PAUSE 1s]
+
+## The mental image: the building
+
+Let's build the picture. In your mind's eye, picture a building cut open from the front, like a dollhouse with its front wall removed, so you can see every floor at once.
+
+The ground floor is the A P I layer. On the far left of the ground floor is the front door, where requests come in from the street. Just inside the door is a security desk that checks who you are and which tenant you belong to. To the right of that is a forms desk, where a clerk checks that the request is well formed and not too big. Further right is a turnstile, one lane per tenant, that controls how fast each tenant can come through. And hanging on the wall above all of it is a big clock. That clock is deadlines: every request gets a time budget stamped on it as it walks in.
+
+Below the ground floor is the basement. That's the engine room. In the middle of the basement stands a foreman with a clipboard, the scheduler, and behind the foreman is the G P U itself, a huge machine that does the actual generating. The basement is where v L L M lives.
+
+Running up from the basement, through the ground floor and out of the front door, is a speaking tube. As the machine produces each token, it goes up the tube and out to the client right away. That tube is streaming.
+
+At the back of the basement is a loading dock with a truck backed up to it. The truck delivers the model weights when a new copy of this building opens. That's cold start.
+
+On the roof are two lamps. One says "alive", one says "ready". That's health checking. And bolted to the outside wall is a panel of gauges, readable from the street, which is observability.
+
+Hold the picture: front door, security desk, forms desk, turnstile and clock on the ground floor; foreman and machine in the basement; the speaking tube up to the street; the loading dock at the back; lamps on the roof; gauges on the wall.
+
+[PAUSE 2s]
+
+## Under the hood: walk one request through the building
+
+Watch a request arrive at the front door.
+
+Security desk first. The request carries a token from your identity provider, which on Azure is Entra ID and on A W S is usually Cognito or your own O Auth server behind an A P I gateway. The desk validates it and stamps two facts on every log line, metric and trace from here on: the tenant, and a request I D, which is what lets an auditor rebuild one conversation months later.
+
+Next, the forms desk: request validation, which for L L M traffic is more than a schema check. Check the shape with a typed model, but also count tokens with the model's own tokenizer, not by characters. If the prompt plus the requested maximum output won't fit the context window you've configured, reject it here with a clear error. Cap maximum output tokens per tenant, because a caller asking for thirty-two thousand output tokens is asking to hold G P U memory for a long time. In financial services, this is also where personal data checks sit: mask account numbers the model doesn't need, and refuse requests that break policy. A rejection at the forms desk costs a millisecond. A rejection in the basement costs seconds of G P U.
+
+Now the turnstile, rate limiting per tenant. The classic mistake is limiting requests per minute. One tenant sends a hundred short questions, another sends ten requests with a hundred thousand tokens of documents each. The second uses far more G P U and passes a request limit easily. So limit on tokens, input and output tokens per minute, with a token bucket per tenant in a shared store like Redis so every replica agrees. Add a cap on concurrent requests per tenant, because long generations tie up capacity even at low request rates. When a tenant hits the limit, answer four twenty-nine with a retry-after header: backpressure the client can act on, instead of a timeout it can only guess about.
+
+Then the clock. There are really three timers, not one. A time-to-first-token deadline: if nothing has come up the tube in, say, ten seconds, the request is probably stuck in a queue, so fail fast. An idle timer between tokens, so a stalled stream gets cut. And an overall cap. The critical part is cancellation. When the deadline fires, or the client hangs up, the abort has to travel all the way down to the basement, so the foreman takes that request off the machine and frees its memory. v L L M does this for its own endpoints: when it sees the client disconnect, it aborts the request. Your job is to not break that chain. If your gateway keeps the connection to v L L M open after the user has gone, you've built the ghost-request machine from the cold open.
+
+[PAUSE 1s]
+
+Now down the stairs to the basement. Why v L L M, rather than calling the model yourself from the web handler? Because the basement's real job is scheduling. The foreman keeps a running batch. After every single step of generation, finished requests leave the batch and waiting requests join. That's continuous batching. The foreman also hands out G P U memory for each conversation's K V cache in small blocks, which is paged attention, and reuses blocks when prompts share a prefix. A handler that calls generate once per request can do none of that, and gets a fraction of the throughput on the same hardware. We built this machinery in the LLMOps track with the G P U warehouse, and next episode opens the foreman's clipboard in detail.
+
+v L L M ships an OpenAI-compatible server, so the ground floor talks to the basement in the same protocol your clients already use. You can swap the engine, say for S G Lang, or fail over to a hosted model, without rewriting clients. One warning from the v L L M docs themselves: its built-in A P I key flag is a shared secret, not a security boundary. Keep v L L M on a private network and do real authentication on the ground floor.
+
+Keep the ground floor thin. Prompt assembly and retrieval belong to the agent layer above you. Your contract is "tokens in, tokens out, safely, on time". And make it asynchronous end to end. A thread-per-request server holding a thread for a thirty-second generation runs out of threads long before the G P U runs out of capacity.
+
+[PAUSE 1s]
+
+Now the speaking tube, streaming. The standard is server-sent events: an ordinary H T T P response with the content type text slash event-stream. It's held open, and each chunk is a line starting with "data", carrying a small jason fragment with the next few tokens. The stream ends with a done marker. For a chat interface this changes everything the user feels. Time to first token might be four hundred milliseconds while the full answer takes fifteen seconds, and the user starts reading at four hundred milliseconds.
+
+Streaming has sharp edges, and interviewers probe them. Once you've sent the status code and the first chunk, you can't turn the response into a five hundred, so a mid-stream failure goes out as an error event that clients must handle. Proxies buffer: a reverse proxy with response buffering on will deliver your stream in one lump at the end, quietly undoing it, so turn buffering off and test through the real network path. During a long reasoning phase nothing may come up the tube for a while, so send a heartbeat comment every fifteen seconds or so. And ask the engine to include token usage in the final chunk, because the turnstile needs the tokens really produced, not the tokens requested. Why not WebSockets? Server-sent events are plain one-way H T T P that works through ordinary proxies. WebSockets earn their place for two-way traffic, like voice.
+
+[PAUSE 1s]
+
+Round the back to the loading dock: model loading and cold start. An eight-billion-parameter model at sixteen bits is about sixteen gigabytes of weights; a seventy-billion model is about one hundred forty, or seventy at eight bits. Before the first token, a G P U node may need provisioning, which can take minutes. Then a container image of ten gigabytes or more is pulled. Then the weights come from a model hub or object storage, A D L S on Azure or S three on A W S. Then the engine warms up: it profiles memory, compiles, and captures C U D A graphs. End to end, a cold replica takes anywhere from one minute to fifteen or more.
+
+So you shorten the truck's trip. Keep weights on node-local N V M e disks or a pre-populated volume. Stream them from object storage straight into G P U memory with a parallel loader; v L L M supports the Run A I model streamer for this. Bake v L L M's compile cache into the image. For rarely used models, v L L M's sleep mode parks weights in C P U memory and wakes far faster than a full reload. And keep a minimum of warm replicas. Scale-to-zero looks cheap on a spreadsheet and terrible at nine in the morning, when the first hundred users all wait for the truck.
+
+[PAUSE 1s]
+
+Up to the roof: the two lamps. In Kubernetes they're the liveness and readiness probes, plus a third you need for models, the startup probe. v L L M's health endpoint returns two hundred when the engine is healthy and five oh three when it has died. The startup probe must allow for the whole truck delivery, so give it a long failure threshold. Otherwise Kubernetes kills the pod halfway through loading weights, restarts it, kills it again, forever. The liveness lamp answers only one question: is this process wedged beyond repair? Never make it depend on a downstream service, or one database hiccup restarts your whole fleet and you pay cold start everywhere at once. The readiness lamp asks: should the load balancer send me traffic right now? That's where warm-up belongs, for example one tiny test generation before the replica is marked ready.
+
+[PAUSE 1s]
+
+Finally, the gauges on the outside wall. Plain request duration isn't enough for L L M traffic, because it mixes two different things. So split it: time to first token, mostly queueing and prefill; inter-token latency, mostly decode and batch size; end-to-end latency; queue time; and tokens in and out per tenant. From the basement, v L L M exports Prometheus metrics to chart and alert on: requests running, requests waiting, K V cache usage, preemptions, and prefix cache hits. Waiting requests and K V cache usage are the two that warn you before users notice. Episode four goes deep on latency metrics.
+
+Add Open Telemetry traces, so one request shows its time at every desk, in the queue and in generation. And log carefully. In a regulated environment, raw prompts often count as customer data, so log token counts, hashes and policy decisions by default, and keep full text only in an access-controlled audit store with retention rules compliance has signed off.
+
+[PAUSE 2s]
+
+## The optimization tour, floor by floor
+
+The second interview question was "what inference optimization techniques did you use?" The weak answer is a list of buzzwords. The strong answer uses the building: say which floor each technique lives on and which number it moves.
+
+On the ground floor, the cheapest token is the one you never generate. Cap output tokens, trim retrieved context, route easy requests to a smaller model, and cache exact repeats where safe. Be careful with semantic caching in finance: two questions that look alike can have different correct answers.
+
+In the basement, the scheduler techniques. Continuous batching and paged attention are the baseline. Prefix caching, on by default in current v L L M: put the stable parts of the prompt first, system prompt, tool definitions, policy text, so requests share cached blocks and skip that prefill, which cuts time to first token sharply for agent workloads. Chunked prefill splits long prompts and interleaves them with ongoing decodes, so one giant document doesn't freeze everyone else's stream. Speculative decoding lets a small draft guess several tokens that the big model verifies in one pass, often two to three times faster decoding at low batch sizes, with the same output distribution.
+
+On the machine itself, make each step cheaper. Eight-bit floating point weights are the near-lossless default on modern G P Us; four-bit when memory is tight and your own evaluations pass. An eight-bit K V cache fits twice the tokens. And tensor parallelism spreads a model that doesn't fit on one G P U across several.
+
+And across buildings: route requests to the replica that already holds their prefix in cache, instead of plain round robin. The Kubernetes Gateway A P I Inference Extension, now at a stable version one A P I, does this with an endpoint picker that reads each replica's queue and K V cache usage. At the largest scale, disaggregated serving runs prefill and decode on separate pools of G P Us. Then autoscaling, on the right signal, which is episode three.
+
+[PAUSE 1s]
+
+## Trade-offs, pitfalls and a war story
+
+Three pitfalls come up again and again.
+
+One: autoscaling or alerting on G P U memory. v L L M reserves around nine-tenths of G P U memory at startup and carves it into K V cache blocks, so memory reads about ninety percent whether the replica is idle or on fire. Use the waiting-requests gauge and K V cache usage instead.
+
+Two: setting the maximum context length to the model's full limit "just in case". That pulls more K V cache into every worst case, and one tenant sending huge documents can starve everyone else. Size it to what the product actually needs, and route long-document work to a separate pool.
+
+Three: retries without budgets. A second war story, in a shape common in banks. An operations assistant shared an inference pool with a nightly job summarizing regulatory filings, whose client had aggressive retries and no per-tenant limit. One night slow storage stretched the batch prompts, the retries filled the queue, and at seven the next morning interactive users saw a forty-second time to first token against a two-second target. The fixes came straight off the ground floor: token-based tenant limits, a retry budget, and a priority lane, using v L L M's priority scheduling so the foreman serves interactive requests first.
+
+On cost: the gateway adds a few milliseconds, negligible next to generation. Warm replicas cost real money, several dollars an hour per top-end G P U, so the warm floor is a business decision about your latency target. Say so in the interview.
+
+[PAUSE 2s]
+
+## The strong answer, out loud
+
+When they ask "tell me how you built an L L M inference microservice", a strong ninety-second answer sounds like this.
+
+"It had two layers. Underneath was v L L M running its OpenAI-compatible server on G P U nodes in Kubernetes, because I wanted continuous batching, paged K V cache and prefix caching without building them myself. On top was a thin async gateway that owned everything v L L M shouldn't. It handled authentication and tenant identity, and request validation with real token counting against the context limit. It did personal data masking and per-tenant rate limits measured in tokens per minute, not requests, returning four twenty-nines with retry-after. Every request got a deadline, and cancellation went all the way down, so a disconnected client aborted its generation. Responses streamed over server-sent events, with heartbeats and buffering turned off at the proxies. Operationally, we used startup, readiness and liveness probes against the health endpoint, with a long startup window for weight loading. Weights were cached on local N V M e to cut cold start, and we kept a warm minimum of replicas. We tracked time to first token, inter-token latency, queue depth and K V cache usage from v L L M's Prometheus metrics, with Open Telemetry traces and audit logging that kept raw prompts out of general logs. For optimization, we put the shared prefix first for cache hits, used eight-bit weights, tuned the batching parameters against our latency targets, and used priority scheduling for interactive traffic."
+
+Then stop, and let them choose where to dig.
+
+Expect these follow-ups. "Why not a managed endpoint?" Data residency, cost at steady high volume, and control over models, while admitting a managed endpoint often wins at low volume. "Why tokens per minute?" Because cost follows tokens, and requests vary a thousand times in size. "What happens when the G P U fills up?" Preemption, next episode. "How did you pick your scaling metric?" Episode three.
+
+And the traps. Don't claim a throughput gain you can't explain: ten x compared to what, on which G P U, at what latency? Don't say you autoscaled on G P U utilization. And don't say you logged every prompt, in a bank.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the building, cut open from the front.
+
+On the ground floor, left to right. The front door. The security desk, which establishes tenant and request I D. The forms desk, which validates the schema, counts real tokens against the context limit, and masks personal data. The turnstile, which limits each tenant in tokens per minute and concurrent requests, and answers with four twenty-nines, not timeouts. And the clock on the wall, which stamps every request with deadlines for first token, idle gaps and total time, with cancellation that travels all the way down.
+
+In the basement, the foreman and the machine: v L L M, with continuous batching, paged K V cache, prefix caching and chunked prefill, behind an OpenAI-compatible interface on a private network.
+
+The speaking tube carries server-sent events, unbuffered, with heartbeats. The loading dock shortens cold start with local weights, streaming loaders and warm replicas. The roof lamps are separate startup, liveness and readiness probes. And the wall gauges show time to first token, inter-token latency, queue depth and K V cache usage, never G P U memory.
+
+The optimizations sit floor by floor: fewer tokens on the ground floor, smarter scheduling in the basement, cheaper math on the machine, smarter routing across buildings.
+
+Next episode, we open the foreman's clipboard: K V cache management, and the serving parameters that decide how many conversations fit on the machine. See you in the next episode.</div></details>
+<div class="navrow"><span></span><a class="btn" href="02-kv-cache-serving-params.html">KV Cache Management & Serving Parameters (max seqs, batched tokens) →</a></div></main></div></body></html>

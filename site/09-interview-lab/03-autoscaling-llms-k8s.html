@@ -1,0 +1,439 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="active" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 3</div>
+<h1 class="lesson">Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</h1>
+<div class="meta">19 min listen · The interview question 'how did you set up HPA and pick your scaling parameters?' answered from the mechanics up: why CPU and GPU utilization lie for LLM serving, how waiting requests and KV cache usage reach the autoscaler through Prometheus and KEDA, how HPA behavior and cold starts shape the numbers, and how load testing picks the targets.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/03-autoscaling-llms-k8s" onclick="toggleDone('09-interview-lab/03-autoscaling-llms-k8s')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="the-interview-questions">The interview questions</h2>
+<blockquote>
+<p>"How did you set up HPA for your inference service?" · "How did you pick the scaling parameters?"</p>
+</blockquote>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>For LLM serving, scale on the engine's <strong>saturation signals</strong> (waiting requests, KV-cache usage) — not CPU, memory, or GPU utilization — feed them to the HPA via Prometheus + KEDA, make scale-up eager and scale-down slow, and derive the target from a <strong>one-replica load test</strong> with headroom for a multi-minute cold start.</p>
+<h2 id="the-mental-image-the-restaurant-with-a-thermostat">The mental image: the restaurant with a thermostat</h2>
+<ul>
+<li><strong>Waiting chairs (left)</strong> = queued requests → <code>vllm:num_requests_waiting</code>. Most honest throughput signal.</li>
+<li><strong>Kitchens (middle)</strong> = replicas (pods). <strong>Burner grid</strong> = KV-cache blocks → <code>vllm:kv_cache_usage_perc</code> (leading latency signal). <strong>Order rail</strong> = running batch → <code>vllm:num_requests_running</code>.</li>
+<li><strong>Thermostat (ceiling)</strong> = HPA: every 15 s, <code>desired = ceil(current × metric / target)</code>, max across metrics.</li>
+<li><strong>Basement + slow freight elevator (below)</strong> = GPU node pool + cold start (node provisioning → image pull → weight load → warm-up ≈ 5–10 min).</li>
+<li><strong>Dials that lie</strong>: tired greeter = CPU; reserved floor space = memory (vLLM pre-allocates <code>gpu_memory_utilization=0.9</code>); gas meter "any burner lit" = GPU utilization (<code>DCGM_FI_DEV_GPU_UTIL</code> = fraction of time <em>any</em> kernel ran).</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    U["Clients"] --> GW["Gateway / inference-aware router"]
+    GW --> Q["Waiting requests (queue)"]
+    Q --> P1["vLLM pod 1 (KV cache blocks)"]
+    Q --> P2["vLLM pod 2"]
+    Q --> P3["vLLM pod N"]
+    P1 -- "/metrics" --> PR["Prometheus"]
+    P2 -- "/metrics" --> PR
+    P3 -- "/metrics" --> PR
+    PR --> K["KEDA ScaledObject (prometheus trigger)"]
+    K --> H["HPA (external metric)"]
+    H -- "replicas" --> D["Deployment"]
+    D -- "pending pods" --> NA["Node autoscaler: Karpenter / Cluster Autoscaler / AKS NAP"]
+    NA --> N["GPU nodes (EC2 GPU / Azure N-series)"]
+</pre>
+
+<pre class="mermaid">flowchart LR
+    A["Pod scheduled"] --> B["GPU node provision: 1-3+ min"]
+    B --> C["Image pull: several GB"]
+    C --> D["Weight load: 16 GB (8B) to 140 GB (70B), minutes"]
+    D --> E["Warm-up: profiling, KV alloc, CUDA graphs"]
+    E --> F["Readiness probe passes: serving"]
+</pre>
+
+<h2 id="signals-which-dial-for-which-goal">Signals: which dial for which goal</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>vLLM metric (current names)</th>
+<th>Use for</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Queue depth</td>
+<td><code>vllm:num_requests_waiting</code> (gauge)</td>
+<td>Throughput/cost within a latency bound</td>
+<td>GKE guidance: start threshold ~3–5 per pod, tune by test</td>
+</tr>
+<tr>
+<td>KV-cache usage</td>
+<td><code>vllm:kv_cache_usage_perc</code> (gauge, 0–1)</td>
+<td>Latency-sensitive services (leading indicator)</td>
+<td>Old <code>vllm:gpu_cache_usage_perc</code> <strong>removed in v0.12</strong> — check your version</td>
+</tr>
+<tr>
+<td>Batch size</td>
+<td><code>vllm:num_requests_running</code></td>
+<td>Tighter latency targets</td>
+<td></td>
+</tr>
+<tr>
+<td>Queue time / TTFT</td>
+<td><code>vllm:request_queue_time_seconds</code>, <code>vllm:time_to_first_token_seconds</code> (histograms)</td>
+<td>Validation, SLO alerting</td>
+<td>Lagging, noisy at low traffic</td>
+</tr>
+<tr>
+<td>Preemptions</td>
+<td><code>vllm:num_preemptions_total</code></td>
+<td>Alert: KV cache too small</td>
+<td>Recompute = latency cliff</td>
+</tr>
+<tr>
+<td>CPU / memory / GPU util</td>
+<td>—</td>
+<td><strong>Don't</strong> scale on these</td>
+<td>Flat / pinned / saturates at low load</td>
+</tr>
+</tbody>
+</table>
+<h2 id="keda-scaledobject-recommended-bridge">KEDA ScaledObject (recommended bridge)</h2>
+<p>KEDA creates and owns an HPA for you; it adds 0↔1 scaling, 60+ scalers (Prometheus, cron, queues). Defaults: <code>pollingInterval: 30</code>, <code>cooldownPeriod: 300</code> (only governs →0). <code>prometheus-adapter</code> is heading to deprecation with KEDA as the recommended alternative.</p>
+<pre><code class="language-yaml">apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: llm-chat
+spec:
+  scaleTargetRef:
+    name: vllm-chat            # Deployment
+  minReplicaCount: 2           # warm floor: normal load + growth during one cold start
+  maxReplicaCount: 12          # &lt;= GPU quota / capacity reservation
+  pollingInterval: 15
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+            - type: Pods
+              value: 4
+              periodSeconds: 60
+        scaleDown:
+          stabilizationWindowSeconds: 900     # 15 min: cold start is expensive
+          policies:
+            - type: Pods
+              value: 1
+              periodSeconds: 300
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus.monitoring:9090
+        query: sum(vllm:num_requests_waiting{model_name=&quot;chat&quot;})
+        threshold: &quot;5&quot;            # per-replica target (AverageValue) ≈ 2/3 of load-test knee
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus.monitoring:9090
+        query: avg(avg_over_time(vllm:kv_cache_usage_perc{model_name=&quot;chat&quot;}[2m]))
+        threshold: &quot;0.7&quot;
+        metricType: Value         # average ratio, not divided by replicas
+    - type: cron                  # pre-warm predictable peaks (month-end, market open)
+      metadata:
+        timezone: Etc/UTC
+        start: 30 8 28-31 * *
+        end: 0 18 28-31 * *
+        desiredReplicas: &quot;6&quot;
+</code></pre>
+<h2 id="plain-hpa-v2-equivalent-external-metric-via-an-adapter">Plain HPA v2 equivalent (external metric via an adapter)</h2>
+<pre><code class="language-yaml">apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: { name: vllm-chat }
+spec:
+  scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: vllm-chat }
+  minReplicas: 2
+  maxReplicas: 12
+  metrics:
+    - type: External
+      external:
+        metric: { name: vllm_num_requests_waiting }
+        target: { type: AverageValue, averageValue: &quot;5&quot; }
+  behavior:
+    scaleUp:   { stabilizationWindowSeconds: 0 }
+    scaleDown:
+      stabilizationWindowSeconds: 900
+      policies: [ { type: Pods, value: 1, periodSeconds: 300 } ]
+</code></pre>
+<p><strong>HPA mechanics to quote:</strong> sync every 15 s; <code>desired = ceil(current × current/target)</code>; multiple metrics → <strong>max</strong>; global tolerance 10% (per-HPA <code>tolerance</code> in <code>behavior.scaleUp/scaleDown</code> via KEP-4951 — alpha 1.33, beta 1.34); defaults: scaleUp window 0 s, policies 100 % <strong>or</strong> 4 pods per 15 s (selectPolicy Max), scaleDown window 300 s. <strong>Scale-to-zero</strong>: <code>HPAScaleToZero</code> is <strong>beta and on by default in Kubernetes v1.37</strong> (Aug 2026); <code>minReplicas: 0</code> requires an Object or External metric.</p>
+<h2 id="pod-spec-essentials-for-llm-pods">Pod spec essentials for LLM pods</h2>
+<pre><code class="language-yaml">terminationGracePeriodSeconds: 600      # let long generations drain
+startupProbe:                           # don't kill a pod still loading 140 GB
+  httpGet: { path: /health, port: 8000 }
+  periodSeconds: 10
+  failureThreshold: 90                  # up to 15 min
+readinessProbe:
+  httpGet: { path: /health, port: 8000 }
+  periodSeconds: 5
+resources:
+  limits: { nvidia.com/gpu: 1 }
+# vLLM: --load-format runai_streamer  (stream weights from S3/GCS/Azure Blob)
+</code></pre>
+<h2 id="cold-start-mitigations-the-elevator">Cold-start mitigations (the elevator)</h2>
+<ul>
+<li>Node: Karpenter (EKS) or AKS node auto-provisioning (Karpenter-based) / Cluster Autoscaler on GPU node pools; <strong>GPU quota ≥ maxReplicas × GPUs per replica</strong>; capacity reservations for thin GPU pools.</li>
+<li>Over-provisioning: low-priority placeholder pods holding GPU nodes, preempted by real pods.</li>
+<li>Image: pre-pull / image streaming. Weights: node-local NVMe cache or shared volume; Run:ai Model Streamer (published: ~4–6× faster for 15–233 GiB models).</li>
+<li>Predictable peaks: KEDA cron trigger (month-end, payroll, market open).</li>
+</ul>
+<h2 id="picking-targets-load-test-procedure">Picking targets: load-test procedure</h2>
+<ol>
+<li>Write SLO (e.g. TTFT p95 &lt; 1 s, ITL p95 &lt; 50 ms).</li>
+<li>Replay <strong>real</strong> prompt/output length distribution (<code>vllm bench serve</code>, NVIDIA AIPerf, Locust, k6).</li>
+<li>One replica; ramp concurrency/rate; record p95 TTFT/ITL <strong>and</strong> waiting, KV usage, running.</li>
+<li>Find the <strong>knee</strong> where p95 breaks SLO (e.g. ~8 waiting, ~90 % KV).</li>
+<li>Target ≈ knee ÷ (1 + growth during one cold start) — e.g. 50 % growth → ~⅔ of knee (5 waiting, 70 % KV).</li>
+<li>Fleet test: ramp, spike, decline; check SLO during scale-up, flapping, scale-down interrupting generations. Re-test on model / quantization / engine / GPU change.</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HPA v2</td>
+<td><code>autoscaling/v2</code> HorizontalPodAutoscaler — resource, pods, object, external metrics + <code>behavior</code></td>
+</tr>
+<tr>
+<td>Stabilization window</td>
+<td>Look-back period; scale-down uses the <strong>max</strong> recommendation in the window</td>
+</tr>
+<tr>
+<td>Scale policy</td>
+<td>Rate limit: Pods or Percent per <code>periodSeconds</code>; <code>selectPolicy</code> Max/Min/Disabled</td>
+</tr>
+<tr>
+<td>KEDA ScaledObject</td>
+<td>CRD that manages an HPA from event sources; adds 0↔1 activation</td>
+</tr>
+<tr>
+<td>Custom vs External metrics API</td>
+<td>Per-pod metrics of scaled objects vs arbitrary metrics not tied to pods</td>
+</tr>
+<tr>
+<td>Knee</td>
+<td>Load point where p95 latency turns sharply upward</td>
+</tr>
+<tr>
+<td>Warm floor</td>
+<td><code>minReplicas</code> sized for normal load + growth during one cold start</td>
+</tr>
+<tr>
+<td>Scale-to-zero</td>
+<td>0 replicas when idle; needs a signal that exists at zero (gateway/queue)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<ol>
+<li><strong>Why not scale LLM pods on GPU utilization?</strong> — DCGM GPU util is the fraction of time any kernel ran, so one active decode stream pins it near 100 %. It saturates at trivial load and can't distinguish 1 from 40 concurrent requests. Memory is pre-allocated (~90 %) and CPU doesn't track GPU work. Use waiting requests and KV-cache usage.</li>
+<li><strong>How does a Prometheus metric reach the HPA?</strong> — Prometheus scrapes vLLM <code>/metrics</code>; KEDA's Prometheus scaler (or the older prometheus-adapter) serves it through the external/custom metrics API; KEDA creates the HPA. With multiple triggers the HPA takes the largest desired replica count.</li>
+<li><strong>How did you choose target values?</strong> — One-replica load test with production length distribution, find the knee where p95 TTFT breaks SLO, then set the target below the knee by the traffic growth expected during a cold start (~⅔ of knee), validate with ramp/spike tests, re-test on every model/engine change.</li>
+<li><strong>What HPA behavior settings for LLMs and why?</strong> — Immediate scale-up (window 0, several pods at once) because cold start is 5–10 min; scale-down window 10–15 min, 1 pod per few minutes, long <code>terminationGracePeriodSeconds</code> so in-flight generations drain. Tolerance per direction on 1.34+.</li>
+<li><strong>Should you scale to zero?</strong> — Only for dev, internal, queue-driven batch or long-tail models. At zero the engine's metrics vanish, so wake-up needs a gateway/queue signal, and the first request eats the full cold start. Native HPA scale-to-zero is beta in K8s 1.37; KEDA has done it for years. Customer-facing SLO paths keep a floor of ≥2.</li>
+</ol>
+<p><strong>Likely follow-ups / traps:</strong> averaging hides a hot pod → use inference-aware routing (Gateway API Inference Extension / llm-d); multi-GPU replicas scale in units of TP size and need matching nodes/quota; split batch vs interactive pools; VPA doesn't apply (GPU count fixed by parallelism); on managed endpoints this becomes pay-per-token vs provisioned throughput sizing.</p>
+<h2 id="links-back">Links back</h2>
+<ul>
+<li>KV cache &amp; scaling signals: <code>tracks/03-genai-system-design/06-scaling-serving.md</code> (the workshop floor / loading dock)</li>
+<li>GPU warehouse &amp; serving engines: <code>tracks/08-llmops/03-quantization-serving.md</code></li>
+</ul>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Kubernetes HPA concepts (algorithm, behavior, defaults): https://kubernetes.io/docs/concepts/workloads/autoscaling/horizontal-pod-autoscale/</li>
+<li>Kubernetes v1.37 HPA scale-to-zero beta (2026-09-02): https://kubernetes.io/blog/2026/09/02/kubernetes-v1-37-hpa-scale-to-zero-beta/</li>
+<li>Kubernetes v1.33 configurable HPA tolerance: https://kubernetes.io/blog/2025/04/28/kubernetes-v1-33-hpa-configurable-tolerance</li>
+<li>KEP-4951 configurable tolerance: https://github.com/kubernetes/enhancements/issues/4951</li>
+<li>vLLM production metrics: https://docs.vllm.ai/en/stable/usage/metrics/</li>
+<li>vLLM metrics design (deprecations incl. <code>gpu_cache_usage_perc</code>): https://docs.vllm.ai/en/stable/design/metrics/</li>
+<li>vLLM production-stack — autoscaling with KEDA: https://docs.vllm.ai/projects/production-stack/en/latest/use_cases/autoscaling-keda.html</li>
+<li>GKE best practices for autoscaling LLM inference: https://docs.cloud.google.com/kubernetes-engine/docs/best-practices/machine-learning/inference/autoscaling</li>
+<li>Amazon EKS — autoscale AI inference with HPA and KEDA: https://docs.aws.amazon.com/eks/latest/userguide/ml-inference-autoscaling-hpa-keda.html</li>
+<li>KServe autoscaling for generative inference: https://kserve.github.io/website/docs/model-serving/generative-inference/autoscaling</li>
+<li>prometheus-adapter deprecation discussion: https://github.com/prometheus-operator/kube-prometheus/issues/2721</li>
+<li>AKS — Run:ai Model Streamer with vLLM from Azure Blob: https://blog.aks.azure.com/2026/07/13/runai-streamer-vllm</li>
+<li>AWS — fast model loading on EKS: https://aws.amazon.com/blogs/containers/fast-model-loading-for-ai-inference-on-amazon-eks/</li>
+<li><code>vllm bench serve</code>: https://docs.vllm.ai/en/latest/cli/bench/serve/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode three: autoscaling language models on Kubernetes — the horizontal pod autoscaler, Keda, and picking the scaling metric.
+
+Here are the exact questions from the interview this track is built on. First: "How did you set up H P A for your inference service?" And then, the follow-up that separates people who copied a YAML file from people who ran the thing in production: "How did you pick the scaling parameters?" Which metric, which target value, how many minimum replicas, how fast up, how fast down. That's what this episode answers.
+
+Start with the most common way this goes wrong. A team in a regulated financial-services shop self-hosts an open-weight model for an internal document assistant. They set up the autoscaler every tutorial shows, utilization at an eighty percent target — but they're smart, so instead of C P U they wire up G P U utilization from the Nvidia exporter. Launch week, the dashboard shows G P U utilization at ninety-five to a hundred percent almost all the time, including at three in the morning when a handful of requests trickle in. The autoscaler dutifully scales to its maximum of eight replicas and stays there. All night. Every night. Eight G P U nodes burning money while almost nobody is using them. Then month-end arrives, a real surge hits, the autoscaler is already at max, and time to first token climbs past twenty seconds.
+
+The metric looked perfect on a slide and measured the wrong thing. By the end of this episode you'll know why, what to scale on instead, and how to defend your numbers out loud.
+
+[PAUSE 2s]
+
+## Why this matters
+
+Autoscaling a normal web service is mostly solved: short requests, cheap pods that start in seconds, and C P U usage that tracks load honestly. Language model serving breaks every one of those assumptions. Requests last seconds to minutes. A pod needs a whole G P U or several, at a few dollars per G P U hour on demand. A new pod takes five to ten minutes to become useful. And the obvious metrics are flat, pinned, or meaningless.
+
+So the autoscaler is a cost lever and a latency lever at once. Wrong one way, you burn a six-figure annual G P U bill on idle capacity. Wrong the other way, your latency objective collapses exactly when the business needs it most. It's where infrastructure knowledge and model-serving knowledge meet, which is why interviewers ask.
+
+[PAUSE 1s]
+
+## The mental image: the restaurant with a thermostat
+
+In your mind's eye, picture a restaurant, seen in cross-section, like a doll's house with the front wall removed.
+
+On the far left, the waiting area: a row of chairs by the door. Every customer is a request. If a kitchen has room, they go straight through; if not, they sit and wait. Count the people in those chairs — that number matters more than anything else in this episode.
+
+In the middle, a row of identical kitchens, side by side. Each kitchen is one replica — one pod running the serving engine, model loaded on its G P U. Inside is a stove with a grid of burners: the K V cache blocks, the memory each active request needs for its conversation state. A customer with a long document occupies a lot of burners. Above the stove hangs an order rail: the tickets currently being cooked together, the running batch.
+
+Above the whole row of kitchens, mounted on the ceiling, a control panel with dials — this is the thermostat. It's the horizontal pod autoscaler. It glances at one or two dials every fifteen seconds and decides: open another kitchen, or close one.
+
+And below the floor, the basement: space where new kitchens can be built — your pool of G P U nodes — connected by a slow freight elevator. Opening a kitchen means building it downstairs, riding the elevator up, and stocking it with the model weights before a single meal comes out.
+
+Hold that picture. Waiting chairs on the left. Kitchens with burner grids in the middle. The thermostat on the ceiling. The basement and the slow elevator below.
+
+[PAUSE 2s]
+
+## Why utilization lies
+
+Now look at the dials people usually wire to the thermostat.
+
+C P U first. In each kitchen, the C P U is the greeter at the door — tokenizing input, streaming output back — while the cooking happens on the G P U. C P U barely moves whether the kitchen is idle or slammed. Scaling on it is judging a restaurant's load by how tired the greeter looks.
+
+Memory next. As we saw in the system design track's scaling episode, engines like v L L M reserve roughly ninety percent of G P U memory up front by default and carve it into burners. Memory reads ninety percent empty or on fire. Useless.
+
+Now the trap from our story: G P U utilization. The standard Nvidia utilization number doesn't mean "how much of the chip is in use." It means "what fraction of the sample period had any work running on the chip." Picture a gas meter that records whether any burner was lit, not how many. One pan: a hundred percent. Forty pans: still a hundred percent. A serving engine runs decode steps whenever even one request is active, so the number saturates at trivially low load. That's why the team's autoscaler sat at max all night. Finer-grained counters exist, but none of them tell you what you care about: whether customers are waiting too long.
+
+[PAUSE 1s]
+
+## The dials that tell the truth
+
+So what should the thermostat read? Go back to the picture and ask: what do you see just before customers start having a bad time?
+
+Dial one: the waiting chairs. The number of requests queued, not yet scheduled into a batch. v L L M exposes this as a Prometheus gauge, num requests waiting. With continuous batching, the engine pulls customers from the chairs into kitchens as fast as burners free up, so the chairs stay near empty while there's room. The moment a kitchen is genuinely full, the chairs fill up, and every person in a chair is time to first token getting worse. Queue depth is the most direct saturation signal you have. It's the metric to reach for when your goal is maximum throughput per dollar within a latency bound.
+
+Dial two: burner occupancy. The fraction of K V cache blocks in use — in current v L L M, the gauge is K V cache usage percent. The older name, G P U cache usage percent, was removed in recent versions, so if you're reading a blog post from last year, the metric name has changed; check it against your engine version. When the burners approach full, the engine can no longer admit new requests, and it may even preempt running ones — evict their state and recompute it later — which is a latency cliff. Cache usage rises before the queue forms, so it's a leading indicator. It's the metric to reach for when you care most about latency and want to scale before anybody sits down.
+
+Dial three: the order rail — running requests, the current batch size — useful for tighter latency targets. And dial four, which you watch but rarely scale on: latency itself, time to first token at the ninety-fifth percentile. It's what you promise, but it lags — by the time it moves, customers are already unhappy. Use it to validate the leading dials.
+
+Google's own guidance for serving on Kubernetes lands in the same place: cache utilization for latency-sensitive workloads, queue size for throughput-oriented ones, with a suggested starting queue threshold of around three to five, then tuned by testing.
+
+[PAUSE 1s]
+
+## Wiring the dials to the thermostat
+
+Now the plumbing, because "I scaled on queue depth" invites the follow-up: "How did that number get to the autoscaler?"
+
+Each kitchen exposes a metrics endpoint. Prometheus scrapes it every fifteen seconds or so. But the horizontal pod autoscaler doesn't speak Prometheus. It reads from Kubernetes metrics A P Eyes: the resource metrics A P I for C P U and memory, the custom metrics A P I for per-pod numbers, and the external metrics A P I for anything else. Something has to bridge Prometheus into those.
+
+The classic bridge was the Prometheus Adapter, still in plenty of clusters, but its maintainers have been steering people toward Keda instead.
+
+Keda, the Kubernetes event-driven autoscaler, is now the common answer. You write one small resource called a scaled object: which deployment, minimum and maximum replicas, and a trigger — say, a Prometheus query summing waiting requests across all your serving pods, with a threshold. Keda runs the query, exposes the result as an external metric, and creates and manages an ordinary horizontal pod autoscaler for you under the hood. That last part is worth saying in an interview: Keda doesn't replace the H P A for scaling between one and many replicas — it feeds it. What Keda adds is scaling between zero and one, and dozens of trigger types including cron schedules and message queues. Defaults worth knowing: it polls every thirty seconds and waits a five-minute cooldown before dropping to zero. Amazon, Azure and Google all document this same pattern for their managed Kubernetes.
+
+[PAUSE 1s]
+
+## How the thermostat actually decides
+
+Now the thermostat's brain, because this is where "picking the parameters" really lives.
+
+The core formula is simple. Desired replicas equals current replicas times the current metric value divided by the target, rounded up. If you have four kitchens, your target is five waiting requests per pod, and you're seeing ten per pod, the thermostat wants eight kitchens. If you give it several metrics — say queue depth and cache usage — it computes a desired count for each and takes the largest. That's a nice property: you can combine a throughput signal and a latency signal and whichever screams loudest wins.
+
+There's a ten percent tolerance around the target so wobbles don't cause scaling; newer releases let you set it per direction. Then the part most people never touch, and should: the behavior section. It has two halves, scale up and scale down, each with a stabilization window and rate policies.
+
+Defaults first. Scale-up has no stabilization window — it reacts immediately — and may add up to one hundred percent of current pods or four pods, whichever is more, every fifteen seconds. Scale-down has a five-minute stabilization window: it looks back over the last five minutes of recommendations and uses the highest one, so a brief lull doesn't kill a kitchen.
+
+For language models, think about what each mistake costs. Removing a kitchen you'll need again in ten minutes means paying a full cold start — five to ten minutes of elevator ride and weight loading — at exactly the moment you need capacity. And a kitchen being shut down may be mid-way through long requests. So scale-down should be slow and gentle: a stabilization window of ten to fifteen minutes, removing maybe one pod every few minutes, and a termination grace period long enough for in-flight generations to finish. Scale-up should be eager — no stabilization window, allow adding several pods at once — because you're already fighting a multi-minute cold start.
+
+One more trap in the formula: it averages across pods. Picture one kitchen overwhelmed by a customer with a hundred-page contract while three others idle. Average queue depth looks fine; the unlucky customers in that one kitchen wait forever. Autoscaling can't fix bad routing. That's why a routing layer that knows each kitchen's cache and queue — like the Kubernetes Gateway A P I inference extension, or L L M D — beats round-robin. Scale the fleet with the autoscaler; balance the kitchens with the router.
+
+[PAUSE 1s]
+
+## The slow elevator: cold start and minimum replicas
+
+Now look below the floor. When the thermostat decides to open a new kitchen, what actually happens, in order?
+
+Step one: the new pod needs a G P U node. If none is free in the basement, the pod sits pending until the node autoscaler adds one. On Amazon, that's typically Karpenter or the cluster autoscaler launching an E C two G P U instance; on Azure, the cluster autoscaler on a G P U node pool, or node auto-provisioning, which is Karpenter under the hood. Expect one to a few minutes, and sometimes much longer, because G P U capacity pools are thin — the instance type you want may simply not be available in that zone, and the request bounces around. And quotas bite: teams often discover mid-surge that their G P U quota is below their max replicas.
+
+Step two: pull a container image of many gigabytes. Step three: load the weights. An eight-billion-parameter model in sixteen-bit precision is about sixteen gigabytes; a seventy-billion one is about a hundred and forty. Pulling that from object storage — S three on Amazon, Blob storage or A D L S on Azure — at a naive pace takes minutes. Published measurements put default loading of very large models at three to five minutes on a fresh node.
+
+Step four: warm-up — profiling memory, allocating burners, capturing execution graphs — another thirty seconds to a couple of minutes. Add it up: five to ten minutes from "open a kitchen" to "first meal served." Traffic can double in less time than that.
+
+What do you do about it? Shorten the elevator ride: cache weights on local disk or a fast shared volume, pre-pull images, and use a streaming loader like the Run A I model streamer, which v L L M supports — it reads tensors from object storage concurrently straight into G P U memory, cutting large-model load times several-fold in published tests. Keep spare basement space: over-provisioned G P U nodes held by low-priority placeholder pods that get evicted the moment a real serving pod needs them. Use scheduled scaling for the spikes you can predict — in financial services, market open, payroll day, month-end and quarter-end statement runs — a Keda cron trigger can pre-warm kitchens thirty minutes before. And set a generous startup probe, so Kubernetes doesn't kill a pod still loading weights, plus a readiness probe so no traffic arrives before the kitchen can cook.
+
+And set minimum replicas deliberately. The floor isn't "one because it's cheap"; it's the kitchens needed for normal traffic plus the growth during one full cold start — for a customer-facing service, usually at least two, which also buys availability across zones.
+
+[PAUSE 1s]
+
+## Scale to zero
+
+Which brings us to the tempting option: close every kitchen at night.
+
+Keda has supported scaling to zero for years. As of Kubernetes one point thirty-seven, released last month, the built-in autoscaler's scale-to-zero support is beta and on by default, as long as you scale on an external or object metric — not C P U or memory, which can't exist when no pods do.
+
+But notice the chicken-and-egg problem in the picture. At zero, there are no kitchens, so there's no one to report waiting requests. The engine's own queue metric vanishes. To wake up, you need a signal from something that exists at zero: a gateway or proxy in front that counts incoming requests and holds them, or a message queue depth for batch work. And then the first customer waits the full cold start — minutes.
+
+So: scale to zero is excellent for dev environments, relaxed internal tools, queue-driven overnight batch, and long-tail fine-tuned models called a few times a day. It's wrong for anything customer-facing with a latency objective — there, savings come from the ceiling and scale-down speed, not from hitting zero.
+
+[PAUSE 1s]
+
+## Picking the target with load testing
+
+Now the heart of the second question: "How did you pick the numbers?" The honest answer is: not by guessing — by load testing one kitchen until it breaks, and reading the dials at the moment it breaks.
+
+Here's the procedure.
+
+First, write down the objective. For example: time to first token under one second at the ninety-fifth percentile, and inter-token latency under fifty milliseconds at the ninety-fifth.
+
+Second, replay a realistic traffic shape — your real prompt and output length distribution, not a fixed hundred-token prompt. A load test with the wrong shape measures the wrong kitchen.
+
+Third, test one replica. Use a benchmarking tool — v L L M's own bench serve command, Nvidia's A I perf, or a Locust or k six script — and ramp concurrency or request rate step by step. At each step, record the latency percentiles alongside the dials: waiting requests, K V cache usage, running batch size.
+
+Fourth, find the knee. Plot ninety-fifth percentile time to first token against queue depth, and against cache usage. You'll see latency stay flat and then turn sharply upward. Say it bends when the queue holds about eight requests per pod and cache usage crosses roughly ninety percent. That's the breaking point of one kitchen.
+
+Fifth, set the target below the knee, with headroom for the elevator. If traffic can grow by, say, fifty percent during one cold start, your target should sit around two-thirds of the knee — about five waiting requests rather than eight, cache usage around seventy percent rather than ninety. The principle: the target encodes your cold start time.
+
+Sixth, validate the whole fleet with autoscaling on. Run a ramp, a sudden spike, and a slow decline. Watch for three things: did latency stay inside the objective during scale-up, did replicas flap up and down, and did scale-down interrupt long-running generations. Re-test whenever the model, quantization, engine version or G P U type changes — each one moves the knee.
+
+[PAUSE 1s]
+
+## War story, resolved
+
+Back to the team scaling on G P U utilization. They moved the thermostat off the gas meter and onto the chairs and the burners: a Keda scaled object with waiting-requests and cache-usage triggers, targets from a one-replica load test, immediate scale-up, a fifteen-minute scale-down window, minimum two, maximum twelve, and a cron trigger for month-end. Node-local weight caching and a streaming loader cut cold start from about eight minutes to under three. Overnight, the fleet sat at two replicas instead of eight. At month-end, it scaled to eleven before the queue formed, and time to first token stayed under a second.
+
+[PAUSE 1s]
+
+## Traps and follow-ups
+
+A few follow-ups interviewers probe. "What about multi-G P U models?" A seventy-billion model on four G P Us is one replica; scaling adds units of four, and nodes with four free G P Us are even scarcer capacity — plan quota for your maximum.
+
+"What if long prompts and short chats share the fleet?" Separate deployments with separate autoscalers — a batch pool on queue depth, an interactive pool on cache usage — so the document job can't starve chat users.
+
+"How do you avoid flapping?" Scale-down stabilization windows, per-direction tolerance, rate-limited scale-down, and metrics smoothed over a window in the Prometheus query. And on a managed endpoint — Bedrock, Microsoft Foundry, Databricks Model Serving — the same questions return as a capacity choice: pay-per-token with rate limits, or provisioned throughput sized by the same load test.
+
+[PAUSE 2s]
+
+## The strong answer, out loud
+
+So when they ask, "How did you set up H P A and pick the scaling parameters for your inference service?", a strong answer, in about ninety seconds, sounds like this:
+
+"First, I didn't scale on C P U, memory, or G P U utilization. C P U doesn't track G P U work, the engine pre-allocates roughly ninety percent of G P U memory so memory is flat, and G P U utilization only says whether any kernel ran in the sample window, so it saturates at low load. Instead I scaled on the engine's own saturation signals from Prometheus: waiting requests as the throughput signal, and K V cache usage as the latency leading indicator. I used Keda with a Prometheus trigger, which manages an H P A underneath, and when you give it two metrics, it takes whichever demands more replicas.
+
+To pick targets, I load tested one replica with our real prompt and output lengths, ramped concurrency, and found the knee where ninety-fifth percentile time to first token broke our one-second objective — around eight queued requests or ninety percent cache usage. I set targets at about two-thirds of that, because cold start was several minutes.
+
+Behavior: immediate scale-up, several pods at once; scale-down with a fifteen-minute stabilization window, one pod at a time, with a long grace period so in-flight generations finish. Minimum two replicas; a cron trigger pre-warms for month-end. Node-local weight caching and a streaming loader shortened cold start. I'd scale to zero only for batch or internal endpoints. And we re-ran the load test on every model or engine change, because each one moves the knee."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the restaurant. On the left, the waiting chairs — queued requests, the most honest throughput signal. In the middle, kitchens with burner grids — the K V cache — whose occupancy warns you before the chairs fill. The dials that lie: the tired greeter, which is C P U; reserved memory; and the gas meter that reads a hundred percent whenever one burner is lit, which is G P U utilization. On the ceiling, the thermostat: current replicas times metric over target, the largest of several metrics wins, eager scale-up, slow and gentle scale-down. Keda wires Prometheus to it and handles zero. Below the floor, the basement and the slow elevator: node provisioning, image pull, weight loading, warm-up — five to ten minutes — which is why you keep a warm floor, cache weights, pre-warm for known peaks, and set targets below the knee you found by load testing one kitchen until it broke.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="02-kv-cache-serving-params.html">← KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="btn" href="04-latency-metrics-frameworks.html">Latency Metrics That Matter & Choosing an LLM Deployment Framework →</a></div></main></div></body></html>

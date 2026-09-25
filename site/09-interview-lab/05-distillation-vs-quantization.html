@@ -1,0 +1,423 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Distillation vs Quantization: Advantages & Disadvantages — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="active" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 5</div>
+<h1 class="lesson">Distillation vs Quantization: Advantages & Disadvantages</h1>
+<div class="meta">19 min listen · The master painting, the apprentice's smaller canvas, and the reprint with fewer shades: how distillation and quantization each make a model cheaper, what each one costs and breaks, when to stack them, and how to answer the pros-and-cons question in ninety seconds.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/05-distillation-vs-quantization" onclick="toggleDone('09-interview-lab/05-distillation-vs-quantization')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> Distillation changes <em>what</em> the model is (a smaller student trained to imitate a teacher); quantization changes <em>how precisely</em> the same model is stored (fewer bits per number). One is a training project with a capability ceiling, the other is a compression step with non-uniform damage, and the strongest production move is often both: distill, then quantize the student.</p>
+<p><strong>Interview question (as asked):</strong> "Talk me through distillation and quantization — what are the pros and cons of each?"</p>
+<h2 id="mental-image-the-gallery-wall">Mental image — the gallery wall</h2>
+<ul>
+<li><strong>Center:</strong> the master painting = teacher model (e.g. 70B params), painted with ~65k shades (BF16/FP16).</li>
+<li><strong>Left:</strong> the apprentice's smaller canvas = <strong>distillation</strong> — a different, smaller model that learns to look the same from across the room.</li>
+<li>sees the master's hesitation per stroke = <strong>logit KD</strong>; copies finished paintings = <strong>sequence-level KD</strong>; paints while the master grades each stroke = <strong>on-policy KD</strong>.</li>
+<li><strong>Right:</strong> the print shop = <strong>quantization</strong> — same painting, same size, fewer inks (INT8 = 256 levels, 4-bit = 16).</li>
+<li>glints of sunlight = <strong>outliers</strong>; small patches with own ink set = <strong>group/block scaling</strong>; protecting important strokes = <strong>AWQ</strong>; nudging neighbours to absorb rounding error = <strong>GPTQ</strong>; practising with reduced inks = <strong>QAT</strong>.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    S["Apprentice canvas: DISTILLATION<br/>smaller student, new architecture<br/>needs a training run"]
+    T["Master painting: TEACHER<br/>large model, BF16"]
+    Q["Print shop: QUANTIZATION<br/>same model, fewer bits<br/>PTQ in hours, QAT with training"]
+    T -->|"logits / generated outputs / per-token grading"| S
+    T -->|"round weights (and activations) to coarser grid"| Q
+    S -->|"then quantize the student"| SQ["Small + low-bit<br/>(stacked savings)"]
+</pre>
+
+<h2 id="distillation-flavours">Distillation flavours</h2>
+<pre class="mermaid">flowchart TB
+    subgraph L["Logit KD (Hinton-style)"]
+      L1["Teacher forward pass on data"] --> L2["Soft targets: full next-token distribution (temperature)"]
+      L2 --> L3["Student minimizes KL(teacher || student)"]
+    end
+    subgraph SQD["Sequence-level KD"]
+      S1["Prompt teacher (can be hosted API)"] --> S2["Collect complete outputs"]
+      S2 --> S3["SFT student on outputs (cross-entropy)"]
+    end
+    subgraph OP["On-policy KD (GKD / OPD)"]
+      O1["Student generates its own sequence"] --> O2["Teacher scores every student token"]
+      O2 --> O3["Update student: per-token reverse KL"]
+      O3 --> O1
+    end
+</pre>
+
+<table>
+<thead>
+<tr>
+<th>Flavour</th>
+<th>Needs</th>
+<th>Strength</th>
+<th>Weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logit (classic KD)</td>
+<td>Teacher logits, shared tokenizer, run teacher yourself</td>
+<td>Richest signal ("dark knowledge")</td>
+<td>Not possible against closed APIs</td>
+</tr>
+<tr>
+<td>Sequence-level</td>
+<td>Only teacher text outputs</td>
+<td>Works with any teacher; simplest (it's SFT)</td>
+<td>Exposure bias — student never sees its own mistakes; teacher-output licensing</td>
+</tr>
+<tr>
+<td>On-policy (GKD, MiniLLM-style reverse KL, OPD)</td>
+<td>Teacher scoring in the loop</td>
+<td>Dense per-token feedback on the student's own states; mode-seeking</td>
+<td>Most engineering — an RL-like loop</td>
+</tr>
+</tbody>
+</table>
+<p>Reference points: DeepSeek-R1-Distill (Qwen2.5 / Llama 3 students, 1.5B–70B) were SFT-only on ~800K teacher samples. Thinking Machines' on-policy distillation post (Oct 2025) reports RL-level math on a Qwen3-8B student at roughly 1/10th the compute.</p>
+<p>Minimal logit-KD loss (PyTorch sketch):</p>
+<pre><code class="language-python">import torch.nn.functional as F
+
+def kd_loss(student_logits, teacher_logits, labels, T=2.0, alpha=0.5):
+    # soft part: match teacher's softened distribution (forward KL)
+    soft = F.kl_div(
+        F.log_softmax(student_logits / T, dim=-1),
+        F.softmax(teacher_logits / T, dim=-1),
+        reduction=&quot;batchmean&quot;,
+    ) * (T * T)
+    hard = F.cross_entropy(student_logits.view(-1, student_logits.size(-1)), labels.view(-1))
+    return alpha * soft + (1 - alpha) * hard
+</code></pre>
+<p>Hugging Face TRL ships <code>GKDTrainer</code> (on-policy / mixed) for the on-policy flavour.</p>
+<h2 id="quantization-mechanics">Quantization mechanics</h2>
+<table>
+<thead>
+<tr>
+<th>Scheme</th>
+<th>What's low-precision</th>
+<th>Where it helps</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W4A16 (AWQ, GPTQ)</td>
+<td>Weights only (4-bit), math in 16-bit</td>
+<td>Memory-bound decode, small batches, fitting on smaller GPUs</td>
+<td>~4× less weight memory; win fades when compute-bound</td>
+</tr>
+<tr>
+<td>W8A16</td>
+<td>Weights 8-bit</td>
+<td>Safe memory halving</td>
+<td>Minimal risk</td>
+</tr>
+<tr>
+<td>W8A8-INT8 (SmoothQuant + GPTQ)</td>
+<td>Weights + activations</td>
+<td>Compute-bound, large-batch throughput (INT8 tensor cores)</td>
+<td>Activation outliers — SmoothQuant migrates difficulty to weights</td>
+</tr>
+<tr>
+<td>W8A8-FP8 (E4M3)</td>
+<td>Weights + activations, float grid</td>
+<td>Default first move on Hopper/Blackwell-class GPUs</td>
+<td>Found ~lossless across Llama 3.1 family</td>
+</tr>
+<tr>
+<td>NVFP4 / MXFP4</td>
+<td>4-bit float, block scales (16 / 32 elems)</td>
+<td>Blackwell-class throughput; MoE expert weights</td>
+<td>gpt-oss ships MXFP4 MoE weights → 120B fits one 80 GB GPU</td>
+</tr>
+<tr>
+<td>FP8 KV cache</td>
+<td>KV cache</td>
+<td>More concurrent sequences / longer context</td>
+<td>Separate knob from weight quantization</td>
+</tr>
+<tr>
+<td>QAT</td>
+<td>Simulated rounding during fine-tune</td>
+<td>Recovers 4-bit quality</td>
+<td>Gemma 3 QAT: ~5k steps, targets = unquantized model's probabilities (i.e. distillation)</td>
+</tr>
+</tbody>
+</table>
+<p>Memory arithmetic (weights only): 70B × 2 bytes ≈ 140 GB (BF16) → ≈ 70 GB (8-bit) → ≈ 35–40 GB (4-bit incl. scales).</p>
+<p>Key evidence:
+- "Give Me BF16 or Give Me Death" (500k+ evals, Llama 3.1): FP8 W8A8 lossless; tuned INT8 W8A8 1–3% drop; INT4 W4A16 competitive with INT8.
+- "Does quantization affect models' performance on long-context tasks?" (EMNLP 2025): 8-bit ≈ 0.8% avg drop; 4-bit up to 59% drop on long-input tasks, worse with longer context and non-English.</p>
+<p>LLM Compressor recipe (W4A16 GPTQ, runs in vLLM):</p>
+<pre><code class="language-python">from llmcompressor import oneshot
+from llmcompressor.modifiers.quantization import GPTQModifier
+
+recipe = GPTQModifier(targets=&quot;Linear&quot;, scheme=&quot;W4A16&quot;, ignore=[&quot;lm_head&quot;])
+oneshot(
+    model=&quot;meta-llama/Llama-3.1-8B-Instruct&quot;,
+    dataset=&quot;open_platypus&quot;,          # use calibration data that looks like YOUR traffic
+    recipe=recipe,
+    max_seq_length=2048,
+    num_calibration_samples=512,
+    output_dir=&quot;Llama-3.1-8B-Instruct-W4A16&quot;,
+)
+</code></pre>
+<pre><code class="language-bash">vllm serve ./Llama-3.1-8B-Instruct-W4A16          # quantization auto-detected from config
+vllm serve &lt;model&gt; --quantization fp8 --kv-cache-dtype fp8   # dynamic FP8 weights + FP8 KV cache
+</code></pre>
+<h2 id="advantages-disadvantages-the-table-to-memorise">Advantages / disadvantages — the table to memorise</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Distillation</th>
+<th>Quantization (PTQ)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Changes</td>
+<td>Architecture (fewer params)</td>
+<td>Numeric precision only</td>
+</tr>
+<tr>
+<td>Effort</td>
+<td>Weeks: teacher data gen + training + eval</td>
+<td>Hours: calibration + eval (QAT = short training)</td>
+</tr>
+<tr>
+<td>Savings</td>
+<td>Up to ~10× (e.g. 70B → 7B): weights, compute, KV cache</td>
+<td>~2× (8-bit) to ~4× (4-bit) weight memory; speed depends on kernels/hardware</td>
+</tr>
+<tr>
+<td>Quality risk</td>
+<td>Capability ceiling; off-distribution/long-tail degrades</td>
+<td>Non-uniform: long context, math, code, JSON/tool args</td>
+</tr>
+<tr>
+<td>Reversible</td>
+<td>No — new model</td>
+<td>Yes — original weights untouched</td>
+</tr>
+<tr>
+<td>Governance</td>
+<td>New model: full re-validation, model card, lineage to teacher, licence check</td>
+<td>Model variant: re-run eval gate, record calibration data + scheme</td>
+</tr>
+<tr>
+<td>Needs</td>
+<td>Teacher access (logits for logit KD)</td>
+<td>Supported kernels on your GPU</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decision-framework">Decision framework</h2>
+<ol>
+<li>Fast win, supported hardware → <strong>FP8</strong> first.</li>
+<li>Memory-bound, small batch, short context → <strong>W4A16 (AWQ/GPTQ)</strong> + slice-level eval.</li>
+<li>Narrow, high-volume, stable task, weeks available → <strong>distill → quantize student</strong> (consider QAT).</li>
+<li>Broad / fast-changing task → avoid heavy distillation; quantization + routing; keep teacher fallback.</li>
+<li>Always: same eval gate, paired comparison vs original, shadow traffic, rollback path.</li>
+</ol>
+<h2 id="war-story-generic">War story (generic)</h2>
+<p>An internal ops assistant moved to 4-bit weight-only to fit a cheaper GPU; general benchmark within a point. A week later: tool-call JSON arguments drifting (date formats, transposed digits, truncated payloads) and long-document summaries looping past ~30k tokens. Fix: FP8 for that workload, 4-bit only for a short-context classifier, and add "tool-arg exactness" and "long-context faithfulness" slices to the release gate.</p>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Soft targets / dark knowledge</td>
+<td>Teacher's full probability distribution, incl. near-miss alternatives</td>
+</tr>
+<tr>
+<td>Temperature (KD)</td>
+<td>Softens distributions so small probabilities carry gradient</td>
+</tr>
+<tr>
+<td>Exposure bias</td>
+<td>Student trained only on teacher paths can't recover from its own early mistakes</td>
+</tr>
+<tr>
+<td>Reverse KL</td>
+<td>KL(student ‖ teacher); mode-seeking — commits to teacher's most likely behaviour</td>
+</tr>
+<tr>
+<td>PTQ</td>
+<td>Post-training quantization (no retraining; needs calibration set)</td>
+</tr>
+<tr>
+<td>QAT</td>
+<td>Quantization-aware training; fake-quant in forward pass during fine-tune</td>
+</tr>
+<tr>
+<td>Group size / block scaling</td>
+<td>One scale per N values (e.g. 128; NVFP4 = 16) to contain outliers</td>
+</tr>
+<tr>
+<td>AWQ</td>
+<td>Activation-aware: scale up ~1% salient channels before quantizing</td>
+</tr>
+<tr>
+<td>GPTQ</td>
+<td>Second-order, column-by-column rounding with error compensation</td>
+</tr>
+<tr>
+<td>SmoothQuant</td>
+<td>Moves activation outlier difficulty into weights for W8A8</td>
+</tr>
+<tr>
+<td>W4A16 / W8A8</td>
+<td>Weight bits / activation bits</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions with strong answers</h2>
+<p><strong>1. Pros and cons of distillation vs quantization?</strong>
+Distillation trains a smaller student to imitate a teacher — big savings in params, compute and KV cache, and task specialization; cons are a weeks-long training project, a capability ceiling, off-distribution degradation, and a new model to validate (plus licensing on teacher outputs). Quantization keeps the model and stores numbers in fewer bits — hours of work, reversible, FP8 near-lossless, 4-bit quarters weight memory; cons are non-uniform damage (long context, math, structured output) and hardware/kernel-dependent speedups.</p>
+<p><strong>2. Does quantization improve latency or throughput?</strong>
+Weight-only (W4A16) mainly speeds the memory-bound decode phase — better time-per-output-token at small batch. Weight+activation (W8A8 INT8/FP8) uses low-precision tensor cores, improving compute-bound large-batch throughput. KV-cache quantization is separate and raises concurrency/context capacity.</p>
+<p><strong>3. How do you validate a quantized model before production?</strong>
+Not perplexity alone. Run the task eval set with slices for long inputs, numbers, tool-call argument exactness, refusals; paired comparison against the BF16 model with confidence intervals; calibrate on data resembling production; shadow live traffic; record scheme + calibration set for audit.</p>
+<p><strong>4. Logit vs sequence-level vs on-policy distillation?</strong>
+Logit KD matches the teacher's full distribution (needs logits, shared tokenizer). Sequence-level KD fine-tunes on teacher outputs (works with hosted teachers, suffers exposure bias). On-policy KD has the student generate and the teacher grade each token with reverse KL — fixes exposure bias, costs an RL-like loop.</p>
+<p><strong>5. When would you combine them, and in which order?</strong>
+Distill first (architectural win), then quantize the student (another 2–4× memory). Small students are more fragile under 4-bit, so prefer FP8 or QAT for them — and QAT with teacher-probability targets is itself a form of distillation (Gemma 3 QAT did exactly this).</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>vLLM quantization overview: https://docs.vllm.ai/en/latest/features/quantization/index.html</li>
+<li>vLLM FP8 W8A8: https://docs.vllm.ai/en/stable/features/quantization/fp8.html</li>
+<li>LLM Compressor (vLLM project): https://github.com/vllm-project/llm-compressor</li>
+<li>LLM Compressor W4A16 example: https://docs.vllm.ai/projects/llm-compressor/en/latest/examples/quantization_w4a16/</li>
+<li>LLM Compressor W8A8 INT8 example: https://docs.vllm.ai/projects/llm-compressor/en/latest/examples/quantization_w8a8_int8/</li>
+<li>"Give Me BF16 or Give Me Death" (arXiv 2411.02355): https://arxiv.org/abs/2411.02355</li>
+<li>Long-context quantization study (arXiv 2505.20276): https://arxiv.org/abs/2505.20276</li>
+<li>GKD — On-Policy Distillation of Language Models (arXiv 2306.13649): https://arxiv.org/abs/2306.13649</li>
+<li>TRL GKD trainer: https://github.com/huggingface/trl/blob/main/docs/source/gkd_trainer.md</li>
+<li>Thinking Machines — On-Policy Distillation: https://thinkingmachines.ai/blog/on-policy-distillation/</li>
+<li>DeepSeek-R1 paper (distilled models): https://arxiv.org/abs/2501.12948</li>
+<li>Gemma 3 QAT models (Google Developers Blog): https://developers.googleblog.com/en/gemma-3-quantized-aware-trained-state-of-the-art-ai-to-consumer-gpus/</li>
+<li>NVFP4 introduction (NVIDIA): https://research.nvidia.com/labs/eai/blogs/pushing-intelligence-to-4-bit/</li>
+<li>gpt-oss model card (MXFP4 MoE weights): https://arxiv.org/abs/2508.10925</li>
+<li>Related episodes: Track 8 ep 3 (quantization &amp; serving warehouse), Track 7 ep 7 (fine-tuning, on-policy distillation intro)</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode five: distillation versus quantization, the advantages and the disadvantages. This is the Interview Lab track, so we start with the exact question, the way it was asked in a real first-round technical interview for an agentic A I engineer role at a financial services company. The interviewer said, more or less: "Talk me through distillation and quantization. What are the pros and cons of each?"
+
+It sounds like a vocabulary check. It isn't. Anyone can say "distillation makes a smaller model, quantization uses fewer bits." What separates a strong candidate is the next three sentences: which one changes the architecture and which one doesn't, which one needs a training run and which one needs an afternoon, what each one silently breaks, and when you'd use both on the same model. By the end of this episode you'll have all of that, plus a ninety-second answer you can say out loud.
+
+## Why this question matters
+
+Here's the situation. A team has a large open-weights model doing well on an internal task, say classifying and summarizing customer complaints for a regulated business. It runs on a pair of expensive G P Us per replica, answers in about two seconds, and the bill makes finance wince. The ask from leadership is simple: same quality, a fraction of the cost, and ideally faster. There are really only two families of levers that attack the model itself rather than the serving stack around it. You can make the model smaller, meaning fewer parameters, and that's distillation. Or you can keep every parameter and store each one with fewer bits, and that's quantization. And in a regulated setting, there's a third dimension the interviewer is quietly listening for: every change to the model is a change your model-risk and validation people have to sign off on, so "how much re-validation does this trigger" is part of the cost.
+
+In the L L M ops track we built the warehouse image for G P U memory, where quantization shrinks the weight crates. Today we go deeper, into how each technique works, with a new picture.
+
+[PAUSE 1s]
+
+## The mental image: one master painting, two copies
+
+In your mind's eye, picture a gallery wall. Hanging in the center is a huge, detailed oil painting. This is the teacher model, the big one, seventy billion parameters, say. Every brushstroke is a parameter. And the painting was made with an enormous palette: every stroke can be any of tens of thousands of subtly different shades. That's sixteen-bit precision, the format models are usually trained and shipped in.
+
+Now, to the left of the master painting, picture a smaller easel, with a much smaller canvas on it, and an apprentice standing in front of it with a brush. The canvas is a tenth of the size, so the apprentice can't copy stroke for stroke; the apprentice is learning to produce a painting that looks the same from across the room. That's distillation: a different, smaller model, with fewer parameters, trained to behave like the big one.
+
+To the right of the master painting, picture a print shop, with a press. The press takes the master painting and reproduces it at exactly the same size, every stroke in exactly the same place, but with a restricted set of inks. Instead of tens of thousands of shades, the press only has two hundred and fifty-six. Or, if you push it, only sixteen. That's quantization: the same model, the same architecture, the same number of parameters, with each number rounded onto a coarser grid.
+
+Hold that layout: master in the center, apprentice's small canvas on the left, the print shop's reduced-ink reproduction on the right. Everything else today hangs off this wall.
+
+[PAUSE 2s]
+
+## Walking left: how distillation actually works
+
+Let's walk left, to the apprentice. The question is: what exactly does the apprentice get to look at while learning? There are three answers, and they're the three flavors of distillation you should be able to name.
+
+The first flavor is logit distillation, sometimes called classic knowledge distillation. Here, the apprentice gets to see not just the master's final brushstroke but the master's whole hesitation. For every next token, the teacher doesn't just pick a word; it produces a probability over the entire vocabulary. Maybe seventy percent "approved", twenty percent "accepted", five percent "declined". Those soft probabilities carry what the original paper on this called dark knowledge: the fact that "accepted" is a near-synonym and "declined" is a plausible but wrong alternative. The apprentice is trained to match that entire distribution, usually by minimizing a K L divergence between the teacher's probabilities and its own, often with a temperature applied to both to soften them so the small probabilities still carry signal. The catch: you need the teacher's full output probabilities, which means you need to run the teacher yourself, with access to its logits, and the two models realistically need to share a tokenizer. You can't do this against a closed model behind an A P I that only returns text.
+
+The second flavor is sequence-level distillation. Here the apprentice never sees the master's hesitation, only finished paintings. You prompt the teacher with thousands or hundreds of thousands of inputs, collect its complete answers, and fine-tune the student on those answers as ordinary supervised training data. It's the most common form because it works with any teacher, even a hosted A P I model. The famous public example: the distilled reasoning models released alongside DeepSeek R one, where small Qwen and Llama models were fine-tuned on around eight hundred thousand samples generated by the big model, with no reinforcement learning at all, and the small ones picked up a surprising amount of the reasoning ability. The catch here is subtler. The student only ever practises on the teacher's perfect paths. At inference time, the student makes its own small mistake early in a sequence, finds itself in a state the teacher never visited, and has no idea how to recover. That's called exposure bias, and it compounds on long outputs.
+
+Which brings us to the third flavor, on-policy distillation. Picture the apprentice painting on their own small canvas, making their own mistakes, and the master standing behind them, looking over their shoulder, and grading every single stroke as it lands: that one I'd have done too, that one I'd never do. Technically: the student generates its own sequences, the teacher scores each token the student produced, and the student is updated to reduce a per-token reverse K L divergence toward the teacher. Reverse K L is mode-seeking, meaning the student learns to commit to what the teacher would most likely do, instead of smearing itself thinly across everything the teacher might do, which is exactly what a small model with limited capacity should do. You get the best of both worlds: the relevance of learning on your own mistakes, like reinforcement learning, but with dense feedback on every token, instead of one sparse reward at the end. Published results from late twenty twenty-five showed it reaching reinforcement-learning-level math scores on an eight-billion-parameter student at roughly a tenth of the compute. The cost: it's the most engineering, closer to a reinforcement learning pipeline than a fine-tuning script.
+
+[PAUSE 1s]
+
+So what does distillation buy you? A genuinely smaller network. Fewer layers or narrower layers, which means fewer bytes to move per token, less memory for weights, and also a smaller K V cache per token of context, because the cache size scales with the number of layers and heads. A seven-billion-parameter student versus a seventy-billion-parameter teacher is roughly ten times less weight memory and, in the memory-bound decode phase, something in the ballpark of five to ten times faster per token on the same hardware. And it can specialize: a student distilled only on your complaint traffic can match the teacher there while being hopeless elsewhere, which for a production service is fine.
+
+What does it cost? First, a training project. Data generation from the teacher, which for a large teacher and a few hundred thousand examples is itself a serious G P U bill or A P I bill. Then training, then evaluation. Weeks, not hours. Second, a capability ceiling: the apprentice's small canvas simply can't hold every detail. Students typically keep most of the teacher's quality on the distribution they were trained on, and lose more off it. Rare cases, long-tail knowledge, and multi-step reasoning outside the training mix degrade first. Third, it's a new model. From a governance point of view, that's a new artifact with new behavior: full re-validation, new model card, new bias and safety testing. And fourth, licensing: many commercial model terms restrict using their outputs to train a competing model, so "just distill from the best hosted model" is a legal question before it's a technical one.
+
+[PAUSE 2s]
+
+## Walking right: how quantization actually works
+
+Now walk back past the master painting to the print shop on the right. Same painting, same size, same strokes, fewer inks.
+
+Mechanically, quantization takes each group of numbers, finds a scale factor so that the group's range fits onto the coarse grid, and rounds every number to the nearest grid point. Sixteen-bit to eight-bit halves the weight memory. Sixteen-bit to four-bit cuts it to a quarter. A seventy-billion-parameter model is about a hundred and forty gigabytes in sixteen-bit, about seventy at eight-bit, and roughly thirty-five to forty at four-bit once you add the scale factors. Because decode is memory-bandwidth-bound, fewer bytes per weight means more tokens per second, often close to proportionally.
+
+Here's the problem the print shop runs into, and it's the heart of every quantization method. Imagine the painting has a few blinding highlights, a glint of sunlight on metal. If one set of inks has to cover the whole range from the darkest shadow to that glint, the inks are spread so far apart that all the subtle mid-tones collapse into a handful of shades. In a model, those glints are outliers: a small number of weight channels, and especially activation channels, with values dozens of times larger than the rest. Every method you'll be asked about is a different trick for dealing with the glints.
+
+First trick: smaller patches, each with its own ink set. Instead of one scale factor for a whole matrix, you use one per channel, or one per small group of values, say every hundred and twenty-eight weights. A glint only ruins its own little patch. That's group-wise quantization, and the newest hardware formats bake it in: the four-bit floating point format on current-generation data-center G P Us uses blocks of just sixteen values, each with its own eight-bit scale.
+
+Second trick, the one called A W Q, activation-aware weight quantization. It notices that not all weights matter equally. A tiny fraction of weight channels, on the order of one percent, line up with the big activations, and those channels matter enormously. So during a short calibration pass, it measures activations, finds the salient channels, and scales them up before quantizing so they get effectively finer ink, compensating on the activation side so the math stays equivalent.
+
+Third trick, G P T Q. Picture the printer placing strokes one column at a time, and every time a stroke gets rounded and lands slightly off, the printer nudges the not-yet-printed neighbouring strokes to compensate for the error. It uses second-order information from a calibration set, essentially an estimate of which errors the layer's output is sensitive to, to decide how to spread that correction. Both A W Q and G P T Q are post-training methods, need a few hundred calibration samples, and run in minutes to a few hours on a single G P U. Five hundred and twelve samples is a common default in the tooling.
+
+Now, a crucial distinction the interviewer may probe: weight-only versus weight-plus-activation quantization. Weight-only, written as W four A sixteen, stores weights in four-bit but upcasts them to sixteen-bit on the fly and does the math in sixteen-bit. It shrinks memory and speeds up the memory-bound decode phase, which is exactly where small-batch, latency-sensitive serving lives. But it doesn't make the matrix multiplications themselves cheaper, so under heavy batching, when you become compute-bound, the win fades. Weight-plus-activation, like W eight A eight, quantizes the activations too, so the multiply itself runs on the G P U's low-precision tensor cores, roughly doubling math throughput. That helps high-throughput, big-batch serving. But activations are where the nastiest glints live, and they change with every input, so you either calibrate their scales ahead of time or compute them dynamically per token. The technique called SmoothQuant exists precisely to migrate difficulty from activations into weights before quantizing.
+
+Where does eight-bit floating point, F P eight, fit? It's weight-plus-activation, but with a floating-point grid instead of an integer one: more shades near zero, fewer at the extremes, which is naturally forgiving of glints. On hardware that supports it natively, it's become the default first move. A large study from late twenty twenty-four, over half a million evaluations on the Llama three point one family, found F P eight weight-and-activation essentially lossless, well-tuned integer eight-bit weight-and-activation within about one to three percent, and four-bit weight-only surprisingly competitive with eight-bit integer.
+
+Finally, quantization-aware training, Q A T. Instead of printing after the fact, you let the model practise with the reduced inks during a short fine-tuning phase: the forward pass simulates the rounding, and the weights learn to sit in places that survive it. It recovers much of the quality lost at four-bit, at the price of a training run. Google shipped quantization-aware-trained four-bit Gemma checkpoints that way. And notice a detail from their report, because it's going to matter in a minute: the fine-tuning targets were the probabilities from the unquantized model. The reduced-ink print was trained to match the master's full palette of confidences. That's distillation, inside quantization.
+
+[PAUSE 1s]
+
+So, the print shop's advantages. It's fast: post-training quantization is an afternoon, not a project. It's cheap: no teacher data generation, no training run for P T Q. It keeps the architecture, so every tool, every prompt, every tokenizer behavior is unchanged. It's reversible: you still have the master painting. And it's widely supported: serving engines load F P eight, A W Q and G P T Q checkpoints directly, and vendors now ship open-weights models with four-bit expert weights so a hundred-billion-plus-parameter model fits on one eighty-gigabyte G P U.
+
+And the disadvantages. The quality loss is not uniform, and that's the dangerous part. Average benchmark scores barely move, while specific capabilities fall off a cliff. A study from twenty twenty-five on long-context tasks found eight-bit methods lost under one percent on average, but four-bit methods lost substantially on long inputs, up to fifty-nine percent on some tasks, getting worse as context length grew and worse again for non-English inputs. Math, code, strict formatting and tool-call argument generation are the other usual casualties. Calibration data matters: calibrate on generic web text, deploy on financial documents full of numbers, and the outlier statistics don't match. And the speedup is hardware-dependent; a four-bit checkpoint on the wrong kernel can be slower than eight-bit.
+
+[PAUSE 2s]
+
+## Tradeoffs, pitfalls, and a war story
+
+Stand back and look at the whole wall again. Distillation, on the left, changes what the model is. Quantization, on the right, changes how precisely the same model is stored.
+
+Here's the war story, the shape of which comes up again and again. A team serving an internal assistant for operations staff quantized their model to four-bit weight-only to fit it on a cheaper G P U. They ran their standard evaluation: a general knowledge benchmark and a couple of hundred short question-and-answer pairs. Scores within a point of the original. Shipped. Within a week, the downstream agent that called tools started failing intermittently. The model was still choosing the right tool, but the JSON arguments had subtle problems: a date format drifting, an account identifier with a digit transposed, a closing brace missing on long payloads. And a separate long-document summarization feature had started repeating itself on inputs past about thirty thousand tokens. The fix was to go back to eight-bit floating point for that workload, keep four-bit for a short-context classification endpoint where it was genuinely harmless, and add the missing evaluation slices, tool-argument exactness and long-context faithfulness, to the release gate. The lesson you want to say out loud: evaluate quantized models on your task's hardest slices, not on averages.
+
+The distillation-side version: a student distilled on six months of traffic matched the teacher on an evaluation set drawn from those same months, then fell apart when a new product shifted the question mix. It had learned the distribution, not the skill. Keep the teacher as a routed fallback, and plan re-distillation as traffic shifts.
+
+Now, when do you combine them? Often, and in a particular order: distill first, then quantize the student. The apprentice paints the small canvas; then the print shop reproduces the small canvas with fewer inks. Distilling first gets you the big architectural win; quantizing second gets you another two to four times on memory. Two cautions. Small models have less redundancy, so they're more fragile under aggressive quantization than big ones. And if you plan to quantize, consider making the student's training quantization-aware, which, as we saw, is itself a form of distillation.
+
+A quick decision framework you can say out loud. Need a fast win this week on hardware that supports it: F P eight first, nearly free quality-wise, half the memory. Memory-bound, small batches, short context: four-bit weight-only with A W Q or G P T Q, and test the hard slices. Need ten times cheaper on a narrow, high-volume, stable task, with a few weeks to spare: distill into a small model, then quantize it. If the task is broad, open-ended, or changes monthly: be very careful with distillation, lean on quantization plus smarter routing. And whatever you pick, in a regulated environment, treat each variant as a new model version: same evaluation gate, logged lineage back to the teacher and the calibration data, and the ability to roll back to the master painting.
+
+[PAUSE 2s]
+
+## The interview angle
+
+When they ask "what are the pros and cons of distillation versus quantization," a strong answer, spoken in about ninety seconds, sounds like this.
+
+"They attack cost from different directions. Distillation trains a smaller student model to imitate a larger teacher, so it changes the architecture: fewer parameters, less compute, less memory and a smaller K V cache per token. Three flavors: logit-level, matching the teacher's full distribution, which needs its logits; sequence-level, fine-tuning on the teacher's outputs, which works even with a hosted teacher; and on-policy, where the student generates and the teacher grades each token, which fixes exposure bias. Pros: order-of-magnitude savings and specialization. Cons: a real training project, a capability ceiling, off-distribution degradation, and a new model to validate, with licensing questions.
+
+Quantization keeps the same model and stores its numbers in fewer bits. Post-training, it's hours of work: F P eight is close to lossless on modern G P Us, and four-bit weight-only with A W Q or G P T Q quarters weight memory, which helps memory-bound decoding. Q A T recovers quality with a short training phase. The cons are that the damage is non-uniform: averages look fine while long-context, math, and structured outputs like tool-call arguments degrade, and the speed-up depends on hardware and kernels.
+
+In practice I'd start with F P eight, go to four-bit only with slice-level evaluation on the hard cases, and reserve distillation for narrow, high-volume, stable tasks, then quantize the student too. Every variant goes through the same evaluation gate as a new model version."
+
+[PAUSE 1s]
+
+Now the follow-ups, and the traps.
+
+Follow-up one: "Does quantization reduce latency or throughput?" Trap: saying "both, always." Better: weight-only quantization mostly helps the memory-bound decode phase, so time per output token improves at small batch sizes; weight-plus-activation formats help compute-bound, large-batch throughput. And quantizing the K V cache is a separate knob that lets you fit more concurrent sequences.
+
+Follow-up two: "Why not just use a smaller off-the-shelf model instead of distilling?" Sometimes you should; try it first. Distillation earns its cost when you have lots of task traffic and the teacher is clearly better on it.
+
+Follow-up three: "How would you know the quantized model is good enough?" Trap: "perplexity stayed within a point." Better: perplexity is a sanity check, not an acceptance test. Run the task evaluation set with slices for long inputs, numbers, tool-call argument exactness and refusal behavior, compare against the unquantized model with paired statistics, and shadow production traffic before switching.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the gallery wall one last time. In the center, the master painting: the big teacher model, every stroke a parameter, painted with tens of thousands of shades. To the left, the apprentice's small canvas: distillation. A different, smaller model that learns by seeing the master's full hesitation at every stroke, or by copying finished paintings, or best of all by painting on its own while the master grades each stroke. Smaller network, training project, capability ceiling. To the right, the print shop: quantization. Same painting, same size, fewer inks. Smaller patches with their own ink sets, protecting the important strokes with A W Q, nudging neighbors to absorb rounding error with G P T Q, and practising with the reduced inks through Q A T. A quick, cheap, reversible win, with damage that hides in long contexts, numbers and structured outputs. The strongest move is often both: paint the small canvas, then print it with fewer inks, and inspect the result on your hardest slices before it ever reaches a customer.
+
+Next episode: why language models repeat themselves, and how to handle hallucinations. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="04-latency-metrics-frameworks.html">← Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="btn" href="06-repetition-hallucination.html">Why LLMs Repeat Themselves & Handling Hallucinations →</a></div></main></div></body></html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk" open><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="active" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 5 · Agentic AI + MCP · Episode 5</div>
+<h1 class="lesson">MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</h1>
+<div class="meta">17 min listen · The Model Context Protocol as of its 2026-07-28 revision: host, clients and servers drawn as one hub-and-spoke picture, the three server primitives and who controls each, the two transports, and why the protocol just went stateless.</div>
+<audio controls preload="metadata" src="../../audio/05-agentic-mcp/s5e05-mcp-protocol.mp3"></audio>
+<button class="btn complete" data-ep="05-agentic-mcp/05-mcp-protocol" onclick="toggleDone('05-agentic-mcp/05-mcp-protocol')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em> (against spec revision <strong>2026-07-28</strong>, the current "latest")</p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>MCP turns the M×N integration problem into M+N: a <strong>host</strong> creates one <strong>client</strong> per <strong>server</strong>; servers expose <strong>tools</strong> (model-controlled), <strong>resources</strong> (application-controlled) and <strong>prompts</strong> (user-controlled) over JSON-RPC 2.0 via <strong>stdio</strong> or <strong>Streamable HTTP</strong> — and as of 2026-07-28 the protocol is <strong>stateless</strong> (no initialize handshake, no sessions).</p>
+<h2 id="the-mental-image-the-hub-and-its-spokes">The mental image: the hub and its spokes</h2>
+<ul>
+<li><strong>Big circle in the center</strong> = host (the AI app: chat, IDE, agent service) — holds model, conversation, user; only component that sees everything.</li>
+<li><strong>Sockets around the rim</strong> = clients, one per server.</li>
+<li><strong>Cabinets outside</strong> = servers; no lines between cabinets (isolation).</li>
+<li><strong>Three drawers</strong>: right = tools (model's hand), left = resources (application's hand), top = prompts (user's hand).</li>
+<li><strong>Short copper cables below</strong> = stdio (local child process). <strong>Long network lines right</strong> = Streamable HTTP.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph HOST["Host application (model + conversation + user)"]
+        C1["Client 1"]
+        C2["Client 2"]
+        C3["Client 3"]
+    end
+    C1 -- "stdio" --> S1["Server: filesystem (local)"]
+    C2 -- "stdio" --> S2["Server: git (local)"]
+    C3 -- "Streamable HTTP" --> S3["Server: ticketing (remote)"]
+    S3 --> API[("Upstream API")]
+</pre>
+
+<h2 id="the-three-server-primitives-client-side-features">The three server primitives (+ client-side features)</h2>
+<table>
+<thead>
+<tr>
+<th>Primitive</th>
+<th>Controlled by</th>
+<th>Methods</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tools</td>
+<td><strong>Model</strong></td>
+<td><code>tools/list</code>, <code>tools/call</code></td>
+<td>create_ticket, run_query</td>
+</tr>
+<tr>
+<td>Resources</td>
+<td><strong>Application</strong></td>
+<td><code>resources/list</code>, <code>resources/read</code>, <code>resources/templates/list</code>, subscribe</td>
+<td><code>file:///…/config.json</code>, table schema</td>
+</tr>
+<tr>
+<td>Prompts</td>
+<td><strong>User</strong></td>
+<td><code>prompts/list</code>, <code>prompts/get</code></td>
+<td>slash command "/summarize-incident"</td>
+</tr>
+</tbody>
+</table>
+<p>Client features a server can request (via MRTR in 2026-07-28):
+- <strong>Elicitation</strong> — <code>elicitation/create</code>; <strong>form mode</strong> (flat JSON-schema form) and <strong>URL mode</strong> (out-of-band web page for sensitive flows: credentials, payments). Servers MUST NOT request sensitive info via form mode.
+- <strong>Sampling</strong> (server asks host's LLM to generate) — <strong>Deprecated</strong> 2026-07-28 → call LLM provider APIs directly.
+- <strong>Roots</strong> (host tells server allowed directories) — <strong>Deprecated</strong> → pass paths as tool params/config.
+- <strong>Logging</strong> — <strong>Deprecated</strong> → stderr for stdio, OpenTelemetry for observability.
+(Deprecated = still works; earliest removal in first revision on/after 2027-07-28.)</p>
+<p>Tool definition shape:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;create_ticket&quot;,
+  &quot;description&quot;: &quot;Create a support ticket in the given project.&quot;,
+  &quot;inputSchema&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: { &quot;project&quot;: {&quot;type&quot;: &quot;string&quot;}, &quot;title&quot;: {&quot;type&quot;: &quot;string&quot;} },
+    &quot;required&quot;: [&quot;project&quot;, &quot;title&quot;]
+  },
+  &quot;outputSchema&quot;: { &quot;type&quot;: &quot;object&quot;, &quot;properties&quot;: { &quot;ticket_id&quot;: {&quot;type&quot;: &quot;string&quot;} } },
+  &quot;annotations&quot;: { &quot;destructiveHint&quot;: false }
+}
+</code></pre>
+<p>Annotations are hints — clients MUST treat them as untrusted unless the server is trusted.</p>
+<h2 id="transports">Transports</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>stdio</th>
+<th>Streamable HTTP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where</td>
+<td>Local child process launched by host</td>
+<td>Remote/independent server process</td>
+</tr>
+<tr>
+<td>Framing</td>
+<td>Newline-delimited JSON-RPC on stdin/stdout</td>
+<td>Each message = HTTP POST to a single MCP endpoint (e.g. <code>/mcp</code>)</td>
+</tr>
+<tr>
+<td>Response</td>
+<td>stdout</td>
+<td><code>application/json</code> <strong>or</strong> per-request SSE stream (progress notifications then final response)</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>No OAuth — credentials from environment</td>
+<td>OAuth 2.1 (next episode)</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Process isolation</td>
+<td>Validate <code>Origin</code> (DNS rebinding), bind localhost when local</td>
+</tr>
+</tbody>
+</table>
+<p>Legacy <strong>HTTP+SSE</strong> (2024-11-05, two endpoints) is <strong>Deprecated</strong> — replaced by Streamable HTTP (introduced 2025-03-26).</p>
+<p>Example 2026-07-28 request headers:</p>
+<pre><code class="language-http">POST /mcp HTTP/1.1
+MCP-Protocol-Version: 2026-07-28
+Mcp-Method: tools/call
+Mcp-Name: create_ticket
+Accept: application/json, text/event-stream
+Authorization: Bearer eyJ...
+</code></pre>
+<h2 id="what-changed-in-2026-07-28-the-stateless-turn">What changed in 2026-07-28 (the stateless turn)</h2>
+<pre class="mermaid">sequenceDiagram
+    participant C as Client
+    participant LB as Round-robin LB
+    participant S1 as Server replica 1
+    participant S2 as Server replica 2
+    C->>LB: tools/call (with _meta: version, clientCapabilities)
+    LB->>S1: forward
+    S1-->>C: resultType = input_required (inputRequests: confirm?)
+    Note over C: Client asks user (elicitation)
+    C->>LB: tools/call again + inputResponses
+    LB->>S2: forward (any replica works)
+    S2-->>C: resultType = complete (result)
+</pre>
+
+<table>
+<thead>
+<tr>
+<th>Before (≤ 2025-11-25)</th>
+<th>Now (2026-07-28)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initialize</code> / <code>notifications/initialized</code> handshake</td>
+<td>Removed; optional <code>server/discover</code></td>
+</tr>
+<tr>
+<td><code>Mcp-Session-Id</code> header, sticky sessions / shared store</td>
+<td>Removed; version + capabilities in each request's <code>_meta</code></td>
+</tr>
+<tr>
+<td>Server-initiated requests over held-open SSE</td>
+<td><strong>MRTR</strong>: server returns <code>InputRequiredResult</code>; client retries with <code>inputResponses</code></td>
+</tr>
+<tr>
+<td>GET stream for notifications</td>
+<td><code>subscriptions/listen</code> opt-in stream</td>
+</tr>
+<tr>
+<td>SSE resumability (<code>Last-Event-ID</code>)</td>
+<td>Removed</td>
+</tr>
+<tr>
+<td>Tasks experimental in core</td>
+<td><code>io.modelcontextprotocol/tasks</code> extension (poll <code>tasks/get</code>)</td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>Mcp-Method</code> / <code>Mcp-Name</code> headers for gateway routing</td>
+</tr>
+<tr>
+<td>—</td>
+<td><code>ttlMs</code> + <code>cacheScope</code> on list results (cacheable)</td>
+</tr>
+<tr>
+<td>—</td>
+<td>Formal extensions (Tasks, MCP Apps, Enterprise-Managed Authorization) + 12-month deprecation policy</td>
+</tr>
+</tbody>
+</table>
+<p>State you still need → server mints an explicit <strong>handle</strong> (cart ID, workflow ID) returned in a tool result; model passes it back as an argument. Never treat possession of a handle as authentication; bind handles server-side to the authenticated user.</p>
+<h2 id="tradeoffs-pitfalls">Tradeoffs / pitfalls</h2>
+<ol>
+<li><strong>Context bloat</strong> — all tool definitions from all servers land in context; accuracy drops as the menu grows. Anthropic's "code execution with MCP" cut one workflow from ~150k to ~2k tokens (~98.7%).</li>
+<li><strong>Name collisions</strong> — tool names unique only per server; host must prefix/disambiguate.</li>
+<li><strong>Version skew</strong> — mixed fleets of 2025-era (session) and 2026-07-28 (stateless) servers during migration.</li>
+<li><strong>Supply chain</strong> — Sept 2025 malicious <code>postmark-mcp</code> npm package: after 15 clean versions, v1.0.16 added one line BCC'ing every email to an attacker (~1,500 weekly downloads).</li>
+</ol>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td>AI application that creates clients, holds model + conversation, enforces consent</td>
+</tr>
+<tr>
+<td>Client</td>
+<td>1:1 protocol connection from host to one server</td>
+</tr>
+<tr>
+<td>Server</td>
+<td>Exposes tools/resources/prompts; local process or remote service</td>
+</tr>
+<tr>
+<td>JSON-RPC 2.0</td>
+<td>Message format (method, params, id)</td>
+</tr>
+<tr>
+<td>stdio</td>
+<td>Local transport over child-process stdin/stdout</td>
+</tr>
+<tr>
+<td>Streamable HTTP</td>
+<td>Single-endpoint POST transport with optional per-request SSE</td>
+</tr>
+<tr>
+<td>Elicitation</td>
+<td>Server requests user input (form or URL mode)</td>
+</tr>
+<tr>
+<td>MRTR</td>
+<td>Multi Round-Trip Requests — "ask by returning"</td>
+</tr>
+<tr>
+<td><code>server/discover</code></td>
+<td>Optional capability discovery RPC (replaces initialize)</td>
+</tr>
+<tr>
+<td>MCP Apps</td>
+<td>Extension: interactive UI rendered in host in a sandboxed iframe</td>
+</tr>
+<tr>
+<td>AAIF</td>
+<td>Agentic AI Foundation (Linux Foundation) — MCP's home since Dec 2025</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. What is MCP and what problem does it solve?</strong>
+An open protocol (Linux Foundation / AAIF since Dec 2025) standardizing how AI applications connect to tools and data. It collapses M apps × N integrations into M clients + N servers. Hosts create one client per server; servers expose tools, resources and prompts over JSON-RPC.</p>
+<p><strong>Q2. Tools vs resources vs prompts?</strong>
+Split by who controls them: tools are model-controlled executable functions; resources are application-controlled data addressed by URI that the host decides to attach; prompts are user-controlled templates invoked like slash commands.</p>
+<p><strong>Q3. Why one client per server?</strong>
+Isolation: a server sees only its own traffic, never the full conversation or other servers. The host is the only component with the full picture and enforces consent and policy.</p>
+<p><strong>Q4. Compare stdio and Streamable HTTP.</strong>
+stdio: host spawns a local child process, newline-delimited JSON-RPC over stdin/stdout, credentials from environment, no OAuth. Streamable HTTP: one endpoint, each message a POST, response as JSON or a per-request SSE stream; OAuth 2.1 for auth; validate Origin; replaced the deprecated two-endpoint HTTP+SSE transport.</p>
+<p><strong>Q5. What changed in the 2026-07-28 revision and why does it matter for deployment?</strong>
+MCP went stateless: no initialize handshake, no <code>Mcp-Session-Id</code>; each request carries version and capabilities in <code>_meta</code>. Server-to-client asks use MRTR (return <code>input_required</code>, client retries). So remote servers scale behind plain round-robin load balancers without sticky sessions or shared session stores; gateways can route on <code>Mcp-Method</code>/<code>Mcp-Name</code>. Sampling, roots and logging were deprecated.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Spec 2026-07-28 (latest): https://modelcontextprotocol.io/specification/2026-07-28</li>
+<li>Changelog 2026-07-28: https://github.com/modelcontextprotocol/modelcontextprotocol/blob/main/docs/specification/2026-07-28/changelog.mdx</li>
+<li>Release blog "The 2026-07-28 Specification": https://blog.modelcontextprotocol.io/posts/2026-07-28/</li>
+<li>Architecture: https://modelcontextprotocol.io/specification/2026-07-28/architecture</li>
+<li>Transports (Streamable HTTP): https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http</li>
+<li>MRTR pattern: https://modelcontextprotocol.io/specification/2026-07-28/basic/patterns/mrtr</li>
+<li>Deprecated features registry: https://modelcontextprotocol.io/specification/2026-07-28/deprecated</li>
+<li>MCP joins the Agentic AI Foundation: https://blog.modelcontextprotocol.io/posts/2025-12-09-mcp-joins-agentic-ai-foundation/</li>
+<li>Anthropic — Code execution with MCP: https://www.anthropic.com/engineering/code-execution-with-mcp</li>
+<li>Spec source repo: https://github.com/modelcontextprotocol/modelcontextprotocol</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track five, episode five: the Model Context Protocol. Host, client and server; tools, resources and prompts; and the transports that carry it all.
+
+Let's start with a number problem. Say your company has five A I applications: a chat assistant, a coding assistant in the editor, a support bot, an internal analytics agent, and a desktop app. And say you want all of them to reach ten systems: your ticketing tool, your code repository, your data warehouse, your document store, your calendar, and so on. Without a standard, somebody writes a custom integration for every pair. Five times ten. Fifty integrations, each with its own auth handling, its own error format, its own way of describing what it can do. Add one new application and you write ten more. Add one new system and you write five more.
+
+That's called the M times N problem, and it's exactly what the Model Context Protocol, M C P, was built to collapse. With a shared protocol, each application implements the client side once, and each system implements the server side once. Five plus ten. Fifteen implementations instead of fifty. Every new server instantly works in every compliant application.
+
+That's why M C P spread so fast. Anthropic open-sourced it in November twenty twenty-four. Within a year it was supported by the major A I clients across vendors, and in December twenty twenty-five it was donated to the Agentic A I Foundation under the Linux Foundation, co-founded by Anthropic, Block and OpenAI. At that point the project reported close to one hundred million monthly S D K downloads and around ten thousand active servers. It's no longer one vendor's protocol. It's infrastructure.
+
+And there's a freshness point you must know for interviews. The specification is versioned by date. The current revision is dated twenty twenty-six, July twenty-eighth, and it's the biggest change since authorization was added: the protocol went stateless. If you learned M C P in twenty twenty-five, parts of your mental model are now out of date. We'll cover exactly which parts.
+
+[PAUSE 1s]
+
+## The mental image: the hub and its spokes
+
+Picture this. In the center of your mind's eye, a large circle. That circle is the host: the A I application the user actually touches. A chat app, an I D E, a desktop assistant, your own agent service. Inside the host lives the model connection, the conversation, and the user.
+
+Now, around the inside rim of that circle, picture several small sockets, evenly spaced, like numbers on a clock face. Each socket is a client. One client per server connection. That's a rule of the protocol: each client talks to exactly one server, and the host creates and manages as many clients as it needs.
+
+From each socket, a line runs outward to a box outside the circle. Each box is a server. Some boxes are close to the circle, just below it, sitting on the same machine: a file system server, a local git server. Other boxes are far off to the right, across a gap, out on the internet: a ticketing system's hosted server, a data warehouse's server.
+
+Now zoom into one server box. Picture it as a small cabinet with three drawers. The top drawer holds prompts. The left drawer holds resources. The right drawer holds tools. We'll open each drawer in a minute, and I'll tell you whose hand opens it.
+
+Finally, the lines between sockets and boxes. The short lines to the boxes just below the circle are copper cables: that's the local transport, standard input and output. The long lines to the boxes far right are network lines: that's the Streamable H T T P transport.
+
+So: host in the center, client sockets around its rim, server cabinets outside, three drawers per cabinet, short cables below, long network lines to the right. Hold that.
+
+[PAUSE 2s]
+
+## The three roles, and the isolation rule
+
+Let's make the roles precise, because interviewers love this.
+
+The host, the big circle, is the coordinator. It creates clients, decides which servers are allowed, enforces user consent, and holds the full conversation. Crucially, the host is where the model lives from the protocol's point of view.
+
+The client, each socket, is a thin protocol endpoint inside the host. It speaks M C P to exactly one server, attaches the protocol version and capabilities to each request, and routes messages.
+
+The server, each cabinet, exposes capabilities. It can be a tiny local process or a large remote service.
+
+Now the design principle that falls out of the picture, and it's a security principle. Servers should not be able to read the whole conversation, and they cannot see into other servers. Look at the picture: each cabinet has one line to one socket. There are no lines between cabinets. The ticketing server has no idea the file system server exists. Only the host, in the center, sees everything, and cross-server interactions are controlled by the host. That's isolation by construction. When someone asks why M C P has a separate client per server instead of one big client, this is the answer: isolation and security boundaries.
+
+Underneath, every message on every line is JSON R P C two point oh: small JSON messages with a method name, parameters, and an I D to match responses to requests.
+
+[PAUSE 1s]
+
+## Opening the three drawers
+
+Now walk up to one cabinet and open the drawers. The best way to remember them is by who controls each one.
+
+The right drawer: tools. Tools are model-controlled. They're executable functions: create a ticket, run a query, send an email. The host lists them by calling the method tools slash list, and each tool comes back with a name, a human description, and an input schema written in JSON Schema. The host hands those definitions to the model. When the model decides to act, it emits a tool call, the host routes it through the right socket as a tools slash call request, the server executes, and the result comes back. Results can be plain text for the model, and optionally structured content that conforms to an output schema, which is much easier for code to consume. Tools can also carry annotations, hints such as "this tool is read-only" or "this tool is destructive." But the spec is explicit: clients must treat those annotations as untrusted unless the server is trusted. A malicious server can label a delete tool as read-only.
+
+The left drawer: resources. Resources are application-controlled. They're data, identified by a U R I: a file, a database schema, a document, a log. The model doesn't grab them on its own; the host application decides which resources to attach to the context, often via a picker the user sees, like "attach this file." Resources can also be templates, parameterized U R Is, so a server can expose "the schema of any table" without listing every table up front. Clients can subscribe to changes on a resource.
+
+The top drawer: prompts. Prompts are user-controlled. They're reusable templates the user explicitly invokes, typically surfaced as slash commands or menu items. Think "slash summarize incident," which pulls in the right instructions and arguments. The server author ships their best practice as a prompt, and the user chooses when to use it.
+
+So: right drawer, tools, the model's hand. Left drawer, resources, the application's hand. Top drawer, prompts, the user's hand. If you remember nothing else about primitives, remember who controls which drawer.
+
+There's also traffic in the other direction, from the cabinet back toward the circle. The most important is elicitation: the server asks the user for input mid-operation. It has two modes. Form mode, a small structured form, like "which project should I file this under?" And U R L mode, which sends the user to a web page for anything sensitive, like entering credentials or approving a payment, so the secret never flows through the client or the model. The spec is explicit that servers must not use form mode for sensitive information like passwords.
+
+Two older reverse-direction features are worth knowing precisely because they're now deprecated. Sampling let a server ask the host's model to generate text, so the server could use an L L M without its own A P I key. Roots let the host tell a server which directories it may work in. In the July twenty twenty-six revision, both sampling and roots, plus protocol-level logging, were marked deprecated. They still work for at least twelve months, but new implementations shouldn't adopt them. The guidance: call your L L M provider directly instead of sampling, pass directories as tool parameters instead of roots, and use OpenTelemetry instead of protocol logging.
+
+[PAUSE 2s]
+
+## The lines: two transports
+
+Now look at the lines between sockets and cabinets.
+
+The short copper cables below the circle: the standard input and output transport, usually just called stdio. The host launches the server as a child process on the same machine, writes JSON R P C messages to the process's standard input, one per line, and reads responses from its standard output. No network, no ports, microsecond-level overhead. This is how most local servers run: file system access, local git, a local database. Because it's local and launched by the user, the spec says stdio servers should not use the O Auth flow; they get credentials from the environment instead, typically environment variables.
+
+The long network lines to the right: Streamable H T T P. The server exposes one endpoint, for example slash M C P. Every message from the client is its own H T T P POST to that endpoint. The server answers each request either with a single JSON response, or, if it wants to stream progress, with a server-sent events stream scoped to that one request, carrying progress notifications and then the final result. Streamable H T T P was introduced in March twenty twenty-five and replaced an older transport that used two endpoints, a separate long-lived server-sent events channel plus a POST endpoint. That old H T T P plus S S E transport is formally deprecated now, and you'll still see it in older servers and tutorials.
+
+Two security rules for the long lines. Servers must validate the Origin header on every request, to stop D N S rebinding attacks, where a malicious web page tricks your browser into talking to a server on your own machine. And a local H T T P server should bind to localhost only, never to all network interfaces.
+
+[PAUSE 2s]
+
+## What changed in twenty twenty-six: the stateless turn
+
+Now the part that makes your knowledge current. Walk along one of the long network lines and picture a load balancer sitting in the middle of it, in front of several copies of the same server.
+
+In the older revisions, M C P was stateful. A connection began with an initialize handshake: the client and server exchanged versions and capabilities, and the server handed back a session I D in an M C P session I D header. Every later request carried that I D. And on H T T P, the server could send its own requests back to the client over a held-open stream, for elicitation or sampling. That's lovely on one machine and painful at scale. Behind a load balancer, request two might land on a different server copy than request one. So teams needed sticky sessions, or a shared session store like Redis, and long-lived streams through proxies that like to cut idle connections.
+
+The twenty twenty-six July revision removed all of that. No initialize handshake. No protocol session I D. Instead, every request carries its own protocol version, client info and client capabilities inside a metadata field. Any request can land on any server copy behind a plain round-robin load balancer. If a client wants to learn a server's capabilities up front, there's a new optional call, server slash discover.
+
+What about the server asking the user something mid-call? That's now a pattern called multi round-trip requests. Walk it through. The client sends a tools call. The server realizes it needs input, say a confirmation. Instead of opening a stream and sending its own request, it returns a result whose type is "input required," listing the questions it needs answered. The client collects the answers from the user, then retries the original call with the answers attached. The server, any copy of it, now has everything it needs and completes. The rule of thumb: servers never initiate requests anymore; they ask by returning.
+
+And if your application genuinely needs state across calls, like a shopping cart or a multi-step workflow, the server mints an explicit handle in a tool result, and the model passes it back as an ordinary argument. The security guidance attached to that: never treat possession of a handle as authentication, generate handles randomly, and bind them server-side to the authenticated user.
+
+A few more changes worth naming. Streamable H T T P requests now carry routing headers, an M C P method header and an M C P name header, so gateways, rate limiters and firewalls can route and meter on "which tool is being called" without parsing the JSON body. List results, like the list of tools, now carry a time-to-live so clients can cache them, which also stabilizes the model's prompt cache. Change notifications moved onto a single opt-in subscription stream. And long-running work moved into an official tasks extension, with polling, alongside other extensions like M C P Apps, which lets servers render interactive user interfaces inside the host, sandboxed in an iframe.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls
+
+Let's be honest about the costs.
+
+Context cost. Every tool definition from every connected server gets injected into the model's context. Connect ten servers with twenty tools each and you've spent tens of thousands of tokens before the user says hello, and tool-selection accuracy drops as the menu grows. Anthropic published an engineering post showing an agent workflow going from about one hundred fifty thousand tokens to about two thousand, roughly a ninety-eight percent reduction, by having the model write code against M C P servers in a sandbox instead of loading every definition and piping every intermediate result through the context. The general lesson: fewer, well-designed tools beat many thin wrappers around every A P I endpoint, and load tools on demand.
+
+Name collisions. Two servers can both expose a tool called search. Tool names are only unique within one server, so the host must disambiguate, typically by prefixing with a server identifier.
+
+Version skew. The ecosystem is mid-migration. Many servers in the wild still speak the twenty twenty-five revisions with sessions and initialize. The spec defines backward-compatibility rules, where each side detects the other's era and falls back, but you should expect mixed fleets for a while.
+
+Supply chain. A local server is code you run with your user's permissions. In September twenty twenty-five, security researchers found the first known malicious M C P server on the public n p m registry: a package impersonating a legitimate email provider's server. After fifteen clean versions that built trust, one release added a single line that blind-copied every outgoing email to an attacker's address. Roughly fifteen hundred weekly downloads. One line. Treat M C P servers like any other dependency: pin versions, review, prefer official publishers, and use an allow-list in the host.
+
+We'll go much deeper on security and authorization in the next episode.
+
+[PAUSE 2s]
+
+## Interview angle
+
+When they ask, "What is M C P, in one breath?", a strong answer sounds like: "An open protocol, now under the Linux Foundation, that standardizes how A I applications connect to tools and data. It turns the M times N integration problem into M plus N. A host application creates one client per server; servers expose tools, which the model controls, resources, which the application controls, and prompts, which the user controls. Messages are JSON R P C, over stdio locally or Streamable H T T P remotely."
+
+When they ask, "Why one client per server?", strong answer: "Isolation. A server only sees its own requests, never the whole conversation or other servers. The host is the only component with the full picture, and it enforces consent and policy."
+
+When they ask, "How would you deploy a remote M C P server at scale?", a strong current answer: "On the twenty twenty-six July revision, the protocol is stateless, so I can run replicas behind a plain round-robin load balancer with no sticky sessions. I'd use the method and name headers for routing and rate limiting at the gateway, validate Origin, require O Auth tokens, and keep any application state in explicit handles bound to the user. If I have clients on older revisions, I'd plan for session support during the migration."
+
+And if they ask about the difference between tools and resources, don't just say "actions versus data." Say who decides: the model decides to call a tool; the application decides to attach a resource.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the picture one last time.
+
+The big circle in the center is the host: it holds the model, the conversation, and the user, and it's the only thing that sees everything.
+
+Around its rim, the sockets: clients, one per server, each attaching version and capabilities to every request.
+
+Outside, the server cabinets, each with three drawers. Right drawer, tools: the model's hand, JSON Schema in, results out. Left drawer, resources: the application's hand, data by U R I. Top drawer, prompts: the user's hand, slash commands. And the server can ask the user for input through elicitation, form mode for simple answers, U R L mode for anything sensitive.
+
+Short copper cables below: stdio, a local child process, credentials from the environment. Long network lines to the right: Streamable H T T P, one endpoint, one POST per message, optional per-request streaming.
+
+And the twenty twenty-six update: no handshake, no sessions, every request self-describing, servers ask by returning "input required," and a plain load balancer is enough. Sampling, roots and logging are deprecated.
+
+Next episode: M C P versus plain function calling, and how to secure all of this with O Auth in real deployments. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="04-multi-agent-patterns.html">← Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="btn" href="06-mcp-vs-function-calling.html">MCP vs Function Calling; Security & Auth in Real Deployments →</a></div></main></div></body></html>

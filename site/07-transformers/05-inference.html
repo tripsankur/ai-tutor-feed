@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Inference: KV Cache, Sampling, Speculative Decoding — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="active" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 5</div>
+<h1 class="lesson">Inference: KV Cache, Sampling, Speculative Decoding</h1>
+<div class="meta">18 min listen · What actually happens between hitting enter and seeing tokens stream back: prefill versus decode, why the KV cache turns inference into a memory problem, how sampling picks each word, and how speculative decoding lets a small draft model buy speed without changing a single output.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e05-inference.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/05-inference" onclick="toggleDone('07-transformers/05-inference')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LLM inference is an autoregressive loop whose decode phase is memory-bandwidth-bound, so serving performance is decided by how you manage the KV cache (size, paging, sharing, batching), how you pick each token (sampling), and whether you can verify several tokens per expensive forward pass (speculative decoding).</p>
+<h2 id="the-mental-image-the-shelf-and-the-cabinet">The mental image: the shelf and the cabinet</h2>
+<ul>
+<li><strong>Shelf</strong> (left → right) = the token sequence; prompt on the left, the answer grows at the right end.</li>
+<li><strong>Many-floored machine above</strong> = the transformer; one floor per layer.</li>
+<li><strong>Cabinet below</strong> = the KV cache; one folder per token, one slip per layer, each with a key stamp and a value stamp. Written once, read forever (causal mask).</li>
+<li><strong>Spinning wheel at the right end</strong> = sampling over the vocabulary distribution.</li>
+<li><strong>Apprentice with a pencil</strong> = the speculative draft model; the master verifies pencilled cards in one pass, inks the accepted prefix, erases from the first rejection.</li>
+</ul>
+<h2 id="prefill-vs-decode">Prefill vs decode</h2>
+<pre class="mermaid">flowchart LR
+    P["Prompt tokens (all at once)"] --> PF["PREFILL: parallel forward pass - compute-bound"]
+    PF --> KV[("KV cache: K,V per token per layer")]
+    PF --> T1["First token - sets TTFT"]
+    T1 --> D["DECODE step: 1 token/pass - memory-bandwidth-bound"]
+    KV --> D
+    D -->|append new K,V| KV
+    D --> S["Sampling: temperature, top-k, top-p, min-p, grammar mask"]
+    S -->|next token| D
+</pre>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prefill</th>
+<th>Decode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tokens per pass</td>
+<td>whole prompt</td>
+<td>1 (or k+1 with speculation)</td>
+</tr>
+<tr>
+<td>Bottleneck</td>
+<td>compute (FLOPs)</td>
+<td>memory bandwidth (stream weights + KV)</td>
+</tr>
+<tr>
+<td>User-facing metric</td>
+<td>time to first token (TTFT)</td>
+<td>inter-token latency / tokens per second</td>
+</tr>
+<tr>
+<td>Mitigations</td>
+<td>chunked prefill, prefix caching, disaggregation</td>
+<td>batching, GQA/MLA, KV quantization, speculative decoding</td>
+</tr>
+</tbody>
+</table>
+<p>Rough bound: decode time per token ≥ (bytes of weights + bytes of KV read) / memory bandwidth. A 70B model in BF16 ≈ 140 GB of weights; at a few TB/s that's tens of ms per step for a batch — which is why batching (weights read once, shared by the batch) is the main throughput lever.</p>
+<h2 id="sizing-the-kv-cache">Sizing the KV cache</h2>
+<p>$$\text{KV bytes per token} = 2 \times n_\text{layers} \times n_\text{kv heads} \times d_\text{head} \times \text{bytes per element}$$</p>
+<table>
+<thead>
+<tr>
+<th>Model shape (Llama-3-style)</th>
+<th>Layers</th>
+<th>KV heads (GQA)</th>
+<th>d_head</th>
+<th>Per token (BF16)</th>
+<th>At 128K tokens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8B</td>
+<td>32</td>
+<td>8</td>
+<td>128</td>
+<td>2·32·8·128·2 = 131,072 B ≈ 128 KB</td>
+<td>≈ 16 GB</td>
+</tr>
+<tr>
+<td>70B</td>
+<td>80</td>
+<td>8</td>
+<td>128</td>
+<td>327,680 B ≈ 320 KB</td>
+<td>≈ 40 GB</td>
+</tr>
+</tbody>
+</table>
+<p>Total KV memory = per-token × sequence length × concurrent sequences. With 32 query heads and no GQA, the 8B case would be 4× larger.</p>
+<pre><code class="language-python">def kv_bytes(layers, kv_heads, d_head, seq_len, batch=1, bytes_per=2):
+    return 2 * layers * kv_heads * d_head * bytes_per * seq_len * batch
+
+print(kv_bytes(32, 8, 128, 128_000) / 2**30)   # ~15.6 GiB for one 128K sequence
+</code></pre>
+<h2 id="pagedattention-vllm">PagedAttention (vLLM)</h2>
+<ul>
+<li>Prior systems pre-reserved contiguous KV space per request for max length → <strong>60–80% of KV memory wasted</strong> (fragmentation + over-reservation).</li>
+<li>PagedAttention splits KV into fixed-size <strong>blocks</strong> (e.g. 16 tokens) mapped via a block table, like OS virtual memory → waste <strong>&lt; 4%</strong> (only the last block), <strong>2–4× throughput</strong> vs prior SOTA at the same latency (SOSP 2023).</li>
+<li>Enables <strong>prefix caching / block sharing</strong>: many requests with the same system prompt point to the same blocks (copy-on-write).</li>
+<li>Related: <strong>continuous batching</strong> (insert new requests at every decode step), <strong>chunked prefill</strong>, <strong>prefill/decode disaggregation</strong>.</li>
+</ul>
+<h2 id="sampling-cheat-sheet">Sampling cheat sheet</h2>
+<table>
+<thead>
+<tr>
+<th>Knob</th>
+<th>Effect on the "wheel"</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Greedy (argmax)</td>
+<td>take the widest slice</td>
+<td>extraction, classification; can loop on long text</td>
+</tr>
+<tr>
+<td>Temperature T</td>
+<td>logits / T; T&lt;1 sharpens, T&gt;1 flattens</td>
+<td>0–0.3 factual; 0.7–1.0 creative</td>
+</tr>
+<tr>
+<td>Top-k</td>
+<td>keep k most likely tokens</td>
+<td>crude truncation</td>
+</tr>
+<tr>
+<td>Top-p (nucleus)</td>
+<td>keep smallest set with cumulative prob ≥ p</td>
+<td>adaptive truncation</td>
+</tr>
+<tr>
+<td>Min-p</td>
+<td>keep tokens with p ≥ min_p × p_max</td>
+<td>robust at higher temperatures</td>
+</tr>
+<tr>
+<td>Repetition / frequency penalties</td>
+<td>down-weight tokens already generated</td>
+<td>reduce loops</td>
+</tr>
+<tr>
+<td>Constrained / structured decoding</td>
+<td>mask tokens that violate a grammar/JSON schema</td>
+<td>guaranteed-valid structured output</td>
+</tr>
+</tbody>
+</table>
+<p>Caveat: T=0 is <em>not</em> guaranteed bit-reproducible in production — batch-dependent floating-point reduction order can flip near-ties.</p>
+<h2 id="speculative-decoding">Speculative decoding</h2>
+<pre class="mermaid">sequenceDiagram
+    participant D as Draft (apprentice)
+    participant T as Target (master)
+    D->>D: propose k tokens autoregressively (cheap)
+    D->>T: k draft tokens
+    T->>T: ONE forward pass scores all k positions
+    T-->>T: accept prefix via rejection sampling
+    T->>D: accepted n tokens + 1 corrected/bonus token
+</pre>
+
+<ul>
+<li>Acceptance rule (Leviathan et al. 2022; Chen et al. 2023): accept draft token x with prob min(1, p_target(x)/p_draft(x)); on rejection resample from the normalized residual max(0, p_target − p_draft). Output distribution is <strong>identical</strong> to the target model — lossless.</li>
+<li>Draft sources: small same-family model (shared tokenizer), <strong>Medusa</strong> heads, <strong>EAGLE / EAGLE-3</strong> (draft head over target hidden states; vLLM reports up to ~2.5× speedups; EAGLE 3.1 and P-EAGLE landed in vLLM in 2026), <strong>n-gram / prompt lookup</strong> (great for code edits, RAG echoing sources), MTP heads (DeepSeek-V3 trained a multi-token-prediction module usable for speculation).</li>
+<li>Wins at low/moderate batch where GPU compute is idle; gains shrink at large batch; depends on acceptance rate (predictable text ≫ high-temperature creative text).</li>
+</ul>
+<pre><code class="language-python"># vLLM (illustrative; check current docs for exact keys)
+from vllm import LLM, SamplingParams
+llm = LLM(model=&quot;meta-llama/Llama-3.1-8B-Instruct&quot;,
+          speculative_config={&quot;method&quot;: &quot;eagle3&quot;, &quot;model&quot;: &quot;&lt;eagle3-draft-head&gt;&quot;, &quot;num_speculative_tokens&quot;: 4},
+          enable_prefix_caching=True, kv_cache_dtype=&quot;fp8&quot;)
+out = llm.generate([&quot;Explain the KV cache.&quot;], SamplingParams(temperature=0.7, top_p=0.9, max_tokens=256))
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Autoregressive decoding</td>
+<td>generate one token, append, repeat</td>
+<td>every answer is a loop</td>
+</tr>
+<tr>
+<td>Prefill</td>
+<td>parallel pass over prompt</td>
+<td>compute-bound; drives TTFT</td>
+</tr>
+<tr>
+<td>Decode</td>
+<td>one token per pass</td>
+<td>memory-bandwidth-bound</td>
+</tr>
+<tr>
+<td>KV cache</td>
+<td>stored K and V per token per layer</td>
+<td>trades memory for avoiding quadratic recompute</td>
+</tr>
+<tr>
+<td>GQA / MQA / MLA</td>
+<td>fewer / shared / compressed KV heads</td>
+<td>shrink the cache by design</td>
+</tr>
+<tr>
+<td>PagedAttention</td>
+<td>block-based KV allocation</td>
+<td>&lt;4% waste, enables sharing</td>
+</tr>
+<tr>
+<td>Prefix caching</td>
+<td>reuse KV blocks for identical prefixes</td>
+<td>cheaper cached input tokens</td>
+</tr>
+<tr>
+<td>Continuous batching</td>
+<td>per-step admission of requests</td>
+<td>keeps batch full</td>
+</tr>
+<tr>
+<td>Disaggregated serving</td>
+<td>separate prefill and decode pools</td>
+<td>isolates long prompts</td>
+</tr>
+<tr>
+<td>Speculative decoding</td>
+<td>draft then verify</td>
+<td>lossless latency win</td>
+</tr>
+<tr>
+<td>Constrained decoding</td>
+<td>grammar mask on logits</td>
+<td>valid JSON guaranteed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Why is decode memory-bound while prefill is compute-bound?</strong>
+Prefill multiplies the weights against many tokens at once, so each byte of weight loaded does lots of FLOPs. Decode processes one new token per sequence, so each step streams all weights (and that sequence's KV) for very little arithmetic — the GPU waits on HBM bandwidth. Batching raises arithmetic intensity by sharing weight reads.</p>
+<p><strong>Q2. Estimate the KV cache for an 8B GQA model at 128K context.</strong>
+2 × 32 layers × 8 KV heads × 128 dims × 2 bytes ≈ 128 KB per token → ≈ 16 GB per 128K sequence — as large as the BF16 weights. So concurrency for long contexts is limited by KV memory, not weights.</p>
+<p><strong>Q3. What problem does PagedAttention solve?</strong>
+Contiguous per-request pre-allocation wasted 60–80% of KV memory. Paging into fixed-size blocks with a block table cuts waste to under 4%, allows larger batches (2–4× throughput), and enables prefix sharing across requests.</p>
+<p><strong>Q4. Is speculative decoding an approximation?</strong>
+No. With the rejection-sampling acceptance rule the output distribution equals the target model's. It trades extra (otherwise idle) compute for fewer sequential target passes; speedup depends on acceptance rate and batch size.</p>
+<p><strong>Q5. Why do providers charge more for output tokens than input tokens, and less for cached input?</strong>
+Input tokens are processed in parallel in prefill; output tokens each require a memory-bound sequential decode step. Cached input reuses existing KV blocks, skipping prefill compute for that prefix.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Efficient Memory Management for LLM Serving with PagedAttention (vLLM paper): https://arxiv.org/abs/2309.06180</li>
+<li>vLLM launch blog (waste and throughput numbers): https://vllm.ai/blog/2023-06-20-vllm</li>
+<li>Fast Inference from Transformers via Speculative Decoding (Leviathan et al.): https://arxiv.org/abs/2211.17192</li>
+<li>Accelerating LLM Decoding with Speculative Sampling (Chen et al.): https://arxiv.org/abs/2302.01318</li>
+<li>EAGLE-3 paper: https://arxiv.org/abs/2503.01840</li>
+<li>vLLM blog — EAGLE 3.1 (2026): https://vllm.ai/blog/2026-05-26-eagle-3-1</li>
+<li>vLLM blog — P-EAGLE (2026): https://vllm.ai/blog/2026-03-13-p-eagle</li>
+<li>DeepSeek-V3 Technical Report (MLA, MTP): https://arxiv.org/abs/2412.19437</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode five: inference — the K V cache, sampling, and speculative decoding. For four episodes we have been building the transformer from the inside: attention, queries, keys and values, multiple heads, positions, the decoder-only stack. Today the model is trained, the weights are frozen, and a user hits enter. What happens next is a completely different engineering problem from training, and it is the one that shows up on your cloud bill every single day.
+
+Here is the puzzle that makes this episode matter. You serve a seventy-billion-parameter model on a node with eight top-end G P Us. The weights take roughly a hundred and forty gigabytes in sixteen-bit precision, and you have well over five hundred gigabytes of G P U memory. Plenty of headroom, you think. Then traffic ramps up, requests with long documents arrive, and the server starts rejecting work with out-of-memory errors — while the G P U compute utilisation sits at a miserable twenty or thirty percent. Memory is full, compute is idle. How can both be true at once? By the end of this episode you will be able to explain exactly why, and what the serious serving engines do about it.
+
+[PAUSE 1s]
+
+## Why it matters
+
+Training is one giant parallel job: every position in every sequence gets processed at once, and the G P U arithmetic units stay busy. Inference for a decoder-only model is different in kind. The model generates one token, appends it, and generates the next. Every answer is a loop. A five-hundred-token reply means five hundred trips through the entire network. And each trip, as we will see, is dominated not by arithmetic but by moving bytes from memory into the chip. Latency, throughput, cost per million tokens, how many users one G P U can hold, whether a long-context feature is affordable at all — all of it is decided here. If you are designing or buying an L L M platform, inference is where the money is.
+
+[PAUSE 1s]
+
+## The mental image: the shelf and the cabinet
+
+Let us build one picture and keep it for the whole episode.
+
+In your mind's eye, picture a long horizontal shelf running from left to right. On that shelf sits a row of cards, one card per token. The leftmost cards are the system prompt, then the user's question, and the row grows toward the right as the model writes its answer. The right end of the shelf is the frontier — the place where the next card will go.
+
+Hovering above the shelf is the model itself. Picture it as a tall machine with many floors stacked vertically — each floor is one transformer layer. To produce the next card, the machine has to look down at every card already on the shelf, through every one of its floors.
+
+Now, directly below the shelf, picture a filing cabinet, as wide as the shelf itself. For every card on the shelf, the cabinet holds a folder directly underneath it. And inside each folder, one slip of paper per floor of the machine, and each slip carries two stamps: a key stamp and a value stamp. That cabinet is the K V cache. Hold that picture: shelf of tokens in the middle, the many-floored machine above, the cabinet of keys and values below.
+
+Finally, at the far right end of the shelf, just past the last card, picture a small spinning selection wheel. That wheel is where the model's output, a probability for every token in its vocabulary, gets turned into one actual choice. That is sampling. We will come back to that wheel, and later we will add one more character to the right of it — an apprentice with a pencil.
+
+[PAUSE 1s]
+
+## Under the hood: prefill, then decode
+
+Walk the picture from the moment the user hits enter.
+
+Phase one is called prefill. The whole prompt arrives at once — say two thousand tokens. All two thousand cards are laid on the shelf together, and the machine processes them in one parallel sweep, floor by floor. As each floor works through each card, it computes that card's key and value, and drops them into the folder below. When prefill finishes, the cabinet is full for every prompt card, and the machine produces the probabilities for the very first new token. Prefill looks like training: big matrix multiplications, lots of work per byte, the G P U arithmetic units genuinely busy. We call that compute-bound. Prefill is what determines time to first token, the pause before anything appears on screen.
+
+Phase two is decode, and this is where the character changes completely. The wheel on the right spins, picks one token, and a new card lands at the right end of the shelf. Now the machine must produce the next token. Here is the key insight from the attention episode: the new card's query has to be compared against the keys of every earlier card, and then it collects a weighted blend of their values. Without the cabinet, the machine would have to recompute the key and value of every card on the shelf, on every floor, for every single new token. Card two thousand and one would recompute two thousand cards. Card two thousand and two would recompute two thousand and one. The work grows with the square of the length. That is the naive loop, and nobody ships it.
+
+With the cabinet, the new card only computes its own query, key and value. Its key and value go into a new folder at the right end of the cabinet. Its query reaches down and reads every folder to the left. That is valid because of the causal mask — the curtain from episode two: earlier cards never look at later cards, so their keys and values never change once written. Compute once, reuse forever. That is the whole trick.
+
+[PAUSE 1s]
+
+But watch what decode actually costs. To produce one card, the machine has to stream all of its weights, every floor, out of G P U memory into the arithmetic units — that is a hundred and forty gigabytes for a seventy-billion-parameter model in sixteen-bit. Plus it reads every folder in the cabinet for this request. And the arithmetic it does with all those bytes is tiny: one token's worth of multiplications. So decode is memory-bandwidth-bound. The chip spends its time waiting for bytes, not doing math. A modern data-centre G P U can move a few terabytes per second, so the order of magnitude is: streaming a hundred and forty gigabytes takes tens of milliseconds, and that sets the floor for how fast a single user's tokens can arrive.
+
+This is why batching is everything in serving. If you are going to stream the weights anyway, you might as well serve many users with that single pass. Thirty-two requests decoding together pay roughly the same weight-streaming cost as one. The weights are shared. But the cabinets are not. Every request has its own shelf and its own cabinet. And that is where our puzzle from the start comes from.
+
+## How big is the cabinet?
+
+Let us size one. Take a popular eight-billion-parameter open model. It has thirty-two floors. It uses grouped-query attention, which we met in episode three, so each floor stores keys and values for only eight shared heads instead of thirty-two, and each head is a hundred and twenty-eight numbers wide. Multiply it out — two stamps, key and value, times thirty-two floors, times eight heads, times a hundred and twenty-eight numbers, times two bytes each — and every single card costs about a hundred and twenty-eight kilobytes of cabinet. Sounds small. Now fill a hundred-and-twenty-eight-thousand-token context window. That is sixteen gigabytes of cabinet, for one user, and the model's own weights are also sixteen gigabytes. For one long conversation, the cache is as big as the model. Scale that to a seventy-billion-parameter model with eighty floors and it is roughly forty gigabytes per full-length request.
+
+So now the puzzle solves itself. Your eight G P Us had plenty of room for the weights. But every concurrent long-context request adds a cabinet that can run to tens of gigabytes, memory fills up with cabinets, the batch can't grow, and the arithmetic units sit idle waiting on memory-bound decode steps. Memory full, compute idle. Inference is a memory-management problem wearing an A I costume.
+
+[PAUSE 1s]
+
+## Managing the cabinet
+
+Serving engines attack the cabinet from every angle.
+
+First, shrink each folder in the design of the model. Grouped-query attention, which we just used, shares keys and values across groups of query heads — a four-times reduction in that eight-billion example compared with full multi-head. Some models go further: DeepSeek's multi-head latent attention compresses keys and values into a small latent vector per token and expands them on the fly. Sliding-window layers keep only the last few thousand folders on some floors.
+
+Second, shrink the stamps: quantize the K V cache to eight bits, which halves it, with small quality cost if done carefully.
+
+Third, and this is the famous one, stop wasting cabinet space. Older serving systems reserved a contiguous cabinet for each request sized for the maximum possible output length. Most requests stop early, so most of the reserved space sat empty and nobody else could use it. The Berkeley team behind v L L M measured that existing systems wasted sixty to eighty percent of K V memory to fragmentation and over-reservation. Their fix, PagedAttention, borrows virtual memory from operating systems. Picture the cabinet chopped into small drawers of fixed size — say sixteen folders each. A request gets drawers only as its shelf grows, drawers can live anywhere in memory, and a small page table maps each request's shelf positions to its drawers. Waste drops to under four percent — only the last, partly filled drawer. The paper reported two to four times the throughput of the previous state of the art at the same latency. And paging unlocks sharing: if a thousand requests start with the same long system prompt, they can all point at the same drawers for that prefix. That is prefix caching, and it is why providers can offer steep discounts on cached input tokens.
+
+Fourth, keep the batch full. Continuous batching means that as soon as one request finishes, a waiting request slides into its slot at the next decode step, instead of the whole batch waiting for its slowest member. Chunked prefill slices a long incoming prompt into pieces interleaved with other users' decode steps, so one giant document does not freeze everyone else's streaming.
+
+[PAUSE 1s]
+
+## The wheel: sampling
+
+Now to the right end of the shelf, to the spinning wheel. After the top floor of the machine finishes with the newest card, it outputs one raw score, a logit, for every token in the vocabulary — often a hundred thousand or more options. Softmax turns those into probabilities. Picture the wheel divided into slices, one per token, each slice as wide as its probability. The word "the" might get a fat slice; thousands of absurd tokens get slivers.
+
+Greedy decoding skips the spin and just takes the fattest slice. Deterministic, good for extraction and classification, but for long open-ended text it tends to loop and repeat itself.
+
+Temperature reshapes the wheel before the spin. Low temperature, below one, makes the fat slices fatter and the thin ones vanish — sharper, safer, more repetitive. Temperature of one leaves the model's distribution as trained. Higher temperature flattens the wheel — more variety, and more nonsense.
+
+Top-k keeps only the k fattest slices, say the top fifty, and throws away the rest before spinning. Top-p, also called nucleus sampling, keeps the smallest set of slices whose widths add up to, say, ninety percent of the wheel — so when the model is confident, only two or three slices survive, and when it is uncertain, hundreds do. Min-p is a newer cousin: keep any slice at least some fraction as wide as the fattest one. Repetition and frequency penalties shave slices for tokens already on the shelf.
+
+Two practical notes an interviewer likes. First, temperature zero does not guarantee bit-identical output in production. Batched floating-point arithmetic on G P Us can produce tiny numerical differences depending on what else is in the batch, and a near-tie between two slices can flip. If you need reproducibility, you log outputs; you do not assume it. Second, structured output — forcing valid JSON against a schema — works right here at the wheel. The engine masks out every slice that would break the grammar before spinning, so the model literally cannot pick an illegal token. That is called constrained decoding.
+
+[PAUSE 1s]
+
+## The apprentice: speculative decoding
+
+Here is the last piece of the picture. We established that each decode step is memory-bound: streaming all the weights to produce one card leaves the arithmetic units mostly idle. What if one weight-streaming pass could check several cards at once?
+
+Picture, to the right of the wheel, a small apprentice with a pencil. The apprentice is a much smaller, faster model. While the big machine above the shelf is between steps, the apprentice quickly sketches the next five cards in pencil at the right end of the shelf — its best guess at what the master would write.
+
+Now the master machine does one single forward pass over all five pencilled cards together. Remember prefill: processing several cards at once costs almost the same as one when you are memory-bound, because the weights only stream once. In that one pass, the master computes its own probabilities at each of the five positions and compares them with the apprentice's choices. Walk left to right along the pencil cards. Card one matches what the master would accept — ink it. Card two — ink it. Card three — the master disagrees. Erase card three and everything to its right, and replace card three with the master's own choice. Result: three cards inked for the price of one master pass, instead of one.
+
+The beautiful part is the guarantee. The acceptance rule, from the original speculative decoding papers by Google and DeepMind researchers, uses a rejection-sampling trick so that the final output has exactly the same probability distribution as if the master had written every card alone. It is lossless. Not an approximation, not a quality tradeoff. You are buying latency with spare compute.
+
+Where does the apprentice come from? The classic setup is a small model from the same family sharing the same tokenizer. Modern engines prefer lighter variants: extra prediction heads bolted onto the master itself, known as Medusa; or the EAGLE family, where a tiny draft network reads the master's own internal hidden states and predicts ahead. EAGLE-three is widely deployed in v L L M and other engines, with reported speedups of up to about two and a half times, and the line keeps moving. There is also n-gram or prompt-lookup drafting, where the apprentice simply copies spans from the prompt — superb for tasks like code editing, where the answer repeats large chunks of the input.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+Now the sharp edges.
+
+Speculative decoding pays off only when the apprentice is usually right. The acceptance rate is everything. On predictable text — code, templated answers, summaries that echo the source — acceptance is high and you see big wins. On creative writing at high temperature, the master rejects often, and you have paid for drafting plus verification for little gain. And at very large batch sizes the G P U is no longer idle during decode — batching already soaked up the spare compute — so the speculative bonus shrinks and can even go negative. It is primarily a latency tool for low-to-moderate batch sizes.
+
+Next, the prefill versus decode tension. One monster prompt entering prefill can stall every other user's token stream for hundreds of milliseconds. That is why chunked prefill exists, and why the largest deployments go one step further and run prefill and decode on separate pools of G P Us, shipping the cabinet from one pool to the other. That is called disaggregated serving.
+
+And now a war story, generic but very real. A team launched a document-question feature on a self-hosted model. In testing, with short prompts, one G P U node comfortably served dozens of concurrent users. On launch day, users started pasting entire contracts — sixty, eighty thousand tokens each. Every one of those requests built a cabinet of ten gigabytes or more. Concurrency collapsed from dozens to a handful, the queue backed up, time to first token went from under a second to over thirty, and the dashboards showed G P U utilisation looking healthy-ish because prefill was burning compute. The load test had measured the wrong shape of traffic. The fixes were all cabinet fixes: cap the context length per tier, enable prefix caching for the shared instructions, move to eight-bit K V cache, and route long-document requests to a dedicated pool. The lesson: capacity planning for L L M serving is in tokens held in memory, not requests per second.
+
+Cost-wise, remember the asymmetry this all implies. Hosted A P Is typically charge several times more per output token than per input token, precisely because output tokens are generated one memory-bound step at a time, while input tokens are processed in parallel during prefill. And cached input is cheaper still, because the cabinet drawers already exist.
+
+[PAUSE 1s]
+
+## Interview angle
+
+When they ask, "Why is L L M inference slow and expensive?" a strong answer sounds like: "Generation is autoregressive, one token per forward pass. Prefill processes the prompt in parallel and is compute-bound; decode is memory-bandwidth-bound because every step streams all the weights plus the K V cache to produce one token. So we batch aggressively to amortise weight reads, and the K V cache — which grows linearly with sequence length and batch — becomes the binding memory constraint."
+
+When they ask, "What is the K V cache and why does it exist?" — "Because of the causal mask, past tokens' keys and values never change, so we compute them once per layer and store them, turning quadratic recomputation into linear reads. The cost is memory: about a hundred and twenty-eight kilobytes per token for an eight-billion model with grouped-query attention, so sixteen gigabytes at a hundred-and-twenty-eight-thousand context. Mitigations are grouped-query or latent attention, K V quantization, paging, and prefix caching."
+
+When they ask, "How does speculative decoding work, and does it change outputs?" — "A cheap draft proposes several tokens, the target model verifies them all in one forward pass, keeps the longest accepted prefix, and substitutes its own token at the first rejection. With the rejection-sampling acceptance rule the output distribution is identical to the target model alone, so it is lossless. It pays when acceptance rates are high and batch sizes are modest."
+
+And if they ask about temperature zero being deterministic, you now know the honest answer: mostly, not guaranteed, because of batch-dependent floating-point effects.
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Re-walk the picture. The long shelf of cards, left to right, one card per token, prompt on the left, the answer growing at the right. Above it, the many-floored machine, one floor per layer. Prefill lays the whole prompt down at once — compute-bound, sets time to first token. Then decode, one card at a time, each step streaming every weight in the machine — memory-bound. Below the shelf, the cabinet: one folder per card, key and value stamps for every floor, computed once and reused forever thanks to the causal mask. It grows with every card and every user, and it is why memory fills while compute idles. PagedAttention chops it into drawers, prefix caching shares drawers, grouped-query attention and quantization shrink the folders. At the right end, the wheel: temperature sharpens or flattens it, top-k and top-p trim it, constrained decoding masks illegal slices. And beside the wheel, the apprentice with the pencil: draft several cards, let the master verify them in one pass, ink the accepted run, erase at the first disagreement — same output distribution, fewer expensive steps.
+
+Next episode, we zoom out from one request to the whole model: scaling laws, mixture-of-experts, and long context. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="04-decoder-only-llms.html">← Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="btn" href="06-scaling-moe.html">Scaling Laws, Mixture-of-Experts, Long Context →</a></div></main></div></body></html>

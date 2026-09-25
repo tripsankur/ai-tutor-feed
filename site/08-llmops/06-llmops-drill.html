@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DRILL: LLMOps Rapid-Fire — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk" open><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="active" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 8 · LLMOps + Prompting · Episode 6</div>
+<h1 class="lesson">DRILL: LLMOps Rapid-Fire</h1>
+<div class="meta">9 min listen · Fourteen rapid-fire interview questions across the whole L L M ops track: what changes from M L ops, prompt versus retrieval versus fine-tuning, quantization and serving, monitoring and drift, and prompt and context engineering. Answer aloud in the pause, then compare.</div>
+<audio controls preload="metadata" src="../../audio/08-llmops/s8e06-llmops-drill.mp3"></audio>
+<button class="btn complete" data-ep="08-llmops/06-llmops-drill" onclick="toggleDone('08-llmops/06-llmops-drill')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> Fourteen questions that cover the whole LLMOps + Prompting track; each answer should name a mechanism, a number or tradeoff, and an operational practice.</p>
+<pre class="mermaid">flowchart LR
+    E1["E1 LLMOps vs MLOps: unit of change, quality, cost"] --> E2["E2 Prompt, RAG or fine-tune"]
+    E2 --> E3["E3 Quantization and serving"]
+    E3 --> E4["E4 Monitoring, drift, feedback"]
+    E4 --> E5["E5 Prompt and context engineering"]
+    E4 -. "golden set gates releases" .-> E1
+</pre>
+
+<h2 id="answer-sheet">Answer sheet</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Strong answer (compressed)</th>
+<th>Episode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>LLMOps vs MLOps?</td>
+<td>Foundations carry over; unit of change → whole app config (prompt, retrieval, tools, guardrails, model id); quality → rubric + calibrated judges; cost → tokens</td>
+<td>E1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Model retirement in 60 days?</td>
+<td>Run model-agnostic eval suite day one, diff by category, fix prompts/parsing, shadow, cut over behind gateway with rollback; continuously test new releases</td>
+<td>E1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Wrong product facts: RAG or FT?</td>
+<td>Knowledge gap → retrieval (fresh, citable, permissioned); FT unreliable for facts, can raise hallucination</td>
+<td>E2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1M-token context, skip RAG?</td>
+<td>OK for small stable corpora + caching; at scale quality degrades, cost scales per call, lose permissions/citations</td>
+<td>E2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>When fine-tune?</td>
+<td>Behavior: format/tone, narrow high-volume task, shorten prompts, distillation; LoRA; tied to a base model that retires</td>
+<td>E2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>70B weights memory?</td>
+<td>FP16 ≈ 2 B/param ≈ 140 GB (multi-GPU); 4-bit ≈ 0.5 B/param ≈ 35 GB + overhead; KV cache extra</td>
+<td>E3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>PagedAttention + continuous batching?</td>
+<td>KV cache in fixed-size on-demand blocks (near-zero fragmentation) + requests join batch every step → much higher throughput</td>
+<td>E3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Speculative decoding?</td>
+<td>Draft proposes tokens, target verifies in one pass, output distribution unchanged; helps when memory-bound + high acceptance, less under heavy batching</td>
+<td>E3</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Monitor in prod?</td>
+<td>100% ops metrics via tracing (TTFT, p95/p99, tokens/cost, errors/schema failures); sampled + flagged quality judging; feedback → golden set → release gate</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Kinds of drift?</td>
+<td>Input (embedding clusters), model (pin snapshots), knowledge (index freshness, retrieval scores), output (symptom)</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Trust LLM-as-judge?</td>
+<td>Only after calibration vs human labels; position/verbosity/self-preference biases; pin judge version; permanent human sample</td>
+<td>E4</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Prompt vs context engineering?</td>
+<td>Instructions vs managing whole context per agent step under attention budget: lean tools, JIT retrieval, compaction, external notes, sub-agents</td>
+<td>E5</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Reliable JSON + lower input cost?</td>
+<td>Structured outputs (schema + constrained decoding), no prefill on newest Claude; static-first prompt order for caching (reads ≈0.1× input)</td>
+<td>E5</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Prompt injection defense?</td>
+<td>OWASP LLM01:2025; not solvable in prompt; delimit untrusted data + least-privilege tools, human approval, output validation, no secrets in prompts</td>
+<td>E5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-numbers-to-have-ready">Key numbers to have ready</h2>
+<table>
+<thead>
+<tr>
+<th>Fact</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP16/BF16 weight size</td>
+<td>~2 bytes/param (70B ≈ 140 GB)</td>
+</tr>
+<tr>
+<td>INT4 weight size</td>
+<td>~0.5 bytes/param (70B ≈ 35 GB + overhead)</td>
+</tr>
+<tr>
+<td>Online eval sampling</td>
+<td>5–10% random + 100% of flagged traces</td>
+</tr>
+<tr>
+<td>Anthropic prompt cache</td>
+<td>reads ≈ 0.1× base input; 5-min writes ≈ 1.25×, 1-hour writes ≈ 2×</td>
+</tr>
+<tr>
+<td>OpenAI prompt cache</td>
+<td>automatic for stable prefixes ≥ 1,024 tokens</td>
+</tr>
+<tr>
+<td>Few-shot</td>
+<td>3–5 diverse examples</td>
+</tr>
+<tr>
+<td>Long-context ordering</td>
+<td>Query after documents: up to ~30% better in Anthropic tests</td>
+</tr>
+</tbody>
+</table>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Anthropic — Effective context engineering for AI agents: https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents</li>
+<li>Claude Docs — Prompting best practices: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices</li>
+<li>Claude Docs — Prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching</li>
+<li>OpenAI — Structured model outputs: https://developers.openai.com/api/docs/guides/structured-outputs</li>
+<li>OpenAI — Reasoning best practices: https://platform.openai.com/docs/guides/reasoning-best-practices</li>
+<li>vLLM documentation (PagedAttention, continuous batching, quantization, speculative decoding): https://docs.vllm.ai/en/latest/</li>
+<li>Databricks — Monitor GenAI apps in production: https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/production-monitoring</li>
+<li>OpenTelemetry — GenAI semantic conventions: https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/</li>
+<li>OWASP Top 10 for LLM Applications 2025: https://genai.owasp.org/resource/owasp-top-10-for-llm-applications-2025/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">This is the Track Eight drill: fourteen questions across the whole L L M ops and prompting track. Same format as always. I ask, you answer out loud in the pause, then I give you a strong answer to compare against. The questions run roughly in track order, so you'll hear where your gaps are. Ready.
+
+[PAUSE 2s]
+
+Question one. In one breath: how is L L M ops different from M L ops?
+
+[PAUSE 6s]
+
+Strong answer: the foundations carry over, versioning, C I and C D, promotion, evaluation gates, monitoring. What moves is the unit of change, from model weights to the whole application configuration, prompt, retrieval settings, tools, guardrails and model identifier; the unit of quality, from labeled metrics to rubric evaluation with calibrated L L M judges; and the unit of cost, to the token.
+
+[PAUSE 2s]
+
+Question two. Your hosted model provider announces the model you run on will be retired in sixty days. What do you do?
+
+[PAUSE 6s]
+
+Strong answer: run the replacement against my model-agnostic evaluation suite on day one and diff the results by category. Fix regressions in prompts and output parsing, shadow the new model on live traffic to compare quality, cost and latency, then cut over behind a gateway with instant rollback. Long term, run the suite against every new model release so a retirement notice is never the first test.
+
+[PAUSE 2s]
+
+Question three. The model gives wrong answers about your company's products. Retrieval or fine-tuning?
+
+[PAUSE 6s]
+
+Strong answer: that's a knowledge gap, so retrieval. It stays fresh without retraining, can cite sources, and can enforce per-user permissions. Fine-tuning is unreliable for injecting facts, goes stale, and training on unfamiliar facts can increase hallucination. Fine-tune for behavior, retrieve for knowledge, and exhaust the prompt first.
+
+[PAUSE 2s]
+
+Question four. Context windows are a million tokens. Why not skip R A G and send everything?
+
+[PAUSE 6s]
+
+Strong answer: for small, stable corpora, long context plus prompt caching can genuinely replace retrieval. At scale it can't: quality degrades as context grows, cost scales with tokens on every call, and you lose per-document permissions and clean citations. Retrieve the best few thousand tokens rather than sending a million.
+
+[PAUSE 2s]
+
+Question five. When is fine-tuning actually the right call?
+
+[PAUSE 6s]
+
+Strong answer: for behavior, not facts. Consistent format or tone, a narrow high-volume task, shortening a long prompt, or distilling a big model's behavior into a small, fast, cheap one. Usually with LoRA adapters, and always with the caveat that the tune is welded to a base model that will eventually be retired.
+
+[PAUSE 2s]
+
+Question six. How much G P U memory do the weights of a seventy-billion-parameter model need, at sixteen-bit and at four-bit?
+
+[PAUSE 6s]
+
+Strong answer: roughly two bytes per parameter at sixteen-bit, so about a hundred and forty gigabytes, which needs multiple G P Us. At four-bit it's about half a byte per parameter, so around thirty-five gigabytes plus overhead, which fits on a single large G P U. And that's weights only; the K V cache for concurrent requests comes on top.
+
+[PAUSE 2s]
+
+Question seven. What problem does paged attention solve, and what does continuous batching add?
+
+[PAUSE 6s]
+
+Strong answer: paged attention, from v L L M, stores the K V cache in fixed-size blocks allocated on demand, like virtual memory pages, which nearly eliminates fragmentation so many more sequences fit in memory at once. Continuous batching lets new requests join the running batch at every generation step instead of waiting for the whole batch to finish. Together they drive much higher throughput on the same hardware.
+
+[PAUSE 2s]
+
+Question eight. What's speculative decoding, and when doesn't it help?
+
+[PAUSE 6s]
+
+Strong answer: a small draft model, or extra prediction heads, proposes several tokens ahead, and the large model verifies them in a single forward pass, accepting the ones it agrees with, so output quality is unchanged. It speeds up decoding when the draft is usually right and the system is memory-bound; it helps less under heavy batch load or when the draft's acceptance rate is low.
+
+[PAUSE 2s]
+
+Question nine. How would you monitor an L L M application in production?
+
+[PAUSE 6s]
+
+Strong answer: three layers. Operational metrics on every request through tracing: time to first token, p ninety-five and p ninety-nine latency, tokens and cost per request by feature, and error, timeout and schema-failure rates. Quality on a sample plus every flagged trace, with code checks and calibrated L L M judges for groundedness, relevance and safety. And a feedback loop where confirmed failures become golden-set cases that gate every release.
+
+[PAUSE 2s]
+
+Question ten. Name the kinds of drift in an L L M system and how you'd catch each.
+
+[PAUSE 6s]
+
+Strong answer: input drift, the query mix shifting, caught with embedding clusters and intent frequencies. Model drift, a version or alias change, prevented by pinning snapshots and eval-gating upgrades. Knowledge drift, a stale index or mismatched embeddings, caught with index freshness and retrieval scores. And output drift, length, refusals, tone, which is usually a symptom of the other three.
+
+[PAUSE 2s]
+
+Question eleven. Can you trust L L M as a judge?
+
+[PAUSE 6s]
+
+Strong answer: only after calibration. Judges show position bias, verbosity bias and self-preference, so I measure agreement with human labels on a few hundred examples, fix the rubric until agreement is acceptable, pin the judge model version, and keep a small human review sample running permanently.
+
+[PAUSE 2s]
+
+Question twelve. What's the difference between prompt engineering and context engineering?
+
+[PAUSE 6s]
+
+Strong answer: prompt engineering is writing good instructions. Context engineering is managing everything in the context window at every step of an agent, under a finite attention budget that degrades as context grows. That means minimal, unambiguous tools, just-in-time retrieval instead of pre-loading, compaction of history, notes stored outside the window, and sub-agents with clean contexts.
+
+[PAUSE 2s]
+
+Question thirteen. You need reliable JSON from a model, and you're paying too much for input tokens. Two fixes.
+
+[PAUSE 6s]
+
+Strong answer: for JSON, use the provider's structured outputs, a JSON schema with constrained decoding, rather than asking nicely and retrying the parse; and don't rely on prefill, which the newest Claude models no longer support. For cost, order the prompt static-first, system prompt, tools, stable documents, and dynamic content last, so the prefix caches; cached reads are roughly a tenth of the normal input price.
+
+[PAUSE 2s]
+
+Question fourteen. How do you defend against prompt injection?
+
+[PAUSE 6s]
+
+Strong answer: you can't solve it in the prompt, because instructions and data share one channel; it's number one on the OWASP list for L L M applications. Delimit and label untrusted content as data, but rely on architecture: least-privilege tools, human approval for consequential actions, output validation before it reaches other systems, and no secrets in the system prompt.
+
+[PAUSE 2s]
+
+That's the drill. If you stalled on any question, go back to that episode's recap: the two workshops for L L M ops versus M L ops, the staircase for prompt, retrieve or fine-tune, the quantization and serving episode, the conveyor for monitoring, and the page for prompt and context engineering. Run the drill again in a few days and listen for the difference.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="05-prompt-engineering.html">← Prompt Engineering Patterns That Matter in Interviews</a><span></span></div></main></div></body></html>

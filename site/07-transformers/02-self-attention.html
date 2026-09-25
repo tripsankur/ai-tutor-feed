@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Self-Attention Mechanics: Q, K, V by Analogy — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk" open><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="active" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 7 · Transformer Architecture · Episode 2</div>
+<h1 class="lesson">Self-Attention Mechanics: Q, K, V by Analogy</h1>
+<div class="meta">17 min listen · Self-attention with no equations read aloud: every word tile raises a question flag, wears a label, and carries a bucket of content — flags match labels, scores become a pie of percentages, and each tile walks away with a weighted blend of buckets. Plus scaling, the causal curtain, and why the grid of scores is the memory problem.</div>
+<audio controls preload="metadata" src="../../audio/07-transformers/s7e02-self-attention.mp3"></audio>
+<button class="btn complete" data-ep="07-transformers/02-self-attention" onclick="toggleDone('07-transformers/02-self-attention')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>Self-attention lets every token build a context-aware version of itself: its <strong>query</strong> is compared with every token's <strong>key</strong>, the scaled similarity scores become softmax weights, and the output is the weighted sum of the tokens' <strong>values</strong> — computed for all tokens at once, which is both why it's fast on GPUs and why it costs O(n²).</p>
+<h2 id="the-mental-image-flag-label-bucket">The mental image: flag, label, bucket</h2>
+<ul>
+<li><strong>Shelf of tiles</strong> (the sequence), left to right.</li>
+<li><strong>Flag above each tile</strong> = query: "what am I looking for?"</li>
+<li><strong>Label on each tile's front</strong> = key: "what do I offer?"</li>
+<li><strong>Bucket below each tile</strong> = value: "what I hand over if chosen."</li>
+<li>All three are made from the same tile by three learned <strong>lenses</strong> (W_Q, W_K, W_V).</li>
+<li>Flag held against every label → match scores → <strong>pie</strong> (softmax, sums to 100%) → pour that share of every bucket → new tile.</li>
+<li>The <strong>grid</strong> of flags × labels floating above the shelf = the n × n score matrix = the quadratic cost.</li>
+<li><strong>Curtain</strong> hiding everything to a tile's right = causal mask → keys/values of past tokens never change → KV cache.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    X["Token embeddings X (n x d)"] --> Q["Q = X W_Q (flags)"]
+    X --> K["K = X W_K (labels)"]
+    X --> V["V = X W_V (buckets)"]
+    Q --> S["Scores = Q K^T / sqrt(d_k) (n x n grid)"]
+    K --> S
+    S --> M["Causal mask (decoder): -inf above diagonal"]
+    M --> P["Softmax per row (the pie)"]
+    P --> O["Output = P V (weighted blend of buckets)"]
+    V --> O
+</pre>
+
+<h2 id="the-math-for-reading-never-read-aloud">The math (for reading, never read aloud)</h2>
+<pre><code class="language-text">Attention(Q, K, V) = softmax( Q Kᵀ / √d_k  +  M ) V
+
+Q = X W_Q,  K = X W_K,  V = X W_V          X: (n × d_model), W_*: (d_model × d_k)
+M_ij = 0 if j ≤ i else −∞                   (causal mask, decoder-only)
+</code></pre>
+<p>Why <code>√d_k</code>: if q and k components are ~independent with variance 1, <code>q·k</code> has variance <code>d_k</code>. Dividing by <code>√d_k</code> restores unit variance so softmax does not saturate (near one-hot → vanishing gradients).</p>
+<pre><code class="language-python">import torch, math
+
+def causal_self_attention(x, Wq, Wk, Wv):
+    # x: (n, d_model)
+    q, k, v = x @ Wq, x @ Wk, x @ Wv            # (n, d_k)
+    scores = q @ k.T / math.sqrt(q.shape[-1])    # (n, n)  &lt;- the quadratic grid
+    n = x.shape[0]
+    mask = torch.triu(torch.ones(n, n, dtype=torch.bool), diagonal=1)
+    scores = scores.masked_fill(mask, float(&quot;-inf&quot;))  # the curtain
+    weights = scores.softmax(dim=-1)             # the pie, each row sums to 1
+    return weights @ v                           # pour the buckets
+
+# In practice: torch.nn.functional.scaled_dot_product_attention(q, k, v, is_causal=True)
+# dispatches to FlashAttention-style fused kernels where available.
+</code></pre>
+<h2 id="worked-example-the-it-tile">Worked example (the "it" tile)</h2>
+<p>Sentence: <em>The animal didn't cross the street because it was too tired.</em>
+Illustrative weights for "it" in one head (causal, so "tired" is hidden): animal 0.60, street 0.10, it 0.08, because 0.06, others small → output ≈ mostly the value of "animal". Other heads/layers refine further; later tiles ("tired") can see "it" and "animal".</p>
+<h2 id="costs-and-numbers">Costs and numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Context n</th>
+<th>Scores per head per layer</th>
+<th>Naive fp16 memory for the grid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1K</td>
+<td>~1M</td>
+<td>~2 MB</td>
+</tr>
+<tr>
+<td>32K</td>
+<td>~1.07B</td>
+<td>~2 GB</td>
+</tr>
+<tr>
+<td>128K</td>
+<td>~17B</td>
+<td>~34 GB</td>
+</tr>
+</tbody>
+</table>
+<p>FlashAttention (2022): tiles Q/K/V blocks into on-chip SRAM with an online softmax — <strong>exact</strong> result, memory O(n) instead of O(n²), fewer HBM reads/writes → large wall-clock speedups. Compute stays O(n²·d).</p>
+<h2 id="pitfalls">Pitfalls</h2>
+<ul>
+<li><strong>Attention dilution</strong> at long context: the relevant token's slice gets crowded out → "lost in the middle" behavior; better retrieval often beats bigger context.</li>
+<li><strong>Attention sinks</strong>: softmax must sum to 1, so models park spare attention on the first token(s). Streaming/eviction schemes that drop the first tokens degrade badly; StreamingLLM keeps them.</li>
+<li><strong>Attention ≠ explanation</strong>: attention weights frequently don't track feature importance (Jain &amp; Wallace 2019). Use perturbation/ablation or attribution methods to explain decisions.</li>
+</ul>
+<h2 id="variants-of-attention-vocabulary">Variants of attention (vocabulary)</h2>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Q from</th>
+<th>K, V from</th>
+<th>Mask</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Causal self-attention</td>
+<td>same seq</td>
+<td>same seq</td>
+<td>causal</td>
+<td>GPT/Llama-style decoders</td>
+</tr>
+<tr>
+<td>Bidirectional self-attention</td>
+<td>same seq</td>
+<td>same seq</td>
+<td>none (padding only)</td>
+<td>BERT-style encoders, many embedding models</td>
+</tr>
+<tr>
+<td>Cross-attention</td>
+<td>decoder seq</td>
+<td>encoder / other modality</td>
+<td>none</td>
+<td>Encoder-decoder (T5, original Transformer), some vision-language models</td>
+</tr>
+</tbody>
+</table>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>What it is</th>
+<th>Interview one-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Query (Q)</td>
+<td>Projection of a token: what it looks for</td>
+<td>The flag</td>
+</tr>
+<tr>
+<td>Key (K)</td>
+<td>Projection: what it offers for matching</td>
+<td>The label</td>
+</tr>
+<tr>
+<td>Value (V)</td>
+<td>Projection: content handed over</td>
+<td>The bucket</td>
+</tr>
+<tr>
+<td>Scaled dot-product</td>
+<td>q·k / √d_k</td>
+<td>Similarity, kept in a softmax-friendly range</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td>Turns scores into positive weights summing to 1</td>
+<td>The pie</td>
+</tr>
+<tr>
+<td>Causal mask</td>
+<td>Blocks attention to future positions</td>
+<td>Enables parallel next-token training + KV cache</td>
+</tr>
+<tr>
+<td>KV cache</td>
+<td>Stored keys/values of past tokens during generation</td>
+<td>Queries of old tokens are never reused</td>
+</tr>
+<tr>
+<td>FlashAttention</td>
+<td>IO-aware tiled exact attention kernel</td>
+<td>Linear memory, same math</td>
+</tr>
+<tr>
+<td>Attention sink</td>
+<td>Excess attention parked on initial tokens</td>
+<td>Keep first tokens when evicting</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. Explain self-attention simply.</strong>
+Each token asks a question (query), advertises a label (key), and carries content (value). It compares its query against every key, turns the scores into percentages with softmax, and takes that percentage of every value. Technically: learned Q/K/V projections, scaled dot-product, softmax, weighted sum of V.</p>
+<p><strong>Q2. Why separate Q and K projections instead of comparing embeddings directly?</strong>
+What a token looks for differs from what it offers; separate projections make the relation asymmetric and let each head learn a different relation type. Comparing raw embeddings would only capture symmetric similarity.</p>
+<p><strong>Q3. Why scale by √d_k?</strong>
+Dot-product variance grows with d_k; large scores saturate softmax to near one-hot, which kills gradients and prevents blending. Scaling keeps it soft and trainable.</p>
+<p><strong>Q4. What's the complexity and what does FlashAttention change?</strong>
+O(n²·d) compute and naive O(n²) memory for the score matrix. FlashAttention tiles computation in SRAM with an online softmax: exact output, O(n) extra memory, far fewer HBM round-trips → faster; compute remains quadratic.</p>
+<p><strong>Q5. Do attention weights explain a model's decision?</strong>
+Not reliably — information is mixed across many heads and layers, and alternative attention distributions can give the same prediction. Test explanations by ablation/perturbation (remove the "important" tokens and see if the output changes).</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>Vaswani et al., 2017 — Attention Is All You Need (Section 3.2): https://arxiv.org/abs/1706.03762</li>
+<li>Dao et al., 2022 — FlashAttention: https://arxiv.org/abs/2205.14135</li>
+<li>FlashAttention implementation: https://github.com/Dao-AILab/flash-attention</li>
+<li>Xiao et al., 2023 — Efficient Streaming Language Models with Attention Sinks: https://arxiv.org/abs/2309.17453</li>
+<li>Jain &amp; Wallace, 2019 — Attention is not Explanation: https://arxiv.org/abs/1902.10186</li>
+<li>PyTorch scaled_dot_product_attention: https://pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track seven, episode two: self-attention mechanics — queries, keys, and values, by analogy.
+
+Last episode we built a shelf of word tiles, deleted the walking messenger, and strung a web of direct threads above the shelf, every tile connected to every tile. I promised we'd climb up into that web and look at how a single tile decides which strings to pull tight. That's today. It's the most important mechanism in modern A I, and you'll come out able to explain it to a whiteboard, or to a non-technical executive, without writing a single symbol.
+
+## The cold open
+
+Here's an interview moment that separates people. The interviewer says: "Explain self-attention. Don't use the words 'query,' 'key,' or 'value' until you've explained what they're for." Most candidates freeze, because they learned attention as a formula — some letters multiplied, divided by a square root, passed through a softmax — and the formula was never attached to a picture. The candidate who has the picture can explain it three ways: to the executive, to the engineer, and to the researcher. That's the goal for the next seventeen minutes.
+
+[PAUSE 2s]
+
+## Why it matters
+
+Attention isn't just the heart of the architecture. It's the source of most of the operational costs you'll ever discuss. The memory that grows with context length. The K V cache that dominates inference server memory. The reason Flash Attention exists. The reason a model can find a needle in a long document at all — or fails to. Every one of those is a property of the mechanism we'll walk through. If you understand the mechanism by picture, you can derive those costs instead of memorizing them.
+
+## The mental image
+
+Back to the shelf from episode one. A wooden shelf running left to right, a row of word tiles on it. This time, the sentence is: "The animal didn't cross the street because it was too tired." Eleven tiles, left to right.
+
+Each tile starts as a list of numbers — the word's embedding, its meaning as a point in a space of a few thousand dimensions. We'll cover where those come from in episode four. For today, just picture each tile holding a card inside it with its raw meaning.
+
+Now give each tile three new things, fixed in the same spots on every tile.
+
+Above each tile, sticking up on a thin pole, a small flag. Written on the flag is a question — what this tile is looking for. That's the query.
+
+On the front face of each tile, a label. The label advertises what this tile has to offer — what it can answer. That's the key.
+
+And below each tile, hanging underneath the shelf, a bucket. In the bucket is the actual content this tile will hand over if someone chooses it. That's the value.
+
+So, three positions, and we'll use them all episode: flag above, label on the front, bucket below. Question, advertisement, content.
+
+## Where the flag, label, and bucket come from
+
+Here's the first thing people get wrong. The flag, the label, and the bucket are not three different words or three pieces of data. All three are made from the same tile — from that tile's raw meaning card. The network holds three learned lenses. Pass the tile's meaning through the first lens and you get its flag. Through the second lens, its label. Through the third lens, its bucket. Every tile uses the same three lenses. The lenses are the learned parameters — three big grids of numbers, trained over billions of examples, that decide how to turn raw meaning into "what I'm looking for," "what I offer," and "what I'll hand over."
+
+Why three separate lenses instead of just comparing raw meanings directly? Because what a word is looking for is different from what it offers. The pronoun "it" is looking for "a noun earlier in the sentence that could be tired." But what "it" offers to other words is something else entirely — "I'm a pronoun, singular, subject of this clause." If one card had to do both jobs, it would do both badly. Separate lenses let each word ask one thing and advertise another. And the bucket is separate again, because what you hand over when chosen isn't the same as the label you used to get chosen. A library book's catalog entry is not the book.
+
+## Walking the image: one tile's turn
+
+Now let's watch one tile do attention. Pick "it," the eighth tile from the left.
+
+Step one: matching. Look at the flag above "it." It asks, roughly, "which earlier noun am I referring to — something animate, something that can be tired?" Now "it" holds its flag up against every label on the shelf, one by one, left to right. "The" — label says "determiner." Poor match. "Animal" — label says "animate noun, singular, subject." Strong match. "Didn't" — poor. "Cross" — poor. "Street" — label says "noun, singular, a place." Some match, it's a noun, but it isn't animate. Weaker. "Tired" — moderate, because "tired" is the thing being said about "it." And so on across the shelf.
+
+How is a match measured? By how much the flag and the label point the same way. Picture each as an arrow in a big space. Arrows pointing the same direction: high score. Perpendicular: zero. Opposite: negative. That's the dot product, and you can say it in an interview exactly like that: "a similarity score between the query and each key."
+
+Step two: turning scores into a pie. Now "it" has eleven raw scores, one per tile. Raw scores are awkward — some positive, some negative, no fixed scale. So they get converted into a pie chart. Every tile gets a slice, the slices always add up to one hundred percent, and a higher score gets a disproportionately bigger slice — the conversion exaggerates differences. That's the softmax. After it, "it" might give "animal" sixty percent of the pie, "tired" fifteen, "street" ten, "it" itself eight, and crumbs to the rest.
+
+Step three: collecting the buckets. Now "it" reaches down below the shelf to the buckets. It takes sixty percent of the contents of the "animal" bucket, fifteen percent of "tired," ten percent of "street," and so on, and pours them together. What comes out is a blend. That blend is the new version of "it" — a version that now carries, mostly, the meaning of "animal." The pronoun has been resolved, not by a rule anyone wrote, but by learned lenses and a pie chart.
+
+That's self-attention, all of it: flags matched against labels, scores become a pie, pie slices say how much of each bucket to pour. Say it in one breath in an interview: "Each token produces a query, key, and value through learned projections. The query is compared to every key to get similarity scores, those are normalized with a softmax into weights, and the output is the weighted sum of the values."
+
+And now the strings from episode one make literal sense. The tightness of each string is a pie slice. Tight string, big slice.
+
+## Everyone at once
+
+Now the crucial part that connects back to episode one. Every tile does this at the same time. Every tile raises its flag, and all eleven flags are held against all eleven labels simultaneously. That's eleven times eleven, a hundred and twenty-one scores — a grid. Picture the grid floating above the shelf: rows for the flags, columns for the labels, each cell a score. Then each row of the grid becomes its own pie. Then each tile pours its own blend of buckets.
+
+Because none of this waits on anything sequential, it's one big grid multiplication, which is exactly what graphics cards love. Same argument as last episode — the web is computed all at once — now with the mechanism visible.
+
+And that grid is also the cost. Its size is the number of tiles times the number of tiles. At a thousand tokens, a million cells. At a hundred thousand tokens, ten billion cells — per head, per layer. That's the quadratic cost from episode one, and now you can see precisely where it lives: in the grid of flag-against-label scores.
+
+## The shrinking step: why divide by a square root
+
+There's one small step in the formula that interviewers love to ask about, so let's put it in the picture. Before the pie is made, every score gets divided by the square root of the size of the flag and label arrows.
+
+Here's why, by picture. Flags and labels are arrows with many components — typically a hundred and twenty-eight numbers each in modern models. Their match score is built by adding up a hundred and twenty-eight little products. The more components you add up, the more the total tends to swing to big positive or big negative values, just by the arithmetic of adding many random-ish numbers. Now remember the pie exaggerates differences. Feed it huge scores, and one tile grabs essentially the whole pie while every other tile gets nothing. The pie becomes a single slice.
+
+That's bad for two reasons. First, the tile loses the ability to blend — it can only copy one bucket. Second, and worse, during training, a pie stuck at one hundred percent and zero percent barely changes when you nudge the scores, so the learning signal almost vanishes. The model stops learning which strings to pull. Dividing by the square root of the arrow size brings the scores back to a sensible range regardless of how big the arrows are, so the pie stays soft enough to learn from. One sentence for the interview: "It keeps the dot products from growing with dimension, which would saturate the softmax and kill the gradients."
+
+## The causal curtain
+
+One more piece of the picture, and it's essential for language models specifically.
+
+When a model is trained to predict the next word, it must not cheat by looking at the words it's supposed to predict. So in a decoder — the kind of transformer every chat model is — we drop a curtain. Picture it: for each tile, everything to its right on the shelf is hidden behind a curtain. "It" can hold its flag up to "the," "animal," "didn't," "cross," "the," "street," "because," and itself — everything to its left — but it cannot see "was," "too," or "tired." In the grid, that means every cell above the diagonal is blacked out before the pie is made, so those tiles get zero slice. That's the causal mask.
+
+Notice what this does to our example. With the curtain, "it" can't see "tired" when it's first processed. So how does the model resolve "it"? It leans on what it can see — "animal" is animate and is the subject, and that's usually enough. And the later tile, "tired," which can see everything to its left including "it" and "animal," gets to refine the picture further up the stack. Language models build understanding left to right, layer by layer, entirely behind that curtain.
+
+The curtain also has a massive practical payoff you'll meet in episode five. Because no tile can ever see to its right, a tile's label and bucket never change once they're computed — nothing that arrives later can affect them. So when the model generates text one new tile at a time, it can keep all the old labels and buckets in memory and reuse them, instead of recomputing the whole shelf. That stored pile of labels and buckets is the K V cache — K for keys, V for values. Flags don't need to be stored, because only the newest tile's flag is ever used. Now you know why it's called a K V cache and not a Q K V cache.
+
+[PAUSE 2s]
+
+## Encoder attention, cross-attention, and naming
+
+Two quick distinctions, because interviewers probe the vocabulary. Without the curtain — every tile seeing left and right — you have bidirectional attention, used in encoder models like the BERT family, which are great at understanding and embedding text but aren't built to generate it. That's why many embedding models used in retrieval pipelines are encoder-style.
+
+And when the flags come from one shelf but the labels and buckets come from a different shelf — say, the flags from a translation being written, the labels and buckets from the source sentence — that's cross-attention. It's what the original twenty seventeen translation transformer used to connect its two halves, and it's how many image-and-text models let text tiles look at image patches. Self-attention simply means flags, labels, and buckets all come from the same shelf.
+
+## Tradeoffs and pitfalls
+
+Now the costs and the sharp edges.
+
+First, the grid is the memory problem. Naively, you build the entire grid of scores, store it, make the pies, then pour the buckets. At long context that grid is enormous — at thirty-two thousand tokens, it's about a billion cells per head per layer — roughly two gigabytes for each one at half precision. The fix that the whole industry now uses by default is Flash Attention, introduced in twenty twenty-two. In our picture: instead of laying out the whole grid at once, it walks across it in small blocks that fit in the chip's small, very fast on-chip memory, keeping a running tally of the pie so it never needs the full grid. Same answer, exactly — not an approximation — but memory for the grid goes from quadratic to linear, and it's much faster because it avoids shuttling the grid back and forth to slower main memory. The compute is still quadratic. Flash Attention fixes memory traffic, not the fundamental count of flag-label comparisons.
+
+Second, attention can get diluted. At long context, each pie is split across a huge number of tiles. If the truly relevant tile is one among a hundred thousand, its slice can be crowded out by thousands of slightly-relevant tiles. That's one mechanical reason long-context models can miss facts buried in the middle of a long input, and it's why careful retrieval — putting fewer, better tiles on the shelf — often beats just stuffing the context window.
+
+Third, the pie must add up to one hundred percent — even when nothing on the shelf is relevant. A tile with nothing useful to look at still has to spend its pie somewhere. Researchers found that trained models often dump their spare attention onto the very first tile of the sequence, which acts as a kind of parking spot — sometimes called an attention sink. It sounds academic, but it has practical consequences: some tricks for streaming very long inputs, where old tiles are thrown away to save memory, break badly if they throw away that first tile, and work fine if they keep it.
+
+Fourth, and this is the war story. Attention weights are not explanations. A team building a document-classification model for a regulated review process decided to show reviewers the attention heatmap — the tiles with the biggest pie slices highlighted — as the model's "reason" for each decision. It looked convincing in demos. Then an internal audit tested it: they removed the highlighted words and re-ran the model, and in a meaningful fraction of cases the decision didn't change at all. The model had many layers and many heads, and the information that drove the decision had been mixed and re-mixed through the stack; one layer's pie slices said little about what ultimately mattered. The heatmaps came out of the review tool, and the team moved to perturbation-based explanations, which directly test what changes the output. Research literature reached the same conclusion — attention is a routing mechanism, not a faithful explanation. If an interviewer asks whether attention weights explain a model, the strong answer is "not reliably, and here's how you'd test it."
+
+[PAUSE 2s]
+
+## The interview angle
+
+Four questions, four one-breath answers.
+
+"Explain self-attention simply." Strong answer: "Each token asks a question, advertises a label, and carries content. Each token compares its question against every other token's label, turns those similarity scores into percentages, and takes that percentage of each token's content. The result is a context-aware version of the token. Technically: learned query, key, and value projections; scaled dot-product scores; softmax; weighted sum of values."
+
+"Why separate queries and keys — why not compare embeddings directly?" Strong answer: "Because what a token is looking for differs from what it offers. Separate projections let the relation be asymmetric — 'it' can look for a noun without 'animal' needing to look for a pronoun — and let each head learn a different kind of relation."
+
+"Why divide by the square root of the dimension?" Strong answer: "Dot products grow in magnitude with dimension; big scores saturate the softmax into near one-hot, which kills gradients. Scaling keeps the distribution soft and trainable."
+
+"What's the complexity, and what does Flash Attention change?" Strong answer: "Compute and naive memory are quadratic in sequence length because of the score matrix. Flash Attention computes it in tiles in on-chip memory with an online softmax, so memory becomes linear and it's much faster in wall clock, but the compute is still quadratic and the result is exact."
+
+Bonus, the staff-level follow-up: "Why is it called a K V cache?" Strong answer: "With causal masking, past tokens' keys and values never change, so you cache them and compute only the newest token's query, key, and value per step. Queries of old tokens are never needed again."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the shelf. A row of word tiles, left to right. Every tile gets three things from three learned lenses: a flag above it — the query, what it's looking for; a label on its front — the key, what it offers; and a bucket below it — the value, what it hands over.
+
+Watch "it." It holds its flag up against every label on the shelf and scores each match by how much the arrows agree. Those scores are scaled down so they don't blow up, then turned into a pie that adds up to a hundred percent. Then "it" pours that share of every bucket together and comes out knowing it means "the animal."
+
+Every tile does this at once — a grid of flags against labels, computed in parallel, and that grid is the quadratic cost. For language models, a curtain hides everything to the right, which is what makes the K V cache possible. Flash Attention walks the grid in small blocks so it never has to hold it all. And a big pie slice is a routing decision, not an explanation.
+
+Next episode: one flag per tile is too few. We'll give every tile many flags at once, tell the web where each tile sits on the shelf, and build the full block — multi-head attention, rotary position encoding, residuals, and normalization. See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="01-why-transformers.html">← From RNNs to Attention: Why Transformers Won</a><a class="btn" href="03-multihead-rope.html">Multi-Head Attention, RoPE, Residuals, LayerNorm →</a></div></main></div></body></html>

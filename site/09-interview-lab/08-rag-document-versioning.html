@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RAG Document Versioning: Section Edits, Removals, Index Consistency — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk"><summary>Track 8 · LLMOps + Prompting</summary><a class="" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk" open><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="active" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 9 · Interview Lab: Agentic AI Engineer · Episode 8</div>
+<h1 class="lesson">RAG Document Versioning: Section Edits, Removals, Index Consistency</h1>
+<div class="meta">19 min listen · The interview question every production RAG system eventually has to answer: when a document changes, a section is edited, or a section disappears, how do you keep the index consistent? Stable section IDs, content hashes, a manifest ledger, delete-then-verify writes, tombstones, as-of versions for regulated documents, blue-green index aliases, cache invalidation and reconciliation.</div>
+<p class="meta">🎙 Audio not rendered yet.</p>
+<button class="btn complete" data-ep="09-interview-lab/08-rag-document-versioning" onclick="toggleDone('09-interview-lab/08-rag-document-versioning')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<p><strong>Thesis:</strong> the vector index is <em>derived data</em>; keep a transactional manifest (ledger) of section IDs, content hashes, versions and chunk IDs, gate reads with a current-version pointer, and prove consistency with nightly reconciliation.</p>
+<p><strong>Interview question answered:</strong> "A document in your RAG corpus is updated — one section modified, another removed entirely. How do you manage the changes and keep indexed content consistent?"</p>
+<h2 id="the-mental-image">The mental image</h2>
+<p>A long room. <strong>Left wall</strong> = the archive (source of truth; every section stamped with a stable ID). <strong>Middle desk</strong> = the ledger/manifest (doc, section ID, version, normalized hash, chunk IDs, tombstones) with a small <strong>board above it</strong> = current-version pointer per doc. <strong>Right wall</strong> = the card wall (vector index). A <strong>tray by the door</strong> = answer/semantic cache. A <strong>second wall behind the first</strong> + a "live" sign = blue-green index behind an alias. Nightly, an auditor walks left → right (reconciliation).</p>
+<pre class="mermaid">flowchart LR
+    subgraph SRC["Source of truth (left wall)"]
+        D["Document v8\nsections with stable IDs"]
+    end
+    subgraph LEDGER["Manifest table (middle desk)"]
+        M["doc_id, section_id, version,\ncontent_hash, chunk_ids, status"]
+        P["current_version pointer"]
+    end
+    subgraph IDX["Vector index (right wall)"]
+        C["chunks with metadata:\ndoc_id, section_id, version,\neffective_from, effective_to"]
+    end
+    CACHE["Semantic / answer cache\n(tagged by doc_id+version)"]
+    D -->|"CDC / change events / poll"| DIFF["Hash diff"]
+    DIFF -->|"changed sections only"| EMB["Chunk + embed"]
+    EMB -->|"1. write new chunks"| C
+    EMB -->|"2. flip pointer"| P
+    P -->|"3. delete / retire old chunks"| C
+    P -->|"evict"| CACHE
+    M -. "nightly reconciliation" .- C
+    M -. "nightly reconciliation" .- D
+</pre>
+
+<h2 id="change-classification-the-diff">Change classification (the diff)</h2>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Detection</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unchanged section</td>
+<td>same section_id, same hash</td>
+<td>skip (no embed, no write)</td>
+</tr>
+<tr>
+<td>Modified section</td>
+<td>same section_id, different hash</td>
+<td>embed new chunks → write → flip pointer → delete/retire old chunks</td>
+</tr>
+<tr>
+<td>Moved section</td>
+<td>same hash, new position/path</td>
+<td>metadata-only update</td>
+</tr>
+<tr>
+<td>New section</td>
+<td>section_id not in manifest</td>
+<td>embed + insert</td>
+</tr>
+<tr>
+<td>Removed section</td>
+<td>in manifest, absent from new version</td>
+<td>tombstone row → delete (or retire) chunks</td>
+</tr>
+<tr>
+<td>Metadata-only (ACL, owner, status)</td>
+<td>hash same, metadata differs</td>
+<td>update metadata on all chunks — fast path (ACL lag = data leak)</td>
+</tr>
+<tr>
+<td>Embedding model / chunker / parser change</td>
+<td>config version differs</td>
+<td><strong>full rebuild</strong>, blue-green behind alias</td>
+</tr>
+</tbody>
+</table>
+<h2 id="write-ordering-why-write-flip-delete">Write ordering — why "write, flip, delete"</h2>
+<pre class="mermaid">sequenceDiagram
+    participant J as Ingest job
+    participant V as Vector index
+    participant L as Manifest + pointer
+    J->>V: upsert chunks (sec4, v8, 1..4)
+    J->>L: set current_version(doc)=8 (atomic)
+    Note over V: retriever filters version == current -> v7 chunks now invisible
+    J->>V: delete where section_id=sec4 AND version != 8
+    J->>L: update manifest row (hash, chunk_ids)
+    Note over J,L: crash anywhere -> rerun is idempotent, reconciliation catches leftovers
+</pre>
+
+<p>The orphan bug: chunk IDs = <code>section + ordinal</code>, upsert-only. v7 had 5 chunks, v8 has 4 → chunk 5 (old rule) survives forever. Fix: version in the chunk ID + delete-by-filter (or delete by the chunk-ID list stored in the manifest).</p>
+<h2 id="code-sketches">Code sketches</h2>
+<p>Normalized section hash:</p>
+<pre><code class="language-python">import hashlib, re, unicodedata
+
+def section_hash(text: str) -&gt; str:
+    t = unicodedata.normalize(&quot;NFKC&quot;, text)
+    t = re.sub(r&quot;(?im)^(page \d+ of \d+|printed on .*)$&quot;, &quot;&quot;, t)  # footers/page nums
+    t = t.replace(&quot;’&quot;, &quot;'&quot;).replace(&quot;“&quot;, '&quot;').replace(&quot;”&quot;, '&quot;')
+    t = re.sub(r&quot;\s+&quot;, &quot; &quot;, t).strip()
+    return hashlib.sha256(t.encode(&quot;utf-8&quot;)).hexdigest()
+</code></pre>
+<p>Diff against the manifest:</p>
+<pre><code class="language-python">def diff(new_sections: dict[str, str], manifest: dict[str, dict]):
+    new_ids, old_ids = set(new_sections), set(manifest)
+    added    = new_ids - old_ids
+    removed  = old_ids - new_ids
+    modified = {s for s in new_ids &amp; old_ids
+                if section_hash(new_sections[s]) != manifest[s][&quot;hash&quot;]}
+    return added, modified, removed
+</code></pre>
+<p>Delete circuit breaker:</p>
+<pre><code class="language-python">if len(removed_docs) &gt; 0.05 * corpus_size or len(source_listing) == 0:
+    raise RuntimeError(&quot;Refusing mass delete; source listing looks incomplete&quot;)
+</code></pre>
+<p>As-of retrieval filter (pseudo-syntax — translate to your store's filter DSL; model "open" as a sentinel far-future date if nulls are awkward):</p>
+<pre><code class="language-python">now_filter   = {&quot;effective_to&quot;: OPEN}                         # default users
+asof_filter  = {&quot;effective_from&quot;: {&quot;$lte&quot;: t}, &quot;effective_to&quot;: {&quot;$gt&quot;: t}}   # OPEN = 9999-12-31  # compliance replay
+</code></pre>
+<p>Blue-green with a Qdrant alias (atomic swap):</p>
+<pre><code class="language-json">POST /collections/aliases
+{&quot;actions&quot;: [
+  {&quot;delete_alias&quot;: {&quot;alias_name&quot;: &quot;policies_live&quot;}},
+  {&quot;create_alias&quot;: {&quot;collection_name&quot;: &quot;policies_v2_emb3&quot;, &quot;alias_name&quot;: &quot;policies_live&quot;}}
+]}
+</code></pre>
+<p>LangChain indexing API (hash-based dedupe + cleanup) — note the <code>full</code> trap:</p>
+<pre><code class="language-python">from langchain_core.indexing import index
+from langchain_classic.indexes import SQLRecordManager   # langchain&gt;=1.0; was langchain.indexes
+rm = SQLRecordManager(&quot;pgvector/policies&quot;, db_url=DB_URL); rm.create_schema()
+index(docs, rm, vectorstore, cleanup=&quot;incremental&quot;, source_id_key=&quot;doc_id&quot;)
+# cleanup=&quot;full&quot; deletes everything the loader did NOT return this run
+# -&gt; a partial loader silently deletes valid docs
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stable section ID</td>
+<td>Identity that survives edits/renumbering (source key or aligned via heading + similarity)</td>
+<td>"No identity, no incremental update"</td>
+</tr>
+<tr>
+<td>Content hash</td>
+<td>Normalized SHA-256 of section text</td>
+<td>"Skip what didn't change"</td>
+</tr>
+<tr>
+<td>Manifest / ledger</td>
+<td>Transactional table: doc, section, version, hash, chunk IDs, status</td>
+<td>"Don't use the vector store as your source of truth for what's in it"</td>
+</tr>
+<tr>
+<td>Upsert vs replace-by-section</td>
+<td>Overwrite by ID vs write-new + delete-by-filter</td>
+<td>"Upsert-only leaves orphans when chunk count shrinks"</td>
+</tr>
+<tr>
+<td>Current-version pointer</td>
+<td>Per-doc version the retriever filters on</td>
+<td>"Physical cleanup is eventual; visibility is atomic"</td>
+</tr>
+<tr>
+<td>Tombstone</td>
+<td>Manifest record of a removal (when/by what)</td>
+<td>"Audit trail + idempotent retries"</td>
+</tr>
+<tr>
+<td>As-of query</td>
+<td>Filter on effective_from/effective_to</td>
+<td>"Time travel for the index — what did we know on 14 March?"</td>
+</tr>
+<tr>
+<td>Index alias / blue-green</td>
+<td>Name pointing at a physical index; swap to cut over</td>
+<td>"Rebuild behind, flip the sign, keep old for rollback"</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>Nightly source ↔ manifest ↔ index compare</td>
+<td>"Orphans, missing, freshness lag as metrics"</td>
+</tr>
+<tr>
+<td>CDC</td>
+<td>Change events incl. deletes from source log</td>
+<td>"Deletes as events beat deletes inferred from absence"</td>
+</tr>
+</tbody>
+</table>
+<h2 id="numbers-worth-quoting">Numbers worth quoting</h2>
+<ul>
+<li>Embedding: cents per million tokens for hosted small models → re-embedding a section is ~free; <strong>parsing</strong> is the cost (layout parsers ~US$10–15 per 1,000 pages: Azure Document Intelligence Layout ~$10/1k, Textract Tables ~$15/1k).</li>
+<li>Azure AI Search alias update: up to ~10 s to propagate.</li>
+<li>Qdrant alias changes: atomic; concurrent requests unaffected.</li>
+<li>Databricks Vector Search Delta Sync: triggered or continuous (seconds of latency, higher cost); incremental, propagates inserts/updates/deletes from the Delta table.</li>
+<li>HNSW-style indexes: deletes are typically soft (marked) until compaction/optimization → watch recall and memory under churn.</li>
+</ul>
+<h2 id="5-interview-questions-with-strong-answers">5 interview questions (with strong answers)</h2>
+<ol>
+<li>
+<p><strong>A section of a policy document is modified. Walk me through the update.</strong>
+   Detect via stable section ID + changed normalized hash; chunk and embed only that section; write new chunks tagged with version N+1; atomically flip the doc's current-version pointer that retrieval filters on; delete (or retire) the old version's chunks by section+version filter; update the manifest; evict caches tagged with the doc. Crash-safe because each step is idempotent and reconciliation cleans leftovers.</p>
+</li>
+<li>
+<p><strong>A section is removed completely. What happens, and what can go wrong?</strong>
+   Set difference between manifest section IDs and the new version → tombstone row → delete chunks. The risk is inferring deletes from absence: a failed or partial listing can wipe the index. Guard with a mass-delete circuit breaker, prefer explicit delete events (CDC/webhooks), and keep tombstones for audit.</p>
+</li>
+<li>
+<p><strong>How do you guarantee users never see a mix of old and new versions?</strong>
+   Vector stores rarely offer multi-record transactions, so make visibility the atomic step: a per-document current-version pointer (or <code>is_current</code> flag) enforced as a query filter. Write new first, flip pointer, then delete old; readers see either all-old or all-new.</p>
+</li>
+<li>
+<p><strong>A regulator asks what your assistant told a customer six months ago. Can you answer?</strong>
+   Yes, if you retire instead of delete: chunks carry effective_from/effective_to, and every answer logs chunk IDs, doc versions and hashes. Replay with an as-of filter to reconstruct the exact context. Retention vs purge (PII) is a policy decision encoded separately.</p>
+</li>
+<li>
+<p><strong>You're changing the embedding model. How do you roll it out?</strong>
+   Full rebuild into a new index (never mix vector spaces), record the change-log position, evaluate against the golden set, replay changes since the start, then swap the alias; keep the old index for rollback. Store model + chunker version in the manifest and check it at query-service startup.</p>
+</li>
+</ol>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>LangChain indexing API (RecordManager, cleanup modes): https://reference.langchain.com/python/langchain-core/indexing/api · blog: https://www.langchain.com/blog/syncing-data-sources-to-vector-stores</li>
+<li>Qdrant collection aliases: https://qdrant.tech/documentation/manage-data/collections/</li>
+<li>Azure AI Search index aliases: https://learn.microsoft.com/en-us/azure/search/search-how-to-alias · rebuild guidance: https://learn.microsoft.com/en-us/azure/search/search-howto-reindex</li>
+<li>Pinecone delete (by ID, by metadata filter): https://docs.pinecone.io/guides/manage-data/delete-data · bulk ops blog: https://www.pinecone.io/blog/update-delete-and-fetch-by-metadata/</li>
+<li>Databricks Vector Search (Delta Sync, triggered vs continuous): https://docs.databricks.com/aws/en/vector-search/create-vector-search · Azure: https://learn.microsoft.com/en-us/azure/databricks/vector-search/create-vector-search</li>
+<li>Related episodes: Track 4 ep 7 (RAG failure modes — staleness, embedding mismatch), Track 4 ep 2 (chunking is versioned).</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track nine, episode eight: R A G document versioning — section edits, section removals, and keeping the index consistent.
+
+This episode answers a question that was asked, almost word for word, in a technical round for an Agentic A I Engineer role in financial services. The interviewer said, roughly: "Your R A G system indexes a set of policy documents. A document gets updated. One section is modified. Another section is removed completely. How do you manage those changes so the indexed content stays consistent?"
+
+[PAUSE 2s]
+
+It sounds like a plumbing question. It's actually a senior-engineer filter. A junior answer is "we re-index the document." A strong answer talks about identity, fingerprints, a ledger, the order of writes, and how you prove every night that the index still matches the source.
+
+## Why it matters
+
+Here is the failure that makes this real. A large lender runs an internal assistant over its credit policy manuals. The policy team rewrites section four of the hardship policy: the old rule said a customer could get up to three months of payment deferral; the new one says up to six, subject to review. The ingestion job picks up the new version, chunks it, embeds it, and writes the new chunks into the vector index. Everyone goes home. The next morning an agent asks the assistant about deferral limits and gets back an answer that quotes both three months and six months, and confidently picks three. Why? Because the old section had been chunked into five pieces and the new one into four. The job wrote four new chunks over the IDs of the first four old chunks. Old chunk number five, containing the three-month rule, was never overwritten and never deleted. It sat there, perfectly retrievable, for eleven weeks.
+
+Nothing errored. No dashboard went red. Versioning bugs are silent, they accumulate, and in a regulated business they're not just a quality problem: if a customer was told the wrong hardship terms, somebody will ask, in writing, what the system knew and when. We touched staleness in the R A G track's failure modes episode. Today we go one level deeper.
+
+[PAUSE 1s]
+
+## The mental image: the archive, the ledger, and the card wall
+
+Picture this. A long room, and you're standing in the middle of it.
+
+On your left, against the wall, is the archive: tall filing cabinets holding the source documents. This is the system of record: the document management system, the wiki, the SharePoint library, the policy database. Every document in a cabinet is divided into sections, and every section has a small label stamped in its top corner: a section identifier that does not change when the words change.
+
+On your right, the whole far wall is the card wall: thousands of index cards pinned up, each card one chunk of text with its embedding. This is your vector index. When a question comes in, the searcher walks along this wall and pulls down the cards whose meaning is closest.
+
+And in the middle of the room, on a desk right in front of you, sits a thick ledger. The ledger is the thing most teams forget to build. Every line in it records one section from the left wall: which document, which section identifier, which version, a fingerprint of the section's exact content, and the list of card numbers on the right wall that this section produced.
+
+Left wall: truth. Right wall: what the searcher can see. Middle desk: the ledger that connects them. Every version question in this episode is answered by walking between those three places.
+
+[PAUSE 2s]
+
+## Under the hood: identity first
+
+Start at the left wall, with that label stamped on each section. Everything depends on it. If you can't say "this is the same section as last time, with different words," you can't do incremental updates at all. You can only throw away the whole document and start over.
+
+Where does a stable section identifier come from? Best case, the source system gives you one: page identifiers, clause numbers stored as fields, section records with their own keys. Use those.
+
+Worst case, you have a P D F or a Word file with nothing stable inside it. Then you derive identity, and there's a trap here. The obvious move is to use the heading number: "section four point two." But the moment someone inserts a new section before it, four point two becomes four point three, and your system thinks one section was deleted and another one appeared, with exactly the same words. The more robust approach is alignment: when a new version of the document arrives, you match its sections against the previous version's sections using the heading text plus a similarity check on the content, the same way a diff tool aligns two files. A section whose heading and most of its content match an old section inherits the old identifier. Genuinely new sections get new identifiers. Old identifiers with no match are removals. For regulated documents, push owners to add stable clause identifiers at the source.
+
+## Under the hood: the fingerprint
+
+Now the ledger's fingerprint column. For every section, you compute a content hash: a short fingerprint of the section's text, something like a S H A two fifty-six digest. If the fingerprint on the left wall matches the fingerprint in the ledger, the section hasn't changed, and you skip it. No parsing of chunks, no embedding call, no index write. If it differs, the section changed.
+
+The subtle part is what you hash. Hash the raw extracted text and you'll get false changes every time a page footer reads "printed on" with today's date, or the page numbers shift because a section above got longer. Here's a real-shaped war story: one team's nightly job re-embedded the entire corpus, every night, for months, because every P D F carried a generated timestamp in its footer that the parser folded into the section text. Their embedding bill was thirty times what it should have been, and nobody noticed until finance asked. So normalize before hashing: strip headers, footers, and page numbers, collapse whitespace, normalize unicode quotes. And hash the content separately from any context you prepend to chunks. If you add the document title to every chunk for contextual retrieval, a title change shouldn't look like every section changed; handle it as a cheap metadata update, or as a deliberate re-embed, but decide on purpose.
+
+Also record in the ledger which embedding model and chunking configuration produced the cards. Change either, and identical text produces different cards. That's not an incremental update; it's a rebuild.
+
+## Walk through case one: a section is modified
+
+Now walk a change through the room. The new version of the hardship policy arrives on the left wall. Section four's label is the same. Its fingerprint is different.
+
+You pick up section four and look at the ledger. The ledger says: last time, section four, version seven, produced five cards on the right wall, numbers one through five. Now you chunk the new text. It produces four chunks. You embed those four, and only those four. Sections one, two, three, five and six had matching fingerprints, so they cost nothing.
+
+Now the part the lender got wrong: how you write to the right wall. There are two shapes.
+
+The first shape is overwrite by identifier, an upsert. Card identifiers are derived from section plus position: section four, chunk one; section four, chunk two; and so on. Upsert replaces cards with the same identifier and inserts new ones. Clean when the chunk count stays the same. Broken when the count shrinks, because nothing ever touches card number five. That's the orphan.
+
+The second shape is replace by section. Card identifiers include the section version: section four, version eight, chunk one. You write all the new version-eight cards first. Then you delete every card on the wall whose metadata says "section four" and whose version is not eight. Most vector stores support delete by metadata filter, or you use the list of card numbers the ledger already holds for version seven, which works even on stores where filter deletes are limited. Then you update the ledger line: section four, version eight, new fingerprint, new card list.
+
+Why write before delete? Because there is no transaction across a vector store, and between the two steps the wall is in an in-between state. If you delete first, there's a window where section four has no cards at all, and a question about deferral limits finds nothing. If you write first, there's a window where both versions are on the wall. That second window is shorter-lived and easier to hide, which brings us to the trick that makes this consistent rather than merely eventually tidy.
+
+[PAUSE 1s]
+
+## The read-side guard: the current-version pointer
+
+Picture a small board hanging above the ledger desk. On it, for each document, one number: the current version. When the searcher on the right wall pulls cards for a question, it pulls a few extra, and then it checks each card against that board. A card stamped "hardship policy, version seven" when the board says version eight is quietly dropped. Some teams do this with a metadata filter at query time. Others keep a flag on each card, "is current," and flip it. Either way, the effect is the same: the moment you update the board, the old cards become invisible, even if the cleanup job that physically removes them hasn't run yet, or failed halfway.
+
+That's the key idea for the interview. Physical cleanup can be eventually consistent. What the searcher is allowed to see is gated by a single pointer, and flipping one pointer is atomic. Write new cards, flip the pointer, then delete old cards at your leisure, and if the delete fails, the reconciliation job catches it tomorrow.
+
+## Walk through case two: a section is removed
+
+Now the second half of the interview question: section six has been removed completely.
+
+Walk it. On the left wall, the new version of the document has no section six. In the ledger, there's still a line for section six with three cards. The diff is set arithmetic: section identifiers in the ledger minus section identifiers in the new version equals removed sections.
+
+For each removed section, you write a tombstone into the ledger: a line that says "section six, removed in version eight, at this timestamp, by this change." Then you delete its cards from the right wall. Why a tombstone instead of just erasing the ledger line? Three reasons. First, an audit trail: in a regulated setting you need to show that the section existed, when it was retired, and that the system stopped using it. Second, idempotency: if the job crashes after writing the tombstone and before deleting the cards, the rerun sees the tombstone and finishes the delete. Third, it protects you from the scariest bug in this whole area, which is the whole-document disappearance.
+
+Here's that bug. A sync job lists the documents in a source folder, compares them to the index, and deletes anything missing from the source. One day the source listing call times out, or a permissions change makes the service account see an empty folder. The job concludes that every document has been removed, and it dutifully empties the index. The popular open-source indexing helpers name this risk explicitly. The LangChain indexing A P I, for example, has a cleanup mode called "full" that deletes anything the loader didn't return in this run, and its documentation warns that if your loader returns only a subset, you'll delete documents you meant to keep. The defenses are simple and non-negotiable: never treat an empty or sharply shrunken listing as truth; put a circuit breaker on deletes, say, abort and alert if a run would remove more than a few percent of the corpus; and prefer explicit delete events from the source over inferring deletes from absence.
+
+## Regulated documents: as-of versions instead of deletes
+
+Now the financial-services twist. For many documents, deleting old versions is exactly the wrong thing. Picture a complaint: a customer says that in March they were told they qualified for a fee waiver. It's now September, and the policy has changed twice since. The question the compliance team asks is not "what does the policy say now?" but "what did the policy say on the fourteenth of March, and what did our assistant tell them?"
+
+So for regulated corpora, you don't remove old cards; you retire them. Every card carries two dates: effective from, and effective until. The current cards have "effective until" empty. When section four goes from version seven to eight, the version-seven cards get their "effective until" stamped, and the version-eight cards start. Back on the right wall, the default query filter says "effective until is empty," so ordinary users only ever see current policy. But a compliance user, or a replay tool, can ask the wall "as of the fourteenth of March," and the filter becomes: effective from is on or before that date, and effective until is after it. That's an as-of query, and it's the same idea as time travel in Delta Lake, applied to your index.
+
+Pair it with answer-level logging: for every answer, record the card identifiers retrieved, their versions, and fingerprints, so "what did the assistant know?" has a factual answer. Two cautions. Retired cards cost storage and slow filtered search, so large corpora often move them to a separate archive index. And retention cuts both ways: some content must be kept for years, some, especially personal information, must be purged on request, so retire-versus-purge belongs to a policy, not to ingestion code.
+
+## Blue-green: when you must rebuild the whole wall
+
+Some changes can't be incremental. You switch embedding models, you change chunk size, you move to a new parser. Every card on the right wall is now from the wrong world, and mixing old and new vectors in one index gives you the silent garbage we described in the failure modes episode.
+
+So picture a second card wall, built behind the first one. You build the new wall completely, from the left-wall archive, with the new model. You run your evaluation set against it. You compare recall and answer quality with the live wall. And the searcher doesn't look at a wall by name; it looks at a sign that says "live," and the sign points at a wall. When the new wall passes, you move the sign. That's an index alias. Qdrant has collection aliases whose switch is atomic; Elasticsearch and Open Search have index aliases; Azure A I Search has them too, with updates taking up to about ten seconds to propagate. Where your store lacks aliases, keep the pointer in your own configuration. Keep the old wall for a day or a week; rollback is moving the sign back.
+
+One gotcha: while the new wall is being built, the left wall keeps changing. So a blue-green rebuild needs a catch-up phase: record the change-log position when the rebuild starts, then replay the changes since that position onto the new wall before you flip the sign.
+
+## Don't forget the caches
+
+There's one more thing in the room, and it's easy to miss. In front of the card wall, near the door, there's a tray of pre-written answers: a semantic cache, or a retrieval cache, keyed on questions that were asked recently. After section four changes, that tray may still hold yesterday's answer about three months of deferral, and the cache will happily serve it without ever visiting the wall.
+
+The fix: tag every cached entry with the document identifiers and versions it was built from, and when a document's pointer moves, evict every entry tagged with it. A time-to-live is a backstop, not the mechanism.
+
+## Getting changes in: C D C versus polling
+
+How does the job know something changed on the left wall? Three levels. Polling: every night, list everything, compare fingerprints; simple, but staleness is up to a day. Change events: many document systems emit notifications or offer delta queries that return only what changed since a saved token. And if your documents live in tables, change data capture from the database's own log. On Databricks, for example, a Delta Sync vector index reads changes from the source Delta table, including deletes, on a trigger or continuously with seconds of latency, at the cost of an always-on pipeline. The key property: deletes arrive as events, which is far safer than inferring them from absence.
+
+## Proving it: reconciliation
+
+Last piece. Even with all this, jobs crash, networks drop, and someone deletes cards by hand during an incident. So every night, a reconciliation job walks the whole room, left to right. For each document on the left wall, is there a ledger line with a matching fingerprint? For each ledger line, do the cards it lists actually exist on the right wall? And for each card on the right wall, is there a ledger line that claims it? Cards claimed by nobody are orphans: delete them. Ledger lines pointing at missing cards: re-embed. Fingerprint mismatches: re-ingest. Emit three numbers as metrics: orphan count, missing count, and freshness lag, meaning the time from a source change to its cards going live. Alert on any of them drifting. That lender with the three-month rule? A reconciliation job would have flagged that orphan card on day one.
+
+[PAUSE 1s]
+
+## Tradeoffs and pitfalls
+
+A few numbers to keep the tradeoffs honest. Embedding is the cheap part: current hosted embedding models cost cents per million tokens, so re-embedding one changed section is effectively free. Parsing is not always cheap: layout-aware cloud parsers are priced per page, typically around ten to fifteen dollars per thousand pages, so re-parsing an entire three-hundred-page manual because one clause changed adds up across thousands of documents. Cache parsed output keyed by the file's own hash.
+
+Deletes are also not free inside the index. In graph-based vector indexes, deleted vectors are usually marked, not physically removed, and search quality and memory can degrade until the store compacts or you rebuild. If your corpus churns heavily, schedule compaction, and watch recall on your evaluation set over time.
+
+Granularity is a tradeoff. Whole-document replacement is simple and always correct, and for short documents that change rarely, it's fine. Section-level machinery earns its keep on long, frequently amended documents: policies, contracts, disclosure statements, procedure manuals.
+
+And don't rely on the vector store as your ledger. Stores are good at similarity search, and weak at "list every card for section four across versions." Keep the ledger in a proper database or a Delta table, where you get transactions, history, and easy auditing.
+
+[PAUSE 1s]
+
+## The strong answer
+
+When they ask, "How do you handle document version changes in R A G: modified sections, removed sections, keeping the index consistent?", a strong ninety-second answer sounds like this.
+
+"I treat the index as derived data with a ledger. Each document is split into sections with stable identifiers, from the source system if possible, otherwise by aligning sections against the previous version. For each section I store a normalized content hash, its version, and the chunk identifiers it produced, in a manifest table, not in the vector store. When a new version arrives, I diff hashes: unchanged sections are skipped, so I only re-embed what changed. For a modified section, I write the new version's chunks first, then flip a current-version pointer that the retriever filters on, then delete the old chunks by section and version, so there are never orphans from a shrinking chunk count and readers never see a mix. For a removed section, I write a tombstone and delete its chunks, with a circuit breaker so an empty source listing can't wipe the index. For regulated documents I retire instead of delete, with effective-from and effective-until dates, so I can answer as-of questions and I log chunk versions with every answer for audit. Caches are tagged by document version and evicted when the pointer moves. Model or chunking changes are full rebuilds behind an index alias with a blue-green cutover. And a nightly reconciliation compares source, manifest and index, and alerts on orphans and freshness lag."
+
+[PAUSE 2s]
+
+Likely follow-ups. "Two updates to the same document arrive at once?" Process per document serially and reject any write older than the current pointer. "Permissions changed but content didn't?" A fast metadata-only update, because a revoked permission that lingers is a data leak. And the trap: "Why not just re-index everything nightly?" Name the cost, the staleness window, and the missing as-of history, then admit it's a fine start for a small corpus.
+
+## Sixty-second recap
+
+Back to the room. On the left wall, the archive: the truth, every section stamped with a stable identifier that survives edits and renumbering. On the desk in the middle, the ledger: for each section, its fingerprint, its version, and the cards it produced, plus tombstones for sections that were removed. On the right wall, the cards the searcher can see.
+
+A section changes: its fingerprint differs, you embed only that section, write the new cards, flip the current-version pointer on the board above the desk, then delete the old cards. A section disappears: tombstone in the ledger, cards removed, and a circuit breaker so a blank listing never empties the wall. Regulated documents: retire, don't delete, and let an as-of filter replay the past. A new model: build a second wall behind the first and move the "live" sign. Evict the answer tray by the door when the pointer moves. And every night, walk the room from left to right and prove the three places still agree.
+
+See you in the next episode.</div></details>
+<div class="navrow"><a class="btn" href="07-llm-judge-sampling.html">← LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="btn" href="09-tables-in-rag.html">Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies →</a></div></main></div></body></html>

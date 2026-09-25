@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLMOps vs MLOps: What Actually Changes — AI Tutor</title><link rel="stylesheet" href="../style.css">
+<script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'dark'});</script>
+<script src="../app.js"></script></head>
+<body><div class="layout"><nav class="sidebar"><h1><a href="../index.html">🎧 AI Tutor — Interview Prep</a></h1><details class="trk"><summary>Track 1 · Databricks Platform & Data Engineering</summary><a class="" data-ep="01-databricks-platform/01-how-databricks-works" href="../01-databricks-platform/01-how-databricks-works.html"><span class="tick"></span>1. How Databricks Actually Works: Control Plane, Compute Plane, Clusters, Photon, Serverless</a><a class="" data-ep="01-databricks-platform/02-azure-vs-aws-databricks" href="../01-databricks-platform/02-azure-vs-aws-databricks.html"><span class="tick"></span>2. Databricks on Azure vs AWS: Deployment, Identity, Storage, Networking, Billing</a><a class="" data-ep="01-databricks-platform/03-delta-lake-internals" href="../01-databricks-platform/03-delta-lake-internals.html"><span class="tick"></span>3. Delta Lake Internals: Transaction Log, ACID, Liquid Clustering, Deletion Vectors</a><a class="" data-ep="01-databricks-platform/04-unity-catalog-deep-dive" href="../01-databricks-platform/04-unity-catalog-deep-dive.html"><span class="tick"></span>4. Unity Catalog Deep Dive: Metastore, Securables, Managed vs External, Lineage, Metrics</a><a class="" data-ep="01-databricks-platform/05-lakeflow-connect" href="../01-databricks-platform/05-lakeflow-connect.html"><span class="tick"></span>5. Lakeflow Connect: Managed Ingestion & CDC</a><a class="" data-ep="01-databricks-platform/06-lakeflow-declarative-pipelines" href="../01-databricks-platform/06-lakeflow-declarative-pipelines.html"><span class="tick"></span>6. Lakeflow Declarative Pipelines (ex-DLT): Streaming Tables, Materialized Views, Expectations</a><a class="" data-ep="01-databricks-platform/07-lakeflow-jobs-orchestration" href="../01-databricks-platform/07-lakeflow-jobs-orchestration.html"><span class="tick"></span>7. Lakeflow Jobs & Orchestration Patterns</a><a class="" data-ep="01-databricks-platform/08-dbt-on-databricks" href="../01-databricks-platform/08-dbt-on-databricks.html"><span class="tick"></span>8. dbt on Databricks: Where It Fits vs Declarative Pipelines</a><a class="" data-ep="01-databricks-platform/09-performance-cost" href="../01-databricks-platform/09-performance-cost.html"><span class="tick"></span>9. Performance & Cost: Photon, AQE, Caching, Liquid Clustering, Serverless Economics</a><a class="" data-ep="01-databricks-platform/10-iceberg-lakebase-open" href="../01-databricks-platform/10-iceberg-lakebase-open.html"><span class="tick"></span>10. Open Lakehouse: Iceberg Support, UniForm, Lakebase (Serverless Postgres)</a><a class="" data-ep="01-databricks-platform/11-databricks-platform-drill" href="../01-databricks-platform/11-databricks-platform-drill.html"><span class="tick"></span>11. DRILL: Databricks Platform Rapid-Fire</a></details><details class="trk"><summary>Track 2 · Databricks AI Stack</summary><a class="" data-ep="02-databricks-ai/01-lakehouse-ai-big-picture" href="../02-databricks-ai/01-lakehouse-ai-big-picture.html"><span class="tick"></span>1. Lakehouse AI: The Big Picture (MLflow 3, UC, Serving, Vector Search — how pieces fit)</a><a class="" data-ep="02-databricks-ai/02-vector-search-internals" href="../02-databricks-ai/02-vector-search-internals.html"><span class="tick"></span>2. Databricks Vector Search Internals (Delta Sync, embeddings, hybrid search)</a><a class="" data-ep="02-databricks-ai/03-model-serving" href="../02-databricks-ai/03-model-serving.html"><span class="tick"></span>3. Model Serving: Endpoints, Provisioned Throughput, AI Gateway, External Models</a><a class="" data-ep="02-databricks-ai/04-agent-bricks" href="../02-databricks-ai/04-agent-bricks.html"><span class="tick"></span>4. Agent Bricks: Building & Auto-Optimizing Agents, MCP Tool Catalog</a><a class="" data-ep="02-databricks-ai/05-mlflow3-genai" href="../02-databricks-ai/05-mlflow3-genai.html"><span class="tick"></span>5. MLflow 3 for GenAI: Tracing, Evals, Prompt & App Versioning</a><a class="" data-ep="02-databricks-ai/06-ai-functions-genie" href="../02-databricks-ai/06-ai-functions-genie.html"><span class="tick"></span>6. AI Functions in SQL, Genie, AI/BI</a><a class="" data-ep="02-databricks-ai/07-ai-governance" href="../02-databricks-ai/07-ai-governance.html"><span class="tick"></span>7. AI Governance: UC Models & Functions, AI Gateway Guardrails, Lineage, Cost</a><a class="" data-ep="02-databricks-ai/08-databricks-ai-drill" href="../02-databricks-ai/08-databricks-ai-drill.html"><span class="tick"></span>8. DRILL: Databricks GenAI Rapid-Fire</a></details><details class="trk"><summary>Track 3 · GenAI System Design</summary><a class="" data-ep="03-genai-system-design/01-production-llm-anatomy" href="../03-genai-system-design/01-production-llm-anatomy.html"><span class="tick"></span>1. Anatomy of a Production LLM System</a><a class="" data-ep="03-genai-system-design/02-design-rag-walkthrough" href="../03-genai-system-design/02-design-rag-walkthrough.html"><span class="tick"></span>2. "Design a RAG System" — Interview Walkthrough</a><a class="" data-ep="03-genai-system-design/03-latency-cost" href="../03-genai-system-design/03-latency-cost.html"><span class="tick"></span>3. Latency & Cost Engineering: Caching, Batching, Streaming, Model Routing</a><a class="" data-ep="03-genai-system-design/04-evals" href="../03-genai-system-design/04-evals.html"><span class="tick"></span>4. Evals: LLM-as-Judge, Golden Sets, Regression Gates</a><a class="" data-ep="03-genai-system-design/05-guardrails-security" href="../03-genai-system-design/05-guardrails-security.html"><span class="tick"></span>5. Guardrails, PII, Prompt-Injection Defense</a><a class="" data-ep="03-genai-system-design/06-scaling-serving" href="../03-genai-system-design/06-scaling-serving.html"><span class="tick"></span>6. Scaling & Multi-Tenancy: KV Cache, vLLM-Style Serving, Queues</a><a class="" data-ep="03-genai-system-design/07-system-design-drill" href="../03-genai-system-design/07-system-design-drill.html"><span class="tick"></span>7. DRILL: GenAI System Design Rapid-Fire</a></details><details class="trk"><summary>Track 4 · RAG</summary><a class="" data-ep="04-rag/01-embeddings" href="../04-rag/01-embeddings.html"><span class="tick"></span>1. Embeddings & Vector Similarity from First Principles</a><a class="" data-ep="04-rag/02-chunking" href="../04-rag/02-chunking.html"><span class="tick"></span>2. Chunking Strategies</a><a class="" data-ep="04-rag/03-retrieval" href="../04-rag/03-retrieval.html"><span class="tick"></span>3. Retrieval: BM25, Hybrid, Reranking, Query Rewriting</a><a class="" data-ep="04-rag/04-vector-db-internals" href="../04-rag/04-vector-db-internals.html"><span class="tick"></span>4. Vector DB Internals: HNSW, IVF, Quantization</a><a class="" data-ep="04-rag/05-advanced-rag" href="../04-rag/05-advanced-rag.html"><span class="tick"></span>5. Advanced RAG: HyDE, Parent-Document, GraphRAG, Agentic RAG</a><a class="" data-ep="04-rag/06-rag-evaluation" href="../04-rag/06-rag-evaluation.html"><span class="tick"></span>6. RAG Evaluation: RAGAS & Friends</a><a class="" data-ep="04-rag/07-failure-modes" href="../04-rag/07-failure-modes.html"><span class="tick"></span>7. Production RAG Failure Modes & Fixes</a><a class="" data-ep="04-rag/08-rag-drill" href="../04-rag/08-rag-drill.html"><span class="tick"></span>8. DRILL: RAG Rapid-Fire</a></details><details class="trk"><summary>Track 5 · Agentic AI + MCP</summary><a class="" data-ep="05-agentic-mcp/01-what-is-an-agent" href="../05-agentic-mcp/01-what-is-an-agent.html"><span class="tick"></span>1. What an Agent Is: The Loop, ReAct, Function Calling Internals</a><a class="" data-ep="05-agentic-mcp/02-planning-reasoning" href="../05-agentic-mcp/02-planning-reasoning.html"><span class="tick"></span>2. Planning & Reasoning Patterns: CoT, Reflection, Plan-Execute</a><a class="" data-ep="05-agentic-mcp/03-agent-memory" href="../05-agentic-mcp/03-agent-memory.html"><span class="tick"></span>3. Agent Memory: Short-Term, Long-Term, Summarization</a><a class="" data-ep="05-agentic-mcp/04-multi-agent-patterns" href="../05-agentic-mcp/04-multi-agent-patterns.html"><span class="tick"></span>4. Multi-Agent Patterns: Orchestrator-Worker, Handoffs, Debate</a><a class="" data-ep="05-agentic-mcp/05-mcp-protocol" href="../05-agentic-mcp/05-mcp-protocol.html"><span class="tick"></span>5. MCP: Protocol, Host/Client/Server, Tools/Resources/Prompts, Transports</a><a class="" data-ep="05-agentic-mcp/06-mcp-vs-function-calling" href="../05-agentic-mcp/06-mcp-vs-function-calling.html"><span class="tick"></span>6. MCP vs Function Calling; Security & Auth in Real Deployments</a><a class="" data-ep="05-agentic-mcp/07-framework-survey" href="../05-agentic-mcp/07-framework-survey.html"><span class="tick"></span>7. Framework Survey: LangGraph vs CrewAI vs AutoGen vs Claude Agent SDK</a><a class="" data-ep="05-agentic-mcp/08-agent-evals" href="../05-agentic-mcp/08-agent-evals.html"><span class="tick"></span>8. Agent Evals, Guardrails, Human-in-the-Loop</a><a class="" data-ep="05-agentic-mcp/09-agentic-drill" href="../05-agentic-mcp/09-agentic-drill.html"><span class="tick"></span>9. DRILL: Agents + MCP Rapid-Fire</a></details><details class="trk"><summary>Track 6 · LangChain / LangGraph</summary><a class="" data-ep="06-langchain-langgraph/01-langchain-core" href="../06-langchain-langgraph/01-langchain-core.html"><span class="tick"></span>1. LangChain Core: LCEL, Runnables, Chains vs Agents</a><a class="" data-ep="06-langchain-langgraph/02-langgraph-state" href="../06-langchain-langgraph/02-langgraph-state.html"><span class="tick"></span>2. LangGraph: State Machines, Nodes, Edges, Checkpoints</a><a class="" data-ep="06-langchain-langgraph/03-langgraph-patterns" href="../06-langchain-langgraph/03-langgraph-patterns.html"><span class="tick"></span>3. LangGraph Patterns: Subgraphs, Human-in-the-Loop, Streaming</a><a class="" data-ep="06-langchain-langgraph/04-langsmith" href="../06-langchain-langgraph/04-langsmith.html"><span class="tick"></span>4. LangSmith: Tracing, Datasets, Evals</a><a class="" data-ep="06-langchain-langgraph/05-when-not-langchain" href="../06-langchain-langgraph/05-when-not-langchain.html"><span class="tick"></span>5. When NOT LangChain — Tradeoffs & Alternatives</a><a class="" data-ep="06-langchain-langgraph/06-langchain-drill" href="../06-langchain-langgraph/06-langchain-drill.html"><span class="tick"></span>6. DRILL: LangChain/LangGraph Rapid-Fire</a></details><details class="trk"><summary>Track 7 · Transformer Architecture</summary><a class="" data-ep="07-transformers/01-why-transformers" href="../07-transformers/01-why-transformers.html"><span class="tick"></span>1. From RNNs to Attention: Why Transformers Won</a><a class="" data-ep="07-transformers/02-self-attention" href="../07-transformers/02-self-attention.html"><span class="tick"></span>2. Self-Attention Mechanics: Q, K, V by Analogy</a><a class="" data-ep="07-transformers/03-multihead-rope" href="../07-transformers/03-multihead-rope.html"><span class="tick"></span>3. Multi-Head Attention, RoPE, Residuals, LayerNorm</a><a class="" data-ep="07-transformers/04-decoder-only-llms" href="../07-transformers/04-decoder-only-llms.html"><span class="tick"></span>4. Decoder-Only LLMs: Training Objective, BPE Tokenization, Embeddings</a><a class="" data-ep="07-transformers/05-inference" href="../07-transformers/05-inference.html"><span class="tick"></span>5. Inference: KV Cache, Sampling, Speculative Decoding</a><a class="" data-ep="07-transformers/06-scaling-moe" href="../07-transformers/06-scaling-moe.html"><span class="tick"></span>6. Scaling Laws, Mixture-of-Experts, Long Context</a><a class="" data-ep="07-transformers/07-finetuning" href="../07-transformers/07-finetuning.html"><span class="tick"></span>7. Fine-Tuning Landscape: LoRA/PEFT, RLHF, DPO</a><a class="" data-ep="07-transformers/08-transformers-drill" href="../07-transformers/08-transformers-drill.html"><span class="tick"></span>8. DRILL: Transformers Rapid-Fire</a></details><details class="trk" open><summary>Track 8 · LLMOps + Prompting</summary><a class="active" data-ep="08-llmops/01-llmops-vs-mlops" href="../08-llmops/01-llmops-vs-mlops.html"><span class="tick"></span>1. LLMOps vs MLOps: What Actually Changes</a><a class="" data-ep="08-llmops/02-prompt-rag-finetune" href="../08-llmops/02-prompt-rag-finetune.html"><span class="tick"></span>2. Prompt vs RAG vs Fine-Tune: The Decision Tree</a><a class="" data-ep="08-llmops/03-quantization-serving" href="../08-llmops/03-quantization-serving.html"><span class="tick"></span>3. Quantization & Efficient Serving</a><a class="" data-ep="08-llmops/04-monitoring" href="../08-llmops/04-monitoring.html"><span class="tick"></span>4. Monitoring, Drift, Feedback Loops</a><a class="" data-ep="08-llmops/05-prompt-engineering" href="../08-llmops/05-prompt-engineering.html"><span class="tick"></span>5. Prompt Engineering Patterns That Matter in Interviews</a><a class="" data-ep="08-llmops/06-llmops-drill" href="../08-llmops/06-llmops-drill.html"><span class="tick"></span>6. DRILL: LLMOps Rapid-Fire</a></details><details class="trk"><summary>Track 9 · Interview Lab: Agentic AI Engineer</summary><a class="" data-ep="09-interview-lab/01-llm-inference-microservice" href="../09-interview-lab/01-llm-inference-microservice.html"><span class="tick"></span>1. Building an LLM Inference Microservice</a><a class="" data-ep="09-interview-lab/02-kv-cache-serving-params" href="../09-interview-lab/02-kv-cache-serving-params.html"><span class="tick"></span>2. KV Cache Management & Serving Parameters (max seqs, batched tokens)</a><a class="" data-ep="09-interview-lab/03-autoscaling-llms-k8s" href="../09-interview-lab/03-autoscaling-llms-k8s.html"><span class="tick"></span>3. Autoscaling LLMs on Kubernetes: HPA, KEDA & Picking the Scaling Metric</a><a class="" data-ep="09-interview-lab/04-latency-metrics-frameworks" href="../09-interview-lab/04-latency-metrics-frameworks.html"><span class="tick"></span>4. Latency Metrics That Matter & Choosing an LLM Deployment Framework</a><a class="" data-ep="09-interview-lab/05-distillation-vs-quantization" href="../09-interview-lab/05-distillation-vs-quantization.html"><span class="tick"></span>5. Distillation vs Quantization: Advantages & Disadvantages</a><a class="" data-ep="09-interview-lab/06-repetition-hallucination" href="../09-interview-lab/06-repetition-hallucination.html"><span class="tick"></span>6. Why LLMs Repeat Themselves & Handling Hallucinations</a><a class="" data-ep="09-interview-lab/07-llm-judge-sampling" href="../09-interview-lab/07-llm-judge-sampling.html"><span class="tick"></span>7. LLM-as-a-Judge: Selecting Representative Evaluation Examples</a><a class="" data-ep="09-interview-lab/08-rag-document-versioning" href="../09-interview-lab/08-rag-document-versioning.html"><span class="tick"></span>8. RAG Document Versioning: Section Edits, Removals, Index Consistency</a><a class="" data-ep="09-interview-lab/09-tables-in-rag" href="../09-interview-lab/09-tables-in-rag.html"><span class="tick"></span>9. Tables in RAG: Multi-Page Tables, Parsing & Ingestion Strategies</a><a class="" data-ep="09-interview-lab/10-imbalanced-data-f1" href="../09-interview-lab/10-imbalanced-data-f1.html"><span class="tick"></span>10. Classical ML Refresher: Imbalanced Datasets, Micro vs Macro F1</a><a class="" data-ep="09-interview-lab/11-langgraph-summarizer-live-coding" href="../09-interview-lab/11-langgraph-summarizer-live-coding.html"><span class="tick"></span>11. Live Coding: A Working LangGraph Summarizer Agent</a><a class="" data-ep="09-interview-lab/12-project-deep-dive" href="../09-interview-lab/12-project-deep-dive.html"><span class="tick"></span>12. The Project Deep-Dive Round: Presenting Your Architecture</a><a class="" data-ep="09-interview-lab/13-interview-lab-drill" href="../09-interview-lab/13-interview-lab-drill.html"><span class="tick"></span>13. DRILL: Agentic AI Engineer Interview Rapid-Fire</a></details></nav>
+<main class="main"><div class="crumb">Track 8 · LLMOps + Prompting · Episode 1</div>
+<h1 class="lesson">LLMOps vs MLOps: What Actually Changes</h1>
+<div class="meta">19 min listen · Opening Track 8: what carries over from classical MLOps, and what really changes once the model is a rented, non-deterministic text engine and the prompt, context and token meter matter as much as the weights.</div>
+<audio controls preload="metadata" src="../../audio/08-llmops/s8e01-llmops-vs-mlops.mp3"></audio>
+<button class="btn complete" data-ep="08-llmops/01-llmops-vs-mlops" onclick="toggleDone('08-llmops/01-llmops-vs-mlops')">Mark complete</button>
+<div class="note"><p><em>Facts verified: 2026-09-25</em></p>
+<h2 id="one-sentence-thesis">One-sentence thesis</h2>
+<p>LLMOps keeps the MLOps foundations (versioning, CI/CD, promotion, eval gates, monitoring) but moves the <strong>unit of change</strong> from model weights to the whole application config, the <strong>unit of quality</strong> from labeled metrics to rubric-based evaluation, and the <strong>unit of cost</strong> to the token. It also adds non-determinism, provider-controlled model retirement, and prompt injection as first-class risks.</p>
+<h2 id="track-8-map">Track 8 map</h2>
+<table>
+<thead>
+<tr>
+<th>Ep</th>
+<th>Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>LLMOps vs MLOps: what changes (this note)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Prompt vs RAG vs fine-tune decision tree</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Quantization &amp; efficient serving</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Monitoring, drift, feedback loops</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Prompt engineering patterns for interviews</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Drill</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-mental-image-two-workshops-split-by-a-line">The mental image: two workshops, split by a line</h2>
+<ul>
+<li><strong>Left bench (MLOps):</strong> one sealed box you trained and own. Labeled data goes in, a deterministic score comes out, and one accuracy dial hangs overhead. The only way to change behavior is to retrain and swap the box.</li>
+<li><strong>Right bench (LLMOps):</strong> a bigger, padlocked, rented box (the foundation model) with a provider-controlled retirement date. The work happens around it: the <strong>prompt card</strong> on the wall, the <strong>document shelf</strong> (retrieval) on the left, the <strong>tool pegboard</strong> on the right, the <strong>guardrail gate</strong> at the exit, a <strong>token meter</strong> by the door, and a <strong>panel of gauges</strong> overhead (groundedness, relevance, safety, format, latency, cost), partly read by LLM judges.</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph MLOPS["Left bench: MLOps"]
+        D["Labeled training data"] --> M["Model you trained and own"]
+        M --> S["Score or class, deterministic"]
+        A["One dial: accuracy vs labels"] -.-> M
+    end
+    subgraph LLMOPS["Right bench: LLMOps"]
+        U["User request"] --> GIN["Input guardrail"]
+        GIN --> RET["Retrieval: document shelf"]
+        RET --> P["Prompt template: card on wall"]
+        P --> FM["Rented foundation model"]
+        FM <--> T["Tools and APIs: pegboard"]
+        FM --> GOUT["Output guardrail: exit gate"]
+        GOUT --> R["Answer, non-deterministic"]
+        FM -.-> TM["Token meter: cost per request"]
+        J["Gauge panel: LLM judges plus human review"] -.-> R
+    end
+</pre>
+
+<h2 id="what-changes-vs-what-carries-over">What changes vs what carries over</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>MLOps (left bench)</th>
+<th>LLMOps (right bench)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit of change</td>
+<td>Model artifact (retrain)</td>
+<td>Prompt + retrieval config + tools + guardrails + model ID, versioned together</td>
+</tr>
+<tr>
+<td>Determinism</td>
+<td>Same input gives same output</td>
+<td>Sampling; no bit-exact repeatability promise; some newer models reject non-default temperature</td>
+</tr>
+<tr>
+<td>Evaluation</td>
+<td>Held-out labeled test set; single metric</td>
+<td>Curated golden set plus production replays; rubric gauges; deterministic checks + LLM judges + sampled human review</td>
+</tr>
+<tr>
+<td>Who changes the model</td>
+<td>You</td>
+<td>Provider (deprecation and retirement schedule)</td>
+</tr>
+<tr>
+<td>Cost driver</td>
+<td>Training + fixed serving cluster</td>
+<td>Tokens per request (input, output, tool loops); caching and routing are levers</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Log features + prediction</td>
+<td>Trace tree per request (retrieval, model calls, tool calls, guardrails)</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Feature vectors aren't instructions</td>
+<td>Prompt injection, direct or indirect (via documents and tool results)</td>
+</tr>
+<tr>
+<td><strong>Carries over</strong></td>
+<td>Git, CI/CD, IaC, dev→staging→prod, access control, lineage, eval gate before release, canary/shadow, runbooks</td>
+<td>same</td>
+</tr>
+</tbody>
+</table>
+<h2 id="useful-numbers-order-of-magnitude-verified-2026-09-25">Useful numbers (order of magnitude, verified 2026-09-25)</h2>
+<ul>
+<li><strong>Model retirement notice:</strong> Anthropic commits to ≥60 days for publicly released models. Hyperscalers typically give ~6 months for GA models; preview models can go with ~2 weeks. In May 2026 xAI retired several API models with ~9 days' notice and redirected old slugs to a newer model at the newer price.</li>
+<li><strong>Prompt caching:</strong> e.g. Anthropic cache reads bill at 0.1x base input price; cache writes cost 1.25x (5-min TTL) or 2x (1-hour TTL). A hit requires an identical prefix.</li>
+<li><strong>OpenTelemetry GenAI semantic conventions:</strong> still <em>Development</em> (not Stable). They moved to a dedicated <code>semantic-conventions-genai</code> repo around June 2026 (semconv v1.42.0). Operations include <code>chat</code>, <code>execute_tool</code>, <code>invoke_agent</code>, and more.</li>
+</ul>
+<h2 id="code-treat-the-prompt-as-versioned-config">Code: treat the prompt as versioned config</h2>
+<pre><code class="language-python"># Illustrative: prompt pulled from a registry by alias, not hardcoded
+import mlflow
+
+prompt = mlflow.genai.load_prompt(&quot;prompts:/support_assistant@production&quot;)  # alias → version
+messages = prompt.format(context=chunks, question=user_q)
+
+# The release gate (pseudo): candidate must meet or beat prod on rubric + cost
+# results = evaluate(candidate_version, golden_set + prod_replay, scorers=[groundedness, relevance, format_ok])
+# if results.pass and results.cost_per_req &lt;= prod.cost_per_req: mlflow.genai.set_prompt_alias(&quot;support_assistant&quot;, &quot;production&quot;, candidate_version)
+</code></pre>
+<h2 id="key-terms">Key terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+<th>One-liner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundation model</td>
+<td>Large pre-trained model, usually rented via API or run from open weights</td>
+<td>"The padlocked box"</td>
+</tr>
+<tr>
+<td>Application version</td>
+<td>Prompt + retrieval config + tools + guardrails + model ID</td>
+<td>"Version the bench, not just the box"</td>
+</tr>
+<tr>
+<td>Golden set</td>
+<td>Curated eval questions with reference answers/rubrics</td>
+<td>Grows from production failures</td>
+</tr>
+<tr>
+<td>LLM judge</td>
+<td>Model scoring outputs against a rubric</td>
+<td>Calibrate against humans, continuously</td>
+</tr>
+<tr>
+<td>Prompt registry</td>
+<td>Versioned prompts with aliases (e.g. <code>production</code>)</td>
+<td>Rollback = alias move</td>
+</tr>
+<tr>
+<td>Token economics</td>
+<td>Cost scales with input + output tokens per request</td>
+<td>Cost is a per-request metric</td>
+</tr>
+<tr>
+<td>Trace / span</td>
+<td>Tree of steps for one request</td>
+<td>Answers "why did it say that?"</td>
+</tr>
+<tr>
+<td>Prompt injection</td>
+<td>Instructions smuggled in via user input, documents, or tool output</td>
+<td>Guard both entrance and exit</td>
+</tr>
+<tr>
+<td>LLM gateway</td>
+<td>Proxy layer in front of model providers (routing, keys, logging, fallbacks)</td>
+<td>Makes migrations measurable</td>
+</tr>
+<tr>
+<td>TTFT</td>
+<td>Time to first token</td>
+<td>Latency SLOs need TTFT + tokens/sec</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-interview-questions">5 interview questions</h2>
+<p><strong>Q1. How is LLMOps different from MLOps?</strong>
+The foundations carry over: versioning, CI/CD, promotion, eval gates, monitoring. Three units move. Change moves from weights to the full app config. Quality moves from labeled metrics to rubric-based eval with calibrated LLM judges. Cost moves to the token. New risks come with it: non-determinism, provider-driven model retirement, and prompt injection.</p>
+<p><strong>Q2. How do you deploy a prompt change safely?</strong>
+Version the prompt in a registry. Evaluate the candidate against the golden set plus a replay of production traffic, and require it to meet or beat production on the rubric gauges and on cost per request. Canary it behind a gateway, then promote by moving an alias, which also gives instant rollback.</p>
+<p><strong>Q3. Your provider retires your model in 60 days. What do you do?</strong>
+Run the model-agnostic eval suite against the replacement on day one and diff by category. Fix regressions in prompts and output parsing. Shadow on live traffic, compare cost and latency, then cut over behind the gateway with rollback ready. Going forward, run the suite on new model releases continuously so a retirement notice is never the first time you test.</p>
+<p><strong>Q4. Why can't you evaluate an LLM app with accuracy alone?</strong>
+Outputs are free text with no single label. Quality is multi-dimensional: groundedness, relevance, safety, format, latency, cost. You combine deterministic checks (schema parse), LLM judges on rubrics, and sampled human review that measures judge agreement.</p>
+<p><strong>Q5. Where do LLM costs hide, and how do you control them?</strong>
+They hide in oversized retrieved context, long system prompts, agent loops (multiple model calls per question), and long outputs. Controls: tighter retrieval with a reranker, prompt caching of a stable prefix, routing easy traffic to smaller models, per-request token budgets tracked in traces, and cost per request as a release-gate metric.</p>
+<h2 id="primary-docs">Primary docs</h2>
+<ul>
+<li>OpenTelemetry GenAI semantic conventions (attribute registry): https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/</li>
+<li>OTel GenAI conventions, dedicated repo: https://github.com/open-telemetry/semantic-conventions-genai</li>
+<li>Anthropic model deprecations (notice policy): https://platform.claude.com/docs/en/about-claude/model-deprecations</li>
+<li>Anthropic prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching</li>
+<li>OpenAI deprecations: https://developers.openai.com/api/docs/deprecations</li>
+<li>MLflow GenAI (tracing, eval, prompt registry): https://mlflow.org/docs/latest/genai/</li>
+</ul></div>
+<details class="transcript"><summary>📜 Transcript</summary><div class="body">Welcome back to the AI Tutor. Track eight, episode one: L L M ops versus M L ops — what actually changes.
+
+This episode opens a new track, so let me frame it first. Track eight is about running language models in production, and about the prompting skill that goes with that. Six episodes. Today we draw the map: what you keep from classical M L ops, and what you have to add. Episode two is the decision tree every team hits sooner or later: do you fix a problem with a better prompt, with retrieval, or with fine-tuning. Episode three goes down into the hardware: quantization and efficient serving, meaning how a seventy-billion-parameter model fits on a G P U and still answers quickly. Episode four is monitoring, drift and feedback loops. Episode five covers the prompt engineering patterns interviewers actually ask about. Episode six is a rapid-fire drill over the whole track. By the end, you should be able to walk into a system design round and talk about an L L M system the way you would talk about a data platform: layers, contracts, failure modes and costs.
+
+[PAUSE 1s]
+
+## The cold open
+
+Here's a story in a shape you'll see again and again. A team has a mature M L ops practice. Feature store, model registry, nightly retraining, drift dashboards, canary deployments, the lot. They build an internal assistant on top of a hosted language model and ship it through the same pipeline. Every check passes. Unit tests pass. The deploy is green. Three weeks later, support tickets start piling up: the assistant has begun answering in a different format, and a downstream parser that expected a clean list is choking on paragraphs.
+
+Nobody changed the code. Nobody changed the model version in the config. What changed? Someone edited the system prompt in a shared settings file to "sound friendlier". The edit never went through review because nobody thought of it as a deployment. It was just text. In their M L ops world, the thing that got versioned, tested and gated was the model artifact. Here, the model artifact never changed. The behavior changed anyway.
+
+That is the whole episode in one incident. The shared vocabulary makes L L M ops look like a small extension of M L ops. It isn't. The thing that decides behavior has moved, and if your controls stay where they were, they end up guarding an empty room.
+
+[PAUSE 1s]
+
+## Why it matters
+
+Why does this matter in an interview? Because "we'll just use our M L ops platform" is the most common weak answer in generative A I system design rounds, and interviewers are listening for whether you know better. The strong candidate can name exactly what carries over, which is a lot, and exactly what is new, which is also a lot. Being precise about that line is what separates someone who has run one of these systems from someone who has only read about them.
+
+It matters in practice too. On an L L M system the cost profile, the failure modes and the release process all look different. Get the operating model wrong and you pay three ways: money leaks through tokens nobody is metering, quality slips in ways no accuracy metric catches, and incidents turn into guesswork because nobody can say which version of what was live.
+
+[PAUSE 1s]
+
+## The mental image: two workshops
+
+So let's build the picture. Keep it for the whole episode, because every point hangs off it.
+
+Picture a long room split down the middle by a line on the floor. Two workshops, side by side.
+
+On the left is the classical M L ops workshop. In the center of that workbench sits one sealed box: the model. You built it yourself. You trained it on your own data, you own the weights, and it lives on your own infrastructure. To its left, feeding in, is a neat stack of labeled training data. To its right comes the output: a number, a class, a score. Above the bench hangs one big dial, the accuracy metric. Precision, recall, root mean squared error, whatever fits. One number, measured against ground-truth labels, and it tells you whether the box is good. When you want to change behavior, there's only one way to do it: retrain and swap in a new box. Everything important in this workshop happens around that box.
+
+Now look right, across the line. The L L M ops workshop. There's a box in the center of this bench too, but it looks different. It's much bigger, it's padlocked, and it has somebody else's name stamped on it. This is the foundation model. Most of the time you didn't train it, you can't open it, and you rent it by the token from a provider, or you run open weights someone else trained. Crucially, this box is no longer where most of your work happens.
+
+Your work happens around it. Pinned to the wall above the box is a card: the prompt, meaning the system instructions, the examples and the output format. To the left of the box is a shelf of documents, your retrieval layer, where context gets pulled from a vector index and slid into the box with each request. To the right of the box is a pegboard of tools: A P Is the model is allowed to call, databases it can query, actions it can take. At the exit, where answers leave the bench, there's a gate, the guardrails, checking what goes out and sometimes what comes in. And mounted on the wall beside the door is something the left-hand workshop never had: a running meter. The token meter. It ticks with every request, on input and on output, and it never stops.
+
+Last detail. Above the right-hand bench there's no single dial. There's a panel of several gauges: groundedness, relevance, safety, format correctness, latency, cost. Several of them are read by another language model acting as a judge, because nothing can check free text against a single label.
+
+Hold that picture: two benches, a line down the middle. On the left, one sealed box you own, with one dial above it. On the right, a rented padlocked box surrounded by a prompt card, a document shelf, a tool pegboard, an exit gate, a token meter and a panel of gauges.
+
+[PAUSE 2s]
+
+## Under the hood: walk a request across both benches
+
+Let's send something through each workshop and watch what happens.
+
+On the left bench, a record arrives. Say it's a loan application with forty features. It goes into the sealed box and a probability of default comes out. Run the same record again tomorrow and you get the same number, to the last decimal. The box is deterministic, which is why the M L ops toolkit works: version the data, version the code, version the model, and you can reproduce any prediction. Drift monitoring means watching the input feature distributions and the score distribution. Evaluation means a held-out test set with labels. The box costs roughly the same per prediction whatever the input looks like, a fraction of a millisecond of compute, and nobody bills you per call.
+
+Now the right bench. A user question arrives: "What's our refund policy for enterprise customers who cancel mid-term?" Watch it move.
+
+First it passes the exit gate going in, because good guardrails check inputs too, for prompt injection or personal data that shouldn't go to a third party. Then it reaches the document shelf on the left. The retrieval layer embeds the question, searches the index and pulls back, say, five chunks of policy text. Next, the prompt card on the wall gets filled in: system instructions, the five chunks, the user's question and the required output format, all concatenated into one long string. That string might be eight thousand tokens, and the meter on the wall ticks eight thousand input tokens before the box has done anything.
+
+The string goes into the padlocked box. The box might reach for the pegboard on the right, say to call a customer lookup A P I and confirm this customer's contract type. That's another round trip, more tokens and more latency. Then the box writes its answer one token at a time, maybe four hundred output tokens, and the meter ticks again, at a higher rate, because output tokens typically cost several times more than input tokens. The answer passes through the exit gate, gets checked for policy and format, and goes back to the user.
+
+Now ask the same question again. You may well get a differently worded answer. Sampling makes the output non-deterministic, and even at low temperature, hosted models don't promise bit-for-bit repeatability. Some current models don't even let you set temperature any more; you steer them through instructions. So the left bench's core assumption, same input gives same output, is gone.
+
+[PAUSE 1s]
+
+Now let's put the two benches side by side and name what really changes. Six things.
+
+One: the thing you version. On the left, the model artifact is the unit of change. On the right, the model is often the one thing you don't change. The prompt card, the retrieval configuration, the tool definitions, the guardrail rules and the model identifier together make up the application, and a change to any one of them is a deployment. Remember the cold open: the prompt card got edited and nothing caught it. The fix is to treat every item on that bench as versioned configuration, with review, evaluation and rollback, exactly like code. Mature tooling now has prompt registries with aliases like "production", so promoting or rolling back a prompt is a pointer move rather than a code redeploy.
+
+Two: the thing you measure. On the left, one dial against ground-truth labels. On the right, a panel of gauges, and most of them don't have labels. Is this answer grounded in the retrieved documents? Is it relevant? Is it safe? Did it follow the format? You measure those with a mix of deterministic checks, like "does it parse as valid jason", L L M judges scoring against a rubric, and human review sampled on an ongoing basis to keep the judges honest. And the evaluation set looks different too. Instead of a big held-out split of your training data, it's a curated golden set, often only a few hundred carefully chosen questions with reference answers or rubrics, plus replays of real production traffic.
+
+Three: who owns the box, and what that means for change. On the left, the model changes when you retrain it. On the right, the provider changes it on their schedule. Hosted models get deprecated and retired. One major provider publicly commits to at least sixty days' notice before retiring a publicly released model; hyperscalers typically promise around six months for generally available models, but preview models can disappear with a couple of weeks' notice. In 2026, at least one provider retired a batch of A P I models with nine days' notice and silently redirected the old names to a newer model at the newer price. So on the right bench, "the model changed under me" is a scheduled event, not an edge case. A migration means re-running your whole evaluation suite against the replacement, because a new model phrases things differently, and different phrasing is exactly what breaks downstream parsers. Teams that only start that work when the retirement email arrives tend to discover, a few weeks before the deadline, that the replacement fails a noticeable slice of their evaluation cases.
+
+Four: the cost model. On the left, cost is mostly training plus a fixed serving cluster. On the right, cost scales with every request, through the meter on the wall. It depends on prompt length, retrieved context size, how many tool round trips the model makes and how long the answer is. An agent that loops five times on a hard question costs five times as much as one that answers first time. The levers are new too: pick a smaller model for easy traffic, route hard traffic to a bigger one, trim retrieved context, and use prompt caching. Several providers bill cached input at around a tenth of the normal input price, so a long, stable system prompt can get dramatically cheaper if you keep its prefix identical from request to request. Cost is now an engineering metric you track per request, per feature and per tenant.
+
+Five: observability. On the left, you log the input features and the prediction. On the right, one request is a tree of steps: retrieval, several model calls, tool calls, guardrail checks. So you need tracing, one root span per request with nested child spans, each recording inputs, outputs, token counts and latency. OpenTelemetry has a set of generative A I semantic conventions for exactly this, with span types for model calls, tool executions and agent runs. They are still marked as development status rather than stable, and in mid-2026 they moved into a dedicated repository, so expect attribute names to keep shifting. The principle doesn't shift: without the trace, the question "why did it say that?" can't be answered.
+
+Six: the security surface. On the left, the model's input is a feature vector, and nobody hides instructions inside a feature vector. On the right, the input is natural language, and the documents on the retrieval shelf are natural language too. So anyone who can put text in front of the box can try to steer it. That's prompt injection, and it can arrive directly from a user or indirectly through a poisoned document or a tool result. The exit gate, least-privilege tool permissions on the pegboard, and never letting the model's output drive a sensitive action without a check all exist because of this.
+
+[PAUSE 1s]
+
+And what carries over? More than people expect. Cross the line back to the left bench and you'll see the same foundations underneath both. Version control, C I and C D, infrastructure as code, environment promotion from dev to staging to production, access control, lineage, the discipline of an evaluation gate before release, canary and shadow deployments, on-call runbooks. None of that goes away. A good way to say it: L L M ops is M L ops with the unit of change moved off the weights and spread across the bench, the unit of cost moved to the token, and the unit of quality moved from a label to a rubric.
+
+And if you do fine-tune, which is the subject of the next episode, the left bench comes right back. A fine-tuned model is a trained artifact. You need its training data versioned, its runs tracked and its weights registered. The two workshops aren't rivals. Most real systems stand with one foot on each side of the line.
+
+[PAUSE 2s]
+
+## Tradeoffs and pitfalls
+
+Now the sharp edges, with numbers attached.
+
+Pitfall one: treating the prompt as a string, not as code. We covered it in the cold open. The fix costs almost nothing: prompts live in version control or a prompt registry, every change goes through the same evaluation gate as a code change, and the production alias only moves after the gate passes.
+
+Pitfall two: a golden set that never grows. A team ships with two hundred evaluation questions and never adds another. Six months later, the failures users actually hit look nothing like those two hundred. The fix is a feedback loop: every production failure that gets flagged becomes a new evaluation case. Episode four goes deep on this.
+
+Pitfall three: trusting a single judge. An L L M judge from the same model family as your application can share its blind spots. It can score an answer as grounded because the answer quotes the retrieved text, even when the text didn't actually answer the user's question. Keep a small, permanent human review sample, even fifty traces a week, and measure how often the humans and the judge agree. If agreement drops, the judge needs attention before your dashboards do.
+
+Pitfall four: the invisible cost explosion. Here's a war story in a common shape. A team ships an agent with a retrieval step that pulls twenty chunks "to be safe", about fifteen thousand tokens of context per call, and the agent averages three model calls per question. At launch, traffic is a few thousand questions a day and nobody notices the cost. Then the feature gets promoted company-wide, traffic grows fifty times in a month, and the monthly bill goes from a rounding error to a line item the finance team asks about in a meeting. Nothing was broken. The meter on the wall was just never on anyone's dashboard. The fixes were boring and effective: retrieve five chunks, not twenty, with a reranker to make sure they're the right five. Cache the stable prefix. Route simple questions to a smaller model. Put a per-request token budget in the tracing so outliers show up. Cost per question fell by an order of magnitude and quality scores didn't move.
+
+Pitfall five: latency done in M L ops terms. A classical model answers in milliseconds. A language model has two latency numbers that matter: time to first token, and the rate of tokens after that. A request with a long context and a long answer can take several seconds end to end. So user experience depends on streaming, on keeping context tight, and on not chaining five sequential model calls when two would do. Your service level objective should name both numbers, not just a single average.
+
+Pitfall six: provider lock-in. If your prompts, tool schemas and evaluation harness are all tangled up with one provider's quirks, a forced migration becomes a rewrite. A thin gateway layer in front of the model, plus an evaluation suite you can point at any model, turns a migration into a measured comparison instead of a fire drill.
+
+[PAUSE 2s]
+
+## The interview angle
+
+Here's how this shows up in interviews.
+
+When they ask "how is L L M ops different from M L ops?", a strong answer sounds like this: "The foundations carry over: versioning, C I and C D, environment promotion, evaluation gates, monitoring. Three things move. The unit of change moves from the model weights to the whole application configuration, meaning prompt, retrieval settings, tools, guardrails and model identifier, so all of those get versioned and gated. The unit of quality moves from a labeled metric to rubric-based evaluation with L L M judges calibrated against human review. And the unit of cost moves to the token, so cost becomes a per-request engineering metric. On top of that you get new risks: non-determinism, provider-driven model retirement, and prompt injection."
+
+When they ask "how would you deploy a prompt change safely?", a strong answer sounds like: "Same discipline as code. The prompt is versioned in a registry. The candidate runs against the golden set and a replay of recent production traffic, and it has to meet or beat the current version on the rubric gauges and on cost per request. Then it goes out as a canary behind a gateway to a small share of traffic while we compare scores, and promotion is an alias move that rolls back instantly."
+
+When they ask "your provider is retiring the model you're on in sixty days, what do you do?", a strong answer sounds like: "I already have an evaluation suite that's model-agnostic, so day one I run the replacement against it and diff the results by category. Wherever it regresses, I adjust prompts and output parsing, not the model. I shadow the new model on live traffic, compare cost and latency, then cut over behind the gateway with rollback ready. And the lesson for next time is to run that suite against new model releases continuously, so a retirement notice is never the first time we test."
+
+[PAUSE 2s]
+
+## Sixty-second recap
+
+Back to the room with the line down the middle.
+
+On the left bench, the classical M L ops workshop: one sealed box you trained and own, labeled data flowing in, a deterministic score flowing out, one accuracy dial overhead. The unit of change is the model artifact.
+
+On the right bench, the L L M ops workshop: a bigger padlocked box you rent, with someone else's name on it and a retirement date they control. Around it, where all your work now lives: the prompt card on the wall, the document shelf on the left, the tool pegboard on the right, the guardrail gate at the exit, a token meter by the door that never stops, and a panel of gauges overhead read partly by L L M judges and partly by humans.
+
+What carries over: versioning, C I and C D, promotion, evaluation gates, monitoring, governance. What changes: you version the whole bench, not just the box. You measure with rubrics, not labels. You meter tokens, not servers. You trace every request as a tree. And you guard the entrance and the exit, because words can be attacks.
+
+Next episode, we stand at that right-hand bench with a problem to fix and ask the question every team asks: do you change the prompt card, stock the document shelf, or reach inside the box and fine-tune it? See you in the next episode.</div></details>
+<div class="navrow"><span></span><a class="btn" href="02-prompt-rag-finetune.html">Prompt vs RAG vs Fine-Tune: The Decision Tree →</a></div></main></div></body></html>
