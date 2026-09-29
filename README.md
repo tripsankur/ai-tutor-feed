@@ -1,6 +1,6 @@
-# AI Tutor — Interview Prep Audio Course
+# AI Tutor — Audio Course
 
-Generated artifacts (audio, podcast feed, course site) for a personal interview-prep learning pipeline.
+Generated artifacts (audio, podcast feed, course site) for a personal learning pipeline.
 Source lives in a private repo; this repo only hosts published output via GitHub Pages.
 
 - **Course site:** https://tripsankur.github.io/ai-tutor-feed/
