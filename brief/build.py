@@ -26,6 +26,7 @@ BASE_URL = "https://tripsankur.github.io/ai-tutor-feed/brief"
 API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
 VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "vDchjyOZZytffNeZXfZK")  # "Mike", American podcast host
 MODELS = [m for m in os.environ.get("ELEVENLABS_MODELS", "eleven_v4,eleven_v3,eleven_multilingual_v2").split(",") if m]
+TAG_MODELS = {"eleven_v3", "eleven_v4"}
 MAX_CHARS = 4800  # ElevenLabs request limit is 5,000 characters
 KEEP_DAYS = int(os.environ.get("KEEP_DAYS", "30"))
 
@@ -47,9 +48,11 @@ def chunks(text):
 def tts(text):
     last_err = None
     for model in MODELS:
+        # Audio tags like [upbeat] or [pause] only work on v3 and v4; older models read them aloud.
+        body = text if model in TAG_MODELS else re.sub(r"\[[^\]\n]+\]\s*", "", text)
         req = urllib.request.Request(
             f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}?output_format=mp3_44100_128",
-            data=json.dumps({"text": text, "model_id": model}).encode(),
+            data=json.dumps({"text": body, "model_id": model}).encode(),
             headers={"xi-api-key": API_KEY, "Content-Type": "application/json", "Accept": "audio/mpeg"},
         )
         try:
