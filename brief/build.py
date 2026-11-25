@@ -1,19 +1,16 @@
 """Morning Brief podcast builder.
 
-For every script in brief/scripts/YYYY-MM-DD.md that has no MP3 yet, ask
-ElevenLabs to voice it, save brief/audio/YYYY-MM-DD.mp3, then rebuild
+For every script in brief/scripts/YYYY-MM-DD.md that has no MP3 yet, voice it
+locally with Kokoro, save brief/audio/YYYY-MM-DD.mp3, then rebuild
 brief/feed.xml. Old episodes beyond KEEP_DAYS are removed to keep the repo small.
 """
 import datetime as dt
 import email.utils
 import html
-import json
 import os
 import pathlib
 import re
-import sys
-import urllib.error
-import urllib.request
+import subprocess
 
 from mutagen.mp3 import MP3
 
@@ -23,47 +20,52 @@ AUDIO = ROOT / "audio"
 FEED = ROOT / "feed.xml"
 BASE_URL = "https://tripsankur.github.io/ai-tutor-feed/brief"
 
-API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")
-VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "vDchjyOZZytffNeZXfZK")  # "Mike", American podcast host
-MODELS = [m for m in os.environ.get("ELEVENLABS_MODELS", "eleven_v4,eleven_v3,eleven_multilingual_v2").split(",") if m]
-TAG_MODELS = {"eleven_v3", "eleven_v4"}
-MAX_CHARS = 4800  # ElevenLabs request limit is 5,000 characters
+# Same engine as the Interview Ready feed: Kokoro, an open-source model that runs
+# on the build machine. No API key, no per-episode cost.
+KOKORO_DIR = pathlib.Path(os.environ.get("KOKORO_DIR", ROOT / "models"))
+VOICE = os.environ.get("KOKORO_VOICE", "af_heart")  # American; Ankur's rule: never a British voice
+SPEED = float(os.environ.get("KOKORO_SPEED", "1.1"))  # a touch faster than default
+SAMPLE_RATE = 24000
+BITRATE = "64k"
+GAP_SECONDS = 0.45  # breath between paragraphs
 KEEP_DAYS = int(os.environ.get("KEEP_DAYS", "30"))
 
-
-def chunks(text):
-    """Split on paragraph breaks so each request stays under MAX_CHARS."""
-    parts, cur = [], ""
-    for para in text.split("\n\n"):
-        if cur and len(cur) + len(para) + 2 > MAX_CHARS:
-            parts.append(cur)
-            cur = para
-        else:
-            cur = f"{cur}\n\n{para}" if cur else para
-    if cur:
-        parts.append(cur)
-    return parts
+_kokoro = None
 
 
-def tts(text):
-    last_err = None
-    for model in MODELS:
-        # Audio tags like [upbeat] or [pause] only work on v3 and v4; older models read them aloud.
-        body = text if model in TAG_MODELS else re.sub(r"\[[^\]\n]+\]\s*", "", text)
-        req = urllib.request.Request(
-            f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}?output_format=mp3_44100_128",
-            data=json.dumps({"text": body, "model_id": model}).encode(),
-            headers={"xi-api-key": API_KEY, "Content-Type": "application/json", "Accept": "audio/mpeg"},
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=300) as r:
-                return r.read()
-        except urllib.error.HTTPError as e:
-            last_err = f"{model}: HTTP {e.code} {e.read()[:300]!r}"
-            print("TTS failed, trying next model:", last_err, file=sys.stderr)
-            if e.code in (401, 402, 429):  # bad key, no credits, rate limit: other models won't help
-                break
-    raise SystemExit(f"ElevenLabs failed: {last_err}")
+def kokoro():
+    global _kokoro
+    if _kokoro is None:
+        from kokoro_onnx import Kokoro
+        _kokoro = Kokoro(str(KOKORO_DIR / "kokoro-v1.0.onnx"), str(KOKORO_DIR / "voices-v1.0.bin"))
+    return _kokoro
+
+
+def paragraphs(text):
+    # Delivery tags like [upbeat] or [pause] are ElevenLabs-only; Kokoro would read them aloud.
+    text = re.sub(r"\[[^\]\n]+\]\s*", "", text)
+    text = re.sub(r"[*_`>#]", "", text)
+    return [" ".join(p.split()) for p in text.split("\n\n") if p.strip()]
+
+
+def tts(text, out):
+    import numpy as np
+    import soundfile as sf
+    gap = None
+    pieces = []
+    for para in paragraphs(text):
+        samples, sr = kokoro().create(para, voice=VOICE, speed=SPEED, lang="en-us")
+        if gap is None:
+            gap = np.zeros(int(sr * GAP_SECONDS), dtype=samples.dtype)
+        pieces += [samples, gap]
+    if not pieces:
+        raise SystemExit(f"No speakable text for {out.name}")
+    wav = out.with_suffix(".wav")
+    sf.write(str(wav), np.concatenate(pieces), sr)
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav), "-ar", str(SAMPLE_RATE),
+                    "-ac", "1", "-b:a", BITRATE, "-metadata", "artist=Morning Brief with Ankur",
+                    "-metadata", f"title={out.stem}", str(out)], check=True)
+    wav.unlink()
 
 
 def title_of(text, day):
@@ -92,11 +94,8 @@ def main():
             mp3.unlink(missing_ok=True)
             continue
         if not mp3.exists():
-            if not API_KEY:
-                raise SystemExit("ELEVENLABS_API_KEY secret is not set")
-            audio = b"".join(tts(part) for part in chunks(spoken(script.read_text())))
-            mp3.write_bytes(audio)
-            print(f"Voiced {script.name}: {len(audio)} bytes")
+            tts(spoken(script.read_text()), mp3)
+            print(f"Voiced {script.name}: {mp3.stat().st_size} bytes")
 
     items = []
     for script in sorted(SCRIPTS.glob("*.md"), reverse=True):

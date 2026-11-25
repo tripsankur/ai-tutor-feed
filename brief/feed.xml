@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Morning Brief with Ankur</title>
+    <link>https://tripsankur.github.io/ai-tutor-feed/brief/feed.xml</link>
+    <description>A fast weekday briefing on markets, AI, Databricks and Aays, with one deep dive and a talking point to practise. General information, not financial advice.</description>
+    <language>en-au</language>
+    <lastBuildDate>Wed, 25 Nov 2026 21:33:18 +0000</lastBuildDate>
+    <atom:link href="https://tripsankur.github.io/ai-tutor-feed/brief/feed.xml" rel="self" type="application/rss+xml"/>
+    <itunes:author>Ankur Tripathi</itunes:author>
+    <itunes:image href="https://tripsankur.github.io/ai-tutor-feed/brief/cover.png"/>
+    <itunes:category text="Business"/>
+    <itunes:type>episodic</itunes:type>
+    <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>Morning Brief · Thu 26 Nov 2026 · Selling AI when the AI trade wobbles</title>
+      <description>Morning Ankur! It&#x27;s Thursday. Wall Street&#x27;s closed today for Thanksgiving, so let&#x27;s catch up on a wild Wednesday, then one big idea for your client calls. Here at home, the big story was inflation. October came in hot. Prices are up four point nine percent on a year ago. That&#x27;s up from four point th</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/brief/audio/2026-11-26.mp3" length="1484263" type="audio/mpeg"/>
+      <guid isPermaLink="false">morning-brief-2026-11-26</guid>
+      <pubDate>Wed, 25 Nov 2026 20:45:00 +0000</pubDate>
+      <itunes:duration>00:03:05</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+    <item>
+      <title>Morning Brief · Tue 24 Nov 2026 · AI governance is the meter</title>
+      <description>Hey Ankur, good morning! It&#x27;s Tuesday, and wow, what a day for markets. Here&#x27;s the quick version, then one big idea you can use today. So, Nvidia. Eleven days ago, Jensen Huang quit as CEO. On Monday, the board brought him back. And the market went wild. Nvidia jumped more than thirty percent in one</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/brief/audio/2026-11-24.mp3" length="1621351" type="audio/mpeg"/>
+      <guid isPermaLink="false">morning-brief-2026-11-24</guid>
+      <pubDate>Mon, 23 Nov 2026 20:45:00 +0000</pubDate>
+      <itunes:duration>00:03:22</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
+  </channel>
+</rss>
