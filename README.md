@@ -13,5 +13,5 @@ Tracks: Databricks Platform & Data Engineering · Databricks AI · GenAI System 
 A separate weekday feed: https://tripsankur.github.io/ai-tutor-feed/brief/feed.xml
 
 - The 7:33 AM Sydney brief pushes a spoken script to `brief/scripts/YYYY-MM-DD.md`.
-- `.github/workflows/morning-brief.yml` runs `brief/build.py`, which voices new scripts with ElevenLabs, saves `brief/audio/YYYY-MM-DD.mp3` and rebuilds `brief/feed.xml`.
-- Needs the repo secret `ELEVENLABS_API_KEY`. Episodes older than 30 days are removed.
+- `.github/workflows/morning-brief.yml` runs `brief/build.py`, which voices new scripts with Kokoro (open-source, runs in the Action, no API key), saves `brief/audio/YYYY-MM-DD.mp3` and rebuilds `brief/feed.xml`.
+- No API key or secret needed. Episodes older than 30 days are removed.
