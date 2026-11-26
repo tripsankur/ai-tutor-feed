@@ -128,7 +128,7 @@ def main():
     <lastBuildDate>{now}</lastBuildDate>
     <atom:link href="{BASE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
-    <itunes:image href="{BASE_URL}/cover.png"/>
+    <itunes:image href="{BASE_URL}/cover-sunrise.png"/>
     <itunes:category text="Business"/>
     <itunes:type>episodic</itunes:type>
     <itunes:explicit>false</itunes:explicit>
