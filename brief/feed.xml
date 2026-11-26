@@ -5,13 +5,23 @@
     <link>https://tripsankur.github.io/ai-tutor-feed/brief/feed.xml</link>
     <description>A fast weekday briefing on markets, AI, Databricks and Aays, with one deep dive and a talking point to practise. General information, not financial advice.</description>
     <language>en-au</language>
-    <lastBuildDate>Wed, 25 Nov 2026 21:35:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 26 Nov 2026 20:38:47 +0000</lastBuildDate>
     <atom:link href="https://tripsankur.github.io/ai-tutor-feed/brief/feed.xml" rel="self" type="application/rss+xml"/>
     <itunes:author>Ankur Tripathi</itunes:author>
     <itunes:image href="https://tripsankur.github.io/ai-tutor-feed/brief/cover.png"/>
     <itunes:category text="Business"/>
     <itunes:type>episodic</itunes:type>
     <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>Morning Brief · Fri 27 Nov 2026 · Governed AI agents are the new product</title>
+      <description>Morning Ankur! It&#x27;s Friday. Wall Street took Thursday off for Thanksgiving, so it was a quiet night. Let&#x27;s do the headlines, then one big idea you can use in your next client chat. At home, the A S X 200 bounced back. It finished up nearly one percent, at about eight thousand seven hundred and sixty</description>
+      <enclosure url="https://tripsankur.github.io/ai-tutor-feed/brief/audio/2026-11-27.mp3" length="1572198" type="audio/mpeg"/>
+      <guid isPermaLink="false">morning-brief-2026-11-27</guid>
+      <pubDate>Thu, 26 Nov 2026 20:45:00 +0000</pubDate>
+      <itunes:duration>00:03:16</itunes:duration>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:explicit>false</itunes:explicit>
+    </item>
     <item>
       <title>Morning Brief · Thu 26 Nov 2026 · Selling AI when the AI trade wobbles</title>
       <description>Morning Ankur! It&#x27;s Thursday. Wall Street&#x27;s closed today for Thanksgiving, so let&#x27;s catch up on a wild Wednesday, then one big idea for your client calls. Here at home, the big story was inflation. October came in hot. Prices are up four point nine percent on a year ago. That&#x27;s up from four point th</description>
